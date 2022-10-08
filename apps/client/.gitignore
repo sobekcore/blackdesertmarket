@@ -1,0 +1,9 @@
+# Compiled output
+/node_modules
+/dist
+
+# Logs
+npm-debug.log*
+
+# IDEs and editors
+/.idea

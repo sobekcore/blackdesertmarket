@@ -1,0 +1,15 @@
+# Compiled output
+/node_modules
+/dist
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea

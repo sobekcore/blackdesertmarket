@@ -1,0 +1,12 @@
+@import "@/styles/variables";
+
+html {
+  font-family: sans-serif;
+  color-scheme: dark;
+}
+
+body {
+  background: $MAIN_BACKGROUND_COLOR;
+  color: $MAIN_FONT_COLOR;
+  margin: 0;
+}
