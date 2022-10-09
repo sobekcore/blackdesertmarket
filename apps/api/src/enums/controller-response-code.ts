@@ -1,0 +1,4 @@
+export enum ControllerResponseCode {
+  SUCCESS = 'SUCCESS',
+  ERROR_INVALID_PARAMETERS = 'ERROR_INVALID_PARAMETERS',
+}
