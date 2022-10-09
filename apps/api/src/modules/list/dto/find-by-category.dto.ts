@@ -1,4 +1,4 @@
-import { IsNumber, Max, Min } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsNumber, Max, Min } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class FindByCategoryDTOParams {
@@ -13,4 +13,16 @@ export class FindByCategoryDTOParams {
   @Min(1)
   @Max(24)
   public readonly subCategory: number;
+}
+
+export class FindByCategoryDTOBody {
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  public readonly region?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  public readonly language?: string;
 }

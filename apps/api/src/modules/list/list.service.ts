@@ -1,36 +1,33 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { Observable, map, lastValueFrom } from 'rxjs';
+import { lastValueFrom, map, Observable } from 'rxjs';
 import { BlackDesertItem } from '@blackdesertmarket/interfaces';
+import { ExternalMarketMeta, ExternalMarketParams } from '@/interfaces/external-market.interface';
+import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
+import { ExternalMarketService } from '@/modules/external-market/external-market.service';
 
 @Injectable()
 export class ListService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(private readonly httpService: HttpService, private readonly marketService: ExternalMarketService) {}
 
-  /**
-   * TODO: Extract request parameters/config/response logic to generic classes
-   */
-  findByCategory(mainCategory: number, subCategory: number, language?: string): Promise<BlackDesertItem[]> {
-    if (!language) {
-      language = process.env.DEFAULT_REQUEST_LANGUAGE || 'en-US';
-    }
-
-    const params: URLSearchParams = new URLSearchParams();
-
-    params.append('__RequestVerificationToken', process.env.PARAMS_REQUEST_TOKEN);
-    params.append('mainCategory', String(mainCategory));
-    params.append('subCategory', String(subCategory));
-
-    const config: Record<string, Record<string, string>> = {
-      headers: {
-        Cookie: `__RequestVerificationToken=${process.env.COOKIE_REQUEST_TOKEN}; lang=${language};`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'User-Agent': 'BlackDesert',
-      },
+  public findByCategory(
+    mainCategory: number,
+    subCategory: number,
+    region?: string,
+    language?: string,
+  ): Promise<BlackDesertItem[]> {
+    const params: ExternalMarketParams = {
+      mainCategory: String(mainCategory),
+      subCategory: String(subCategory),
     };
 
-    const data: Observable<BlackDesertItem[]> = this.httpService
-      .post('https://eu-trade.naeu.playblackdesert.com/Home/GetWorldMarketList', params, config)
+    const meta: ExternalMarketMeta = {
+      region: region,
+      language: language,
+    };
+
+    const data: Observable<BlackDesertItem[]> = this.marketService
+      .buildExternalMarketRequest(InternalMarketEndpoint.LIST, params, meta)
       .pipe(
         map((response): Array<unknown> => {
           return response.data.marketList ? response.data.marketList : [];

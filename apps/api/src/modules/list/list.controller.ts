@@ -1,19 +1,29 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Body } from '@nestjs/common';
 import { BlackDesertItem } from '@blackdesertmarket/interfaces';
-import { ControllerResponse } from '@/interfaces/controller-response';
-import { ControllerResponseCode } from '@/enums/controller-response-code';
+import { ControllerResponse } from '@/interfaces/controller-response.interface';
+import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { ListService } from '@/modules/list/list.service';
-import { FindByCategoryDTOParams } from '@/modules/list/dto/find-by-category.dto';
+import { FindByCategoryDTOParams, FindByCategoryDTOBody } from '@/modules/list/dto/find-by-category.dto';
 
 @Controller('list')
 export class ListController {
   constructor(private readonly listService: ListService) {}
 
   @Get('/:mainCategory/:subCategory')
-  async findByCategory(@Param() params: FindByCategoryDTOParams): Promise<ControllerResponse<BlackDesertItem[]>> {
+  public async findByCategory(
+    @Param() params: FindByCategoryDTOParams,
+    @Body() body: FindByCategoryDTOBody,
+  ): Promise<ControllerResponse<BlackDesertItem[]>> {
+    const data: BlackDesertItem[] = await this.listService.findByCategory(
+      params.mainCategory,
+      params.subCategory,
+      body.region,
+      body.language,
+    );
+
     return {
       code: ControllerResponseCode.SUCCESS,
-      data: await this.listService.findByCategory(params.mainCategory, params.subCategory),
+      data: data,
     };
   }
 }

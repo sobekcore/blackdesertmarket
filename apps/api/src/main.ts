@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { BadRequestException, ValidationPipe, ValidationError } from '@nestjs/common';
-import { ControllerResponseCode } from '@/enums/controller-response-code';
+import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { AppModule } from '@/app.module';
 
 async function bootstrap() {
