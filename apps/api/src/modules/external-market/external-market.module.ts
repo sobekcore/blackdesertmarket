@@ -6,4 +6,4 @@ import { ExternalMarketService } from '@/modules/external-market/external-market
   imports: [HttpModule],
   providers: [ExternalMarketService],
 })
-export class ListModule {}
+export class ExternalMarketModule {}

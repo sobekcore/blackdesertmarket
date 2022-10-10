@@ -32,8 +32,6 @@ export class ListService {
         map((response): Array<unknown> => {
           return response.data.marketList ? response.data.marketList : [];
         }),
-      )
-      .pipe(
         map((data: Array<unknown>): BlackDesertItem[] => {
           /**
            * TODO: Add transformer to adjust items data structure
