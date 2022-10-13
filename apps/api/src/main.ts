@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { BadRequestException, ValidationPipe, ValidationError } from '@nestjs/common';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { AllExceptionsFilter } from '@/filters/all-exceptions.filter';
+import { NotFoundExceptionFilter } from '@/filters/not-found-exception.filter';
 import { AppModule } from '@/app.module';
 
 async function bootstrap() {
@@ -14,6 +15,7 @@ async function bootstrap() {
   });
 
   app.useGlobalFilters(new AllExceptionsFilter());
+  app.useGlobalFilters(new NotFoundExceptionFilter());
 
   app.useGlobalPipes(
     new ValidationPipe({
