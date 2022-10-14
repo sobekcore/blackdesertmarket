@@ -1,18 +1,13 @@
-import { IsNotEmpty, IsOptional, IsString, IsNumber, IsIn } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class FindByIdDTOParams {
+export class FindTypesByIdDTOParams {
   @Type(() => Number)
   @IsNumber()
   public readonly id: number;
-
-  @Type(() => Number)
-  @IsNumber()
-  @IsIn([0, 8, 11, 13, 16, 17, 18, 19, 20])
-  public readonly enhancement: number;
 }
 
-export class FindByIdDTOBody {
+export class FindTypesByIdDTOBody {
   @IsString()
   @IsNotEmpty()
   @IsOptional()

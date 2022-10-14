@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { Observable, lastValueFrom, map } from 'rxjs';
 import {
   BlackDesertItem,
+  BlackDesertItemType,
   BlackDesertItemDetails,
   BlackDesertItemDetailsAvailability,
   BlackDesertItemDetailsHistory,
 } from '@blackdesertmarket/interfaces';
 import {
   ExternalMarketItem,
+  ExternalMarketItemType,
   ExternalMarketItemDetails,
   ExternalMarketItemDetailsHistory,
   ExternalMarketMeta,
@@ -31,6 +33,17 @@ export class ItemService {
     );
   }
 
+  public isValidExternalMarketItemType(type: unknown): boolean {
+    return (
+      type.hasOwnProperty('mainKey') &&
+      type.hasOwnProperty('name') &&
+      type.hasOwnProperty('count') &&
+      type.hasOwnProperty('grade') &&
+      type.hasOwnProperty('pricePerOne') &&
+      type.hasOwnProperty('subKey')
+    );
+  }
+
   public isValidExternalMarketItemDetails(details: unknown): boolean {
     return (
       details.hasOwnProperty('marketConditionList') &&
@@ -46,6 +59,17 @@ export class ItemService {
       count: item.sumCount,
       grade: item.grade,
       basePrice: item.minPrice,
+    };
+  }
+
+  public transformExternalMarketItemType(type: ExternalMarketItemType): BlackDesertItemType {
+    return {
+      id: type.mainKey,
+      name: type.name,
+      count: type.count,
+      grade: type.grade,
+      basePrice: type.pricePerOne,
+      enhancement: type.subKey,
     };
   }
 
@@ -77,7 +101,44 @@ export class ItemService {
     };
   }
 
-  public findById(id: number, enhancement: number, region?: string, language?: string): Promise<any> {
+  public findTypesById(id: number, region?: string, language?: string): Promise<BlackDesertItemType[]> {
+    const params: ExternalMarketParams = {
+      mainKey: String(id),
+    };
+
+    const meta: ExternalMarketMeta = {
+      region: region,
+      language: language,
+    };
+
+    const data: Observable<BlackDesertItemType[]> = this.externalMarketService
+      .buildExternalMarketRequest(InternalMarketEndpoint.ITEM_TYPES, params, meta)
+      .pipe(
+        map((response): unknown[] => {
+          return response.data.detailList ? response.data.detailList : [];
+        }),
+        map((data: unknown[]): BlackDesertItemType[] => {
+          data.forEach((type: unknown) => {
+            if (!this.isValidExternalMarketItemType(type)) {
+              throw new ExternalMarketException('Response from external market did contain invalid data');
+            }
+          });
+
+          return data.map((type: ExternalMarketItemType): BlackDesertItemType => {
+            return this.transformExternalMarketItemType(type);
+          });
+        }),
+      );
+
+    return lastValueFrom(data);
+  }
+
+  public findDetailsById(
+    id: number,
+    enhancement: number,
+    region?: string,
+    language?: string,
+  ): Promise<BlackDesertItemDetails> {
     const params: ExternalMarketParams = {
       mainKey: String(id),
       subKey: String(enhancement),
@@ -91,7 +152,7 @@ export class ItemService {
     };
 
     const data: Observable<BlackDesertItemDetails> = this.externalMarketService
-      .buildExternalMarketRequest(InternalMarketEndpoint.ITEM, params, meta)
+      .buildExternalMarketRequest(InternalMarketEndpoint.ITEM_DETAILS, params, meta)
       .pipe(
         map((response): unknown => {
           return response.data ? response.data : {};
@@ -101,10 +162,6 @@ export class ItemService {
             throw new ExternalMarketException('Response from external market did contain invalid data');
           }
 
-          /**
-           * At this point we are certain that data implements all the members of ExternalMarketItemDetails
-           * which is the assurance we need to safely explicitly cast it to ExternalMarketItemDetails
-           */
           return this.transformExternalMarketItemDetails(data as ExternalMarketItemDetails);
         }),
       );

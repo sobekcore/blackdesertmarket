@@ -20,12 +20,12 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       exceptionFactory: (errors: ValidationError[]): BadRequestException => {
-        const messages = errors.map((error) => {
+        const messages: string[][] = errors.map((error: ValidationError): string[] => {
           return Object.values(error.constraints);
         });
 
-        const flattenedMessages = messages.flat();
-        const uniqueMessages = Array.from(new Set(flattenedMessages));
+        const flattenedMessages: string[] = messages.flat();
+        const uniqueMessages: string[] = Array.from(new Set(flattenedMessages));
 
         return new BadRequestException({
           code: ControllerResponseCode.ERROR_INVALID_PARAMETERS,

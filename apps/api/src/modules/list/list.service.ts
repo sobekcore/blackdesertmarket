@@ -40,10 +40,6 @@ export class ListService {
             }
           });
 
-          /**
-           * Native JavaScript map method must be used here instead of rxjs map function
-           * due to how HttpService returns response data as a single rxjs stream
-           */
           return data.map((item: ExternalMarketItem): BlackDesertItem => {
             return this.itemService.transformExternalMarketItem(item);
           });

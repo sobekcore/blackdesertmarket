@@ -15,6 +15,23 @@ export interface ExternalMarketItem {
   minPrice: number;
 }
 
+export interface ExternalMarketItemType extends ExternalMarketItemTypeUnused {
+  mainKey: number;
+  name: string;
+  count: number;
+  grade: number;
+  pricePerOne: number;
+  subKey: number;
+}
+
+interface ExternalMarketItemTypeUnused {
+  chooseKey: number;
+  keyType: number;
+  mainCategory: number;
+  subCategory: number;
+  totalTradeCount: number;
+}
+
 export interface ExternalMarketItemDetails extends ExternalMarketItemDetailsUnused {
   marketConditionList: ExternalMarketItemDetailsAvailability[];
   resultMsg: string;

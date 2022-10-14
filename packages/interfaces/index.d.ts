@@ -6,6 +6,10 @@ export interface BlackDesertItem {
   basePrice: number;
 }
 
+export interface BlackDesertItemType extends BlackDesertItem {
+  enhancement: number;
+}
+
 export interface BlackDesertItemDetails {
   availability: BlackDesertItemDetailsAvailability[],
   history: BlackDesertItemDetailsHistory[],

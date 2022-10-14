@@ -14,16 +14,9 @@ export class ListController {
     @Param() params: FindByCategoryDTOParams,
     @Body() body: FindByCategoryDTOBody,
   ): Promise<ControllerResponse<BlackDesertItem[]>> {
-    const data: BlackDesertItem[] = await this.listService.findByCategory(
-      params.mainCategory,
-      params.subCategory,
-      body.region,
-      body.language,
-    );
-
     return {
       code: ControllerResponseCode.SUCCESS,
-      data: data,
+      data: await this.listService.findByCategory(params.mainCategory, params.subCategory, body.region, body.language),
     };
   }
 }
