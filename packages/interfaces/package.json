@@ -1,6 +1,6 @@
 {
   "name": "@blackdesertmarket/interfaces",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "TypeScript interfaces for the Black Desert items available from @blackdesertmarket/api",
   "author": "David <sobekcore@gmail.com>",
   "types": "index.d.ts"
