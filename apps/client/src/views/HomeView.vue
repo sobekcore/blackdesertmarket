@@ -1,32 +1,40 @@
 <template>
-  <div class="home-view">
-    <main class="content">
-      <MainLogo />
-    </main>
-  </div>
+  <AppMarketplaceView>
+    <AppMarketplaceProvider>
+      <div class="flex flex-grow">
+        <nav class="category-sidemenu w-1/4 overflow-y-scroll">
+          <CategorySidemenu />
+        </nav>
+        <main class="w-3/4 overflow-y-scroll">
+          <section class="flex h-full w-full items-center justify-center">
+            <AppLogo />
+          </section>
+        </main>
+      </div>
+    </AppMarketplaceProvider>
+  </AppMarketplaceView>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import MainLogo from '@/components/MainLogo.vue';
+import AppMarketplaceView from '@/components/base/AppMarketplaceView.vue';
+import AppMarketplaceProvider from '@/components/base/AppMarketplaceProvider.vue';
+import CategorySidemenu from '@/components/CategorySidemenu.vue';
+import AppLogo from '@/components/base/AppLogo.vue';
 
 export default defineComponent({
   name: 'HomeView',
   components: {
-    MainLogo,
+    AppMarketplaceView,
+    AppMarketplaceProvider,
+    CategorySidemenu,
+    AppLogo,
   },
 });
 </script>
 
 <style lang="scss" scoped>
-.home-view {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-
-  .content {
-    padding: 1rem;
-  }
+.category-sidemenu {
+  min-width: 250px;
 }
 </style>
