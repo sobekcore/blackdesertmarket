@@ -2,6 +2,9 @@
 /node_modules
 /dist
 
+# Environment
+/.env.local
+
 # Logs
 npm-debug.log*
 

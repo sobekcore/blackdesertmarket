@@ -1,9 +1,9 @@
-import { Controller, Get, Param, Body } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { BlackDesertItem } from '@blackdesertmarket/interfaces';
 import { ControllerResponse } from '@/interfaces/controller-response.interface';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { ListService } from '@/modules/list/list.service';
-import { FindByCategoryDTOParams, FindByCategoryDTOBody } from '@/modules/list/dto/find-by-category.dto';
+import { FindByCategoryDTOParams, FindByCategoryDTOQuery } from '@/modules/list/dto/find-by-category.dto';
 
 @Controller('list')
 export class ListController {
@@ -12,11 +12,16 @@ export class ListController {
   @Get('/:mainCategory/:subCategory')
   public async findByCategory(
     @Param() params: FindByCategoryDTOParams,
-    @Body() body: FindByCategoryDTOBody,
+    @Query() query: FindByCategoryDTOQuery,
   ): Promise<ControllerResponse<BlackDesertItem[]>> {
     return {
       code: ControllerResponseCode.SUCCESS,
-      data: await this.listService.findByCategory(params.mainCategory, params.subCategory, body.region, body.language),
+      data: await this.listService.findByCategory(
+        params.mainCategory,
+        params.subCategory,
+        query.region,
+        query.language,
+      ),
     };
   }
 }

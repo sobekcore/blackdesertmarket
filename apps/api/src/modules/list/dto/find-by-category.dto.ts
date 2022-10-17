@@ -15,7 +15,7 @@ export class FindByCategoryDTOParams {
   public readonly subCategory: number;
 }
 
-export class FindByCategoryDTOBody {
+export class FindByCategoryDTOQuery {
   @IsString()
   @IsNotEmpty()
   @IsOptional()

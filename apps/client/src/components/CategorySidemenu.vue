@@ -1,5 +1,5 @@
 <template>
-  <ul class="relative flex min-h-full flex-col gap-0.5 bg-dark-200 p-1">
+  <ul class="flex flex-col gap-0.5 p-0.5">
     <template v-for="(category, index) in categories" :key="index">
       <CategorySidemenuItem
         :title="category.title"

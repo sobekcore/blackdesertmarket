@@ -7,7 +7,7 @@ export class FindTypesByIdDTOParams {
   public readonly id: number;
 }
 
-export class FindTypesByIdDTOBody {
+export class FindTypesByIdDTOQuery {
   @IsString()
   @IsNotEmpty()
   @IsOptional()
