@@ -18,18 +18,18 @@
           'text-light-100': toggled,
         }"
       >
-        {{ title }}
+        {{ props.title }}
       </span>
       <span>
         <!-- TODO: Display individual category state triangle icon -->
       </span>
     </button>
     <ul v-show="toggled" class="mt-0.5 flex flex-col gap-0.5">
-      <template v-if="subCategories && subCategories.length">
-        <template v-for="(subCategory, index) in subCategories" :key="index">
+      <template v-if="props.subCategories && props.subCategories.length">
+        <template v-for="(subCategory, index) in props.subCategories" :key="index">
           <CategorySidemenuSubItem
             :title="subCategory.title"
-            :main-category="mainCategory"
+            :main-category="props.mainCategory"
             :sub-category="subCategory.subCategory"
           />
         </template>
@@ -41,42 +41,35 @@
   </li>
 </template>
 
-<script lang="ts">
-import { Ref, defineComponent, ref } from 'vue';
+<script lang="ts" setup>
+import { Ref, PropType, defineProps, ref } from 'vue';
+import { MarketConfigSubCategory } from '@/interfaces/market-config';
 import CategorySidemenuSubItem from '@/components/CategorySidemenuSubItem.vue';
 
-interface CategorySidemenuItemData {
-  toggled: Ref<boolean>;
-  toggleSidemenuItem(): void;
+interface CategorySidemenuItemProps {
+  title: string;
+  mainCategory: number;
+  subCategories: MarketConfigSubCategory[];
 }
 
-export default defineComponent({
-  name: 'CategorySidemenuItem',
-  components: {
-    CategorySidemenuSubItem,
+const props: CategorySidemenuItemProps = defineProps({
+  title: {
+    type: String,
+    required: true,
   },
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    mainCategory: {
-      type: Number,
-      required: true,
-    },
-    subCategories: {
-      type: Array,
-      required: true,
-    },
+  mainCategory: {
+    type: Number,
+    required: true,
   },
-  setup(): CategorySidemenuItemData {
-    const toggled: Ref<boolean> = ref(false);
-
-    const toggleSidemenuItem = (): void => {
-      toggled.value = !toggled.value;
-    };
-
-    return { toggled, toggleSidemenuItem };
+  subCategories: {
+    type: Array as PropType<MarketConfigSubCategory[]>,
+    required: true,
   },
 });
+
+const toggled: Ref<boolean> = ref(false);
+
+const toggleSidemenuItem = (): void => {
+  toggled.value = !toggled.value;
+};
 </script>

@@ -10,30 +10,16 @@
   </ul>
 </template>
 
-<script lang="ts">
-import { Ref, defineComponent, inject, ref } from 'vue';
+<script lang="ts" setup>
+import { Ref, inject, ref } from 'vue';
 import { MarketConfig, MarketConfigCategory } from '@/interfaces/market-config';
 import CategorySidemenuItem from '@/components/CategorySidemenuItem.vue';
 
-interface CategorySidemenuData {
-  categories: Ref<MarketConfigCategory[]>;
+const marketConfig: MarketConfig | undefined = inject('marketConfig');
+
+const categories: Ref<MarketConfigCategory[]> = ref([]);
+
+if (marketConfig) {
+  categories.value = marketConfig.categories;
 }
-
-export default defineComponent({
-  name: 'CategorySidemenu',
-  components: {
-    CategorySidemenuItem,
-  },
-  setup(): CategorySidemenuData {
-    const marketConfig: MarketConfig | undefined = inject('marketConfig');
-
-    const categories: Ref<MarketConfigCategory[]> = ref([]);
-
-    if (marketConfig) {
-      categories.value = marketConfig.categories;
-    }
-
-    return { categories };
-  },
-});
 </script>

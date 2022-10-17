@@ -8,14 +8,14 @@
       @click="redirectToCategoryItemList"
     >
       <span class="text-sm text-brand-700">
-        {{ title }}
+        {{ props.title }}
       </span>
     </button>
   </li>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
+import { defineProps } from 'vue';
 import { Router, useRouter } from 'vue-router';
 
 interface CategorySidemenuSubItemProps {
@@ -24,40 +24,30 @@ interface CategorySidemenuSubItemProps {
   subCategory: number;
 }
 
-interface CategorySidemenuSubItemData {
-  redirectToCategoryItemList(): void;
-}
-
-export default defineComponent({
-  name: 'CategorySidemenuSubItem',
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    mainCategory: {
-      type: Number,
-      required: true,
-    },
-    subCategory: {
-      type: Number,
-      required: true,
-    },
+const props: CategorySidemenuSubItemProps = defineProps({
+  title: {
+    type: String,
+    required: true,
   },
-  setup(props: CategorySidemenuSubItemProps): CategorySidemenuSubItemData {
-    const router: Router = useRouter();
-
-    const redirectToCategoryItemList = (): void => {
-      router.push({
-        name: 'list',
-        params: {
-          mainCategory: props.mainCategory,
-          subCategory: props.subCategory,
-        },
-      });
-    };
-
-    return { redirectToCategoryItemList };
+  mainCategory: {
+    type: Number,
+    required: true,
+  },
+  subCategory: {
+    type: Number,
+    required: true,
   },
 });
+
+const router: Router = useRouter();
+
+const redirectToCategoryItemList = (): void => {
+  router.push({
+    name: 'list',
+    params: {
+      mainCategory: props.mainCategory,
+      subCategory: props.subCategory,
+    },
+  });
+};
 </script>

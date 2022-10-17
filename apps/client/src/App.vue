@@ -4,42 +4,35 @@
   </component>
 </template>
 
-<script lang="ts">
-import { Ref, defineComponent, ref, watch } from 'vue';
+<script lang="ts" setup>
+import { Ref, ref, watch } from 'vue';
 import { RouteLocationNormalizedLoaded, RouteRecordName, useRoute } from 'vue-router';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import EmptyLayout from '@/layouts/EmptyLayout.vue';
 
-interface AppData {
-  layout: Ref<string>;
-}
+const globalDefaultLayout = 'DefaultLayout';
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    DefaultLayout,
-    EmptyLayout,
+const layouts: Record<string, unknown> = {
+  DefaultLayout: DefaultLayout,
+  EmptyLayout: EmptyLayout,
+};
+
+const extractLayoutFromRoute = (route: RouteLocationNormalizedLoaded): string => {
+  return (route.meta.layout as string) || globalDefaultLayout;
+};
+
+const route: RouteLocationNormalizedLoaded = useRoute();
+
+const currentRouteLayout: string = extractLayoutFromRoute(route);
+const layout: Ref<unknown> = ref(layouts[currentRouteLayout] || layouts[globalDefaultLayout]);
+
+watch(
+  (): RouteRecordName | null | undefined => {
+    return route.name;
   },
-  setup(): AppData {
-    const extractLayoutFromRoute = (route: RouteLocationNormalizedLoaded): string => {
-      return (route.meta.layout as string) || 'DefaultLayout';
-    };
-
-    const route: RouteLocationNormalizedLoaded = useRoute();
+  (): void => {
     const currentRouteLayout: string = extractLayoutFromRoute(route);
-
-    const layout: Ref<string> = ref(currentRouteLayout);
-
-    watch(
-      (): RouteRecordName | null | undefined => {
-        return route.name;
-      },
-      (): void => {
-        layout.value = extractLayoutFromRoute(route);
-      },
-    );
-
-    return { layout };
+    layout.value = layouts[currentRouteLayout] || layouts[globalDefaultLayout];
   },
-});
+);
 </script>

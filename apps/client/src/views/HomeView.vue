@@ -4,14 +4,6 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
 import AppLogo from '@/components/base/AppLogo.vue';
-
-export default defineComponent({
-  name: 'HomeView',
-  components: {
-    AppLogo,
-  },
-});
 </script>

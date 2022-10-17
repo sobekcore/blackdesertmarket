@@ -13,20 +13,10 @@
   </AppMarketplaceView>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
 import AppMarketplaceView from '@/components/base/AppMarketplaceView.vue';
 import AppMarketplaceProvider from '@/components/base/AppMarketplaceProvider.vue';
 import CategorySidemenu from '@/components/CategorySidemenu.vue';
-
-export default defineComponent({
-  name: 'DefaultLayout',
-  components: {
-    AppMarketplaceView,
-    AppMarketplaceProvider,
-    CategorySidemenu,
-  },
-});
 </script>
 
 <style lang="scss" scoped>
