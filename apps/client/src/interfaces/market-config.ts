@@ -4,6 +4,7 @@ export interface MarketConfig {
 
 export interface MarketConfigCategory {
   title: string;
+  icon: string;
   mainCategory: number;
   subCategories: MarketConfigSubCategory[];
 }

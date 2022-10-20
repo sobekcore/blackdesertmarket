@@ -2,7 +2,7 @@
   <AppMarketplaceView>
     <AppMarketplaceProvider>
       <div class="flex flex-grow">
-        <nav class="category-sidemenu w-1/4 overflow-y-scroll bg-dark-200">
+        <nav class="w-1/4 min-w-[250px] overflow-y-scroll bg-dark-200">
           <CategorySidemenu />
         </nav>
         <main class="w-3/4 overflow-y-scroll bg-dark-100">
@@ -16,11 +16,5 @@
 <script lang="ts" setup>
 import AppMarketplaceView from '@/components/base/AppMarketplaceView.vue';
 import AppMarketplaceProvider from '@/components/base/AppMarketplaceProvider.vue';
-import CategorySidemenu from '@/components/CategorySidemenu.vue';
+import CategorySidemenu from '@/components/CategorySidemenu/CategorySidemenu.vue';
 </script>
-
-<style lang="scss" scoped>
-.category-sidemenu {
-  min-width: 250px;
-}
-</style>

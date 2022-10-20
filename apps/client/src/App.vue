@@ -5,34 +5,21 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref, ref, watch } from 'vue';
+import { Ref, shallowRef, watch } from 'vue';
 import { RouteLocationNormalizedLoaded, RouteRecordName, useRoute } from 'vue-router';
-import DefaultLayout from '@/layouts/DefaultLayout.vue';
-import EmptyLayout from '@/layouts/EmptyLayout.vue';
-
-const globalDefaultLayout = 'DefaultLayout';
-
-const layouts: Record<string, unknown> = {
-  DefaultLayout: DefaultLayout,
-  EmptyLayout: EmptyLayout,
-};
-
-const extractLayoutFromRoute = (route: RouteLocationNormalizedLoaded): string => {
-  return (route.meta.layout as string) || globalDefaultLayout;
-};
+import { useLayout } from '@/composables/use-layout';
 
 const route: RouteLocationNormalizedLoaded = useRoute();
+const { extractLayoutFromRoute } = useLayout();
 
-const currentRouteLayout: string = extractLayoutFromRoute(route);
-const layout: Ref<unknown> = ref(layouts[currentRouteLayout] || layouts[globalDefaultLayout]);
+const layout: Ref<unknown> = shallowRef(extractLayoutFromRoute(route));
 
 watch(
   (): RouteRecordName | null | undefined => {
     return route.name;
   },
   (): void => {
-    const currentRouteLayout: string = extractLayoutFromRoute(route);
-    layout.value = layouts[currentRouteLayout] || layouts[globalDefaultLayout];
+    layout.value = extractLayoutFromRoute(route);
   },
 );
 </script>

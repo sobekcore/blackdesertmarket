@@ -2,6 +2,7 @@ export default {
   categories: [
     {
       title: 'Main Weapon',
+      icon: 'images/categories/1.png',
       mainCategory: 1,
       subCategories: [
         {
@@ -80,6 +81,7 @@ export default {
     },
     {
       title: 'Sub-weapon',
+      icon: 'images/categories/5.png',
       mainCategory: 5,
       subCategories: [
         {
@@ -150,6 +152,7 @@ export default {
     },
     {
       title: 'Awakening',
+      icon: 'images/categories/10.png',
       mainCategory: 10,
       subCategories: [
         {
@@ -248,6 +251,7 @@ export default {
     },
     {
       title: 'Armor',
+      icon: 'images/categories/15.png',
       mainCategory: 15,
       subCategories: [
         {
@@ -278,6 +282,7 @@ export default {
     },
     {
       title: 'Accessories',
+      icon: 'images/categories/20.png',
       mainCategory: 20,
       subCategories: [
         {
@@ -300,6 +305,7 @@ export default {
     },
     {
       title: 'Lightstone',
+      icon: 'images/categories/85.png',
       mainCategory: 85,
       subCategories: [
         {
@@ -326,6 +332,7 @@ export default {
     },
     {
       title: 'Material',
+      icon: 'images/categories/25.png',
       mainCategory: 25,
       subCategories: [
         {
@@ -364,6 +371,7 @@ export default {
     },
     {
       title: 'Enhancement/Upgrade',
+      icon: 'images/categories/30.png',
       mainCategory: 30,
       subCategories: [
         {
@@ -378,6 +386,7 @@ export default {
     },
     {
       title: 'Consumables',
+      icon: 'images/categories/35.png',
       mainCategory: 35,
       subCategories: [
         {
@@ -416,6 +425,7 @@ export default {
     },
     {
       title: 'Life Tools',
+      icon: 'images/categories/40.png',
       mainCategory: 40,
       subCategories: [
         {
@@ -462,6 +472,7 @@ export default {
     },
     {
       title: 'Alchemy Stone',
+      icon: 'images/categories/45.png',
       mainCategory: 45,
       subCategories: [
         {
@@ -484,6 +495,7 @@ export default {
     },
     {
       title: 'Magic Crystal',
+      icon: 'images/categories/50.png',
       mainCategory: 50,
       subCategories: [
         {
@@ -522,6 +534,7 @@ export default {
     },
     {
       title: 'Pearl Item',
+      icon: 'images/categories/55.png',
       mainCategory: 55,
       subCategories: [
         {
@@ -560,6 +573,7 @@ export default {
     },
     {
       title: 'Dye',
+      icon: 'images/categories/60.png',
       mainCategory: 60,
       subCategories: [
         {
@@ -598,6 +612,7 @@ export default {
     },
     {
       title: 'Mount',
+      icon: 'images/categories/65.png',
       mainCategory: 65,
       subCategories: [
         {
@@ -652,6 +667,7 @@ export default {
     },
     {
       title: 'Ship',
+      icon: 'images/categories/70.png',
       mainCategory: 70,
       subCategories: [
         {
@@ -694,6 +710,7 @@ export default {
     },
     {
       title: 'Wagon',
+      icon: 'images/categories/75.png',
       mainCategory: 75,
       subCategories: [
         {
@@ -724,6 +741,7 @@ export default {
     },
     {
       title: 'Furniture',
+      icon: 'images/categories/80.png',
       mainCategory: 80,
       subCategories: [
         {

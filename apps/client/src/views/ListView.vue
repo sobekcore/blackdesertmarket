@@ -8,17 +8,15 @@
 import { Ref, ref, watch } from 'vue';
 import { RouteLocationNormalizedLoaded, RouteParams, useRoute } from 'vue-router';
 import { ComponentException } from '@/exceptions/component-exception';
-import CategoryItemList from '@/components/CategoryItemList.vue';
+import CategoryItemList from '@/components/CategoryItemList/CategoryItemList.vue';
 
 const route: RouteLocationNormalizedLoaded = useRoute();
 
-const params: Ref<RouteParams> = ref(route.params);
-
-const mainCategory: Ref<number> = ref(Number(params.value.mainCategory));
-const subCategory: Ref<number> = ref(Number(params.value.subCategory));
+const mainCategory: Ref<number> = ref(Number(route.params.mainCategory));
+const subCategory: Ref<number> = ref(Number(route.params.subCategory));
 
 if (!mainCategory.value || !subCategory.value) {
-  throw new ComponentException('Required route parameters mainCategory and subCategory are empty');
+  throw new ComponentException('Required route parameters mainCategory or subCategory are empty');
 }
 
 watch(

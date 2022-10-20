@@ -2,7 +2,7 @@
   <li>
     <button
       :class="{
-        'border-lighten flex w-full rounded-sm p-2.5': true,
+        'border-lighten flex w-full rounded-sm p-3': true,
         'bg-dark-300 hover:bg-dark-500 focus-visible:bg-dark-500': true,
       }"
       @click="redirectToCategoryItemList"
@@ -18,13 +18,7 @@
 import { defineProps } from 'vue';
 import { Router, useRouter } from 'vue-router';
 
-interface CategorySidemenuSubItemProps {
-  title: string;
-  mainCategory: number;
-  subCategory: number;
-}
-
-const props: CategorySidemenuSubItemProps = defineProps({
+const props = defineProps({
   title: {
     type: String,
     required: true,
