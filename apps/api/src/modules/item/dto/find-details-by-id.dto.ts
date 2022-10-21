@@ -12,7 +12,7 @@ export class FindDetailsByIdDTOParams {
   public readonly enhancement: number;
 }
 
-export class FindDetailsByIdDTOBody {
+export class FindDetailsByIdDTOQuery {
   @IsString()
   @IsNotEmpty()
   @IsOptional()

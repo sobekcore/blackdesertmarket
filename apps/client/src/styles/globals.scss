@@ -1,0 +1,14 @@
+html {
+  font-family: sans-serif;
+  color-scheme: dark;
+}
+
+body {
+  background: $DARK_100;
+  color: $LIGHT_100;
+}
+
+*:focus-visible {
+  outline: 2px solid $LIGHT_100;
+  outline-offset: 0;
+}

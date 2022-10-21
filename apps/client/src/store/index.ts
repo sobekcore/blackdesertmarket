@@ -1,9 +1,8 @@
 import { createStore } from 'vuex';
+import preferences from '@/store/preferences';
 
 export default createStore({
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+  modules: {
+    preferences: preferences,
+  },
 });

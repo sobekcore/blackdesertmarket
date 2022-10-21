@@ -1,12 +1,6 @@
-@import "@/styles/variables";
+@tailwind base;
+@tailwind utilities;
 
-html {
-  font-family: sans-serif;
-  color-scheme: dark;
-}
-
-body {
-  background: $MAIN_BACKGROUND_COLOR;
-  color: $MAIN_FONT_COLOR;
-  margin: 0;
-}
+@import '@/styles/variables';
+@import '@/styles/globals';
+@import '@/styles/utilities';
