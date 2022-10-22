@@ -5,6 +5,9 @@
 # Environment
 /.env.local
 
+# Cache
+/cache/images/item/*.png
+
 # Logs
 logs
 *.log

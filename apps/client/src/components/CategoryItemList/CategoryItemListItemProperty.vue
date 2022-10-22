@@ -1,7 +1,11 @@
 <template>
-  <span class="flex w-1/5 flex-col">
-    <span class="text-left text-xs text-light-300">{{ props.label }}</span>
-    <span class="text-right">{{ props.value }}</span>
+  <span class="flex w-1/5 flex-col justify-between">
+    <span class="text-left text-xs text-light-300">
+      {{ props.label }}
+    </span>
+    <span class="text-right">
+      {{ props.value }}
+    </span>
   </span>
 </template>
 

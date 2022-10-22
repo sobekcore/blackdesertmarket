@@ -5,7 +5,12 @@
       icon="images/other/volatile-price-items.png"
       :effect="volatilePriceItemsEffect"
     />
-    <template v-for="(category, index) in categories" :key="index">
+    <CategorySidemenuItem
+      title="In Registration Queue"
+      icon="images/other/in-registration-queue.png"
+      :effect="inRegistrationQueueEffect"
+    />
+    <template v-for="category in categories" :key="category.mainCategory">
       <CategorySidemenuItem
         :title="category.title"
         :icon="category.icon"
@@ -33,5 +38,9 @@ if (marketConfig) {
 
 const volatilePriceItemsEffect = () => {
   router.push({ name: 'hot' });
+};
+
+const inRegistrationQueueEffect = () => {
+  router.push({ name: 'queue' });
 };
 </script>

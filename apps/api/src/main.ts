@@ -1,19 +1,13 @@
 import { NestFactory } from '@nestjs/core';
-import { ConfigModule } from '@nestjs/config';
-import { BadRequestException, ValidationPipe, ValidationError } from '@nestjs/common';
+import { BadRequestException, ValidationPipe, INestApplication, ValidationError } from '@nestjs/common';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { AllExceptionsFilter } from '@/filters/all-exceptions.filter';
 import { NotFoundExceptionFilter } from '@/filters/not-found-exception.filter';
 import { AppModule } from '@/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
+  const app: INestApplication = await NestFactory.create(AppModule, {
     cors: true,
-  });
-
-  ConfigModule.forRoot({
-    isGlobal: true,
-    envFilePath: ['.env.local', '.env'],
   });
 
   app.useGlobalFilters(new AllExceptionsFilter());

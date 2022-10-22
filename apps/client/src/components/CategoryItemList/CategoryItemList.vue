@@ -1,6 +1,6 @@
 <template>
   <ul class="flex flex-col gap-2 p-2.5">
-    <template v-for="(item, index) in list" :key="index">
+    <template v-for="item in list" :key="item.id">
       <CategoryItemListItem :item="item" />
     </template>
   </ul>

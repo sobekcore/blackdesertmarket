@@ -6,7 +6,7 @@ import { HttpMethod } from '@/enums/http';
 export function useMarketApi<T>(
   method: HttpMethod,
   url: string,
-  params: Record<string, any>,
+  params?: Record<string, any>,
 ): StrictUseAxiosReturn<MarketApiResponse<T>, AxiosResponse<MarketApiResponse<T>>, any> {
   return useAxios(url, {
     method: method,

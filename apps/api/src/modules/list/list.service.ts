@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Observable, lastValueFrom, map } from 'rxjs';
+import { AxiosResponse } from 'axios';
 import { BlackDesertItem } from '@blackdesertmarket/interfaces';
 import { ExternalMarketMeta, ExternalMarketParams, ExternalMarketItem } from '@/interfaces/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
@@ -30,7 +31,7 @@ export class ListService {
     const data: Observable<BlackDesertItem[]> = this.marketService
       .buildExternalMarketRequest(InternalMarketEndpoint.LIST, params, meta)
       .pipe(
-        map((response): unknown[] => {
+        map((response: AxiosResponse): unknown[] => {
           return response.data.marketList ? response.data.marketList : [];
         }),
         map((data: unknown[]): BlackDesertItem[] => {

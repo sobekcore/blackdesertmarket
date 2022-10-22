@@ -1,5 +1,8 @@
+import { ReadStream, createReadStream, createWriteStream, existsSync } from 'fs';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Observable, lastValueFrom, map } from 'rxjs';
+import { AxiosResponse } from 'axios';
 import {
   BlackDesertItem,
   BlackDesertItemType,
@@ -15,13 +18,17 @@ import {
   ExternalMarketMeta,
   ExternalMarketParams,
 } from '@/interfaces/external-market.interface';
-import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
-import { ExternalMarketService } from '@/modules/external-market/external-market.service';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
+import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
+import { ExternalMarketAsset } from '@/enums/external-market.enum';
+import { ExternalMarketService } from '@/modules/external-market/external-market.service';
 
 @Injectable()
 export class ItemService {
-  constructor(private readonly externalMarketService: ExternalMarketService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly externalMarketService: ExternalMarketService,
+  ) {}
 
   public isValidExternalMarketItem(item: unknown): boolean {
     return (
@@ -114,7 +121,7 @@ export class ItemService {
     const data: Observable<BlackDesertItemType[]> = this.externalMarketService
       .buildExternalMarketRequest(InternalMarketEndpoint.ITEM_TYPES, params, meta)
       .pipe(
-        map((response): unknown[] => {
+        map((response: AxiosResponse): unknown[] => {
           return response.data.detailList ? response.data.detailList : [];
         }),
         map((data: unknown[]): BlackDesertItemType[] => {
@@ -127,6 +134,32 @@ export class ItemService {
           return data.map((type: ExternalMarketItemType): BlackDesertItemType => {
             return this.transformExternalMarketItemType(type);
           });
+        }),
+      );
+
+    return lastValueFrom(data);
+  }
+
+  public findIconById(id: number): Promise<ReadStream> {
+    const useCache: boolean = this.configService.get('useCache');
+
+    const pathToAsset: string = `cache/images/item/${id}.png`;
+
+    if (useCache && existsSync(pathToAsset)) {
+      return new Promise<ReadStream>((resolve): void => {
+        resolve(createReadStream(pathToAsset));
+      });
+    }
+
+    const data: Observable<ReadStream> = this.externalMarketService
+      .getExternalMarketAsset(`img/BDO/item/${id}.png`, ExternalMarketAsset.IMAGE)
+      .pipe(
+        map((response: AxiosResponse): ReadStream => {
+          if (useCache) {
+            response.data.pipe(createWriteStream(pathToAsset));
+          }
+
+          return response.data;
         }),
       );
 
@@ -154,7 +187,7 @@ export class ItemService {
     const data: Observable<BlackDesertItemDetails> = this.externalMarketService
       .buildExternalMarketRequest(InternalMarketEndpoint.ITEM_DETAILS, params, meta)
       .pipe(
-        map((response): unknown => {
+        map((response: AxiosResponse): unknown => {
           return response.data ? response.data : {};
         }),
         map((data: unknown): BlackDesertItemDetails => {

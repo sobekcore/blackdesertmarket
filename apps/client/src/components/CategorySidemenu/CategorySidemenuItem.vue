@@ -22,7 +22,7 @@
     </button>
     <ul v-if="props.subCategories" v-show="active" class="mt-0.5 flex flex-col gap-0.5">
       <template v-if="props.subCategories.length">
-        <template v-for="(subCategory, index) in props.subCategories" :key="index">
+        <template v-for="subCategory in props.subCategories" :key="subCategory.subCategory">
           <CategorySidemenuSubItem
             :title="subCategory.title"
             :main-category="props.mainCategory"
