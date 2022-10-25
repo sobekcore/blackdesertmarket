@@ -14,6 +14,7 @@ export class ExternalMarketService {
   constructor(private readonly configService: ConfigService, private readonly httpService: HttpService) {}
 
   private readonly matchExternalEndpoint: Record<InternalMarketEndpoint, ExternalMarketEndpoint> = {
+    [InternalMarketEndpoint.LIST_HOT]: ExternalMarketEndpoint.GET_WORLD_MARKET_HOT_LIST,
     [InternalMarketEndpoint.LIST]: ExternalMarketEndpoint.GET_WORLD_MARKET_LIST,
     [InternalMarketEndpoint.ITEM_TYPES]: ExternalMarketEndpoint.GET_WORLD_MARKET_SUB_LIST,
     [InternalMarketEndpoint.ITEM_DETAILS]: ExternalMarketEndpoint.GET_ITEM_SELL_BUY_INFO,

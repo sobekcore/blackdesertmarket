@@ -1,12 +1,12 @@
 {
   "name": "@blackdesertmarket/api",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "API wrapper package for the Black Desert market powered by multiple sources",
   "author": "David <sobekcore@gmail.com>",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "lint": "eslint \"{src,test}/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\"",
     "fix": "npm run lint -s && npm run format -s",
     "start": "nest start",

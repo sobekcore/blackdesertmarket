@@ -1,7 +1,7 @@
 <template>
   <ul class="flex flex-col gap-2 p-2.5">
     <template v-for="item in list" :key="item.id">
-      <CategoryItemListItem :item="item" />
+      <ListItem :item="item" />
     </template>
   </ul>
 </template>
@@ -10,7 +10,7 @@
 import { Ref, defineProps, ref, watch } from 'vue';
 import { BlackDesertItem } from '@blackdesertmarket/interfaces';
 import { useCategoryItemList } from '@/composables/use-category-item-list';
-import CategoryItemListItem from '@/components/CategoryItemList/CategoryItemListItem.vue';
+import ListItem from '@/components/ListItem/ListItem.vue';
 
 const props = defineProps({
   mainCategory: {

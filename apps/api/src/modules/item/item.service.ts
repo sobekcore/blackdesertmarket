@@ -125,7 +125,7 @@ export class ItemService {
           return response.data.detailList ? response.data.detailList : [];
         }),
         map((data: unknown[]): BlackDesertItemType[] => {
-          data.forEach((type: unknown) => {
+          data.forEach((type: unknown): void => {
             if (!this.isValidExternalMarketItemType(type)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
             }

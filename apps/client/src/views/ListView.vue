@@ -8,7 +8,7 @@
 import { Ref, ref, watch } from 'vue';
 import { RouteLocationNormalizedLoaded, RouteParams, useRoute } from 'vue-router';
 import { ComponentException } from '@/exceptions/component-exception';
-import CategoryItemList from '@/components/CategoryItemList/CategoryItemList.vue';
+import CategoryItemList from '@/components/CategoryItemList.vue';
 
 const route: RouteLocationNormalizedLoaded = useRoute();
 
