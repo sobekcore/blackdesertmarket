@@ -1,9 +1,9 @@
 <template>
-  <section class="flex h-full w-full items-center justify-center">
-    <AppLogo />
+  <section>
+    <QueueItemList />
   </section>
 </template>
 
 <script lang="ts" setup>
-import AppLogo from '@/components/base/AppLogo.vue';
+import QueueItemList from '@/components/QueueItemList.vue';
 </script>

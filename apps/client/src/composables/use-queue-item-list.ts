@@ -1,18 +1,18 @@
-import { BlackDesertItem } from '@blackdesertmarket/interfaces';
+import { BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { ComposableException } from '@/exceptions/composable-exception';
 import { HttpMethod } from '@/enums/http';
 import { usePreferencesStore } from '@/stores/preferences';
 import { useMarketApi } from '@/composables/use-market-api';
 
-export interface UseCategoryItemListReturn {
-  fetch(mainCategory: number, subCategory: number): Promise<BlackDesertItem[]>;
+export interface UseQueueItemListReturn {
+  fetch(): Promise<BlackDesertItemType[]>;
 }
 
-export function useCategoryItemList(): UseCategoryItemListReturn {
+export function useQueueItemList(): UseQueueItemListReturn {
   const preferencesStore = usePreferencesStore();
 
-  const fetch = async (mainCategory: number, subCategory: number): Promise<BlackDesertItem[]> => {
-    const marketApi = useMarketApi<BlackDesertItem[]>(HttpMethod.GET, `/list/${mainCategory}/${subCategory}`, {
+  const fetch = async (): Promise<BlackDesertItemType[]> => {
+    const marketApi = useMarketApi<BlackDesertItemType[]>(HttpMethod.GET, '/list/queue', {
       region: preferencesStore.getRegion,
       language: preferencesStore.getLanguage,
     });
@@ -20,7 +20,7 @@ export function useCategoryItemList(): UseCategoryItemListReturn {
     const response = await marketApi.execute();
 
     if (response.error.value) {
-      throw new ComposableException('Could not fetch category item list from market API');
+      throw new ComposableException('Could not fetch queue item list from market API');
     }
 
     if (response.data.value) {

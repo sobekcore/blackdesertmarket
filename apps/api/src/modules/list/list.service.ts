@@ -45,6 +45,38 @@ export class ListService {
     return lastValueFrom(data);
   }
 
+  public findQueueItems(region?: string, language?: string): Promise<BlackDesertItemType[]> {
+    const meta: ExternalMarketMeta = {
+      region: region,
+      language: language,
+    };
+
+    const data: Observable<BlackDesertItemType[]> = this.marketService
+      .buildExternalMarketRequest(InternalMarketEndpoint.LIST_QUEUE, {}, meta)
+      .pipe(
+        map((response: AxiosResponse): unknown[] => {
+          return response.data._waitList ? response.data._waitList : [];
+        }),
+        map((data: unknown[]): BlackDesertItemType[] => {
+          data.forEach((type: any): void => {
+            type.pricePerOne = type._pricePerOne;
+          });
+
+          data.forEach((type: unknown): void => {
+            if (!this.itemService.isValidExternalMarketItemType(type)) {
+              throw new ExternalMarketException('Response from external market did contain invalid data');
+            }
+          });
+
+          return data.map((type: ExternalMarketItemType): BlackDesertItemType => {
+            return this.itemService.transformExternalMarketItemType(type);
+          });
+        }),
+      );
+
+    return lastValueFrom(data);
+  }
+
   public findByCategory(
     mainCategory: number,
     subCategory: number,

@@ -9,14 +9,14 @@
 <script lang="ts" setup>
 import { Ref, ref } from 'vue';
 import { BlackDesertItemType } from '@blackdesertmarket/interfaces';
-import { UseHotItemListReturn, useHotItemList } from '@/composables/use-hot-item-list';
+import { UseQueueItemListReturn, useQueueItemList } from '@/composables/use-queue-item-list';
 import ListItem from '@/components/ListItem/ListItem.vue';
 
-const hotItemList: UseHotItemListReturn = useHotItemList();
+const queueItemList: UseQueueItemListReturn = useQueueItemList();
 
 const list: Ref<BlackDesertItemType[]> = ref([]);
 
-hotItemList.fetch().then((response: BlackDesertItemType[]): void => {
+queueItemList.fetch().then((response: BlackDesertItemType[]): void => {
   list.value = response;
 });
 </script>

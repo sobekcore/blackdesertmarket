@@ -4,6 +4,7 @@ import { ControllerResponse } from '@/interfaces/controller-response.interface';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { ListService } from '@/modules/list/list.service';
 import { FindHotItemsDTOQuery } from '@/modules/list/dto/find-hot-items.dto';
+import { FindQueueItemsDTOQuery } from '@/modules/list/dto/find-queue-items.dto';
 import { FindByCategoryDTOParams, FindByCategoryDTOQuery } from '@/modules/list/dto/find-by-category.dto';
 
 @Controller('list')
@@ -15,6 +16,16 @@ export class ListController {
     return {
       code: ControllerResponseCode.SUCCESS,
       data: await this.listService.findHotItems(query.region, query.language),
+    };
+  }
+
+  @Get('/queue')
+  public async findQueueItems(
+    @Query() query: FindQueueItemsDTOQuery,
+  ): Promise<ControllerResponse<BlackDesertItemType[]>> {
+    return {
+      code: ControllerResponseCode.SUCCESS,
+      data: await this.listService.findQueueItems(query.region, query.language),
     };
   }
 

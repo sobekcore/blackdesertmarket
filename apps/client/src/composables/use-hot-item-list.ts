@@ -1,36 +1,36 @@
-import { Store, useStore } from 'vuex';
 import { BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { ComposableException } from '@/exceptions/composable-exception';
 import { HttpMethod } from '@/enums/http';
+import { usePreferencesStore } from '@/stores/preferences';
 import { useMarketApi } from '@/composables/use-market-api';
 
-interface UseCategoryItemListReturn {
-  fetchHotItemList(): Promise<BlackDesertItemType[]>;
+export interface UseHotItemListReturn {
+  fetch(): Promise<BlackDesertItemType[]>;
 }
 
-export function useHotItemList(): UseCategoryItemListReturn {
-  const store: Store<any> = useStore();
+export function useHotItemList(): UseHotItemListReturn {
+  const preferencesStore = usePreferencesStore();
 
-  const fetchHotItemList = async (): Promise<BlackDesertItemType[]> => {
-    const { execute } = useMarketApi<BlackDesertItemType[]>(HttpMethod.GET, `/list/hot`, {
-      region: store.getters['preferences/region'],
-      language: store.getters['preferences/language'],
+  const fetch = async (): Promise<BlackDesertItemType[]> => {
+    const marketApi = useMarketApi<BlackDesertItemType[]>(HttpMethod.GET, '/list/hot', {
+      region: preferencesStore.getRegion,
+      language: preferencesStore.getLanguage,
     });
 
-    const { data, error } = await execute();
+    const response = await marketApi.execute();
 
-    if (error.value) {
+    if (response.error.value) {
       throw new ComposableException('Could not fetch hot item list from market API');
     }
 
-    if (data.value) {
-      return data.value.data;
+    if (response.data.value) {
+      return response.data.value.data;
     }
 
     return [];
   };
 
   return {
-    fetchHotItemList,
+    fetch,
   };
 }

@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 import { Ref, defineProps, ref, watch } from 'vue';
 import { BlackDesertItem } from '@blackdesertmarket/interfaces';
-import { useCategoryItemList } from '@/composables/use-category-item-list';
+import { UseCategoryItemListReturn, useCategoryItemList } from '@/composables/use-category-item-list';
 import ListItem from '@/components/ListItem/ListItem.vue';
 
 const props = defineProps({
@@ -23,12 +23,12 @@ const props = defineProps({
   },
 });
 
-const { fetchCategoryItemList } = useCategoryItemList();
+const categoryItemList: UseCategoryItemListReturn = useCategoryItemList();
 
 const list: Ref<BlackDesertItem[]> = ref([]);
 
 const refetchCategoryItemList = (mainCategory: number, subCategory: number): void => {
-  fetchCategoryItemList(mainCategory, subCategory).then((response: BlackDesertItem[]): void => {
+  categoryItemList.fetch(mainCategory, subCategory).then((response: BlackDesertItem[]): void => {
     list.value = response;
   });
 };
