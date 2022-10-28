@@ -6,6 +6,7 @@ import { AxiosResponse } from 'axios';
 import {
   BlackDesertItem,
   BlackDesertItemType,
+  BlackDesertItemQueue,
   BlackDesertItemDetails,
   BlackDesertItemDetailsAvailability,
   BlackDesertItemDetailsHistory,
@@ -13,6 +14,7 @@ import {
 import {
   ExternalMarketItem,
   ExternalMarketItemType,
+  ExternalMarketItemQueue,
   ExternalMarketItemDetails,
   ExternalMarketItemDetailsHistory,
   ExternalMarketMeta,
@@ -40,22 +42,34 @@ export class ItemService {
     );
   }
 
-  public isValidExternalMarketItemType(type: unknown): boolean {
+  public isValidExternalMarketItemType(itemType: unknown): boolean {
     return (
-      type.hasOwnProperty('mainKey') &&
-      type.hasOwnProperty('name') &&
-      type.hasOwnProperty('count') &&
-      type.hasOwnProperty('grade') &&
-      type.hasOwnProperty('pricePerOne') &&
-      type.hasOwnProperty('subKey')
+      itemType.hasOwnProperty('mainKey') &&
+      itemType.hasOwnProperty('name') &&
+      itemType.hasOwnProperty('count') &&
+      itemType.hasOwnProperty('grade') &&
+      itemType.hasOwnProperty('pricePerOne') &&
+      itemType.hasOwnProperty('subKey')
     );
   }
 
-  public isValidExternalMarketItemDetails(details: unknown): boolean {
+  public isValidExternalMarketItemQueue(itemQueue: unknown): boolean {
     return (
-      details.hasOwnProperty('marketConditionList') &&
-      details.hasOwnProperty('resultMsg') &&
-      details.hasOwnProperty('basePrice')
+      itemQueue.hasOwnProperty('mainKey') &&
+      itemQueue.hasOwnProperty('name') &&
+      itemQueue.hasOwnProperty('count') &&
+      itemQueue.hasOwnProperty('grade') &&
+      itemQueue.hasOwnProperty('_pricePerOne') &&
+      itemQueue.hasOwnProperty('subKey') &&
+      itemQueue.hasOwnProperty('_waitEndTime')
+    );
+  }
+
+  public isValidExternalMarketItemDetails(itemDetails: unknown): boolean {
+    return (
+      itemDetails.hasOwnProperty('marketConditionList') &&
+      itemDetails.hasOwnProperty('resultMsg') &&
+      itemDetails.hasOwnProperty('basePrice')
     );
   }
 
@@ -69,24 +83,36 @@ export class ItemService {
     };
   }
 
-  public transformExternalMarketItemType(type: ExternalMarketItemType): BlackDesertItemType {
+  public transformExternalMarketItemType(itemType: ExternalMarketItemType): BlackDesertItemType {
     return {
-      id: type.mainKey,
-      name: type.name,
-      count: type.count,
-      grade: type.grade,
-      basePrice: type.pricePerOne,
-      enhancement: type.subKey,
+      id: itemType.mainKey,
+      name: itemType.name,
+      count: itemType.count,
+      grade: itemType.grade,
+      basePrice: itemType.pricePerOne,
+      enhancement: itemType.subKey,
     };
   }
 
-  public transformExternalMarketItemDetails(details: ExternalMarketItemDetails): BlackDesertItemDetails {
+  public transformExternalMarketItemQueue(itemQueue: ExternalMarketItemQueue): BlackDesertItemQueue {
+    return {
+      id: itemQueue.mainKey,
+      name: itemQueue.name,
+      count: itemQueue.count,
+      grade: itemQueue.grade,
+      basePrice: itemQueue._pricePerOne,
+      enhancement: itemQueue.subKey,
+      endTime: itemQueue._waitEndTime,
+    };
+  }
+
+  public transformExternalMarketItemDetails(itemDetails: ExternalMarketItemDetails): BlackDesertItemDetails {
     const availability: BlackDesertItemDetailsAvailability[] = [];
     const history: BlackDesertItemDetailsHistory[] = [];
 
-    const parsedHistory: ExternalMarketItemDetailsHistory[] = JSON.parse(details.resultMsg);
+    const parsedHistory: ExternalMarketItemDetailsHistory[] = JSON.parse(itemDetails.resultMsg);
 
-    for (const oneAvailability of details.marketConditionList) {
+    for (const oneAvailability of itemDetails.marketConditionList) {
       availability.push({
         sellCount: oneAvailability.sellCount,
         buyCount: oneAvailability.buyCount,
@@ -104,7 +130,7 @@ export class ItemService {
     return {
       availability: availability,
       history: history,
-      basePrice: details.basePrice,
+      basePrice: itemDetails.basePrice,
     };
   }
 
@@ -125,14 +151,14 @@ export class ItemService {
           return response.data.detailList ? response.data.detailList : [];
         }),
         map((data: unknown[]): BlackDesertItemType[] => {
-          data.forEach((type: unknown): void => {
-            if (!this.isValidExternalMarketItemType(type)) {
+          data.forEach((itemType: unknown): void => {
+            if (!this.isValidExternalMarketItemType(itemType)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
             }
           });
 
-          return data.map((type: ExternalMarketItemType): BlackDesertItemType => {
-            return this.transformExternalMarketItemType(type);
+          return data.map((itemType: ExternalMarketItemType): BlackDesertItemType => {
+            return this.transformExternalMarketItemType(itemType);
           });
         }),
       );

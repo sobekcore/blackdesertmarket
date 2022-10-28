@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
-import { BlackDesertItem, BlackDesertItemType } from '@blackdesertmarket/interfaces';
+import { BlackDesertItem, BlackDesertItemType, BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
 import { ControllerResponse } from '@/interfaces/controller-response.interface';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { ListService } from '@/modules/list/list.service';
@@ -22,7 +22,7 @@ export class ListController {
   @Get('/queue')
   public async findQueueItems(
     @Query() query: FindQueueItemsDTOQuery,
-  ): Promise<ControllerResponse<BlackDesertItemType[]>> {
+  ): Promise<ControllerResponse<BlackDesertItemQueue[]>> {
     return {
       code: ControllerResponseCode.SUCCESS,
       data: await this.listService.findQueueItems(query.region, query.language),

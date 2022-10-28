@@ -28,8 +28,8 @@ const categoryItemList: UseCategoryItemListReturn = useCategoryItemList();
 const list: Ref<BlackDesertItem[]> = ref([]);
 
 const refetchCategoryItemList = (mainCategory: number, subCategory: number): void => {
-  categoryItemList.fetch(mainCategory, subCategory).then((response: BlackDesertItem[]): void => {
-    list.value = response;
+  categoryItemList.fetch(mainCategory, subCategory).then((data: BlackDesertItem[]): void => {
+    list.value = data;
   });
 };
 

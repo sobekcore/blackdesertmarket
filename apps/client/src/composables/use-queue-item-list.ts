@@ -1,18 +1,18 @@
-import { BlackDesertItemType } from '@blackdesertmarket/interfaces';
+import { BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
 import { ComposableException } from '@/exceptions/composable-exception';
 import { HttpMethod } from '@/enums/http';
 import { usePreferencesStore } from '@/stores/preferences';
 import { useMarketApi } from '@/composables/use-market-api';
 
 export interface UseQueueItemListReturn {
-  fetch(): Promise<BlackDesertItemType[]>;
+  fetch(): Promise<BlackDesertItemQueue[]>;
 }
 
 export function useQueueItemList(): UseQueueItemListReturn {
   const preferencesStore = usePreferencesStore();
 
-  const fetch = async (): Promise<BlackDesertItemType[]> => {
-    const marketApi = useMarketApi<BlackDesertItemType[]>(HttpMethod.GET, '/list/queue', {
+  const fetch = async (): Promise<BlackDesertItemQueue[]> => {
+    const marketApi = useMarketApi<BlackDesertItemQueue[]>(HttpMethod.GET, '/list/queue', {
       region: preferencesStore.getRegion,
       language: preferencesStore.getLanguage,
     });

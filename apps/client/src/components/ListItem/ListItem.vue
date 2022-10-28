@@ -1,12 +1,18 @@
 <template>
   <li class="rounded border-t border-t-dark-600 bg-dark-400 py-1.5 px-2 shadow-md">
     <span class="flex items-stretch gap-2.5">
-      <ListItemIcon :src="icon" />
-      <ListItemName :name="props.item.name" />
-      <ListItemSeparator />
-      <ListItemProperty label="Base Price" :value="props.item.basePrice" />
-      <ListItemSeparator />
-      <ListItemProperty label="In Stock" :value="props.item.count" />
+      <slot name="icon">
+        <ListItemIcon :src="itemIcon.href" :class="itemGradeBorder" />
+      </slot>
+      <slot name="name">
+        <ListItemName :name="props.item.name" :class="itemGradeText" />
+      </slot>
+      <slot name="append">
+        <ListItemSeparator />
+        <ListItemProperty label="Base Price" :value="formatBasePrice(props.item.basePrice)" />
+        <ListItemSeparator />
+        <ListItemProperty label="In Stock" :value="props.item.count" />
+      </slot>
     </span>
   </li>
 </template>
@@ -14,6 +20,8 @@
 <script lang="ts" setup>
 import { Ref, PropType, defineProps, ref } from 'vue';
 import { BlackDesertItem } from '@blackdesertmarket/interfaces';
+import { UseConfigReturn, useConfig } from '@/composables/use-config';
+import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemName from '@/components/ListItem/ListItemName.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';
@@ -26,8 +34,19 @@ const props = defineProps({
   },
 });
 
-/**
- * TODO: Create composable to access environment variables instead of accessing them directly
- */
-const icon: Ref<string> = ref(`${process.env.VUE_APP_API_URL}/item/icon/${props.item.id}`);
+const config: UseConfigReturn = useConfig();
+const numberFormat: UseNumberFormatReturn = useNumberFormat();
+
+const itemIcon: Ref<URL> = ref(new URL(`/item/icon/${props.item.id}`, config.marketApiUrl));
+const itemGradeText: Ref<string> = ref('');
+const itemGradeBorder: Ref<string> = ref('');
+
+const formatBasePrice = (price: number): string => {
+  return numberFormat.format(price);
+};
+
+if (props.item.grade) {
+  itemGradeText.value = `text:item-grade-${props.item.grade}`;
+  itemGradeBorder.value = `border:item-grade-${props.item.grade}`;
+}
 </script>

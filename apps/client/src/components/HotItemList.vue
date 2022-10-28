@@ -16,7 +16,7 @@ const hotItemList: UseHotItemListReturn = useHotItemList();
 
 const list: Ref<BlackDesertItemType[]> = ref([]);
 
-hotItemList.fetch().then((response: BlackDesertItemType[]): void => {
-  list.value = response;
+hotItemList.fetch().then((data: BlackDesertItemType[]): void => {
+  list.value = data;
 });
 </script>

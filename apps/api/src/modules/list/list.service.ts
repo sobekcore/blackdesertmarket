@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Observable, lastValueFrom, map } from 'rxjs';
 import { AxiosResponse } from 'axios';
-import { BlackDesertItem, BlackDesertItemType } from '@blackdesertmarket/interfaces';
+import { BlackDesertItem, BlackDesertItemQueue, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import {
   ExternalMarketMeta,
   ExternalMarketParams,
   ExternalMarketItem,
   ExternalMarketItemType,
+  ExternalMarketItemQueue,
 } from '@/interfaces/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
 import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
@@ -30,14 +31,14 @@ export class ListService {
           return response.data.hotList ? response.data.hotList : [];
         }),
         map((data: unknown[]): BlackDesertItemType[] => {
-          data.forEach((type: unknown): void => {
-            if (!this.itemService.isValidExternalMarketItemType(type)) {
+          data.forEach((itemType: unknown): void => {
+            if (!this.itemService.isValidExternalMarketItemType(itemType)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
             }
           });
 
-          return data.map((type: ExternalMarketItemType): BlackDesertItemType => {
-            return this.itemService.transformExternalMarketItemType(type);
+          return data.map((itemType: ExternalMarketItemType): BlackDesertItemType => {
+            return this.itemService.transformExternalMarketItemType(itemType);
           });
         }),
       );
@@ -45,31 +46,27 @@ export class ListService {
     return lastValueFrom(data);
   }
 
-  public findQueueItems(region?: string, language?: string): Promise<BlackDesertItemType[]> {
+  public findQueueItems(region?: string, language?: string): Promise<BlackDesertItemQueue[]> {
     const meta: ExternalMarketMeta = {
       region: region,
       language: language,
     };
 
-    const data: Observable<BlackDesertItemType[]> = this.marketService
+    const data: Observable<BlackDesertItemQueue[]> = this.marketService
       .buildExternalMarketRequest(InternalMarketEndpoint.LIST_QUEUE, {}, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
           return response.data._waitList ? response.data._waitList : [];
         }),
-        map((data: unknown[]): BlackDesertItemType[] => {
-          data.forEach((type: any): void => {
-            type.pricePerOne = type._pricePerOne;
-          });
-
-          data.forEach((type: unknown): void => {
-            if (!this.itemService.isValidExternalMarketItemType(type)) {
+        map((data: unknown[]): BlackDesertItemQueue[] => {
+          data.forEach((itemQueue: unknown): void => {
+            if (!this.itemService.isValidExternalMarketItemQueue(itemQueue)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
             }
           });
 
-          return data.map((type: ExternalMarketItemType): BlackDesertItemType => {
-            return this.itemService.transformExternalMarketItemType(type);
+          return data.map((itemQueue: ExternalMarketItemQueue): BlackDesertItemQueue => {
+            return this.itemService.transformExternalMarketItemQueue(itemQueue);
           });
         }),
       );

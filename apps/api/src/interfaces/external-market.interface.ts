@@ -32,6 +32,23 @@ interface ExternalMarketItemTypeUnused {
   totalTradeCount: number;
 }
 
+export interface ExternalMarketItemQueue extends ExternalMarketItemQueueUnused {
+  mainKey: number;
+  name: string;
+  count: number;
+  grade: number;
+  _pricePerOne: number;
+  subKey: number;
+  _waitEndTime: number;
+}
+
+interface ExternalMarketItemQueueUnused {
+  chooseKey: number;
+  keyType: number;
+  mainCategory: number;
+  subCategory: number;
+}
+
 export interface ExternalMarketItemDetails extends ExternalMarketItemDetailsUnused {
   marketConditionList: ExternalMarketItemDetailsAvailability[];
   resultMsg: string;
