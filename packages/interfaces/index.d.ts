@@ -10,6 +10,11 @@ export interface BlackDesertItemType extends BlackDesertItem {
   enhancement: number;
 }
 
+export interface BlackDesertItemHot extends BlackDesertItemType {
+  fluctuationType: number;
+  fluctuationPrice: number;
+}
+
 export interface BlackDesertItemQueue extends BlackDesertItemType {
   endTime: number;
 }

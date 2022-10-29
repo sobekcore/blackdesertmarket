@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Observable, lastValueFrom, map } from 'rxjs';
 import { AxiosResponse } from 'axios';
-import { BlackDesertItem, BlackDesertItemQueue, BlackDesertItemType } from '@blackdesertmarket/interfaces';
+import { BlackDesertItem, BlackDesertItemHot, BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
 import {
   ExternalMarketMeta,
   ExternalMarketParams,
   ExternalMarketItem,
-  ExternalMarketItemType,
+  ExternalMarketItemHot,
   ExternalMarketItemQueue,
 } from '@/interfaces/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
@@ -18,27 +18,27 @@ import { ExternalMarketService } from '@/modules/external-market/external-market
 export class ListService {
   constructor(private readonly itemService: ItemService, private readonly marketService: ExternalMarketService) {}
 
-  public findHotItems(region?: string, language?: string): Promise<BlackDesertItemType[]> {
+  public findHotItems(region?: string, language?: string): Promise<BlackDesertItemHot[]> {
     const meta: ExternalMarketMeta = {
       region: region,
       language: language,
     };
 
-    const data: Observable<BlackDesertItemType[]> = this.marketService
+    const data: Observable<BlackDesertItemHot[]> = this.marketService
       .buildExternalMarketRequest(InternalMarketEndpoint.LIST_HOT, {}, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
           return response.data.hotList ? response.data.hotList : [];
         }),
-        map((data: unknown[]): BlackDesertItemType[] => {
-          data.forEach((itemType: unknown): void => {
-            if (!this.itemService.isValidExternalMarketItemType(itemType)) {
+        map((data: unknown[]): BlackDesertItemHot[] => {
+          data.forEach((itemHot: unknown): void => {
+            if (!this.itemService.isValidExternalMarketItemHot(itemHot)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
             }
           });
 
-          return data.map((itemType: ExternalMarketItemType): BlackDesertItemType => {
-            return this.itemService.transformExternalMarketItemType(itemType);
+          return data.map((itemHot: ExternalMarketItemHot): BlackDesertItemHot => {
+            return this.itemService.transformExternalMarketItemHot(itemHot);
           });
         }),
       );

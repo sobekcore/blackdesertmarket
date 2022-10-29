@@ -1,0 +1,10 @@
+$fluctuationTypes: (
+  1: $FLUCTUATION_TYPE_1,
+  2: $FLUCTUATION_TYPE_2,
+);
+
+@each $fluctuationType, $color in $fluctuationTypes {
+  .bg\:fluctuation-type-#{$fluctuationType} {
+    background-color: $color;
+  }
+}

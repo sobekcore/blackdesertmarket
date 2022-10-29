@@ -6,6 +6,7 @@ import { AxiosResponse } from 'axios';
 import {
   BlackDesertItem,
   BlackDesertItemType,
+  BlackDesertItemHot,
   BlackDesertItemQueue,
   BlackDesertItemDetails,
   BlackDesertItemDetailsAvailability,
@@ -14,6 +15,7 @@ import {
 import {
   ExternalMarketItem,
   ExternalMarketItemType,
+  ExternalMarketItemHot,
   ExternalMarketItemQueue,
   ExternalMarketItemDetails,
   ExternalMarketItemDetailsHistory,
@@ -53,6 +55,19 @@ export class ItemService {
     );
   }
 
+  public isValidExternalMarketItemHot(itemHot: unknown): boolean {
+    return (
+      itemHot.hasOwnProperty('mainKey') &&
+      itemHot.hasOwnProperty('name') &&
+      itemHot.hasOwnProperty('count') &&
+      itemHot.hasOwnProperty('grade') &&
+      itemHot.hasOwnProperty('pricePerOne') &&
+      itemHot.hasOwnProperty('subKey') &&
+      itemHot.hasOwnProperty('fluctuationType') &&
+      itemHot.hasOwnProperty('fluctuationPrice')
+    );
+  }
+
   public isValidExternalMarketItemQueue(itemQueue: unknown): boolean {
     return (
       itemQueue.hasOwnProperty('mainKey') &&
@@ -60,7 +75,7 @@ export class ItemService {
       itemQueue.hasOwnProperty('count') &&
       itemQueue.hasOwnProperty('grade') &&
       itemQueue.hasOwnProperty('_pricePerOne') &&
-      itemQueue.hasOwnProperty('subKey') &&
+      itemQueue.hasOwnProperty('chooseKey') &&
       itemQueue.hasOwnProperty('_waitEndTime')
     );
   }
@@ -94,6 +109,19 @@ export class ItemService {
     };
   }
 
+  public transformExternalMarketItemHot(itemHot: ExternalMarketItemHot): BlackDesertItemHot {
+    return {
+      id: itemHot.mainKey,
+      name: itemHot.name,
+      count: itemHot.count,
+      grade: itemHot.grade,
+      basePrice: itemHot.pricePerOne,
+      enhancement: itemHot.subKey,
+      fluctuationType: itemHot.fluctuationType,
+      fluctuationPrice: itemHot.fluctuationPrice,
+    };
+  }
+
   public transformExternalMarketItemQueue(itemQueue: ExternalMarketItemQueue): BlackDesertItemQueue {
     return {
       id: itemQueue.mainKey,
@@ -101,7 +129,7 @@ export class ItemService {
       count: itemQueue.count,
       grade: itemQueue.grade,
       basePrice: itemQueue._pricePerOne,
-      enhancement: itemQueue.subKey,
+      enhancement: itemQueue.chooseKey,
       endTime: itemQueue._waitEndTime,
     };
   }

@@ -1,10 +1,14 @@
 <template>
   <span class="flex w-1/5 flex-col justify-between">
-    <span class="text-left text-xs text-light-300">
-      {{ props.label }}
+    <span class="flex items-center justify-start text-xs text-light-300">
+      <slot name="label">
+        {{ props.label }}
+      </slot>
     </span>
-    <span class="text-right">
-      {{ props.value }}
+    <span class="flex items-center justify-end">
+      <slot name="value">
+        {{ props.value }}
+      </slot>
     </span>
   </span>
 </template>
@@ -15,11 +19,9 @@ import { defineProps } from 'vue';
 const props = defineProps({
   label: {
     type: String,
-    required: true,
   },
   value: {
     type: [String, Number],
-    required: true,
   },
 });
 </script>

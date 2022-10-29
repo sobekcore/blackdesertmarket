@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
-import { BlackDesertItem, BlackDesertItemType, BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
+import { BlackDesertItem, BlackDesertItemHot, BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
 import { ControllerResponse } from '@/interfaces/controller-response.interface';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { ListService } from '@/modules/list/list.service';
@@ -12,7 +12,7 @@ export class ListController {
   constructor(private readonly listService: ListService) {}
 
   @Get('/hot')
-  public async findHotItems(@Query() query: FindHotItemsDTOQuery): Promise<ControllerResponse<BlackDesertItemType[]>> {
+  public async findHotItems(@Query() query: FindHotItemsDTOQuery): Promise<ControllerResponse<BlackDesertItemHot[]>> {
     return {
       code: ControllerResponseCode.SUCCESS,
       data: await this.listService.findHotItems(query.region, query.language),

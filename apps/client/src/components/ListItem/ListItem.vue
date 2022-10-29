@@ -1,5 +1,5 @@
 <template>
-  <li class="rounded border-t border-t-dark-600 bg-dark-400 py-1.5 px-2 shadow-md">
+  <li :class="props.class" class="border-t-lighten rounded border-t bg-dark-400 py-1.5 px-2 shadow-md">
     <span class="flex items-stretch gap-2.5">
       <slot name="icon">
         <ListItemIcon :src="itemIcon.href" :class="itemGradeBorder" />
@@ -20,6 +20,7 @@
 <script lang="ts" setup>
 import { Ref, PropType, defineProps, ref } from 'vue';
 import { BlackDesertItem } from '@blackdesertmarket/interfaces';
+import { VueAttributeClass } from '@/types/attributes-vue';
 import { UseConfigReturn, useConfig } from '@/composables/use-config';
 import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
@@ -31,6 +32,9 @@ const props = defineProps({
   item: {
     type: Object as PropType<BlackDesertItem>,
     required: true,
+  },
+  class: {
+    type: [String, Object] as PropType<VueAttributeClass>,
   },
 });
 

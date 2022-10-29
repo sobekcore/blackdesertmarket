@@ -1,5 +1,5 @@
 <template>
-  <span role="presentation" class="w-[1px] self-stretch bg-dark-600"></span>
+  <span role="presentation" class="bg-lighten w-[1px] self-stretch"></span>
 </template>
 
 <script lang="ts" setup></script>
