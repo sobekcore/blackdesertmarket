@@ -1,12 +1,11 @@
 {
   "name": "@blackdesertmarket/api",
-  "version": "0.1.4",
   "description": "API wrapper package for the Black Desert market powered by multiple sources",
   "author": "David <sobekcore@gmail.com>",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "lint": "eslint \"{src,test}/**/*.ts\" --fix",
+    "lint": "eslint \"{src,test}/**/*.ts\" v--fix",
     "format": "prettier --write \"src/**/*.ts\"",
     "fix": "npm run lint -s && npm run format -s",
     "start": "nest start",
@@ -19,7 +18,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
-    "@blackdesertmarket/interfaces": "^0.0.5",
+    "@blackdesertmarket/interfaces": "*",
     "@nestjs/axios": "^0.1.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",

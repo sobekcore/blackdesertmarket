@@ -1,6 +1,5 @@
 {
   "name": "@blackdesertmarket/client",
-  "version": "0.0.8",
   "description": "Client-side application designed to display data from the @blackdesertmarket/api package",
   "author": "David <sobekcore@gmail.com>",
   "scripts": {
@@ -10,7 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@blackdesertmarket/interfaces": "^0.0.5",
+    "@blackdesertmarket/interfaces": "*",
     "@vueuse/core": "^9.3.1",
     "@vueuse/integrations": "^9.3.1",
     "axios": "^1.1.3",

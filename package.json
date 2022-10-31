@@ -1,6 +1,5 @@
 {
   "name": "blackdesertmarket",
-  "version": "0.1.5",
   "description": "Single repository for all the Black Desert market related packages",
   "author": "David <sobekcore@gmail.com>",
   "workspaces": [
