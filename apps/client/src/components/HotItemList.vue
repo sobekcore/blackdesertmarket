@@ -37,7 +37,6 @@ import AppIcon from '@/components/base/AppIcon.vue';
 
 const hotItemList: UseHotItemListReturn = useHotItemList();
 const numberFormat: UseNumberFormatReturn = useNumberFormat();
-const fluctuationType: UseFluctuationTypeReturn = useFluctuationType();
 
 const list: Ref<BlackDesertItemHot[]> = ref([]);
 
@@ -46,17 +45,21 @@ const formatBasePrice = (price: number): string => {
 };
 
 const formatFluctuationPrice = (item: BlackDesertItemHot): string => {
-  const operator: string = fluctuationType.getOperator(item.fluctuationType);
+  const fluctuationType: UseFluctuationTypeReturn = useFluctuationType(item.fluctuationType);
+  const operator: string = fluctuationType.getOperator();
   const price: string = numberFormat.format(item.fluctuationPrice);
+
   return `${operator}${price}`;
 };
 
 const getFluctuationTypeClass = (item: BlackDesertItemHot): string => {
-  return fluctuationType.getClass(item.fluctuationType, 'bg');
+  const fluctuationType: UseFluctuationTypeReturn = useFluctuationType(item.fluctuationType);
+  return fluctuationType.getClass('bg');
 };
 
 const getFluctuationTypeIcon = (item: BlackDesertItemHot): string => {
-  return fluctuationType.getIcon(item.fluctuationType);
+  const fluctuationType: UseFluctuationTypeReturn = useFluctuationType(item.fluctuationType);
+  return fluctuationType.getIcon();
 };
 
 hotItemList.fetch().then((data: BlackDesertItemHot[]): void => {

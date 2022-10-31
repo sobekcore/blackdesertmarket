@@ -23,12 +23,12 @@ const props = defineProps({
   },
 });
 
-const categoryItemList: UseCategoryItemListReturn = useCategoryItemList();
-
 const list: Ref<BlackDesertItem[]> = ref([]);
 
 const refetchCategoryItemList = (mainCategory: number, subCategory: number): void => {
-  categoryItemList.fetch(mainCategory, subCategory).then((data: BlackDesertItem[]): void => {
+  const categoryItemList: UseCategoryItemListReturn = useCategoryItemList(mainCategory, subCategory);
+
+  categoryItemList.fetch().then((data: BlackDesertItem[]): void => {
     list.value = data;
   });
 };

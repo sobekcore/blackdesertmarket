@@ -51,7 +51,9 @@ export class ItemService {
       itemType.hasOwnProperty('count') &&
       itemType.hasOwnProperty('grade') &&
       itemType.hasOwnProperty('pricePerOne') &&
-      itemType.hasOwnProperty('subKey')
+      itemType.hasOwnProperty('mainCategory') &&
+      itemType.hasOwnProperty('subCategory') &&
+      itemType.hasOwnProperty('chooseKey')
     );
   }
 
@@ -62,7 +64,9 @@ export class ItemService {
       itemHot.hasOwnProperty('count') &&
       itemHot.hasOwnProperty('grade') &&
       itemHot.hasOwnProperty('pricePerOne') &&
-      itemHot.hasOwnProperty('subKey') &&
+      itemHot.hasOwnProperty('mainCategory') &&
+      itemHot.hasOwnProperty('subCategory') &&
+      itemHot.hasOwnProperty('chooseKey') &&
       itemHot.hasOwnProperty('fluctuationType') &&
       itemHot.hasOwnProperty('fluctuationPrice')
     );
@@ -75,6 +79,8 @@ export class ItemService {
       itemQueue.hasOwnProperty('count') &&
       itemQueue.hasOwnProperty('grade') &&
       itemQueue.hasOwnProperty('_pricePerOne') &&
+      itemQueue.hasOwnProperty('mainCategory') &&
+      itemQueue.hasOwnProperty('subCategory') &&
       itemQueue.hasOwnProperty('chooseKey') &&
       itemQueue.hasOwnProperty('_waitEndTime')
     );
@@ -105,7 +111,9 @@ export class ItemService {
       count: itemType.count,
       grade: itemType.grade,
       basePrice: itemType.pricePerOne,
-      enhancement: itemType.subKey,
+      mainCategory: itemType.mainCategory,
+      subCategory: itemType.subCategory,
+      enhancement: itemType.chooseKey,
     };
   }
 
@@ -116,7 +124,9 @@ export class ItemService {
       count: itemHot.count,
       grade: itemHot.grade,
       basePrice: itemHot.pricePerOne,
-      enhancement: itemHot.subKey,
+      mainCategory: itemHot.mainCategory,
+      subCategory: itemHot.subCategory,
+      enhancement: itemHot.chooseKey,
       fluctuationType: itemHot.fluctuationType,
       fluctuationPrice: itemHot.fluctuationPrice,
     };
@@ -129,6 +139,8 @@ export class ItemService {
       count: itemQueue.count,
       grade: itemQueue.grade,
       basePrice: itemQueue._pricePerOne,
+      mainCategory: itemQueue.mainCategory,
+      subCategory: itemQueue.subCategory,
       enhancement: itemQueue.chooseKey,
       endTime: itemQueue._waitEndTime,
     };

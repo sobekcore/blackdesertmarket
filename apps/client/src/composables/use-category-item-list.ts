@@ -5,13 +5,13 @@ import { usePreferencesStore } from '@/stores/preferences';
 import { useMarketApi } from '@/composables/use-market-api';
 
 export interface UseCategoryItemListReturn {
-  fetch(mainCategory: number, subCategory: number): Promise<BlackDesertItem[]>;
+  fetch(): Promise<BlackDesertItem[]>;
 }
 
-export function useCategoryItemList(): UseCategoryItemListReturn {
+export function useCategoryItemList(mainCategory: number, subCategory: number): UseCategoryItemListReturn {
   const preferencesStore = usePreferencesStore();
 
-  const fetch = async (mainCategory: number, subCategory: number): Promise<BlackDesertItem[]> => {
+  const fetch = async (): Promise<BlackDesertItem[]> => {
     const marketApi = useMarketApi<BlackDesertItem[]>(HttpMethod.GET, `/list/${mainCategory}/${subCategory}`, {
       region: preferencesStore.getRegion,
       language: preferencesStore.getLanguage,

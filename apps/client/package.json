@@ -1,6 +1,6 @@
 {
   "name": "@blackdesertmarket/client",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Client-side application designed to display data from the @blackdesertmarket/api package",
   "author": "David <sobekcore@gmail.com>",
   "scripts": {

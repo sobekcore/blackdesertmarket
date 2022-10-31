@@ -2,10 +2,10 @@
   <li :class="props.class" class="border-t-lighten rounded border-t bg-dark-400 py-1.5 px-2 shadow-md">
     <span class="flex items-stretch gap-2.5">
       <slot name="icon">
-        <ListItemIcon :src="itemIcon.href" :class="itemGradeBorder" />
+        <ListItemIcon :src="itemIcon.href" :text="getItemIconText(props.item)" :class="itemGradeBorder" />
       </slot>
       <slot name="name">
-        <ListItemName :name="props.item.name" :class="itemGradeText" />
+        <ListItemName :name="getItemName(props.item)" :class="itemGradeText" />
       </slot>
       <slot name="append">
         <ListItemSeparator />
@@ -19,10 +19,15 @@
 
 <script lang="ts" setup>
 import { Ref, PropType, defineProps, ref } from 'vue';
-import { BlackDesertItem } from '@blackdesertmarket/interfaces';
+import { BlackDesertItem, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { VueAttributeClass } from '@/types/attributes-vue';
 import { UseConfigReturn, useConfig } from '@/composables/use-config';
 import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
+import {
+  UseItemEnhancementReturn,
+  ItemEnhancementNameData,
+  useItemEnhancement,
+} from '@/composables/use-item-enhancement';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemName from '@/components/ListItem/ListItemName.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';
@@ -47,6 +52,34 @@ const itemGradeBorder: Ref<string> = ref('');
 
 const formatBasePrice = (price: number): string => {
   return numberFormat.format(price);
+};
+
+const getItemIconText = (item: BlackDesertItem): string => {
+  const itemType: BlackDesertItemType = item as BlackDesertItemType;
+  const itemEnhancement: UseItemEnhancementReturn = useItemEnhancement(itemType);
+  const itemEnhancementName: ItemEnhancementNameData = itemEnhancement.getName();
+
+  if (!itemEnhancementName.name) {
+    return '';
+  }
+
+  return itemEnhancementName.short;
+};
+
+const getItemName = (item: BlackDesertItem): string => {
+  const itemType: BlackDesertItemType = item as BlackDesertItemType;
+  const itemEnhancement: UseItemEnhancementReturn = useItemEnhancement(itemType);
+  const itemEnhancementName: ItemEnhancementNameData = itemEnhancement.getName();
+
+  if (!itemEnhancementName.name) {
+    return itemType.name;
+  }
+
+  if (itemEnhancementName.advanced) {
+    return `${itemEnhancementName.name}: ${itemType.name}`;
+  }
+
+  return `${itemEnhancementName.name} ${itemType.name}`;
 };
 
 if (props.item.grade) {

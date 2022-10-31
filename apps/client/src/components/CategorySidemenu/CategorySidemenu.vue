@@ -44,18 +44,18 @@
 <script lang="ts" setup>
 import { ComputedRef, Ref, inject, ref, computed } from 'vue';
 import { Router, RouteLocationNamedRaw, useLink, useRouter } from 'vue-router';
-import { MarketConfig, MarketConfigCategory } from '@/interfaces/market-config';
+import { MarketCategoriesConfig, MarketCategoriesConfigCategory } from '@/interfaces/market-config';
 import CategorySidemenuItem from '@/components/CategorySidemenu/CategorySidemenuItem.vue';
 import CategorySidemenuSubItem from '@/components/CategorySidemenu/CategorySidemenuSubItem.vue';
 
-const marketConfig: MarketConfig | undefined = inject('marketConfig');
+const marketCategoriesConfig: MarketCategoriesConfig | undefined = inject('marketCategoriesConfig');
 const router: Router = useRouter();
 
-const categories: Ref<MarketConfigCategory[]> = ref([]);
+const categories: Ref<MarketCategoriesConfigCategory[]> = ref([]);
 const activeMainCategory: Ref<number | null> = ref(null);
 
-if (marketConfig) {
-  categories.value = marketConfig.categories;
+if (marketCategoriesConfig) {
+  categories.value = marketCategoriesConfig.categories;
 }
 
 /**
@@ -89,7 +89,7 @@ const inRegistrationQueueEffect = (): void => {
 };
 
 /**
- * Injected from marketConfig
+ * Injected from marketCategoriesConfig
  */
 const categorySidemenuItemEffect = (mainCategory: number): void => {
   const isAlreadyActive = activeMainCategory.value === mainCategory;

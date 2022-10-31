@@ -21,14 +21,14 @@ export interface ExternalMarketItemType extends ExternalMarketItemTypeUnused {
   count: number;
   grade: number;
   pricePerOne: number;
-  subKey: number;
+  mainCategory: number;
+  subCategory: number;
+  chooseKey: number;
 }
 
 interface ExternalMarketItemTypeUnused {
-  chooseKey: number;
   keyType: number;
-  mainCategory: number;
-  subCategory: number;
+  subKey: number;
   totalTradeCount: number;
 }
 
@@ -38,16 +38,16 @@ export interface ExternalMarketItemHot extends ExternalMarketItemHotUnused {
   count: number;
   grade: number;
   pricePerOne: number;
-  subKey: number;
+  mainCategory: number;
+  subCategory: number;
+  chooseKey: number;
   fluctuationType: number;
   fluctuationPrice: number;
 }
 
 interface ExternalMarketItemHotUnused {
-  chooseKey: number;
   keyType: number;
-  mainCategory: number;
-  subCategory: number;
+  subKey: number;
   subtype: number;
   totalTradeCount: number;
 }
@@ -57,15 +57,15 @@ export interface ExternalMarketItemQueue extends ExternalMarketItemQueueUnused {
   name: string;
   count: number;
   grade: number;
-  chooseKey: number;
   _pricePerOne: number;
+  mainCategory: number;
+  subCategory: number;
+  chooseKey: number;
   _waitEndTime: number;
 }
 
 interface ExternalMarketItemQueueUnused {
   keyType: number;
-  mainCategory: number;
-  subCategory: number;
   subKey: number;
 }
 

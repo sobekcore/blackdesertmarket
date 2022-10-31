@@ -1,13 +1,13 @@
 import { ComposableException } from '@/exceptions/composable-exception';
 
 export interface UseFluctuationTypeReturn {
-  getClass(fluctuationType: number, modifier?: string): string;
-  getIcon(fluctuationType: number): string;
-  getOperator(fluctuationType: number): string;
+  getClass(modifier?: string): string;
+  getIcon(): string;
+  getOperator(): string;
 }
 
-export function useFluctuationType(): UseFluctuationTypeReturn {
-  const getClass = (fluctuationType: number, modifier?: string): string => {
+export function useFluctuationType(fluctuationType: number): UseFluctuationTypeReturn {
+  const getClass = (modifier?: string): string => {
     switch (fluctuationType) {
       case 1:
         return modifier ? `${modifier}:fluctuation-type-1` : 'fluctuation-type-1';
@@ -18,7 +18,7 @@ export function useFluctuationType(): UseFluctuationTypeReturn {
     throw new ComposableException(`Could not find class for fluctuation type ${fluctuationType}`);
   };
 
-  const getIcon = (fluctuationType: number): string => {
+  const getIcon = (): string => {
     switch (fluctuationType) {
       case 1:
         return require('@/assets/images/fluctuation-type/1.png');
@@ -29,7 +29,7 @@ export function useFluctuationType(): UseFluctuationTypeReturn {
     throw new ComposableException(`Could not find icon for fluctuation type ${fluctuationType}`);
   };
 
-  const getOperator = (fluctuationType: number): string => {
+  const getOperator = (): string => {
     switch (fluctuationType) {
       case 1:
         return '-';
