@@ -1,5 +1,5 @@
 <template>
-  <img :class="props.class" class="select-none" :src="props.src" alt="Icon" />
+  <img :class="props.class" class="select-none object-contain" :src="props.src" alt="Icon" />
 </template>
 
 <script lang="ts" setup>

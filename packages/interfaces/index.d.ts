@@ -7,7 +7,18 @@ export interface BlackDesertItem {
 }
 
 export interface BlackDesertItemType extends BlackDesertItem {
+  mainCategory: number;
+  subCategory: number;
   enhancement: number;
+}
+
+export interface BlackDesertItemHot extends BlackDesertItemType {
+  fluctuationType: number;
+  fluctuationPrice: number;
+}
+
+export interface BlackDesertItemQueue extends BlackDesertItemType {
+  endTime: number;
 }
 
 export interface BlackDesertItemDetails {

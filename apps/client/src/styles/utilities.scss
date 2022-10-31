@@ -1,5 +1,13 @@
 @layer utilities {
+  .bg-lighten {
+    background: rgba($LIGHT_100, 12%);
+  }
+
   .border-lighten {
-    border: 1px solid rgba($LIGHT_100, 10%);
+    border: 1px solid rgba($LIGHT_100, 12%);
+  }
+
+  .border-t-lighten {
+    border-top: 1px solid rgba($LIGHT_100, 12%);
   }
 }

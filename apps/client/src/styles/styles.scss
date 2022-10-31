@@ -2,5 +2,9 @@
 @tailwind utilities;
 
 @import '@/styles/variables';
+@import '@/styles/fonts';
 @import '@/styles/globals';
 @import '@/styles/utilities';
+
+@import '@/styles/modules/item-grade';
+@import '@/styles/modules/fluctuation-type';

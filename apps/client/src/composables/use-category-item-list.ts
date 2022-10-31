@@ -1,36 +1,36 @@
-import { Store, useStore } from 'vuex';
 import { BlackDesertItem } from '@blackdesertmarket/interfaces';
 import { ComposableException } from '@/exceptions/composable-exception';
 import { HttpMethod } from '@/enums/http';
+import { usePreferencesStore } from '@/stores/preferences';
 import { useMarketApi } from '@/composables/use-market-api';
 
-interface UseCategoryItemListReturn {
-  fetchCategoryItemList(mainCategory: number, subCategory: number): Promise<BlackDesertItem[]>;
+export interface UseCategoryItemListReturn {
+  fetch(): Promise<BlackDesertItem[]>;
 }
 
-export function useCategoryItemList(): UseCategoryItemListReturn {
-  const store: Store<any> = useStore();
+export function useCategoryItemList(mainCategory: number, subCategory: number): UseCategoryItemListReturn {
+  const preferencesStore = usePreferencesStore();
 
-  const fetchCategoryItemList = async (mainCategory: number, subCategory: number): Promise<BlackDesertItem[]> => {
-    const { execute } = useMarketApi<BlackDesertItem[]>(HttpMethod.GET, `/list/${mainCategory}/${subCategory}`, {
-      region: store.getters['preferences/region'],
-      language: store.getters['preferences/language'],
+  const fetch = async (): Promise<BlackDesertItem[]> => {
+    const marketApi = useMarketApi<BlackDesertItem[]>(HttpMethod.GET, `/list/${mainCategory}/${subCategory}`, {
+      region: preferencesStore.getRegion,
+      language: preferencesStore.getLanguage,
     });
 
-    const { data, error } = await execute();
+    const response = await marketApi.execute();
 
-    if (error.value) {
+    if (response.error.value) {
       throw new ComposableException('Could not fetch category item list from market API');
     }
 
-    if (data.value) {
-      return data.value.data;
+    if (response.data.value) {
+      return response.data.value.data;
     }
 
     return [];
   };
 
   return {
-    fetchCategoryItemList,
+    fetch,
   };
 }

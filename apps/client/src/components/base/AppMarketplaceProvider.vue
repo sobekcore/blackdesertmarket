@@ -4,8 +4,10 @@
 
 <script lang="ts" setup>
 import { provide } from 'vue';
-import { MarketConfig } from '@/interfaces/market-config';
-import marketConfig from '@/config/market.config';
+import { MarketCategoriesConfig, MarketEnhancementConfig } from '@/interfaces/market-config';
+import marketCategoriesConfig from '@/configs/market-categories.config';
+import marketEnhancementConfig from '@/configs/market-enhancement.config';
 
-provide('marketConfig', marketConfig as MarketConfig);
+provide('marketCategoriesConfig', marketCategoriesConfig as MarketCategoriesConfig);
+provide('marketEnhancementConfig', marketEnhancementConfig as MarketEnhancementConfig);
 </script>

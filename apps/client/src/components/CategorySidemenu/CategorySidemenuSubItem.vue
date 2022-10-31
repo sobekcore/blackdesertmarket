@@ -2,12 +2,13 @@
   <li>
     <button
       :class="{
-        'border-lighten flex w-full rounded-sm p-3': true,
-        'bg-dark-300 hover:bg-dark-500 focus-visible:bg-dark-500': true,
+        'flex w-full rounded-sm border py-3 px-6 hocus:text-light-100': true,
+        'button-inactive-state': !isActive,
+        'border-lighten button-active-state': isActive,
       }"
-      @click="redirectToCategoryItemList"
+      @click="triggerCategorySidemenuSubItemEffect"
     >
-      <span class="text-sm text-brand-700">
+      <span class="text-sm">
         {{ props.title }}
       </span>
     </button>
@@ -15,8 +16,12 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue';
-import { Router, useRouter } from 'vue-router';
+import { defineEmits, defineProps, watch } from 'vue';
+import { RouteLocationNamedRaw, Router, useRouter, useLink } from 'vue-router';
+
+const emit = defineEmits({
+  effect: null,
+});
 
 const props = defineProps({
   title: {
@@ -33,15 +38,40 @@ const props = defineProps({
   },
 });
 
-const router: Router = useRouter();
-
-const redirectToCategoryItemList = (): void => {
-  router.push({
-    name: 'list',
-    params: {
-      mainCategory: props.mainCategory,
-      subCategory: props.subCategory,
-    },
-  });
+const categorySidemenuSubItemRoute: RouteLocationNamedRaw = {
+  name: 'list',
+  params: {
+    mainCategory: props.mainCategory,
+    subCategory: props.subCategory,
+  },
 };
+
+const router: Router = useRouter();
+const { isActive } = useLink({ to: categorySidemenuSubItemRoute });
+
+const triggerCategorySidemenuSubItemEffect = (): void => {
+  router.push(categorySidemenuSubItemRoute);
+  emit('effect');
+};
+
+watch(
+  (): boolean => {
+    return isActive.value;
+  },
+  (): void => {
+    if (isActive.value) {
+      emit('effect');
+    }
+  },
+);
 </script>
+
+<style lang="scss" scoped>
+.button-inactive-state {
+  @apply border-dark-200 bg-dark-300 text-brand-700 hocus:bg-dark-500;
+}
+
+.button-active-state {
+  @apply bg-dark-500 text-light-300;
+}
+</style>

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
 import HotView from '@/views/HotView.vue';
+import QueueView from '@/views/QueueView.vue';
 import ListView from '@/views/ListView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
 
@@ -16,6 +17,11 @@ const routes: Array<RouteRecordRaw> = [
     component: HotView,
   },
   {
+    path: '/queue',
+    name: 'queue',
+    component: QueueView,
+  },
+  {
     path: '/list/:mainCategory/:subCategory',
     name: 'list',
     component: ListView,
@@ -27,9 +33,7 @@ const routes: Array<RouteRecordRaw> = [
   },
 ];
 
-const router = createRouter({
+export const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
-
-export default router;

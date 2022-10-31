@@ -1,43 +1,44 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { Observable } from 'rxjs';
-import { ExternalMarketParams, ExternalMarketMeta } from '@/interfaces/external-market.interface';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ExternalMarketMeta, ExternalMarketParams } from '@/interfaces/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
 import { HttpHeader } from '@/enums/http.enum';
 import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
-import { ExternalMarketEndpoint } from '@/enums/external-market.enum';
+import { ExternalMarketAsset, ExternalMarketEndpoint } from '@/enums/external-market.enum';
 
 @Injectable()
 export class ExternalMarketService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(private readonly configService: ConfigService, private readonly httpService: HttpService) {}
 
   private readonly matchExternalEndpoint: Record<InternalMarketEndpoint, ExternalMarketEndpoint> = {
+    [InternalMarketEndpoint.LIST_HOT]: ExternalMarketEndpoint.GET_WORLD_MARKET_HOT_LIST,
+    [InternalMarketEndpoint.LIST_QUEUE]: ExternalMarketEndpoint.GET_WORLD_MARKET_WAIT_LIST,
     [InternalMarketEndpoint.LIST]: ExternalMarketEndpoint.GET_WORLD_MARKET_LIST,
     [InternalMarketEndpoint.ITEM_TYPES]: ExternalMarketEndpoint.GET_WORLD_MARKET_SUB_LIST,
     [InternalMarketEndpoint.ITEM_DETAILS]: ExternalMarketEndpoint.GET_ITEM_SELL_BUY_INFO,
   };
 
-  /**
-   * TODO: Change return type Observable<any> to Observable<AxiosResponse>
-   */
   public buildExternalMarketRequest(
     endpoint: InternalMarketEndpoint,
     params: ExternalMarketParams,
     meta?: ExternalMarketMeta,
-  ): Observable<any> {
-    const paramsRequestToken: string = process.env.PARAMS_REQUEST_TOKEN;
-    const cookieRequestToken: string = process.env.COOKIE_REQUEST_TOKEN;
+  ): Observable<AxiosResponse> {
+    const paramsRequestToken: string = this.configService.get('paramsRequestToken');
+    const cookieRequestToken: string = this.configService.get('cookieRequestToken');
 
     if (!paramsRequestToken || !cookieRequestToken) {
       throw new ExternalMarketException('Request verification tokens are missing');
     }
 
     if (!meta.region) {
-      meta.region = process.env.DEFAULT_REQUEST_REGION || 'eu';
+      meta.region = this.configService.get('defaultRequestRegion');
     }
 
     if (!meta.language) {
-      meta.language = process.env.DEFAULT_REQUEST_LANGUAGE || 'en-US';
+      meta.language = this.configService.get('defaultRequestLanguage');
     }
 
     const url: URL = this.getExternalMarketUrl(this.getExternalMarketEndpoint(endpoint), meta.region);
@@ -49,7 +50,7 @@ export class ExternalMarketService {
       data.append(key, value);
     }
 
-    const config: Record<string, Record<HttpHeader, string>> = {
+    const config: AxiosRequestConfig = {
       headers: {
         [HttpHeader.COOKIE]: `__RequestVerificationToken=${cookieRequestToken}; lang=${meta.language};`,
         [HttpHeader.CONTENT_TYPE]: 'application/x-www-form-urlencoded',
@@ -60,8 +61,25 @@ export class ExternalMarketService {
     return this.httpService.post(url.href, data, config);
   }
 
+  public getExternalMarketAsset(endpoint: string, assetType: ExternalMarketAsset): Observable<AxiosResponse> {
+    const config: AxiosRequestConfig = {};
+
+    if (assetType === ExternalMarketAsset.IMAGE) {
+      const url: URL = this.getExternalMarketCdnUrl(endpoint);
+      config.responseType = 'stream';
+
+      return this.httpService.get(url.href, config);
+    }
+
+    throw new ExternalMarketException(`Could not fetch asset ${endpoint} from external CDN`);
+  }
+
   private getExternalMarketUrl(endpoint: string, region: string): URL {
     return new URL(`https://${region}-trade.naeu.playblackdesert.com/Home/${endpoint}`);
+  }
+
+  private getExternalMarketCdnUrl(endpoint: string): URL {
+    return new URL(`https://s1.pearlcdn.com/NAEU/TradeMarket/Common/${endpoint}`);
   }
 
   private getExternalMarketEndpoint(endpoint: string): string {

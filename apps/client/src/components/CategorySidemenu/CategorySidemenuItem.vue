@@ -1,50 +1,32 @@
 <template>
   <li>
+    <slot name="before" :active="isActive"></slot>
     <button
       :class="{
-        'border-lighten flex w-full cursor-pointer items-center justify-between p-3': true,
-        'bg-dark-400 hover:bg-dark-600 focus-visible:bg-dark-600': !active,
-        'bg-dark-600': active,
+        'flex w-full cursor-pointer items-center justify-between p-3': true,
+        'button-inactive-state': !isActive,
+        'border-lighten button-active-state': isActive,
       }"
-      @click="triggerItemEffect"
+      @click="triggerCategorySidemenuItemEffect"
     >
       <AppIcon class="-my-[4px] h-[24px]" :src="require(`@/assets/${props.icon}`)" />
-      <span
-        :class="{
-          'text-sm': true,
-          'text-light-300': !active,
-          'text-light-100': active,
-        }"
-      >
+      <span class="text-sm">
         {{ props.title }}
       </span>
-      <AppDropdownIcon class="-my-[8px] h-[32px] drop-shadow-md" :active="active" />
+      <AppDropdownIcon class="-my-[8px] h-[32px] drop-shadow-md" :active="isActive" />
     </button>
-    <ul v-if="props.subCategories" v-show="active" class="mt-0.5 flex flex-col gap-0.5">
-      <template v-if="props.subCategories.length">
-        <template v-for="(subCategory, index) in props.subCategories" :key="index">
-          <CategorySidemenuSubItem
-            :title="subCategory.title"
-            :main-category="props.mainCategory"
-            :sub-category="subCategory.subCategory"
-          />
-        </template>
-      </template>
-      <template v-else>
-        <li class="p-2.5 text-sm text-light-300">Could not find any sub-categories...</li>
-      </template>
-    </ul>
+    <slot name="after" :active="isActive"></slot>
   </li>
 </template>
 
 <script lang="ts" setup>
-import { Ref, PropType, defineProps, ref } from 'vue';
-import { MarketConfigSubCategory } from '@/interfaces/market-config';
-import CategorySidemenuSubItem from '@/components/CategorySidemenu/CategorySidemenuSubItem.vue';
+import { Ref, defineEmits, defineProps, ref, watch } from 'vue';
 import AppIcon from '@/components/base/AppIcon.vue';
 import AppDropdownIcon from '@/components/base/AppDropdownIcon.vue';
 
-type CategorySidemenuItemEffect = (event: Event, active: Ref<boolean>) => void;
+const emit = defineEmits({
+  effect: null,
+});
 
 const props = defineProps({
   title: {
@@ -55,27 +37,34 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  mainCategory: {
-    type: Number,
-  },
-  subCategories: {
-    type: Array as PropType<MarketConfigSubCategory[]>,
-  },
-  effect: {
-    type: Function as PropType<CategorySidemenuItemEffect>,
+  active: {
+    type: Boolean,
+    default: false,
   },
 });
 
-const active: Ref<boolean> = ref(false);
+const isActive: Ref<boolean> = ref(props.active);
 
-const triggerItemEffect = (event: Event): void => {
-  if (props.effect) {
-    props.effect(event, active);
-    return;
-  }
-
-  if (props.subCategories) {
-    active.value = !active.value;
-  }
+const triggerCategorySidemenuItemEffect = (): void => {
+  emit('effect');
 };
+
+watch(
+  (): boolean => {
+    return props.active;
+  },
+  (): void => {
+    isActive.value = props.active;
+  },
+);
 </script>
+
+<style lang="scss" scoped>
+.button-inactive-state {
+  @apply border border-dark-400 bg-dark-400 text-light-300 hocus:border-dark-600 hocus:bg-dark-600 hocus:text-light-100;
+}
+
+.button-active-state {
+  @apply bg-dark-600 text-light-100;
+}
+</style>
