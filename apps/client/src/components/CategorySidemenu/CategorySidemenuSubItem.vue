@@ -16,8 +16,9 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, defineProps, watch } from 'vue';
-import { RouteLocationNamedRaw, Router, useRouter, useLink } from 'vue-router';
+import { ComputedRef, Ref, defineEmits, defineProps, watch, ref, computed } from 'vue';
+import { Router, RouteLocationNamedRaw, useRouter, useLink } from 'vue-router';
+import { useLocationStore } from '@/stores/location';
 
 const emit = defineEmits({
   effect: null,
@@ -38,7 +39,7 @@ const props = defineProps({
   },
 });
 
-const categorySidemenuSubItemRoute: RouteLocationNamedRaw = {
+const categoryItemListRoute: RouteLocationNamedRaw = {
   name: 'list',
   params: {
     mainCategory: props.mainCategory,
@@ -46,11 +47,18 @@ const categorySidemenuSubItemRoute: RouteLocationNamedRaw = {
   },
 };
 
+const locationStore = useLocationStore();
 const router: Router = useRouter();
-const { isActive } = useLink({ to: categorySidemenuSubItemRoute });
+const { isActive: categoryItemListActiveRoute } = useLink({ to: categoryItemListRoute });
+
+const itemListActiveRoute: Ref<boolean> = ref(false);
+
+const isActive: ComputedRef<boolean> = computed((): boolean => {
+  return categoryItemListActiveRoute.value || itemListActiveRoute.value;
+});
 
 const triggerCategorySidemenuSubItemEffect = (): void => {
-  router.push(categorySidemenuSubItemRoute);
+  router.push(categoryItemListRoute);
   emit('effect');
 };
 
@@ -62,6 +70,18 @@ watch(
     if (isActive.value) {
       emit('effect');
     }
+  },
+);
+
+watch(
+  (): Array<number | null> => {
+    return [locationStore.getMainCategory, locationStore.getSubCategory];
+  },
+  (): void => {
+    const matchMainCategory: boolean = props.mainCategory === locationStore.getMainCategory;
+    const matchSubCategory: boolean = props.subCategory === locationStore.getSubCategory;
+
+    itemListActiveRoute.value = matchMainCategory && matchSubCategory;
   },
 );
 </script>

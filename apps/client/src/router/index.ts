@@ -3,9 +3,10 @@ import HomeView from '@/views/HomeView.vue';
 import HotView from '@/views/HotView.vue';
 import QueueView from '@/views/QueueView.vue';
 import ListView from '@/views/ListView.vue';
+import ItemView from '@/views/ItemView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
 
-const routes: Array<RouteRecordRaw> = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
@@ -25,6 +26,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/list/:mainCategory/:subCategory',
     name: 'list',
     component: ListView,
+  },
+  {
+    path: '/item/:id',
+    name: 'item',
+    component: ItemView,
   },
   {
     path: '/:catchAll(.*)',

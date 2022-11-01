@@ -7,8 +7,10 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref, defineProps, ref, watch } from 'vue';
+import { Ref, defineProps, onBeforeUnmount, ref, watch } from 'vue';
+import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
 import { BlackDesertItem } from '@blackdesertmarket/interfaces';
+import { useLocationStore } from '@/stores/location';
 import { UseCategoryItemListReturn, useCategoryItemList } from '@/composables/use-category-item-list';
 import ListItem from '@/components/ListItem/ListItem.vue';
 
@@ -23,9 +25,15 @@ const props = defineProps({
   },
 });
 
+const locationStore = useLocationStore();
+const route: RouteLocationNormalizedLoaded = useRoute();
+
 const list: Ref<BlackDesertItem[]> = ref([]);
 
 const refetchCategoryItemList = (mainCategory: number, subCategory: number): void => {
+  locationStore.mainCategory = mainCategory;
+  locationStore.subCategory = subCategory;
+
   const categoryItemList: UseCategoryItemListReturn = useCategoryItemList(mainCategory, subCategory);
 
   categoryItemList.fetch().then((data: BlackDesertItem[]): void => {
@@ -36,6 +44,15 @@ const refetchCategoryItemList = (mainCategory: number, subCategory: number): voi
 if (!list.value.length) {
   refetchCategoryItemList(props.mainCategory, props.subCategory);
 }
+
+onBeforeUnmount((): void => {
+  if (route.name === 'item') {
+    return;
+  }
+
+  locationStore.mainCategory = null;
+  locationStore.subCategory = null;
+});
 
 watch(
   (): number[] => {

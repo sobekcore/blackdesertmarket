@@ -185,7 +185,7 @@ export class ItemService {
     };
 
     const data: Observable<BlackDesertItemType[]> = this.externalMarketService
-      .buildExternalMarketRequest(InternalMarketEndpoint.ITEM_TYPES, params, meta)
+      .buildExternalMarketRequest(InternalMarketEndpoint.ITEM, params, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
           return response.data.detailList ? response.data.detailList : [];

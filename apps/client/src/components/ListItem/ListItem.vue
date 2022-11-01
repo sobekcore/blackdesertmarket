@@ -1,5 +1,9 @@
 <template>
-  <li :class="props.class" class="border-t-lighten rounded border-t bg-dark-400 py-1.5 px-2 shadow-md">
+  <li
+    :class="props.class"
+    class="border-t-lighten cursor-pointer rounded border-t bg-dark-400 py-1.5 px-2 shadow-md"
+    @click="handleListItemClick(props.item)"
+  >
     <span class="flex items-stretch gap-2.5">
       <slot name="icon">
         <ListItemIcon :src="itemIcon.href" :text="getItemIconText(props.item)" :class="itemGradeBorder" />
@@ -19,6 +23,7 @@
 
 <script lang="ts" setup>
 import { Ref, PropType, defineProps, ref } from 'vue';
+import { Router, useRouter } from 'vue-router';
 import { BlackDesertItem, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { VueAttributeClass } from '@/types/attributes-vue';
 import { UseConfigReturn, useConfig } from '@/composables/use-config';
@@ -44,11 +49,27 @@ const props = defineProps({
 });
 
 const config: UseConfigReturn = useConfig();
+const router: Router = useRouter();
 const numberFormat: UseNumberFormatReturn = useNumberFormat();
 
 const itemIcon: Ref<URL> = ref(new URL(`/item/icon/${props.item.id}`, config.marketApiUrl));
 const itemGradeText: Ref<string> = ref('');
 const itemGradeBorder: Ref<string> = ref('');
+
+const handleListItemClick = (item: BlackDesertItem): void => {
+  const itemType: BlackDesertItemType = item as BlackDesertItemType;
+
+  if (itemType.hasOwnProperty('enhancement')) {
+    return;
+  }
+
+  router.push({
+    name: 'item',
+    params: {
+      id: itemType.id,
+    },
+  });
+};
 
 const formatBasePrice = (price: number): string => {
   return numberFormat.format(price);
