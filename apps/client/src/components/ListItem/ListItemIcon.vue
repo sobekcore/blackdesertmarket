@@ -1,13 +1,13 @@
 <template>
   <span class="relative">
-    <span class="text-over-icon">
-      {{ text }}
-    </span>
     <AppIcon
       :src="props.src"
       :class="props.class"
       class="h-[46px] w-[46px] rounded border border-dark-600 bg-dark-100"
     />
+    <span role="presentation" aria-hidden="true" class="text-over-icon">
+      {{ text }}
+    </span>
   </span>
 </template>
 

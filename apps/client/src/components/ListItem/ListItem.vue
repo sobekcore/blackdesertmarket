@@ -1,29 +1,32 @@
+<!-- TODO: Move focus automatically into first ListItem when redirecting into any list -->
+
 <template>
-  <li
-    :class="props.class"
-    class="border-t-lighten cursor-pointer rounded border-t bg-dark-400 py-1.5 px-2 shadow-md"
-    @click="handleListItemClick(props.item)"
-  >
-    <span class="flex items-stretch gap-2.5">
-      <slot name="icon">
-        <ListItemIcon :src="itemIcon.href" :text="getItemIconText(props.item)" :class="itemGradeBorder" />
-      </slot>
-      <slot name="name">
-        <ListItemName :name="getItemName(props.item)" :class="itemGradeText" />
-      </slot>
-      <slot name="append">
-        <ListItemSeparator />
-        <ListItemProperty label="Base Price" :value="formatBasePrice(props.item.basePrice)" />
-        <ListItemSeparator />
-        <ListItemProperty label="In Stock" :value="props.item.count" />
-      </slot>
-    </span>
+  <li class="flex">
+    <button
+      :class="props.class"
+      class="border-t-lighten w-full rounded border-t bg-dark-400 py-1.5 px-2 shadow-md"
+      @click="triggerListItemEffect"
+    >
+      <span class="flex items-stretch gap-2.5">
+        <slot name="icon">
+          <ListItemIcon :src="itemIcon.href" :text="getItemIconText(props.item)" :class="itemGradeBorder" />
+        </slot>
+        <slot name="name">
+          <ListItemName :name="getItemName(props.item)" :class="itemGradeText" />
+        </slot>
+        <slot name="append">
+          <ListItemSeparator />
+          <ListItemProperty label="Base Price" :value="formatBasePrice(props.item.basePrice)" />
+          <ListItemSeparator />
+          <ListItemProperty label="In Stock" :value="props.item.count" />
+        </slot>
+      </span>
+    </button>
   </li>
 </template>
 
 <script lang="ts" setup>
-import { Ref, PropType, defineProps, ref } from 'vue';
-import { Router, useRouter } from 'vue-router';
+import { Ref, PropType, defineEmits, defineProps, ref } from 'vue';
 import { BlackDesertItem, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { VueAttributeClass } from '@/types/attributes-vue';
 import { UseConfigReturn, useConfig } from '@/composables/use-config';
@@ -38,6 +41,10 @@ import ListItemName from '@/components/ListItem/ListItemName.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';
 import ListItemSeparator from '@/components/ListItem/ListItemSeparator.vue';
 
+const emit = defineEmits({
+  effect: null,
+});
+
 const props = defineProps({
   item: {
     type: Object as PropType<BlackDesertItem>,
@@ -49,27 +56,11 @@ const props = defineProps({
 });
 
 const config: UseConfigReturn = useConfig();
-const router: Router = useRouter();
 const numberFormat: UseNumberFormatReturn = useNumberFormat();
 
-const itemIcon: Ref<URL> = ref(new URL(`/item/icon/${props.item.id}`, config.marketApiUrl));
+const itemIcon: Ref<URL> = ref(new URL(`/item/${props.item.id}/icon`, config.marketApiUrl));
 const itemGradeText: Ref<string> = ref('');
 const itemGradeBorder: Ref<string> = ref('');
-
-const handleListItemClick = (item: BlackDesertItem): void => {
-  const itemType: BlackDesertItemType = item as BlackDesertItemType;
-
-  if (itemType.hasOwnProperty('enhancement')) {
-    return;
-  }
-
-  router.push({
-    name: 'item',
-    params: {
-      id: itemType.id,
-    },
-  });
-};
 
 const formatBasePrice = (price: number): string => {
   return numberFormat.format(price);
@@ -101,6 +92,10 @@ const getItemName = (item: BlackDesertItem): string => {
   }
 
   return `${itemEnhancementName.name} ${itemType.name}`;
+};
+
+const triggerListItemEffect = (): void => {
+  emit('effect');
 };
 
 if (props.item.grade) {

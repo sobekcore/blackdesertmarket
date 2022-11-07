@@ -1,14 +1,14 @@
 <template>
   <ul class="flex flex-col gap-2 p-2.5">
     <template v-for="item in list" :key="item.id">
-      <ListItem :item="item" />
+      <ListItem :item="item" class="cursor-pointer" @effect="handleListItemClick(item)" />
     </template>
   </ul>
 </template>
 
 <script lang="ts" setup>
 import { Ref, defineProps, onBeforeUnmount, ref, watch } from 'vue';
-import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
+import { Router, RouteLocationNormalizedLoaded, useRouter, useRoute } from 'vue-router';
 import { BlackDesertItem } from '@blackdesertmarket/interfaces';
 import { useLocationStore } from '@/stores/location';
 import { UseCategoryItemListReturn, useCategoryItemList } from '@/composables/use-category-item-list';
@@ -26,6 +26,7 @@ const props = defineProps({
 });
 
 const locationStore = useLocationStore();
+const router: Router = useRouter();
 const route: RouteLocationNormalizedLoaded = useRoute();
 
 const list: Ref<BlackDesertItem[]> = ref([]);
@@ -38,6 +39,15 @@ const refetchCategoryItemList = (mainCategory: number, subCategory: number): voi
 
   categoryItemList.fetch().then((data: BlackDesertItem[]): void => {
     list.value = data;
+  });
+};
+
+const handleListItemClick = (item: BlackDesertItem): void => {
+  router.push({
+    name: 'item',
+    params: {
+      id: item.id,
+    },
   });
 };
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen">
+  <div class="flex h-screen overflow-x-auto">
     <slot></slot>
   </div>
 </template>

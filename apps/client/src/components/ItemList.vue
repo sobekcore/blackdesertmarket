@@ -1,15 +1,16 @@
 <template>
   <ul class="flex flex-col gap-2 p-2.5">
     <template v-for="item in list" :key="item.id">
-      <ListItem :item="item" />
+      <ListItem :item="item" class="cursor-pointer" @effect="handleListItemClick(item)" />
     </template>
   </ul>
 </template>
 
 <script lang="ts" setup>
 import { Ref, defineProps, onBeforeUnmount, ref, watch } from 'vue';
-import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
+import { Router, RouteLocationNormalizedLoaded, useRouter, useRoute } from 'vue-router';
 import { BlackDesertItemType } from '@blackdesertmarket/interfaces';
+import { getFirstElement } from '@blackdesertmarket/helpers';
 import { useLocationStore } from '@/stores/location';
 import { UseItemTypeListReturn, useItemList } from '@/composables/use-item-list';
 import ListItem from '@/components/ListItem/ListItem.vue';
@@ -22,6 +23,7 @@ const props = defineProps({
 });
 
 const locationStore = useLocationStore();
+const router: Router = useRouter();
 const route: RouteLocationNormalizedLoaded = useRoute();
 
 const list: Ref<BlackDesertItemType[]> = ref([]);
@@ -30,15 +32,24 @@ const refetchItemTypeList = (id: number): void => {
   const itemTypeList: UseItemTypeListReturn = useItemList(id);
 
   itemTypeList.fetch().then((data: BlackDesertItemType[]): void => {
-    if (data.length) {
-      /**
-       * TODO: Find categories from BlackDesertItemType collection in a cleaner way
-       */
-      locationStore.mainCategory = data[0].mainCategory;
-      locationStore.subCategory = data[0].subCategory;
+    const itemType: BlackDesertItemType | null = getFirstElement<BlackDesertItemType>(data);
+
+    if (itemType) {
+      locationStore.mainCategory = itemType.mainCategory;
+      locationStore.subCategory = itemType.subCategory;
     }
 
     list.value = data;
+  });
+};
+
+const handleListItemClick = (itemType: BlackDesertItemType): void => {
+  router.push({
+    name: 'item-details',
+    params: {
+      id: itemType.id,
+      enhancement: itemType.enhancement,
+    },
   });
 };
 

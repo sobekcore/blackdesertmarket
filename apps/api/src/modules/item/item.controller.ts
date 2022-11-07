@@ -23,7 +23,7 @@ export class ItemController {
     };
   }
 
-  @Get('/icon/:id')
+  @Get('/:id/icon')
   @Header(HttpHeader.CONTENT_TYPE, 'image/png')
   public async findIconById(@Param() params: FindIconByIdDTOParams): Promise<StreamableFile> {
     return new StreamableFile(await this.itemService.findIconById(params.id));

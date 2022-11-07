@@ -1,7 +1,7 @@
 <template>
   <ul class="flex flex-col gap-2 p-2.5">
     <template v-for="item in list" :key="item.id">
-      <ListItem :item="item">
+      <ListItem :item="item" class="cursor-pointer" @effect="handleListItemClick(item)">
         <template #append>
           <ListItemSeparator />
           <ListItemProperty label="Registered Price" :value="formatRegisteredPrice(item.basePrice)" />
@@ -9,6 +9,10 @@
           <ListItemProperty label="Registered Time" :value="formatRegisteredTime(item.endTime)" />
         </template>
       </ListItem>
+
+      <Teleport v-if="activeItem && activeItem.id === item.id" to="#modal">
+        <ItemDetailsModal :id="item.id" :enhancement="item.enhancement" @close="handleListItemClick(item)" />
+      </Teleport>
     </template>
   </ul>
 </template>
@@ -22,11 +26,13 @@ import { useNumberFormat, UseNumberFormatReturn } from '@/composables/use-number
 import ListItem from '@/components/ListItem/ListItem.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';
 import ListItemSeparator from '@/components/ListItem/ListItemSeparator.vue';
+import ItemDetailsModal from '@/components/ItemDetailsModal.vue';
 
 const queueItemList: UseQueueItemListReturn = useQueueItemList();
 const numberFormat: UseNumberFormatReturn = useNumberFormat();
 
 const list: Ref<BlackDesertItemQueue[]> = ref([]);
+const activeItem: Ref<BlackDesertItemQueue | null> = ref(null);
 
 const formatRegisteredPrice = (price: number): string => {
   return numberFormat.format(price);
@@ -37,7 +43,13 @@ const formatRegisteredTime = (time: number): string => {
   return dateFormat.value;
 };
 
-queueItemList.fetch().then((data: BlackDesertItemQueue[]): void => {
-  list.value = data;
-});
+const handleListItemClick = (item: BlackDesertItemQueue): void => {
+  activeItem.value = activeItem.value !== item ? item : null;
+};
+
+if (!list.value.length) {
+  queueItemList.fetch().then((data: BlackDesertItemQueue[]): void => {
+    list.value = data;
+  });
+}
 </script>

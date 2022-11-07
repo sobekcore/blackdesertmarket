@@ -2,6 +2,9 @@
   <section>
     <ItemList :id="id" />
   </section>
+  <Teleport to="#modal">
+    <RouterView />
+  </Teleport>
 </template>
 
 <script lang="ts" setup>
@@ -12,11 +15,11 @@ import ItemList from '@/components/ItemList.vue';
 
 const route: RouteLocationNormalizedLoaded = useRoute();
 
-const id: Ref<number> = ref(Number(route.params.id));
-
-if (!id.value) {
+if (!route.params.id) {
   throw new ComponentException('Required route parameter id is empty');
 }
+
+const id: Ref<number> = ref(Number(route.params.id));
 
 watch(
   (): RouteParams => {

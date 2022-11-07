@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li class="flex flex-col">
     <slot name="before" :active="isActive"></slot>
     <button
       :class="{

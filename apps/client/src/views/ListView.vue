@@ -12,12 +12,12 @@ import CategoryItemList from '@/components/CategoryItemList.vue';
 
 const route: RouteLocationNormalizedLoaded = useRoute();
 
-const mainCategory: Ref<number> = ref(Number(route.params.mainCategory));
-const subCategory: Ref<number> = ref(Number(route.params.subCategory));
-
-if (!mainCategory.value || !subCategory.value) {
+if (!route.params.mainCategory || !route.params.subCategory) {
   throw new ComponentException('Required route parameters mainCategory or subCategory are empty');
 }
+
+const mainCategory: Ref<number> = ref(Number(route.params.mainCategory));
+const subCategory: Ref<number> = ref(Number(route.params.subCategory));
 
 watch(
   (): RouteParams => {

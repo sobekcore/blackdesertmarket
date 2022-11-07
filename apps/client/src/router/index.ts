@@ -4,6 +4,7 @@ import HotView from '@/views/HotView.vue';
 import QueueView from '@/views/QueueView.vue';
 import ListView from '@/views/ListView.vue';
 import ItemView from '@/views/ItemView.vue';
+import ItemDetailsView from '@/views/ItemDetailsView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
 
 const routes: RouteRecordRaw[] = [
@@ -31,6 +32,13 @@ const routes: RouteRecordRaw[] = [
     path: '/item/:id',
     name: 'item',
     component: ItemView,
+    children: [
+      {
+        path: ':enhancement',
+        name: 'item-details',
+        component: ItemDetailsView,
+      },
+    ],
   },
   {
     path: '/:catchAll(.*)',

@@ -17,7 +17,7 @@
         :title="category.title"
         :icon="category.icon"
         :active="activeMainCategory === category.mainCategory"
-        @effect="() => categorySidemenuItemEffect(category.mainCategory)"
+        @effect="categorySidemenuItemEffect(category.mainCategory)"
       >
         <template #after="after">
           <ul v-if="category.subCategories" v-show="after.active" class="mt-0.5 flex flex-col gap-0.5">
@@ -27,7 +27,7 @@
                   :title="subCategory.title"
                   :main-category="category.mainCategory"
                   :sub-category="subCategory.subCategory"
-                  @effect="() => categorySidemenuSubItemEffect(category.mainCategory)"
+                  @effect="categorySidemenuSubItemEffect(category.mainCategory)"
                 />
               </template>
             </template>

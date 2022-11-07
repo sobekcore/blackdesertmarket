@@ -2,6 +2,6 @@
   "name": "@blackdesertmarket/interfaces",
   "description": "TypeScript interfaces for the Black Desert items available from @blackdesertmarket/api",
   "author": "David <sobekcore@gmail.com>",
-  "main": "index.d.ts",
-  "types": "index.d.ts"
+  "main": "types/index.d.ts",
+  "types": "types/index.d.ts"
 }

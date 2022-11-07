@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString, IsNumber, IsIn } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsNumber, IsIn, Min, Max } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class FindDetailsByIdDTOParams {
@@ -8,7 +8,8 @@ export class FindDetailsByIdDTOParams {
 
   @Type(() => Number)
   @IsNumber()
-  @IsIn([0, 8, 11, 13, 16, 17, 18, 19, 20])
+  @Min(0)
+  @Max(20)
   public readonly enhancement: number;
 }
 
