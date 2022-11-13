@@ -1,5 +1,5 @@
 <template>
-  <span class="relative">
+  <span class="relative flex items-center">
     <AppIcon
       :src="props.src"
       :class="props.class"
@@ -35,7 +35,6 @@ const props = defineProps({
 
 .text-over-icon {
   @apply absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 select-none font-dejavu-sans-condensed text-lg;
-
   text-shadow: 0 0 1px $ITEM_ICON_HIGHLIGHT, 0 0 2px $ITEM_ICON_HIGHLIGHT, 0 0 3px $ITEM_ICON_HIGHLIGHT,
     0 0 4px $ITEM_ICON_HIGHLIGHT, 0 0 5px $ITEM_ICON_HIGHLIGHT, 0 0 6px $ITEM_ICON_HIGHLIGHT;
 }

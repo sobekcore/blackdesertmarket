@@ -1,27 +1,30 @@
-<!-- TODO: Move focus automatically into first ListItem when redirecting into any list -->
+<!--
+  TODO: Move focus automatically into first ListItem when redirecting into any list
+-->
 
 <template>
-  <li class="flex">
-    <button
-      :class="props.class"
-      class="border-t-lighten w-full rounded border-t bg-dark-400 py-1.5 px-2 shadow-md"
-      @click="triggerListItemEffect"
-    >
-      <span class="flex items-stretch gap-2.5">
-        <slot name="icon">
-          <ListItemIcon :src="itemIcon.href" :text="getItemIconText(props.item)" :class="itemGradeBorder" />
-        </slot>
-        <slot name="name">
-          <ListItemName :name="getItemName(props.item)" :class="itemGradeText" />
-        </slot>
-        <slot name="append">
-          <ListItemSeparator />
-          <ListItemProperty label="Base Price" :value="formatBasePrice(props.item.basePrice)" />
-          <ListItemSeparator />
-          <ListItemProperty label="In Stock" :value="props.item.count" />
-        </slot>
-      </span>
-    </button>
+  <li>
+    <div :class="props.class" class="flex rounded bg-dark-400 shadow-md">
+      <button
+        class="border-lighten hocus:bg-lighten-weak w-full cursor-pointer rounded border-t py-1.5 px-2"
+        @click="triggerListItemEffect"
+      >
+        <span class="relative flex items-stretch gap-2.5">
+          <slot name="icon">
+            <ListItemIcon :src="itemIcon.href" :text="getItemIconText(props.item)" :class="itemGradeBorder" />
+          </slot>
+          <slot name="name">
+            <ListItemName :name="getItemName(props.item)" :class="itemGradeText" />
+          </slot>
+          <slot name="append">
+            <ListItemSeparator />
+            <ListItemProperty label="Base Price" :value="formatBasePrice(props.item.basePrice)" />
+            <ListItemSeparator />
+            <ListItemProperty label="In Stock" :value="props.item.count" />
+          </slot>
+        </span>
+      </button>
+    </div>
   </li>
 </template>
 

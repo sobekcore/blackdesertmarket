@@ -5,7 +5,7 @@
       <div ref="modal" :style="modalStyle" class="fixed">
         <div
           :class="{
-            'flex flex-col overflow-hidden rounded-lg border border-brand-700 bg-dark-200 bg-opacity-90 shadow-xl': true,
+            'flex flex-col overflow-hidden rounded-lg border border-brand-700 shadow-xl': true,
             'h-[90vh] w-[90vw]': props.fullsize,
             'max-h-[90vh] w-[400px] max-w-[90vw]': !props.fullsize,
           }"
@@ -22,8 +22,8 @@
             <span class="flex-grow"></span>
             <AppModalClose @close="modalClose" />
           </div>
-          <div class="relative overflow-y-auto p-5">
-            <slot name="content"></slot>
+          <div class="relative flex flex-grow overflow-y-hidden">
+            <slot></slot>
           </div>
         </div>
       </div>

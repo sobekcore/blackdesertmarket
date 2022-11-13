@@ -1,6 +1,6 @@
 <template>
   <span class="flex w-1/5 flex-col justify-between">
-    <span class="flex items-center justify-start text-xs text-light-300">
+    <span class="flex items-center justify-start text-xs text-dark-800">
       <slot name="label">
         {{ props.label }}
       </slot>

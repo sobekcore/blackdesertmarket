@@ -32,7 +32,7 @@
               </template>
             </template>
             <template v-else>
-              <li class="py-3 px-6 text-sm text-light-300">Could not find any sub-categories...</li>
+              <li class="py-3 px-6 text-sm text-dark-800">Could not find any sub-categories...</li>
             </template>
           </ul>
         </template>

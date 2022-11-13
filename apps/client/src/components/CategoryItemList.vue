@@ -1,7 +1,7 @@
 <template>
   <ul class="flex flex-col gap-2 p-2.5">
     <template v-for="item in list" :key="item.id">
-      <ListItem :item="item" class="cursor-pointer" @effect="handleListItemClick(item)" />
+      <ListItem :item="item" @effect="handleListItemClick(item)" />
     </template>
   </ul>
 </template>

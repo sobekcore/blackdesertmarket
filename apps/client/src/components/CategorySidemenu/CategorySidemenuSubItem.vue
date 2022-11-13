@@ -2,7 +2,7 @@
   <li>
     <button
       :class="{
-        'flex w-full rounded-sm border py-3 px-6 hocus:text-light-100': true,
+        'flex w-full rounded-sm border py-3 px-6 hocus:text-dark-900': true,
         'button-inactive-state': !isActive,
         'border-lighten button-active-state': isActive,
       }"
@@ -92,6 +92,6 @@ watch(
 }
 
 .button-active-state {
-  @apply bg-dark-500 text-light-300;
+  @apply bg-dark-500 text-dark-800;
 }
 </style>

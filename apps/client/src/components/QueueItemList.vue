@@ -1,7 +1,7 @@
 <template>
   <ul class="flex flex-col gap-2 p-2.5">
     <template v-for="item in list" :key="item.id">
-      <ListItem :item="item" class="cursor-pointer" @effect="handleListItemClick(item)">
+      <ListItem :item="item" @effect="handleListItemClick(item)">
         <template #append>
           <ListItemSeparator />
           <ListItemProperty label="Registered Price" :value="formatRegisteredPrice(item.basePrice)" />
@@ -10,7 +10,7 @@
         </template>
       </ListItem>
 
-      <Teleport v-if="activeItem && activeItem.id === item.id" to="#modal">
+      <Teleport v-if="activeItem === item" to="#modal">
         <ItemDetailsModal :id="item.id" :enhancement="item.enhancement" @close="handleListItemClick(item)" />
       </Teleport>
     </template>
@@ -26,7 +26,7 @@ import { useNumberFormat, UseNumberFormatReturn } from '@/composables/use-number
 import ListItem from '@/components/ListItem/ListItem.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';
 import ListItemSeparator from '@/components/ListItem/ListItemSeparator.vue';
-import ItemDetailsModal from '@/components/ItemDetailsModal.vue';
+import ItemDetailsModal from '@/components/ItemDetails/ItemDetailsModal.vue';
 
 const queueItemList: UseQueueItemListReturn = useQueueItemList();
 const numberFormat: UseNumberFormatReturn = useNumberFormat();

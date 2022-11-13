@@ -1,13 +1,21 @@
 @layer utilities {
+  .scroll-gutter-stable {
+    scrollbar-gutter: stable;
+  }
+
   .bg-lighten {
-    background: rgba($LIGHT_100, 12%);
+    background: rgba($DARK_900, 12%);
+  }
+
+  .bg-lighten-weak {
+    background: rgba($DARK_900, 8%);
   }
 
   .border-lighten {
-    border: 1px solid rgba($LIGHT_100, 12%);
+    border-color: rgba($DARK_900, 12%);
   }
 
-  .border-t-lighten {
-    border-top: 1px solid rgba($LIGHT_100, 12%);
+  .border-lighten-weak {
+    border-color: rgba($DARK_900, 8%);
   }
 }
