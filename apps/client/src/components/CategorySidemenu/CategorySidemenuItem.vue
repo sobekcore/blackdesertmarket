@@ -3,7 +3,7 @@
     <slot name="before" :active="isActive"></slot>
     <button
       :class="{
-        'flex w-full cursor-pointer items-center justify-between p-3': true,
+        'flex w-full cursor-pointer items-center justify-between border p-3': true,
         'button-inactive-state': !isActive,
         'border-lighten button-active-state': isActive,
       }"
@@ -61,10 +61,10 @@ watch(
 
 <style lang="scss" scoped>
 .button-inactive-state {
-  @apply border border-dark-400 bg-dark-400 text-light-300 hocus:border-dark-600 hocus:bg-dark-600 hocus:text-light-100;
+  @apply border-dark-400 bg-dark-400 text-dark-800 hocus:border-dark-600 hocus:bg-dark-600 hocus:text-dark-900;
 }
 
 .button-active-state {
-  @apply bg-dark-600 text-light-100;
+  @apply bg-dark-600 text-dark-900;
 }
 </style>

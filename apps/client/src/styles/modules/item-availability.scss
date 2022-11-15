@@ -1,0 +1,21 @@
+$itemAvailabilitiesBackground: (
+  1: $ITEM_AVAILABILITY_BG_1,
+  2: $ITEM_AVAILABILITY_BG_2,
+);
+
+$itemAvailabilitiesText: (
+  1: $ITEM_AVAILABILITY_TEXT_1,
+  2: $ITEM_AVAILABILITY_TEXT_2,
+);
+
+@each $itemAvailability, $color in $itemAvailabilitiesBackground {
+  .bg\:item-availability-#{$itemAvailability} {
+    background-color: $color;
+  }
+}
+
+@each $itemAvailability, $color in $itemAvailabilitiesText {
+  .text\:item-availability-#{$itemAvailability} {
+    color: $color;
+  }
+}

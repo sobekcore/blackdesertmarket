@@ -1,5 +1,5 @@
 <template>
-  <span :class="props.class" class="flex flex-grow items-center text-sm">
+  <span :class="props.class" class="flex flex-grow items-center">
     {{ props.name }}
   </span>
 </template>

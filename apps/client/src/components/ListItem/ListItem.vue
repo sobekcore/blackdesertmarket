@@ -1,24 +1,35 @@
+<!--
+  TODO: Move focus automatically into first ListItem when redirecting into any list
+-->
+
 <template>
-  <li :class="props.class" class="border-t-lighten rounded border-t bg-dark-400 py-1.5 px-2 shadow-md">
-    <span class="flex items-stretch gap-2.5">
-      <slot name="icon">
-        <ListItemIcon :src="itemIcon.href" :text="getItemIconText(props.item)" :class="itemGradeBorder" />
-      </slot>
-      <slot name="name">
-        <ListItemName :name="getItemName(props.item)" :class="itemGradeText" />
-      </slot>
-      <slot name="append">
-        <ListItemSeparator />
-        <ListItemProperty label="Base Price" :value="formatBasePrice(props.item.basePrice)" />
-        <ListItemSeparator />
-        <ListItemProperty label="In Stock" :value="props.item.count" />
-      </slot>
-    </span>
+  <li>
+    <div :class="props.class" class="flex rounded bg-dark-400 shadow-md">
+      <button
+        class="border-lighten hocus:bg-lighten-sm w-full cursor-pointer rounded border-t py-1.5 px-2"
+        @click="triggerListItemEffect"
+      >
+        <span class="relative flex items-stretch gap-2.5">
+          <slot name="icon">
+            <ListItemIcon :src="itemIcon.href" :text="getItemIconText(props.item)" :class="itemGradeBorder" />
+          </slot>
+          <slot name="name">
+            <ListItemName :name="getItemName(props.item)" :class="itemGradeText" />
+          </slot>
+          <slot name="append">
+            <ListItemSeparator />
+            <ListItemProperty label="Base Price" :value="formatBasePrice(props.item.basePrice)" />
+            <ListItemSeparator />
+            <ListItemProperty label="In Stock" :value="props.item.count" />
+          </slot>
+        </span>
+      </button>
+    </div>
   </li>
 </template>
 
 <script lang="ts" setup>
-import { Ref, PropType, defineProps, ref } from 'vue';
+import { Ref, PropType, defineEmits, defineProps, ref } from 'vue';
 import { BlackDesertItem, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { VueAttributeClass } from '@/types/attributes-vue';
 import { UseConfigReturn, useConfig } from '@/composables/use-config';
@@ -33,6 +44,10 @@ import ListItemName from '@/components/ListItem/ListItemName.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';
 import ListItemSeparator from '@/components/ListItem/ListItemSeparator.vue';
 
+const emit = defineEmits({
+  effect: null,
+});
+
 const props = defineProps({
   item: {
     type: Object as PropType<BlackDesertItem>,
@@ -46,7 +61,7 @@ const props = defineProps({
 const config: UseConfigReturn = useConfig();
 const numberFormat: UseNumberFormatReturn = useNumberFormat();
 
-const itemIcon: Ref<URL> = ref(new URL(`/item/icon/${props.item.id}`, config.marketApiUrl));
+const itemIcon: Ref<URL> = ref(new URL(`/item/${props.item.id}/icon`, config.marketApiUrl));
 const itemGradeText: Ref<string> = ref('');
 const itemGradeBorder: Ref<string> = ref('');
 
@@ -82,8 +97,12 @@ const getItemName = (item: BlackDesertItem): string => {
   return `${itemEnhancementName.name} ${itemType.name}`;
 };
 
+const triggerListItemEffect = (): void => {
+  emit('effect');
+};
+
 if (props.item.grade) {
-  itemGradeText.value = `text:item-grade-${props.item.grade}`;
+  itemGradeText.value = `text-sm text:item-grade-${props.item.grade}`;
   itemGradeBorder.value = `border:item-grade-${props.item.grade}`;
 }
 </script>

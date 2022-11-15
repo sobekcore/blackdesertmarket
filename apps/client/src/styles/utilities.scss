@@ -1,13 +1,29 @@
 @layer utilities {
+  .scroll-gutter-stable {
+    scrollbar-gutter: stable;
+  }
+
+  .bg-lighten-xs {
+    background: rgba($DARK_900, 4%);
+  }
+
+  .bg-lighten-sm {
+    background: rgba($DARK_900, 8%);
+  }
+
   .bg-lighten {
-    background: rgba($LIGHT_100, 12%);
+    background: rgba($DARK_900, 12%);
+  }
+
+  .border-lighten-xs {
+    border-color: rgba($DARK_900, 4%);
+  }
+
+  .border-lighten-sm {
+    border-color: rgba($DARK_900, 8%);
   }
 
   .border-lighten {
-    border: 1px solid rgba($LIGHT_100, 12%);
-  }
-
-  .border-t-lighten {
-    border-top: 1px solid rgba($LIGHT_100, 12%);
+    border-color: rgba($DARK_900, 12%);
   }
 }
