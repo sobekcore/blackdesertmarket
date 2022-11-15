@@ -1,9 +1,6 @@
 <template>
   <template v-if="itemType">
-    <div class="flex gap-2.5">
-      <!--
-        TODO: Adjust item name font size to match original designs
-      -->
+    <div class="flex gap-3.5">
       <ListItemIcon :src="itemIcon.href" :class="itemGradeBorder" />
       <ListItemName :name="itemType.name" :class="itemGradeText" />
     </div>

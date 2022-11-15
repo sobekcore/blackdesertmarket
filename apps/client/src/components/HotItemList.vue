@@ -64,7 +64,7 @@ const formatFluctuationPrice = (item: BlackDesertItemHot): string => {
 
 const getFluctuationTypeClass = (item: BlackDesertItemHot): string => {
   const fluctuationType: UseFluctuationTypeReturn = useFluctuationType(item.fluctuationType);
-  return fluctuationType.getClass('bg');
+  return fluctuationType.getBackgroundClass();
 };
 
 const getFluctuationTypeIcon = (item: BlackDesertItemHot): string => {

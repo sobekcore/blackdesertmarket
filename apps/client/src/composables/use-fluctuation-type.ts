@@ -1,18 +1,18 @@
 import { ComposableException } from '@/exceptions/composable-exception';
 
 export interface UseFluctuationTypeReturn {
-  getClass(modifier?: string): string;
+  getBackgroundClass(): string;
   getIcon(): string;
   getOperator(): string;
 }
 
 export function useFluctuationType(fluctuationType: number): UseFluctuationTypeReturn {
-  const getClass = (modifier?: string): string => {
+  const getBackgroundClass = (): string => {
     switch (fluctuationType) {
       case 1:
-        return modifier ? `${modifier}:fluctuation-type-1` : 'fluctuation-type-1';
+        return 'bg:fluctuation-type-1';
       case 2:
-        return modifier ? `${modifier}:fluctuation-type-2` : 'fluctuation-type-2';
+        return 'bg:fluctuation-type-2';
     }
 
     throw new ComposableException(`Could not find class for fluctuation type ${fluctuationType}`);
@@ -41,8 +41,8 @@ export function useFluctuationType(fluctuationType: number): UseFluctuationTypeR
   };
 
   return {
+    getBackgroundClass,
     getIcon,
-    getClass,
     getOperator,
   };
 }

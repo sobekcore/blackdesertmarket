@@ -21,6 +21,10 @@
   background-color: $BRAND_800;
 }
 
+::-webkit-scrollbar-thumb:active {
+  background-color: $BRAND_900;
+}
+
 ::-webkit-scrollbar-corner {
   background-color: transparent;
 }

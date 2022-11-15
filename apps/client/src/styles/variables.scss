@@ -22,6 +22,16 @@ $ITEM_GRADE_2: #458dcb;
 $ITEM_GRADE_3: #f3b93c;
 $ITEM_GRADE_4: #ce5e4a;
 
+/**
+ * TODO: Maybe it would be possible to replace this values with $FLUCTUATION_TYPE
+ *  variables combined with backdrop-filter to achieve similar looking colors
+ */
+$ITEM_AVAILABILITY_BG_1: #333845;
+$ITEM_AVAILABILITY_BG_2: #482c29;
+
+$ITEM_AVAILABILITY_TEXT_1: #f6465a;
+$ITEM_AVAILABILITY_TEXT_2: #92b2d8;
+
 $ITEM_ICON_HIGHLIGHT: #b92511;
 
 $FLUCTUATION_TYPE_1: #2b3a46;

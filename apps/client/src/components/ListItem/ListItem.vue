@@ -6,7 +6,7 @@
   <li>
     <div :class="props.class" class="flex rounded bg-dark-400 shadow-md">
       <button
-        class="border-lighten hocus:bg-lighten-weak w-full cursor-pointer rounded border-t py-1.5 px-2"
+        class="border-lighten hocus:bg-lighten-sm w-full cursor-pointer rounded border-t py-1.5 px-2"
         @click="triggerListItemEffect"
       >
         <span class="relative flex items-stretch gap-2.5">
@@ -102,7 +102,7 @@ const triggerListItemEffect = (): void => {
 };
 
 if (props.item.grade) {
-  itemGradeText.value = `text:item-grade-${props.item.grade}`;
+  itemGradeText.value = `text-sm text:item-grade-${props.item.grade}`;
   itemGradeBorder.value = `border:item-grade-${props.item.grade}`;
 }
 </script>
