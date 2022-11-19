@@ -1,10 +1,20 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { files, configuration } from '@/configuration';
 import { AppController } from '@/app.controller';
-import { AppService } from '@/app.service';
+import { ListModule } from '@/modules/list/list.module';
+import { ItemModule } from '@/modules/item/item.module';
 
 @Module({
-  imports: [],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: files,
+      load: [configuration],
+    }),
+    ListModule,
+    ItemModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

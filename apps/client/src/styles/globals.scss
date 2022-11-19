@@ -1,0 +1,14 @@
+html {
+  font-family: 'DejaVu Sans', sans-serif;
+  color-scheme: dark;
+}
+
+body {
+  background: $DARK_100;
+  color: $DARK_900;
+}
+
+*:focus-visible {
+  outline: 2px solid $DARK_900;
+  outline-offset: 0;
+}

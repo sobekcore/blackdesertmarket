@@ -1,0 +1,29 @@
+@layer utilities {
+  .scroll-gutter-stable {
+    scrollbar-gutter: stable;
+  }
+
+  .bg-lighten-xs {
+    background: rgba($DARK_900, 4%);
+  }
+
+  .bg-lighten-sm {
+    background: rgba($DARK_900, 8%);
+  }
+
+  .bg-lighten {
+    background: rgba($DARK_900, 12%);
+  }
+
+  .border-lighten-xs {
+    border-color: rgba($DARK_900, 4%);
+  }
+
+  .border-lighten-sm {
+    border-color: rgba($DARK_900, 8%);
+  }
+
+  .border-lighten {
+    border-color: rgba($DARK_900, 12%);
+  }
+}

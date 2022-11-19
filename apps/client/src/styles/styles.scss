@@ -1,12 +1,12 @@
-@import "@/styles/variables";
+@tailwind base;
+@tailwind utilities;
 
-html {
-  font-family: sans-serif;
-  color-scheme: dark;
-}
+@import '@/styles/variables';
+@import '@/styles/fonts';
+@import '@/styles/globals';
+@import '@/styles/utilities';
 
-body {
-  background: $MAIN_BACKGROUND_COLOR;
-  color: $MAIN_FONT_COLOR;
-  margin: 0;
-}
+@import '@/styles/modules/scrollbar';
+@import '@/styles/modules/item-grade';
+@import '@/styles/modules/item-availability';
+@import '@/styles/modules/fluctuation-type';

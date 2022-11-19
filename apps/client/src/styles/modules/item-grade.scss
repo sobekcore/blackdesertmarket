@@ -1,0 +1,16 @@
+$itemGrades: (
+  1: $ITEM_GRADE_1,
+  2: $ITEM_GRADE_2,
+  3: $ITEM_GRADE_3,
+  4: $ITEM_GRADE_4,
+);
+
+@each $itemGrade, $color in $itemGrades {
+  .text\:item-grade-#{$itemGrade} {
+    color: $color;
+  }
+
+  .border\:item-grade-#{$itemGrade} {
+    border-color: $color;
+  }
+}
