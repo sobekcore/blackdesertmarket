@@ -1,7 +1,6 @@
 {
   "name": "@blackdesertmarket/client",
   "description": "Client-side application designed to display data from the @blackdesertmarket/api package",
-  "author": "David <sobekcore@gmail.com>",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

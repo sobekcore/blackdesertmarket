@@ -1,13 +1,13 @@
 import { IsNotEmpty, IsOptional, IsString, IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class FindTypesByIdDTOParams {
+export class FindTypesByIdParamsDto {
   @Type(() => Number)
   @IsNumber()
   public readonly id: number;
 }
 
-export class FindTypesByIdDTOQuery {
+export class FindTypesByIdQueryDto {
   @IsString()
   @IsNotEmpty()
   @IsOptional()

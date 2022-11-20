@@ -5,3 +5,6 @@ Currently, the project is very early in development process. For now most of the
 - `@blackdesertmarket/api`
 - `@blackdesertmarket/client`
 - `@blackdesertmarket/interfaces`
+- `@blackdesertmarket/objects`
+- `@blackdesertmarket/mocks`
+- `@blackdesertmarket/helpers`

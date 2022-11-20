@@ -36,6 +36,7 @@ export class ItemService {
 
   public isValidExternalMarketItem(item: unknown): boolean {
     return (
+      item &&
       item.hasOwnProperty('mainKey') &&
       item.hasOwnProperty('name') &&
       item.hasOwnProperty('sumCount') &&
@@ -46,6 +47,7 @@ export class ItemService {
 
   public isValidExternalMarketItemType(itemType: unknown): boolean {
     return (
+      itemType &&
       itemType.hasOwnProperty('mainKey') &&
       itemType.hasOwnProperty('name') &&
       itemType.hasOwnProperty('count') &&
@@ -59,6 +61,7 @@ export class ItemService {
 
   public isValidExternalMarketItemHot(itemHot: unknown): boolean {
     return (
+      itemHot &&
       itemHot.hasOwnProperty('mainKey') &&
       itemHot.hasOwnProperty('name') &&
       itemHot.hasOwnProperty('count') &&
@@ -74,6 +77,7 @@ export class ItemService {
 
   public isValidExternalMarketItemQueue(itemQueue: unknown): boolean {
     return (
+      itemQueue &&
       itemQueue.hasOwnProperty('mainKey') &&
       itemQueue.hasOwnProperty('name') &&
       itemQueue.hasOwnProperty('count') &&
@@ -191,6 +195,10 @@ export class ItemService {
           return response.data.detailList ? response.data.detailList : [];
         }),
         map((data: unknown[]): BlackDesertItemType[] => {
+          if (!data.length) {
+            throw new ExternalMarketException('Response from external market did contain invalid data');
+          }
+
           data.forEach((itemType: unknown): void => {
             if (!this.isValidExternalMarketItemType(itemType)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
@@ -221,6 +229,10 @@ export class ItemService {
       .getExternalMarketAsset(`img/BDO/item/${id}.png`, ExternalMarketAsset.IMAGE)
       .pipe(
         map((response: AxiosResponse): ReadStream => {
+          if (!Object.keys(response.data).length) {
+            throw new ExternalMarketException('Response from external market did contain invalid data');
+          }
+
           if (useCache) {
             response.data.pipe(createWriteStream(pathToAsset));
           }

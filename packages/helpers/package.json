@@ -1,7 +1,6 @@
 {
   "name": "@blackdesertmarket/helpers",
   "description": "Generic helper functions with provided type definitions",
-  "author": "David <sobekcore@gmail.com>",
   "main": "src/index.js",
   "types": "types/index.d.ts"
 }

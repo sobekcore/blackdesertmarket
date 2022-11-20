@@ -62,16 +62,14 @@ export class ExternalMarketService {
   }
 
   public getExternalMarketAsset(endpoint: string, assetType: ExternalMarketAsset): Observable<AxiosResponse> {
+    const url: URL = this.getExternalMarketCdnUrl(endpoint);
     const config: AxiosRequestConfig = {};
 
     if (assetType === ExternalMarketAsset.IMAGE) {
-      const url: URL = this.getExternalMarketCdnUrl(endpoint);
       config.responseType = 'stream';
-
-      return this.httpService.get(url.href, config);
     }
 
-    throw new ExternalMarketException(`Could not fetch asset ${endpoint} from external CDN`);
+    return this.httpService.get(url.href, config);
   }
 
   private getExternalMarketUrl(endpoint: string, region: string): URL {

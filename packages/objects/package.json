@@ -1,0 +1,6 @@
+{
+  "name": "@blackdesertmarket/objects",
+  "description": "Functions to check for implementation of @blackdesertmarket/interfaces",
+  "main": "src/index.js",
+  "types": "types/index.d.ts"
+}

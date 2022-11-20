@@ -27,9 +27,9 @@ export interface ExternalMarketItemType extends ExternalMarketItemTypeUnused {
 }
 
 interface ExternalMarketItemTypeUnused {
-  keyType: number;
-  subKey: number;
-  totalTradeCount: number;
+  keyType?: number;
+  subKey?: number;
+  totalTradeCount?: number;
 }
 
 export interface ExternalMarketItemHot extends ExternalMarketItemHotUnused {
@@ -46,10 +46,10 @@ export interface ExternalMarketItemHot extends ExternalMarketItemHotUnused {
 }
 
 interface ExternalMarketItemHotUnused {
-  keyType: number;
-  subKey: number;
-  subtype: number;
-  totalTradeCount: number;
+  keyType?: number;
+  subKey?: number;
+  subtype?: number;
+  totalTradeCount?: number;
 }
 
 export interface ExternalMarketItemQueue extends ExternalMarketItemQueueUnused {
@@ -65,8 +65,8 @@ export interface ExternalMarketItemQueue extends ExternalMarketItemQueueUnused {
 }
 
 interface ExternalMarketItemQueueUnused {
-  keyType: number;
-  subKey: number;
+  keyType?: number;
+  subKey?: number;
 }
 
 export interface ExternalMarketItemDetails extends ExternalMarketItemDetailsUnused {
@@ -76,21 +76,21 @@ export interface ExternalMarketItemDetails extends ExternalMarketItemDetailsUnus
 }
 
 interface ExternalMarketItemDetailsUnused {
-  priceList: number[];
-  enchantGroup: number;
-  enchantMaxGroup: number;
-  enchantMaterialKey: number;
-  enchantMaterialPrice: number;
-  enchantNeedCount: number;
-  maxRegisterForWorldMarket: number;
-  sellCountForWorldMarket: number;
-  addBuyRefCountForWorldMarket: number;
-  addBuyCountForWorldMarket: number;
-  biddingSellCount: number;
-  countValue: number;
-  sellMaxCount: number;
-  buyMaxCount: number;
-  isWaitItem: boolean;
+  priceList?: number[];
+  enchantGroup?: number;
+  enchantMaxGroup?: number;
+  enchantMaterialKey?: number;
+  enchantMaterialPrice?: number;
+  enchantNeedCount?: number;
+  maxRegisterForWorldMarket?: number;
+  sellCountForWorldMarket?: number;
+  addBuyRefCountForWorldMarket?: number;
+  addBuyCountForWorldMarket?: number;
+  biddingSellCount?: number;
+  countValue?: number;
+  sellMaxCount?: number;
+  buyMaxCount?: number;
+  isWaitItem?: boolean;
 }
 
 export interface ExternalMarketItemDetailsAvailability {

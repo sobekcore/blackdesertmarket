@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsOptional, IsString, IsNumber, Max, Min } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class FindByCategoryDTOParams {
+export class FindByCategoryParamsDto {
   @Type(() => Number)
   @IsNumber()
   @Min(1)
@@ -15,7 +15,7 @@ export class FindByCategoryDTOParams {
   public readonly subCategory: number;
 }
 
-export class FindByCategoryDTOQuery {
+export class FindByCategoryQueryDto {
   @IsString()
   @IsNotEmpty()
   @IsOptional()

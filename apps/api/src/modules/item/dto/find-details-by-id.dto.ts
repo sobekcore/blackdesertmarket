@@ -1,7 +1,7 @@
-import { IsNotEmpty, IsOptional, IsString, IsNumber, IsIn, Min, Max } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsNumber, Min, Max } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class FindDetailsByIdDTOParams {
+export class FindDetailsByIdParamsDto {
   @Type(() => Number)
   @IsNumber()
   public readonly id: number;
@@ -13,7 +13,7 @@ export class FindDetailsByIdDTOParams {
   public readonly enhancement: number;
 }
 
-export class FindDetailsByIdDTOQuery {
+export class FindDetailsByIdQueryDto {
   @IsString()
   @IsNotEmpty()
   @IsOptional()
