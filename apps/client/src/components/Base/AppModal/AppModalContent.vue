@@ -4,4 +4,6 @@
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+// eslint-disable-line
+</script>

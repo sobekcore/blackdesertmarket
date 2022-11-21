@@ -8,9 +8,9 @@
 
 <script lang="ts" setup>
 import { Ref, defineProps, onBeforeUnmount, ref, watch } from 'vue';
-import { Router, RouteLocationNormalizedLoaded, useRouter, useRoute } from 'vue-router';
-import { BlackDesertItemType } from '@blackdesertmarket/interfaces';
+import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from 'vue-router';
 import { getFirstElement } from '@blackdesertmarket/helpers';
+import { BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { useLocationStore } from '@/stores/location';
 import { UseItemTypeListReturn, useItemList } from '@/composables/use-item-list';
 import ListItem from '@/components/ListItem/ListItem.vue';

@@ -16,8 +16,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ComputedRef, Ref, defineEmits, defineProps, watch, ref, computed } from 'vue';
-import { Router, RouteLocationNamedRaw, useRouter, useLink } from 'vue-router';
+import { ComputedRef, Ref, computed, defineEmits, defineProps, ref, watch } from 'vue';
+import { RouteLocationNamedRaw, Router, useLink, useRouter } from 'vue-router';
 import { useLocationStore } from '@/stores/location';
 
 const emit = defineEmits({

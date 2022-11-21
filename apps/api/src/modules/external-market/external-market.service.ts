@@ -1,13 +1,13 @@
+import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { HttpService } from '@nestjs/axios';
-import { Observable } from 'rxjs';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { Observable } from 'rxjs';
 import { ExternalMarketMeta, ExternalMarketParams } from '@/interfaces/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
+import { ExternalMarketAsset, ExternalMarketEndpoint } from '@/enums/external-market.enum';
 import { HttpHeader } from '@/enums/http.enum';
 import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
-import { ExternalMarketAsset, ExternalMarketEndpoint } from '@/enums/external-market.enum';
 
 @Injectable()
 export class ExternalMarketService {

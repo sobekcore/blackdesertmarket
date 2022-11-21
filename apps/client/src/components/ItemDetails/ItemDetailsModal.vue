@@ -45,12 +45,12 @@ import {
   BlackDesertItemDetailsAvailability,
   BlackDesertItemType,
 } from '@blackdesertmarket/interfaces';
-import { UseItemTypeListReturn, useItemList } from '@/composables/use-item-list';
-import { UseItemDetailsReturn, useItemDetails } from '@/composables/use-item-details';
-import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 import { UseItemAvailabilityReturn, useItemAvailability } from '@/composables/use-item-availability';
-import AppModal from '@/components/base/AppModal/AppModal.vue';
-import AppLoader from '@/components/base/AppLoader.vue';
+import { UseItemDetailsReturn, useItemDetails } from '@/composables/use-item-details';
+import { UseItemTypeListReturn, useItemList } from '@/composables/use-item-list';
+import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
+import AppLoader from '@/components/Base/AppLoader.vue';
+import AppModal from '@/components/Base/AppModal/AppModal.vue';
 import ItemDetails from '@/components/ItemDetails/ItemDetails.vue';
 import ItemDetailsAdditional from '@/components/ItemDetails/ItemDetailsAdditional.vue';
 import ItemDetailsAvailability from '@/components/ItemDetails/ItemDetailsAvailability.vue';

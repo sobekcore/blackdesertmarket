@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import { Ref, defineProps, onBeforeUnmount, ref, watch } from 'vue';
-import { Router, RouteLocationNormalizedLoaded, useRouter, useRoute } from 'vue-router';
+import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from 'vue-router';
 import { BlackDesertItem } from '@blackdesertmarket/interfaces';
 import { useLocationStore } from '@/stores/location';
 import { UseCategoryItemListReturn, useCategoryItemList } from '@/composables/use-category-item-list';

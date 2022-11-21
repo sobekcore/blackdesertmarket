@@ -21,8 +21,8 @@
 
 <script lang="ts" setup>
 import { Ref, defineEmits, defineProps, ref, watch } from 'vue';
-import AppIcon from '@/components/base/AppIcon.vue';
-import AppDropdownIcon from '@/components/base/AppDropdownIcon.vue';
+import AppDropdownIcon from '@/components/Base/AppDropdownIcon.vue';
+import AppIcon from '@/components/Base/AppIcon.vue';
 
 const emit = defineEmits({
   effect: null,

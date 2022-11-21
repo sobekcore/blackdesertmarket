@@ -29,16 +29,16 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref, PropType, defineEmits, defineProps, ref } from 'vue';
+import { PropType, Ref, defineEmits, defineProps, ref } from 'vue';
 import { BlackDesertItem, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { VueAttributeClass } from '@/types/attributes-vue';
 import { UseConfigReturn, useConfig } from '@/composables/use-config';
-import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 import {
-  UseItemEnhancementReturn,
   ItemEnhancementNameData,
+  UseItemEnhancementReturn,
   useItemEnhancement,
 } from '@/composables/use-item-enhancement';
+import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemName from '@/components/ListItem/ListItemName.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';

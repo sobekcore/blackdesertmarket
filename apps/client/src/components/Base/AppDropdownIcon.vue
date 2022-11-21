@@ -3,10 +3,10 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, ComputedRef, defineProps, computed } from 'vue';
+import { ComputedRef, PropType, computed, defineProps } from 'vue';
 import { VueAttributeClass } from '@/types/attributes-vue';
 import { useDropdownIcon } from '@/composables/use-dropdown-icon';
-import AppIcon from '@/components/base/AppIcon.vue';
+import AppIcon from '@/components/Base/AppIcon.vue';
 
 const props = defineProps({
   active: {

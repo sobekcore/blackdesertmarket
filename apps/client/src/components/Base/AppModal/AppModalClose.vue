@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import { defineEmits } from 'vue';
-import AppIcon from '@/components/base/AppIcon.vue';
+import AppIcon from '@/components/Base/AppIcon.vue';
 
 const emit = defineEmits({
   close: null,

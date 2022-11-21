@@ -19,14 +19,14 @@
 
 <script lang="ts" setup>
 import { ComputedRef, Ref, ref } from 'vue';
-import { useDateFormat } from '@vueuse/core';
 import { BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
+import { useDateFormat } from '@vueuse/core';
+import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 import { UseQueueItemListReturn, useQueueItemList } from '@/composables/use-queue-item-list';
-import { useNumberFormat, UseNumberFormatReturn } from '@/composables/use-number-format';
+import ItemDetailsModal from '@/components/ItemDetails/ItemDetailsModal.vue';
 import ListItem from '@/components/ListItem/ListItem.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';
 import ListItemSeparator from '@/components/ListItem/ListItemSeparator.vue';
-import ItemDetailsModal from '@/components/ItemDetails/ItemDetailsModal.vue';
 
 const queueItemList: UseQueueItemListReturn = useQueueItemList();
 const numberFormat: UseNumberFormatReturn = useNumberFormat();

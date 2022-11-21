@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, PropType } from 'vue';
+import { PropType, defineProps } from 'vue';
 import { VueAttributeClass } from '@/types/attributes-vue';
 
 const props = defineProps({

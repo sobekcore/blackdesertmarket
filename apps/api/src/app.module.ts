@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { CoreModule } from '@/core.module';
-import { ListModule } from '@/modules/list/list.module';
 import { ItemModule } from '@/modules/item/item.module';
+import { ListModule } from '@/modules/list/list.module';
 import { AppController } from '@/app.controller';
+import { CoreModule } from '@/core.module';
 
 @Module({
   imports: [CoreModule, ListModule, ItemModule],

@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import AppMarketplaceView from '@/components/base/AppMarketplaceView.vue';
-import AppMarketplaceProvider from '@/components/base/AppMarketplaceProvider.vue';
+import AppMarketplaceProvider from '@/components/Base/AppMarketplaceProvider.vue';
+import AppMarketplaceView from '@/components/Base/AppMarketplaceView.vue';
 import CategorySidemenu from '@/components/CategorySidemenu/CategorySidemenu.vue';
 </script>

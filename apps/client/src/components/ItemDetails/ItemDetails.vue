@@ -8,8 +8,8 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref, PropType, defineProps, ref } from 'vue';
-import { BlackDesertItemType, BlackDesertItemDetails } from '@blackdesertmarket/interfaces';
+import { PropType, Ref, defineProps, ref } from 'vue';
+import { BlackDesertItemDetails, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { UseConfigReturn, useConfig } from '@/composables/use-config';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemName from '@/components/ListItem/ListItemName.vue';

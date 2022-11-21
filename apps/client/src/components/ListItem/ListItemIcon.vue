@@ -14,7 +14,7 @@
 <script lang="ts" setup>
 import { PropType, defineProps } from 'vue';
 import { VueAttributeClass } from '@/types/attributes-vue';
-import AppIcon from '@/components/base/AppIcon.vue';
+import AppIcon from '@/components/Base/AppIcon.vue';
 
 const props = defineProps({
   src: {

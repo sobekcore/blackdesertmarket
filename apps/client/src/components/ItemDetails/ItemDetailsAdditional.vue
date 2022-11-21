@@ -3,5 +3,5 @@
 </template>
 
 <script lang="ts" setup>
-import AppComingSoon from '@/components/base/AppComingSoon.vue';
+import AppComingSoon from '@/components/Base/AppComingSoon.vue';
 </script>

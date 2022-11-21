@@ -1,5 +1,5 @@
-import { IsNotEmpty, IsOptional, IsString, IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class FindTypesByIdParamsDto {
   @Type(() => Number)

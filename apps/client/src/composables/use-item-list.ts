@@ -1,9 +1,9 @@
-import { usePreferencesStore } from '@/stores/preferences';
-import { BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { getFirstElement } from '@blackdesertmarket/helpers';
-import { useMarketApi } from '@/composables/use-market-api';
-import { HttpMethod } from '@/enums/http';
+import { BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { ComposableException } from '@/exceptions/composable-exception';
+import { HttpMethod } from '@/enums/http';
+import { usePreferencesStore } from '@/stores/preferences';
+import { useMarketApi } from '@/composables/use-market-api';
 
 export interface UseItemTypeListReturn {
   fetch(): Promise<BlackDesertItemType[]>;

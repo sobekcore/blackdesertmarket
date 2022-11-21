@@ -1,11 +1,11 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
 import HotView from '@/views/HotView.vue';
-import QueueView from '@/views/QueueView.vue';
-import ListView from '@/views/ListView.vue';
-import ItemView from '@/views/ItemView.vue';
 import ItemDetailsView from '@/views/ItemDetailsView.vue';
+import ItemView from '@/views/ItemView.vue';
+import ListView from '@/views/ListView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
+import QueueView from '@/views/QueueView.vue';
 
 const routes: RouteRecordRaw[] = [
   {

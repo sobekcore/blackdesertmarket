@@ -15,4 +15,6 @@ const props = defineProps({
     type: [String, Object] as PropType<VueAttributeClass>,
   },
 });
+
+console.log(props.class);
 </script>

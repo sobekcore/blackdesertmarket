@@ -32,13 +32,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ComputedRef, Ref, defineEmits, defineProps, nextTick, onMounted, ref, computed } from 'vue';
-import { UseDraggableReturn, useElementBounding, useDraggable, useResizeObserver, clamp } from '@vueuse/core';
+import { ComputedRef, Ref, computed, defineEmits, defineProps, nextTick, onMounted, ref } from 'vue';
+import { UseDraggableReturn, clamp, useDraggable, useElementBounding, useResizeObserver } from '@vueuse/core';
 import { UseFocusTrapReturn, useFocusTrap } from '@vueuse/integrations/useFocusTrap';
 import { VueAttributeStyle } from '@/types/attributes-vue';
-import AppModalBackdrop from '@/components/base/AppModal/AppModalBackdrop.vue';
-import AppModalTitle from '@/components/base/AppModal/AppModalTitle.vue';
-import AppModalClose from '@/components/base/AppModal/AppModalClose.vue';
+import AppModalBackdrop from '@/components/Base/AppModal/AppModalBackdrop.vue';
+import AppModalClose from '@/components/Base/AppModal/AppModalClose.vue';
+import AppModalTitle from '@/components/Base/AppModal/AppModalTitle.vue';
 
 const emit = defineEmits({
   close: null,

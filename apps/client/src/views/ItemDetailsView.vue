@@ -4,7 +4,7 @@
 
 <script lang="ts" setup>
 import { Ref, ref } from 'vue';
-import { Router, RouteLocationNormalizedLoaded, useRouter, useRoute } from 'vue-router';
+import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from 'vue-router';
 import { ComponentException } from '@/exceptions/component-exception';
 import ItemDetailsModal from '@/components/ItemDetails/ItemDetailsModal.vue';
 

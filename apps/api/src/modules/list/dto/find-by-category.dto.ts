@@ -1,5 +1,5 @@
-import { IsNotEmpty, IsOptional, IsString, IsNumber, Max, Min } from 'class-validator';
 import { Type } from 'class-transformer';
+import { IsNotEmpty, IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
 
 export class FindByCategoryParamsDto {
   @Type(() => Number)
