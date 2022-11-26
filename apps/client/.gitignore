@@ -8,5 +8,8 @@
 # Logs
 npm-debug.log*
 
-# IDEs and editors
+# Tests
+/coverage
+
+# Configs
 /.idea

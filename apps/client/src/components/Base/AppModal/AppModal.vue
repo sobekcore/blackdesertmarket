@@ -64,6 +64,8 @@ const modal: Ref<HTMLElement | null> = ref(null);
 const focus: Ref<HTMLElement | null> = ref(null);
 const handle: Ref<HTMLElement | null> = ref(null);
 
+const fallbackFocus: Ref<HTMLElement> = ref((document.activeElement as HTMLElement) || document.body);
+
 let x: Ref<number> = ref(0);
 let y: Ref<number> = ref(0);
 
@@ -72,15 +74,16 @@ const { width, height } = useElementBounding(modal);
 
 const focusTrap: UseFocusTrapReturn = useFocusTrap(modal, {
   escapeDeactivates: false,
+  fallbackFocus: fallbackFocus.value,
   initialFocus: (): HTMLElement => {
-    return focus.value || document.body;
+    return focus.value || fallbackFocus.value;
   },
 });
 
 if (props.draggable) {
   const draggable: UseDraggableReturn = useDraggable(modal, {
-    handle: handle,
     preventDefault: true,
+    handle: handle.value,
     onStart: (): void => {
       document.body.classList.add('cursor-move');
     },

@@ -2,19 +2,19 @@
   "name": "@blackdesertmarket/api",
   "description": "API wrapper package for the Black Desert market powered by multiple sources",
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "nest build",
-    "lint": "eslint \"{src,test}/**/*.ts\" --fix",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "fix": "npm run lint -s && npm run format -s",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "prebuild": "rimraf dist",
+    "build": "nest build",
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "fix": "npm run lint -s && npm run format -s",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register $(npm bin)/jest --runInBand"
   },
   "dependencies": {
     "@blackdesertmarket/helpers": "*",
