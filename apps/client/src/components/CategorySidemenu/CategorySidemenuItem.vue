@@ -2,6 +2,7 @@
   <li>
     <slot name="before" :active="isActive"></slot>
     <button
+      data-test="button"
       :class="{
         'flex w-full cursor-pointer items-center justify-between border p-3': true,
         'button-inactive-state': !isActive,

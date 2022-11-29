@@ -9,7 +9,7 @@ describe('AppModalClose', () => {
   });
 
   it('should emit close event on click', () => {
-    const button: DOMWrapper<HTMLButtonElement> = wrapper.find('button');
+    const button: DOMWrapper<HTMLElement> = wrapper.find('[data-test="button"]');
     button.trigger('click');
 
     const emitted: Record<string, unknown[]> = wrapper.emitted();

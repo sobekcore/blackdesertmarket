@@ -5,10 +5,10 @@ module.exports = {
   importOrder: [
     '^@nestjs',
     '<THIRD_PARTY_MODULES>',
+    '^@test/(.*)$',
     '^@/interfaces/(.*)$',
     '^@/exceptions/(.*)$',
     '^@/enums/(.*)$',
-    '^@/mocks/(.*)$',
     '^@/modules/(.*)$',
     '^@/filters/(.*)$',
     '^@/(.*)$',

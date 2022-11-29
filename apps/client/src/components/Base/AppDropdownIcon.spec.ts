@@ -22,7 +22,7 @@ describe('AppDropdownIcon', () => {
     expect(iconWrapper.exists()).toBeTruthy();
   });
 
-  it('should pass prop to AppIcon depending on class prop', () => {
+  it('should pass class prop to AppIcon depending on class prop', () => {
     wrapper = shallowMount(AppDropdownIcon, {
       props: {
         active: DROPDOWN_ICON_ACTIVE,

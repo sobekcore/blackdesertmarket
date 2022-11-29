@@ -4,6 +4,7 @@
     <div ref="container" class="fixed inset-0">
       <div ref="modal" :style="modalStyle" class="fixed">
         <div
+          data-test="inner"
           :class="{
             'flex flex-col overflow-hidden rounded-lg border border-brand-700 shadow-xl': true,
             'h-[90vh] w-[90vw]': props.fullsize,

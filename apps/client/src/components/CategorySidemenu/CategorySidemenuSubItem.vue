@@ -1,6 +1,7 @@
 <template>
   <li>
     <button
+      data-test="button"
       :class="{
         'flex w-full rounded-sm border py-3 px-6 hocus:text-dark-900': true,
         'button-inactive-state': !isActive,
@@ -83,6 +84,7 @@ watch(
 
     itemListActiveRoute.value = matchMainCategory && matchSubCategory;
   },
+  { immediate: process.env.NODE_ENV === 'test' },
 );
 </script>
 

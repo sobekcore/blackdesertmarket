@@ -10,8 +10,9 @@ module.exports = {
   moduleNameMapper: {
     '^uuid$': require.resolve('uuid'),
     '@/(.*)': '<rootDir>/src/$1',
+    '@test/(.*)': '<rootDir>/test/$1',
   },
   collectCoverageFrom: ['<rootDir>/src/**/*.(t|j)s'],
-  coveragePathIgnorePatterns: ['<rootDir>/src/main.ts', '.module.ts', '.mock.ts'],
+  coveragePathIgnorePatterns: ['<rootDir>/src/main.ts', '.module.ts'],
   coverageDirectory: 'coverage',
 };

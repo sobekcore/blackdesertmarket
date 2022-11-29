@@ -55,7 +55,9 @@ describe('AppModal', () => {
 
   it('should handle close event from AppModalClose', () => {
     const modalCloseWrapper: VueWrapper = wrapper.findComponent(AppModalClose);
-    modalCloseWrapper.trigger('close');
+
+    const component: ComponentInternalInstance = modalCloseWrapper.getCurrentComponent();
+    component.emit('close');
 
     const emitted: Record<string, unknown[]> = modalCloseWrapper.emitted();
     const [events] = emitted.close;
@@ -63,7 +65,7 @@ describe('AppModal', () => {
     expect(Array.isArray(events)).toBeTruthy();
   });
 
-  it('should pass prop to AppModalTitle depending on title prop', () => {
+  it('should pass title prop to AppModalTitle depending on title prop', () => {
     wrapper = shallowMount(AppModal, {
       props: {
         title: MODAL_TITLE,
@@ -85,21 +87,10 @@ describe('AppModal', () => {
       },
     });
 
-    const component: ComponentInternalInstance = wrapper.getCurrentComponent();
-    const modal: unknown = component.refs.modal;
+    const inner: DOMWrapper<HTMLElement> = wrapper.find('[data-test="inner"]');
 
-    if (!(modal instanceof HTMLElement)) {
-      throw new UnitTestException('Could not find modal ref in AppModal');
-    }
-
-    const inner: HTMLDivElement | null = modal.querySelector('div');
-
-    if (!(inner instanceof HTMLDivElement)) {
-      throw new UnitTestException('Could not find inner HTMLDivElement element');
-    }
-
-    expect(inner.classList.contains('h-[90vh]')).toBeTruthy();
-    expect(inner.classList.contains('w-[90vw]')).toBeTruthy();
+    expect(inner.classes()).toContain('h-[90vh]');
+    expect(inner.classes()).toContain('w-[90vw]');
   });
 
   it('should contain class depending on draggable prop', () => {

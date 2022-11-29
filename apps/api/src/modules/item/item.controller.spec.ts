@@ -7,11 +7,11 @@ import { isValidBlackDesertItemDetails, isValidBlackDesertItemType } from '@blac
 import { AxiosResponse } from 'axios';
 import { createReadStream } from 'fs';
 import { Observable, of } from 'rxjs';
+import { mockAxiosResponse } from '@test/mocks/axios-response.mock';
+import { mockExternalMarketItemDetails } from '@test/mocks/external-market-item-details.mock';
+import { mockExternalMarketItemType } from '@test/mocks/external-market-item-type.mock';
 import { ControllerResponse } from '@/interfaces/controller-response.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
-import { mockAxiosResponse } from '@/mocks/axios-response.mock';
-import { mockExternalMarketItemDetails } from '@/mocks/external-market-item-details.mock';
-import { mockExternalMarketItemType } from '@/mocks/external-market-item-type.mock';
 import { ExternalMarketModule } from '@/modules/external-market/external-market.module';
 import { FindDetailsByIdParamsDto, FindDetailsByIdQueryDto } from '@/modules/item/dto/find-details-by-id.dto';
 import { FindIconByIdParamsDto } from '@/modules/item/dto/find-icon-by-id.dto';
@@ -67,7 +67,7 @@ describe('ItemController', () => {
   describe('findIconById', () => {
     it('should return StreamableFile with type image/png on valid response', async () => {
       jest.spyOn(httpService, 'get').mockImplementationOnce((): Observable<AxiosResponse> => {
-        return of(mockAxiosResponse(createReadStream('src/mocks/external-market-item-icon.mock.png')));
+        return of(mockAxiosResponse(createReadStream('test/mocks/external-market-item-icon.mock.png')));
       });
 
       const params: FindIconByIdParamsDto = { id: 5600 };
