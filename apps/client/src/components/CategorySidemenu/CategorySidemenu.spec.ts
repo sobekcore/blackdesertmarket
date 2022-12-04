@@ -8,7 +8,7 @@ import marketCategoriesConfig from '@/configs/market-categories.config';
 import CategorySidemenu from '@/components/CategorySidemenu/CategorySidemenu.vue';
 import CategorySidemenuItem from '@/components/CategorySidemenu/CategorySidemenuItem.vue';
 
-const CATEGORY_SIDEMENU_TITLES: string[] = [
+const MOCK_CATEGORY_SIDEMENU_TITLES: string[] = [
   'Volatile Price Items',
   'In Registration Queue',
   ...marketCategoriesConfig.categories.map((category: MarketCategoriesConfigCategory): string => {
@@ -16,7 +16,7 @@ const CATEGORY_SIDEMENU_TITLES: string[] = [
   }),
 ];
 
-const CATEGORY_SIDEMENU_ICONS: string[] = [
+const MOCK_CATEGORY_SIDEMENU_ICONS: string[] = [
   'images/other/volatile-price-items.png',
   'images/other/in-registration-queue.png',
   ...marketCategoriesConfig.categories.map((category: MarketCategoriesConfigCategory): string => {
@@ -60,7 +60,7 @@ describe('CategorySidemenu', () => {
 
       expect(categorySidemenuItemAttributes).toHaveProperty('title');
 
-      const title: string | undefined = CATEGORY_SIDEMENU_TITLES.find((title: string): boolean => {
+      const title: string | undefined = MOCK_CATEGORY_SIDEMENU_TITLES.find((title: string): boolean => {
         return title === categorySidemenuItemAttributes.title;
       });
 
@@ -78,7 +78,7 @@ describe('CategorySidemenu', () => {
 
       expect(categorySidemenuItemAttributes).toHaveProperty('icon');
 
-      const icon: string | undefined = CATEGORY_SIDEMENU_ICONS.find((icon: string): boolean => {
+      const icon: string | undefined = MOCK_CATEGORY_SIDEMENU_ICONS.find((icon: string): boolean => {
         return icon === categorySidemenuItemAttributes.icon;
       });
 

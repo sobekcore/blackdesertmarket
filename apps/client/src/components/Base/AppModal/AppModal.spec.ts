@@ -6,8 +6,8 @@ import AppModalBackdrop from '@/components/Base/AppModal/AppModalBackdrop.vue';
 import AppModalClose from '@/components/Base/AppModal/AppModalClose.vue';
 import AppModalTitle from '@/components/Base/AppModal/AppModalTitle.vue';
 
-const MODAL_TITLE: string = 'Modal Title';
-const MODAL_CONTENT: string = '<span>Modal Content</span>';
+const MOCK_MODAL_TITLE: string = 'Modal Title';
+const MOCK_MODAL_CONTENT: string = '<span>Modal Content</span>';
 
 describe('AppModal', () => {
   let wrapper: VueWrapper;
@@ -15,7 +15,7 @@ describe('AppModal', () => {
   beforeEach(() => {
     wrapper = shallowMount(AppModal, {
       props: {
-        title: MODAL_TITLE,
+        title: MOCK_MODAL_TITLE,
       },
     });
   });
@@ -41,16 +41,16 @@ describe('AppModal', () => {
   it('should render default slot content', () => {
     wrapper = shallowMount(AppModal, {
       slots: {
-        default: `<div data-slot>${MODAL_CONTENT}</div>`,
+        default: `<div data-slot>${MOCK_MODAL_CONTENT}</div>`,
       },
       props: {
-        title: MODAL_TITLE,
+        title: MOCK_MODAL_TITLE,
       },
     });
 
     const slot: DOMWrapper<HTMLElement> = wrapper.find('[data-slot]');
 
-    expect(slot.element.innerHTML).toBe(MODAL_CONTENT);
+    expect(slot.element.innerHTML).toBe(MOCK_MODAL_CONTENT);
   });
 
   it('should handle close event from AppModalClose', () => {
@@ -68,7 +68,7 @@ describe('AppModal', () => {
   it('should pass title prop to AppModalTitle depending on title prop', () => {
     wrapper = shallowMount(AppModal, {
       props: {
-        title: MODAL_TITLE,
+        title: MOCK_MODAL_TITLE,
       },
     });
 
@@ -76,13 +76,13 @@ describe('AppModal', () => {
     const modalTitleAttributes: Record<string, string> = modalTitleWrapper.attributes();
 
     expect(modalTitleAttributes).toHaveProperty('title');
-    expect(modalTitleAttributes.title).toBe(MODAL_TITLE);
+    expect(modalTitleAttributes.title).toBe(MOCK_MODAL_TITLE);
   });
 
   it('should contain class depending on fullsize prop', () => {
     wrapper = shallowMount(AppModal, {
       props: {
-        title: MODAL_TITLE,
+        title: MOCK_MODAL_TITLE,
         fullsize: true,
       },
     });
@@ -96,7 +96,7 @@ describe('AppModal', () => {
   it('should contain class depending on draggable prop', () => {
     wrapper = shallowMount(AppModal, {
       props: {
-        title: MODAL_TITLE,
+        title: MOCK_MODAL_TITLE,
         draggable: true,
       },
     });

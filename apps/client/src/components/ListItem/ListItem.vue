@@ -4,8 +4,9 @@
 
 <template>
   <li>
-    <div :class="props.class" class="flex rounded bg-dark-400 shadow-md">
+    <div data-test="inner" :class="props.class" class="flex rounded bg-dark-400 shadow-md">
       <button
+        data-test="button"
         class="border-lighten hocus:bg-lighten-sm w-full cursor-pointer rounded border-t py-1.5 px-2"
         @click="triggerListItemEffect"
       >
@@ -18,9 +19,9 @@
           </slot>
           <slot name="append">
             <ListItemSeparator />
-            <ListItemProperty label="Base Price" :value="formatBasePrice(props.item.basePrice)" />
+            <ListItemProperty data-test="price" label="Base Price" :value="formatBasePrice(props.item.basePrice)" />
             <ListItemSeparator />
-            <ListItemProperty label="In Stock" :value="props.item.count" />
+            <ListItemProperty data-test="count" label="In Stock" :value="props.item.count" />
           </slot>
         </span>
       </button>

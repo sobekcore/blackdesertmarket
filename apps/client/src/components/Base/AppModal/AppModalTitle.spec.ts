@@ -1,7 +1,7 @@
 import { VueWrapper, shallowMount } from '@vue/test-utils';
 import AppModalTitle from '@/components/Base/AppModal/AppModalTitle.vue';
 
-const MODAL_TITLE: string = 'Modal Title';
+const MOCK_MODAL_TITLE: string = 'Modal Title';
 
 describe('AppModalClose', () => {
   let wrapper: VueWrapper;
@@ -9,7 +9,7 @@ describe('AppModalClose', () => {
   beforeEach(() => {
     wrapper = shallowMount(AppModalTitle, {
       props: {
-        title: MODAL_TITLE,
+        title: MOCK_MODAL_TITLE,
       },
     });
   });
@@ -17,10 +17,10 @@ describe('AppModalClose', () => {
   it('should render content depending on title prop', () => {
     wrapper = shallowMount(AppModalTitle, {
       props: {
-        title: MODAL_TITLE,
+        title: MOCK_MODAL_TITLE,
       },
     });
 
-    expect(wrapper.text()).toBe(MODAL_TITLE);
+    expect(wrapper.text()).toBe(MOCK_MODAL_TITLE);
   });
 });

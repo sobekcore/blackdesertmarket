@@ -84,7 +84,7 @@ const focusTrap: UseFocusTrapReturn = useFocusTrap(modal, {
 if (props.draggable) {
   const draggable: UseDraggableReturn = useDraggable(modal, {
     preventDefault: true,
-    handle: handle.value,
+    handle: handle,
     onStart: (): void => {
       document.body.classList.add('cursor-move');
     },
