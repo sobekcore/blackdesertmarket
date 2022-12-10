@@ -1,6 +1,6 @@
 import { BlackDesertItemDetails, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItemDetails, mockBlackDesertItemType } from '@blackdesertmarket/mocks';
-import { VueWrapper, shallowMount } from '@vue/test-utils';
+import { VueWrapper, flushPromises, shallowMount } from '@vue/test-utils';
 import { mockPlugins } from '@test/mocks/plugins.mock';
 import ItemDetails from '@/components/ItemDetails/ItemDetails.vue';
 import ItemDetailsAdditional from '@/components/ItemDetails/ItemDetailsAdditional.vue';
@@ -68,7 +68,7 @@ describe('ItemDetails', () => {
       },
     });
 
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     const itemDetailsOverviewWrapper: VueWrapper = wrapper.findComponent(ItemDetailsOverview);
     const itemDetailsOverviewVM: Record<string, any> = itemDetailsOverviewWrapper.vm as Record<string, any>;
@@ -88,7 +88,7 @@ describe('ItemDetails', () => {
       },
     });
 
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     const itemDetailsOverviewWrapper: VueWrapper = wrapper.findComponent(ItemDetailsOverview);
     const itemDetailsOverviewVM: Record<string, any> = itemDetailsOverviewWrapper.vm as Record<string, any>;

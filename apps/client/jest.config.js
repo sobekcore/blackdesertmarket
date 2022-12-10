@@ -10,6 +10,6 @@ module.exports = {
     '@test/(.*)': '<rootDir>/test/$1',
   },
   collectCoverageFrom: ['<rootDir>/src/**/*.(t|j)s', '<rootDir>/src/**/*.vue'],
-  coveragePathIgnorePatterns: ['<rootDir>/src/main.ts'],
+  coveragePathIgnorePatterns: ['<rootDir>/src/layouts', '<rootDir>/src/main.ts', '<rootDir>/src/App.vue'],
   coverageDirectory: 'coverage',
 };
