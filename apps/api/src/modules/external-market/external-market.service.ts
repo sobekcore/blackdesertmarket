@@ -1,13 +1,13 @@
+import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { HttpService } from '@nestjs/axios';
-import { Observable } from 'rxjs';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { Observable } from 'rxjs';
 import { ExternalMarketMeta, ExternalMarketParams } from '@/interfaces/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
+import { ExternalMarketAsset, ExternalMarketEndpoint } from '@/enums/external-market.enum';
 import { HttpHeader } from '@/enums/http.enum';
 import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
-import { ExternalMarketAsset, ExternalMarketEndpoint } from '@/enums/external-market.enum';
 
 @Injectable()
 export class ExternalMarketService {
@@ -62,16 +62,14 @@ export class ExternalMarketService {
   }
 
   public getExternalMarketAsset(endpoint: string, assetType: ExternalMarketAsset): Observable<AxiosResponse> {
+    const url: URL = this.getExternalMarketCdnUrl(endpoint);
     const config: AxiosRequestConfig = {};
 
     if (assetType === ExternalMarketAsset.IMAGE) {
-      const url: URL = this.getExternalMarketCdnUrl(endpoint);
       config.responseType = 'stream';
-
-      return this.httpService.get(url.href, config);
     }
 
-    throw new ExternalMarketException(`Could not fetch asset ${endpoint} from external CDN`);
+    return this.httpService.get(url.href, config);
   }
 
   private getExternalMarketUrl(endpoint: string, region: string): URL {

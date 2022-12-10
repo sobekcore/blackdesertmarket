@@ -1,6 +1,7 @@
 <template>
   <li>
     <button
+      data-test="button"
       :class="{
         'flex w-full rounded-sm border py-3 px-6 hocus:text-dark-900': true,
         'button-inactive-state': !isActive,
@@ -16,8 +17,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ComputedRef, Ref, defineEmits, defineProps, watch, ref, computed } from 'vue';
-import { Router, RouteLocationNamedRaw, useRouter, useLink } from 'vue-router';
+import { ComputedRef, Ref, computed, defineEmits, defineProps, ref, watch } from 'vue';
+import { RouteLocationNamedRaw, Router, useLink, useRouter } from 'vue-router';
 import { useLocationStore } from '@/stores/location';
 
 const emit = defineEmits({
@@ -83,6 +84,7 @@ watch(
 
     itemListActiveRoute.value = matchMainCategory && matchSubCategory;
   },
+  { immediate: process.env.NODE_ENV === 'test' },
 );
 </script>
 

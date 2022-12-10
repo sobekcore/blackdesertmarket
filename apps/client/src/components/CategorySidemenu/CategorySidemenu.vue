@@ -42,8 +42,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ComputedRef, Ref, inject, ref, computed } from 'vue';
-import { Router, RouteLocationNamedRaw, useLink, useRouter } from 'vue-router';
+import { ComputedRef, Ref, computed, inject, ref } from 'vue';
+import { RouteLocationNamedRaw, Router, useLink, useRouter } from 'vue-router';
 import { MarketCategoriesConfig, MarketCategoriesConfigCategory } from '@/interfaces/market-config';
 import CategorySidemenuItem from '@/components/CategorySidemenu/CategorySidemenuItem.vue';
 import CategorySidemenuSubItem from '@/components/CategorySidemenu/CategorySidemenuSubItem.vue';

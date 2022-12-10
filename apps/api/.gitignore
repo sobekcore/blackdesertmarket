@@ -17,5 +17,5 @@ npm-debug.log*
 /coverage
 /.nyc_output
 
-# IDEs and editors
+# Configs
 /.idea

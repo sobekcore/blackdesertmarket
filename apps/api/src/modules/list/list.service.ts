@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { Observable, lastValueFrom, map } from 'rxjs';
-import { AxiosResponse } from 'axios';
 import { BlackDesertItem, BlackDesertItemHot, BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
+import { AxiosResponse } from 'axios';
+import { Observable, lastValueFrom, map } from 'rxjs';
 import {
-  ExternalMarketMeta,
-  ExternalMarketParams,
   ExternalMarketItem,
   ExternalMarketItemHot,
   ExternalMarketItemQueue,
+  ExternalMarketMeta,
+  ExternalMarketParams,
 } from '@/interfaces/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
 import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
-import { ItemService } from '@/modules/item/item.service';
 import { ExternalMarketService } from '@/modules/external-market/external-market.service';
+import { ItemService } from '@/modules/item/item.service';
 
 @Injectable()
 export class ListService {
@@ -31,6 +31,10 @@ export class ListService {
           return response.data.hotList ? response.data.hotList : [];
         }),
         map((data: unknown[]): BlackDesertItemHot[] => {
+          if (!data.length) {
+            throw new ExternalMarketException('Response from external market did contain invalid data');
+          }
+
           data.forEach((itemHot: unknown): void => {
             if (!this.itemService.isValidExternalMarketItemHot(itemHot)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
@@ -59,6 +63,10 @@ export class ListService {
           return response.data._waitList ? response.data._waitList : [];
         }),
         map((data: unknown[]): BlackDesertItemQueue[] => {
+          if (!data.length) {
+            throw new ExternalMarketException('Response from external market did contain invalid data');
+          }
+
           data.forEach((itemQueue: unknown): void => {
             if (!this.itemService.isValidExternalMarketItemQueue(itemQueue)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
@@ -97,6 +105,10 @@ export class ListService {
           return response.data.marketList ? response.data.marketList : [];
         }),
         map((data: unknown[]): BlackDesertItem[] => {
+          if (!data.length) {
+            throw new ExternalMarketException('Response from external market did contain invalid data');
+          }
+
           data.forEach((item: unknown): void => {
             if (!this.itemService.isValidExternalMarketItem(item)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');

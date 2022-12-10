@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class FindHotItemsDTOQuery {
+export class FindHotItemsQueryDto {
   @IsString()
   @IsNotEmpty()
   @IsOptional()

@@ -11,12 +11,12 @@
           <ListItemProperty>
             <template #label>
               <span>Base Price</span>
-              <span class="flex-grow"></span>
+              <span class="flex-grow" />
               <span>({{ formatFluctuationPrice(item) }})</span>
             </template>
             <template #value>
               <AppIcon :src="getFluctuationTypeIcon(item)" class="h-[20px] drop-shadow" />
-              <span class="flex-grow"></span>
+              <span class="flex-grow" />
               <span>{{ formatBasePrice(item.basePrice) }}</span>
             </template>
           </ListItemProperty>
@@ -35,14 +35,14 @@
 <script lang="ts" setup>
 import { Ref, ref } from 'vue';
 import { BlackDesertItemHot } from '@blackdesertmarket/interfaces';
+import { UseFluctuationTypeReturn, useFluctuationType } from '@/composables/use-fluctuation-type';
 import { UseHotItemListReturn, useHotItemList } from '@/composables/use-hot-item-list';
 import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
-import { UseFluctuationTypeReturn, useFluctuationType } from '@/composables/use-fluctuation-type';
-import AppIcon from '@/components/base/AppIcon.vue';
+import AppIcon from '@/components/Base/AppIcon.vue';
+import ItemDetailsModal from '@/components/ItemDetails/ItemDetailsModal.vue';
 import ListItem from '@/components/ListItem/ListItem.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';
 import ListItemSeparator from '@/components/ListItem/ListItemSeparator.vue';
-import ItemDetailsModal from '@/components/ItemDetails/ItemDetailsModal.vue';
 
 const hotItemList: UseHotItemListReturn = useHotItemList();
 const numberFormat: UseNumberFormatReturn = useNumberFormat();

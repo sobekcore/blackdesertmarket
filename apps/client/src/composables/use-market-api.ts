@@ -1,5 +1,5 @@
-import { AxiosResponse } from 'axios';
 import { StrictUseAxiosReturn, useAxios } from '@vueuse/integrations/useAxios';
+import { AxiosResponse } from 'axios';
 import { MarketApiResponse } from '@/interfaces/market-api-response';
 import { HttpMethod } from '@/enums/http';
 import { UseConfigReturn, useConfig } from '@/composables/use-config';

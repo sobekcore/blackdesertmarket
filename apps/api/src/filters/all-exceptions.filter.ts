@@ -1,4 +1,4 @@
-import { Catch, ArgumentsHost, ExceptionFilter, HttpStatus, HttpException } from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
 import { HttpArgumentsHost } from '@nestjs/common/interfaces';
 import { Response } from 'express';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
@@ -18,18 +18,16 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const messages: string[] = [];
 
     try {
-      if (!messages.length) {
-        if (exception instanceof HttpException) {
-          status = exception.getStatus();
-          code = this.extractExceptionCode(exception);
-          messages.push(...this.extractExceptionMessages(exception));
-        }
+      if (exception instanceof HttpException) {
+        status = exception.getStatus();
+        code = this.extractExceptionCode(exception);
+        messages.push(...this.extractExceptionMessages(exception));
+      }
 
-        if (!messages.length) {
-          status = this.defaultExceptionStatus;
-          code = this.defaultExceptionCode;
-          messages.push(this.defaultExceptionMessage);
-        }
+      if (!messages.length) {
+        status = this.defaultExceptionStatus;
+        code = this.defaultExceptionCode;
+        messages.push(this.defaultExceptionMessage);
       }
     } catch {
       status = this.defaultExceptionStatus;
