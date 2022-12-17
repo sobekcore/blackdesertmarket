@@ -14,6 +14,7 @@ export function mockExternalMarketItemType(): ExternalMarketItemType {
     mainCategory: 25,
     subCategory: 2,
     chooseKey: 0,
+    totalTradeCount: 1000,
   };
 }
 
@@ -27,6 +28,7 @@ export function mockExternalMarketItemHot(): ExternalMarketItemHot {
     mainCategory: 25,
     subCategory: 2,
     chooseKey: 0,
+    totalTradeCount: 1000,
     fluctuationType: 1,
     fluctuationPrice: 500,
   };
@@ -42,6 +44,7 @@ export function mockExternalMarketItemQueue(): ExternalMarketItemQueue {
     mainCategory: 25,
     subCategory: 2,
     chooseKey: 0,
+    totalTradeCount: 1000,
     _waitEndTime: 1666389600,
   };
 }

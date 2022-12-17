@@ -9,6 +9,7 @@ export function mockExternalMarketItemDetails(): ExternalMarketItemDetails {
     marketConditionList: [mockExternalMarketItemDetailsAvailability()],
     resultMsg: '[{ "days": "2022-10-22", "value": 3000 }]',
     basePrice: 3000,
+    biddingSellCount: 1000,
   };
 }
 

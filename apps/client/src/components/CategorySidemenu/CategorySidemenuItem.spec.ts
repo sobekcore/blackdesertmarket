@@ -112,7 +112,6 @@ describe('CategorySidemenuItem', () => {
 
     const button: DOMWrapper<HTMLElement> = wrapper.find('[data-test="button"]');
 
-    expect(button.classes()).toContain('border-lighten');
     expect(button.classes()).toContain('button-active-state');
   });
 });

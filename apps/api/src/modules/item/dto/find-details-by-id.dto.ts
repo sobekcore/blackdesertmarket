@@ -1,5 +1,5 @@
-import { Type } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
 
 export class FindDetailsByIdParamsDto {
   @Type(() => Number)
@@ -14,6 +14,11 @@ export class FindDetailsByIdParamsDto {
 }
 
 export class FindDetailsByIdQueryDto {
+  @Transform(({ value }) => String(value) === 'true')
+  @IsBoolean()
+  @IsOptional()
+  public readonly extended?: boolean;
+
   @IsString()
   @IsNotEmpty()
   @IsOptional()

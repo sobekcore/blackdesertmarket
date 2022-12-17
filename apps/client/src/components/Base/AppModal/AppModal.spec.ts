@@ -89,8 +89,7 @@ describe('AppModal', () => {
 
     const inner: DOMWrapper<HTMLElement> = wrapper.find('[data-test="inner"]');
 
-    expect(inner.classes()).toContain('h-[90vh]');
-    expect(inner.classes()).toContain('w-[90vw]');
+    expect(inner.classes()).toContain('modal-active-fullsize');
   });
 
   it('should contain class depending on draggable prop', () => {
@@ -108,6 +107,6 @@ describe('AppModal', () => {
       throw new UnitTestException('Could not find handle ref in AppModal');
     }
 
-    expect(handle.classList.contains('cursor-move')).toBeTruthy();
+    expect(handle.classList.contains('modal-handle-draggable')).toBeTruthy();
   });
 });

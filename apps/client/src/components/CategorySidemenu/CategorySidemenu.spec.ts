@@ -1,4 +1,4 @@
-import { ComponentInternalInstance } from 'vue';
+import { ComponentInternalInstance, ComponentPublicInstance } from 'vue';
 import { VueWrapper, shallowMount } from '@vue/test-utils';
 import { mockPlugins } from '@test/mocks/plugins.mock';
 import { mockProvide } from '@test/mocks/provide.mock';
@@ -8,21 +8,13 @@ import marketCategoriesConfig from '@/configs/market-categories.config';
 import CategorySidemenu from '@/components/CategorySidemenu/CategorySidemenu.vue';
 import CategorySidemenuItem from '@/components/CategorySidemenu/CategorySidemenuItem.vue';
 
-const MOCK_CATEGORY_SIDEMENU_TITLES: string[] = [
-  'Volatile Price Items',
-  'In Registration Queue',
-  ...marketCategoriesConfig.categories.map((category: MarketCategoriesConfigCategory): string => {
-    return category.title;
-  }),
-];
+const MOCK_CATEGORY_SIDEMENU_TITLES: string[] = marketCategoriesConfig.categories.map(
+  (category: MarketCategoriesConfigCategory): string => category.title,
+);
 
-const MOCK_CATEGORY_SIDEMENU_ICONS: string[] = [
-  'images/other/volatile-price-items.png',
-  'images/other/in-registration-queue.png',
-  ...marketCategoriesConfig.categories.map((category: MarketCategoriesConfigCategory): string => {
-    return category.icon;
-  }),
-];
+const MOCK_CATEGORY_SIDEMENU_ICONS: string[] = marketCategoriesConfig.categories.map(
+  (category: MarketCategoriesConfigCategory): string => category.icon,
+);
 
 describe('CategorySidemenu', () => {
   let wrapper: VueWrapper;
@@ -55,38 +47,42 @@ describe('CategorySidemenu', () => {
   });
 
   it('should pass title prop to CategorySidemenuItem depending on marketCategoriesConfig inject', () => {
-    wrapper.findAllComponents(CategorySidemenuItem).forEach((categorySidemenuItemWrapper: VueWrapper): void => {
-      const categorySidemenuItemAttributes: Record<string, string> = categorySidemenuItemWrapper.attributes();
+    wrapper
+      .findAllComponents<ComponentPublicInstance>('[data-test="config"]')
+      .forEach((categorySidemenuItemWrapper: VueWrapper): void => {
+        const categorySidemenuItemAttributes: Record<string, string> = categorySidemenuItemWrapper.attributes();
 
-      expect(categorySidemenuItemAttributes).toHaveProperty('title');
+        expect(categorySidemenuItemAttributes).toHaveProperty('title');
 
-      const title: string | undefined = MOCK_CATEGORY_SIDEMENU_TITLES.find((title: string): boolean => {
-        return title === categorySidemenuItemAttributes.title;
+        const title: string | undefined = MOCK_CATEGORY_SIDEMENU_TITLES.find((title: string): boolean => {
+          return title === categorySidemenuItemAttributes.title;
+        });
+
+        if (typeof title === 'undefined') {
+          throw new UnitTestException(`Item with title ${categorySidemenuItemAttributes.title} is unrecognized`);
+        }
+
+        expect(categorySidemenuItemAttributes.title).toBe(title);
       });
-
-      if (typeof title === 'undefined') {
-        throw new UnitTestException(`Item with title ${categorySidemenuItemAttributes.title} is unrecognized`);
-      }
-
-      expect(categorySidemenuItemAttributes.title).toBe(title);
-    });
   });
 
   it('should pass icon prop to CategorySidemenuItem depending on marketCategoriesConfig inject', () => {
-    wrapper.findAllComponents(CategorySidemenuItem).forEach((categorySidemenuItemWrapper: VueWrapper): void => {
-      const categorySidemenuItemAttributes: Record<string, string> = categorySidemenuItemWrapper.attributes();
+    wrapper
+      .findAllComponents<ComponentPublicInstance>('[data-test="config"]')
+      .forEach((categorySidemenuItemWrapper: VueWrapper): void => {
+        const categorySidemenuItemAttributes: Record<string, string> = categorySidemenuItemWrapper.attributes();
 
-      expect(categorySidemenuItemAttributes).toHaveProperty('icon');
+        expect(categorySidemenuItemAttributes).toHaveProperty('icon');
 
-      const icon: string | undefined = MOCK_CATEGORY_SIDEMENU_ICONS.find((icon: string): boolean => {
-        return icon === categorySidemenuItemAttributes.icon;
+        const icon: string | undefined = MOCK_CATEGORY_SIDEMENU_ICONS.find((icon: string): boolean => {
+          return icon === categorySidemenuItemAttributes.icon;
+        });
+
+        if (typeof icon === 'undefined') {
+          throw new UnitTestException(`Item with icon ${categorySidemenuItemAttributes.icon} is unrecognized`);
+        }
+
+        expect(categorySidemenuItemAttributes.icon).toBe(icon);
       });
-
-      if (typeof icon === 'undefined') {
-        throw new UnitTestException(`Item with icon ${categorySidemenuItemAttributes.icon} is unrecognized`);
-      }
-
-      expect(categorySidemenuItemAttributes.icon).toBe(icon);
-    });
   });
 });

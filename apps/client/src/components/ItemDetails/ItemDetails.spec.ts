@@ -5,7 +5,7 @@ import { mockPlugins } from '@test/mocks/plugins.mock';
 import ItemDetails from '@/components/ItemDetails/ItemDetails.vue';
 import ItemDetailsAdditional from '@/components/ItemDetails/ItemDetailsAdditional.vue';
 import ItemDetailsAvailability from '@/components/ItemDetails/ItemDetailsAvailability.vue';
-import ItemDetailsOverview from '@/components/ItemDetails/ItemDetailsOverview.vue';
+import ItemDetailsOverview from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverview.vue';
 
 const MOCK_ITEM_DETAILS_ID: number = 5600;
 const MOCK_ITEM_DETAILS_ENHANCEMENT: number = 0;

@@ -25,7 +25,7 @@ export class ListService {
     };
 
     const data: Observable<BlackDesertItemHot[]> = this.marketService
-      .buildExternalMarketRequest(InternalMarketEndpoint.LIST_HOT, {}, meta)
+      .buildRequest(InternalMarketEndpoint.LIST_HOT, {}, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
           return response.data.hotList ? response.data.hotList : [];
@@ -57,7 +57,7 @@ export class ListService {
     };
 
     const data: Observable<BlackDesertItemQueue[]> = this.marketService
-      .buildExternalMarketRequest(InternalMarketEndpoint.LIST_QUEUE, {}, meta)
+      .buildRequest(InternalMarketEndpoint.LIST_QUEUE, {}, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
           return response.data._waitList ? response.data._waitList : [];
@@ -99,7 +99,7 @@ export class ListService {
     };
 
     const data: Observable<BlackDesertItem[]> = this.marketService
-      .buildExternalMarketRequest(InternalMarketEndpoint.LIST, params, meta)
+      .buildRequest(InternalMarketEndpoint.LIST, params, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
           return response.data.marketList ? response.data.marketList : [];

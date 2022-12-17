@@ -1,0 +1,39 @@
+<template>
+  <div
+    data-test="outer"
+    :class="{
+      'my-1.5 rounded': true,
+      'button-inactive-state': !props.active,
+      'button-active-state': props.active,
+    }"
+  >
+    <button class="border-lighten hocus:bg-lighten-sm flex h-full items-center rounded border px-5 text-sm">
+      {{ props.label }}
+    </button>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  label: {
+    type: String,
+    required: true,
+  },
+  active: {
+    type: Boolean,
+    default: false,
+  },
+});
+</script>
+
+<style lang="scss" scoped>
+.button-inactive-state {
+  @apply bg-dark-500;
+}
+
+.button-active-state {
+  @apply bg-brand-400;
+}
+</style>

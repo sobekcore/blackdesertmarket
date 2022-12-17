@@ -1,5 +1,9 @@
 import { Controller, Get, Header, Param, Query, StreamableFile } from '@nestjs/common';
-import { BlackDesertItemDetails, BlackDesertItemType } from '@blackdesertmarket/interfaces';
+import {
+  BlackDesertItemDetails,
+  BlackDesertItemDetailsExtended,
+  BlackDesertItemType,
+} from '@blackdesertmarket/interfaces';
 import { ControllerResponse } from '@/interfaces/controller-response.interface';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { HttpHeader } from '@/enums/http.enum';
@@ -33,10 +37,16 @@ export class ItemController {
   public async findDetailsById(
     @Param() params: FindDetailsByIdParamsDto,
     @Query() query: FindDetailsByIdQueryDto,
-  ): Promise<ControllerResponse<BlackDesertItemDetails>> {
+  ): Promise<ControllerResponse<BlackDesertItemDetails | BlackDesertItemDetailsExtended>> {
     return {
       code: ControllerResponseCode.SUCCESS,
-      data: await this.itemService.findDetailsById(params.id, params.enhancement, query.region, query.language),
+      data: await this.itemService.findDetailsById(
+        params.id,
+        params.enhancement,
+        query.extended,
+        query.region,
+        query.language,
+      ),
     };
   }
 }

@@ -4,6 +4,7 @@ import {
   BlackDesertItem,
   BlackDesertItemDetails,
   BlackDesertItemDetailsAvailability,
+  BlackDesertItemDetailsExtended,
   BlackDesertItemDetailsHistory,
   BlackDesertItemHot,
   BlackDesertItemQueue,
@@ -12,6 +13,11 @@ import {
 import { AxiosResponse } from 'axios';
 import { ReadStream, createReadStream, createWriteStream, existsSync } from 'fs';
 import { Observable, lastValueFrom, map } from 'rxjs';
+import { BlackDesertItemDetailsExtendedOnly } from '@/interfaces/black-desert-item-details.interface';
+import {
+  ExternalMarketRawItemDetails,
+  ExternalMarketRawItemDetailsElement,
+} from '@/interfaces/external-market-raw.interface';
 import {
   ExternalMarketItem,
   ExternalMarketItemDetails,
@@ -23,8 +29,10 @@ import {
   ExternalMarketParams,
 } from '@/interfaces/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
-import { ExternalMarketAsset } from '@/enums/external-market.enum';
+import { ExternalMarketAsset } from '@/enums/external-market-asset.enum';
 import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
+import { ExternalMarketAssetService } from '@/modules/external-market/external-market-asset.service';
+import { ExternalMarketRawService } from '@/modules/external-market/external-market-raw.service';
 import { ExternalMarketService } from '@/modules/external-market/external-market.service';
 
 @Injectable()
@@ -32,6 +40,8 @@ export class ItemService {
   constructor(
     private readonly configService: ConfigService,
     private readonly externalMarketService: ExternalMarketService,
+    private readonly externalMarketRawService: ExternalMarketRawService,
+    private readonly externalMarketAssetService: ExternalMarketAssetService,
   ) {}
 
   public isValidExternalMarketItem(item: unknown): boolean {
@@ -55,7 +65,8 @@ export class ItemService {
       itemType.hasOwnProperty('pricePerOne') &&
       itemType.hasOwnProperty('mainCategory') &&
       itemType.hasOwnProperty('subCategory') &&
-      itemType.hasOwnProperty('chooseKey')
+      itemType.hasOwnProperty('chooseKey') &&
+      itemType.hasOwnProperty('totalTradeCount')
     );
   }
 
@@ -70,6 +81,7 @@ export class ItemService {
       itemHot.hasOwnProperty('mainCategory') &&
       itemHot.hasOwnProperty('subCategory') &&
       itemHot.hasOwnProperty('chooseKey') &&
+      itemHot.hasOwnProperty('totalTradeCount') &&
       itemHot.hasOwnProperty('fluctuationType') &&
       itemHot.hasOwnProperty('fluctuationPrice')
     );
@@ -86,16 +98,23 @@ export class ItemService {
       itemQueue.hasOwnProperty('mainCategory') &&
       itemQueue.hasOwnProperty('subCategory') &&
       itemQueue.hasOwnProperty('chooseKey') &&
+      itemQueue.hasOwnProperty('totalTradeCount') &&
       itemQueue.hasOwnProperty('_waitEndTime')
     );
   }
 
   public isValidExternalMarketItemDetails(itemDetails: unknown): boolean {
     return (
+      itemDetails &&
       itemDetails.hasOwnProperty('marketConditionList') &&
       itemDetails.hasOwnProperty('resultMsg') &&
-      itemDetails.hasOwnProperty('basePrice')
+      itemDetails.hasOwnProperty('basePrice') &&
+      itemDetails.hasOwnProperty('biddingSellCount')
     );
+  }
+
+  public isValidExternalMarketRawItemDetails(itemDetails: unknown): boolean {
+    return itemDetails && itemDetails.hasOwnProperty('resultMsg');
   }
 
   public transformExternalMarketItem(item: ExternalMarketItem): BlackDesertItem {
@@ -118,6 +137,7 @@ export class ItemService {
       mainCategory: itemType.mainCategory,
       subCategory: itemType.subCategory,
       enhancement: itemType.chooseKey,
+      tradeCount: itemType.totalTradeCount,
     };
   }
 
@@ -131,6 +151,7 @@ export class ItemService {
       mainCategory: itemHot.mainCategory,
       subCategory: itemHot.subCategory,
       enhancement: itemHot.chooseKey,
+      tradeCount: itemHot.totalTradeCount,
       fluctuationType: itemHot.fluctuationType,
       fluctuationPrice: itemHot.fluctuationPrice,
     };
@@ -146,6 +167,7 @@ export class ItemService {
       mainCategory: itemQueue.mainCategory,
       subCategory: itemQueue.subCategory,
       enhancement: itemQueue.chooseKey,
+      tradeCount: itemQueue.totalTradeCount,
       endTime: itemQueue._waitEndTime,
     };
   }
@@ -175,7 +197,34 @@ export class ItemService {
       availability: availability,
       history: history,
       basePrice: itemDetails.basePrice,
+      sellCount: itemDetails.biddingSellCount,
     };
+  }
+
+  public transformExternalMarketRawItemDetails(
+    itemDetails: ExternalMarketRawItemDetails,
+    enhancement: number,
+  ): BlackDesertItemDetailsExtendedOnly {
+    const parsedDetails: ExternalMarketRawItemDetailsElement[] = itemDetails.resultMsg
+      .split('|')
+      .map((element: string): ExternalMarketRawItemDetailsElement => {
+        return Object.fromEntries(Object.entries(element.split('-')));
+      });
+
+    for (const oneDetails of parsedDetails) {
+      const oneDetailsEnhancement: number = Number(oneDetails['1']);
+      const oneDetailsRecentPrice: number = Number(oneDetails['8']);
+      const oneDetailsRecentTransaction: number = Number(oneDetails['9']);
+
+      if (oneDetailsEnhancement !== enhancement) {
+        continue;
+      }
+
+      return {
+        recentPrice: oneDetailsRecentPrice,
+        recentTransaction: oneDetailsRecentTransaction,
+      };
+    }
   }
 
   public findTypesById(id: number, region?: string, language?: string): Promise<BlackDesertItemType[]> {
@@ -189,7 +238,7 @@ export class ItemService {
     };
 
     const data: Observable<BlackDesertItemType[]> = this.externalMarketService
-      .buildExternalMarketRequest(InternalMarketEndpoint.ITEM, params, meta)
+      .buildRequest(InternalMarketEndpoint.ITEM, params, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
           return response.data.detailList ? response.data.detailList : [];
@@ -225,8 +274,8 @@ export class ItemService {
       });
     }
 
-    const data: Observable<ReadStream> = this.externalMarketService
-      .getExternalMarketAsset(`img/BDO/item/${id}.png`, ExternalMarketAsset.IMAGE)
+    const data: Observable<ReadStream> = this.externalMarketAssetService
+      .buildRequest(`img/BDO/item/${id}.png`, ExternalMarketAsset.IMAGE)
       .pipe(
         map((response: AxiosResponse): ReadStream => {
           if (!Object.keys(response.data).length) {
@@ -244,12 +293,13 @@ export class ItemService {
     return lastValueFrom(data);
   }
 
-  public findDetailsById(
+  public async findDetailsById(
     id: number,
     enhancement: number,
+    extended?: boolean,
     region?: string,
     language?: string,
-  ): Promise<BlackDesertItemDetails> {
+  ): Promise<BlackDesertItemDetails | BlackDesertItemDetailsExtended> {
     const params: ExternalMarketParams = {
       mainKey: String(id),
       subKey: String(enhancement),
@@ -262,9 +312,8 @@ export class ItemService {
       language: language,
     };
 
-    const data: Observable<BlackDesertItemDetails> = this.externalMarketService
-      .buildExternalMarketRequest(InternalMarketEndpoint.ITEM_DETAILS, params, meta)
-      .pipe(
+    let data: BlackDesertItemDetails | BlackDesertItemDetailsExtended = await lastValueFrom(
+      this.externalMarketService.buildRequest(InternalMarketEndpoint.ITEM_DETAILS, params, meta).pipe(
         map((response: AxiosResponse): unknown => {
           return response.data ? response.data : {};
         }),
@@ -275,8 +324,31 @@ export class ItemService {
 
           return this.transformExternalMarketItemDetails(data as ExternalMarketItemDetails);
         }),
+      ),
+    );
+
+    if (extended) {
+      const additional: BlackDesertItemDetailsExtendedOnly = await lastValueFrom(
+        this.externalMarketRawService.buildRequest(InternalMarketEndpoint.ITEM_DETAILS, params, meta).pipe(
+          map((response: AxiosResponse): unknown => {
+            return response.data ? response.data : '';
+          }),
+          map((additional: unknown): BlackDesertItemDetailsExtendedOnly => {
+            if (!this.isValidExternalMarketRawItemDetails(additional)) {
+              throw new ExternalMarketException('Response from external market did contain invalid data');
+            }
+
+            return this.transformExternalMarketRawItemDetails(additional as ExternalMarketRawItemDetails, enhancement);
+          }),
+        ),
       );
 
-    return lastValueFrom(data);
+      data = {
+        ...data,
+        ...additional,
+      };
+    }
+
+    return data;
   }
 }

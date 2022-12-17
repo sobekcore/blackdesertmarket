@@ -24,12 +24,12 @@ export interface ExternalMarketItemType extends ExternalMarketItemTypeUnused {
   mainCategory: number;
   subCategory: number;
   chooseKey: number;
+  totalTradeCount: number;
 }
 
 interface ExternalMarketItemTypeUnused {
   keyType?: number;
   subKey?: number;
-  totalTradeCount?: number;
 }
 
 export interface ExternalMarketItemHot extends ExternalMarketItemHotUnused {
@@ -41,6 +41,7 @@ export interface ExternalMarketItemHot extends ExternalMarketItemHotUnused {
   mainCategory: number;
   subCategory: number;
   chooseKey: number;
+  totalTradeCount: number;
   fluctuationType: number;
   fluctuationPrice: number;
 }
@@ -49,7 +50,6 @@ interface ExternalMarketItemHotUnused {
   keyType?: number;
   subKey?: number;
   subtype?: number;
-  totalTradeCount?: number;
 }
 
 export interface ExternalMarketItemQueue extends ExternalMarketItemQueueUnused {
@@ -61,6 +61,7 @@ export interface ExternalMarketItemQueue extends ExternalMarketItemQueueUnused {
   mainCategory: number;
   subCategory: number;
   chooseKey: number;
+  totalTradeCount: number;
   _waitEndTime: number;
 }
 
@@ -73,6 +74,7 @@ export interface ExternalMarketItemDetails extends ExternalMarketItemDetailsUnus
   marketConditionList: ExternalMarketItemDetailsAvailability[];
   resultMsg: string;
   basePrice: number;
+  biddingSellCount: number;
 }
 
 interface ExternalMarketItemDetailsUnused {
@@ -86,7 +88,6 @@ interface ExternalMarketItemDetailsUnused {
   sellCountForWorldMarket?: number;
   addBuyRefCountForWorldMarket?: number;
   addBuyCountForWorldMarket?: number;
-  biddingSellCount?: number;
   countValue?: number;
   sellMaxCount?: number;
   buyMaxCount?: number;

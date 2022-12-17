@@ -7,8 +7,8 @@
           data-test="inner"
           :class="{
             'flex flex-col overflow-hidden rounded-lg border border-brand-700 shadow-xl': true,
-            'h-[90vh] w-[90vw]': props.fullsize,
-            'max-h-[90vh] w-[400px] max-w-[90vw]': !props.fullsize,
+            'modal-active-fullsize': props.fullsize,
+            'modal-inactive-fullsize': !props.fullsize,
           }"
         >
           <span ref="focus" aria-label="Modal" tabindex="0"></span>
@@ -16,7 +16,7 @@
             ref="handle"
             :class="{
               'flex items-center bg-dark-400 px-5 py-2 shadow-lg': true,
-              'cursor-move': props.draggable,
+              'modal-handle-draggable': props.draggable,
             }"
           >
             <AppModalTitle :title="props.title" />
@@ -138,3 +138,17 @@ useResizeObserver(modal, (): void => {
   modalDefaultPosition();
 });
 </script>
+
+<style lang="scss" scoped>
+.modal-active-fullsize {
+  @apply h-[90vh] w-[90vw];
+}
+
+.modal-inactive-fullsize {
+  @apply max-h-[90vh] w-[400px] max-w-[90vw];
+}
+
+.modal-handle-draggable {
+  @apply cursor-move;
+}
+</style>

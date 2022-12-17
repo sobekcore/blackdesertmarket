@@ -1,21 +1,26 @@
-import { BlackDesertItemDetails } from '@blackdesertmarket/interfaces';
+import { BlackDesertItemDetails, BlackDesertItemDetailsExtended } from '@blackdesertmarket/interfaces';
 import { ComposableException } from '@/exceptions/composable-exception';
 import { HttpMethod } from '@/enums/http';
 import { usePreferencesStore } from '@/stores/preferences';
 import { useMarketApi } from '@/composables/use-market-api';
 
 export interface UseItemDetailsReturn {
-  fetch(): Promise<BlackDesertItemDetails | null>;
+  fetch(): Promise<BlackDesertItemDetails | BlackDesertItemDetailsExtended | null>;
 }
 
-export function useItemDetails(id: number, enhancement: number): UseItemDetailsReturn {
+export function useItemDetails(id: number, enhancement: number, extended?: boolean): UseItemDetailsReturn {
   const preferencesStore = usePreferencesStore();
 
-  const fetch = async (): Promise<BlackDesertItemDetails | null> => {
-    const marketApi = useMarketApi<BlackDesertItemDetails>(HttpMethod.GET, `/item/${id}/${enhancement}`, {
-      region: preferencesStore.getRegion,
-      language: preferencesStore.getLanguage,
-    });
+  const fetch = async (): Promise<BlackDesertItemDetails | BlackDesertItemDetailsExtended | null> => {
+    const marketApi = useMarketApi<BlackDesertItemDetails | BlackDesertItemDetailsExtended>(
+      HttpMethod.GET,
+      `/item/${id}/${enhancement}`,
+      {
+        region: preferencesStore.getRegion,
+        language: preferencesStore.getLanguage,
+        extended: String(extended),
+      },
+    );
 
     const response = await marketApi.execute();
 

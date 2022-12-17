@@ -6,6 +6,7 @@ export function mockBlackDesertItemType() {
     mainCategory: 25,
     subCategory: 2,
     enhancement: 0,
+    tradeCount: 1000,
   }
 }
 

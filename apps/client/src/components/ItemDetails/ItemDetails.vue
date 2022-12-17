@@ -51,7 +51,7 @@ import AppLoader from '@/components/Base/AppLoader.vue';
 import ItemDetailsAdditional from '@/components/ItemDetails/ItemDetailsAdditional.vue';
 import ItemDetailsAvailability from '@/components/ItemDetails/ItemDetailsAvailability.vue';
 import ItemDetailsAvailabilityItem from '@/components/ItemDetails/ItemDetailsAvailabilityItem.vue';
-import ItemDetailsOverview from '@/components/ItemDetails/ItemDetailsOverview.vue';
+import ItemDetailsOverview from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverview.vue';
 
 const props = defineProps({
   id: {
@@ -65,7 +65,7 @@ const props = defineProps({
 });
 
 const itemListComposable: UseItemTypeListReturn = useItemList(props.id);
-const itemDetailsComposable: UseItemDetailsReturn = useItemDetails(props.id, props.enhancement);
+const itemDetailsComposable: UseItemDetailsReturn = useItemDetails(props.id, props.enhancement, true);
 const numberFormat: UseNumberFormatReturn = useNumberFormat();
 
 const itemType: Ref<BlackDesertItemType | null> = ref(null);
