@@ -7,7 +7,7 @@
       'button-active-state': props.active,
     }"
   >
-    <button class="border-lighten hocus:bg-lighten-sm flex h-full items-center rounded border px-5 text-sm">
+    <button class="border-lighten flex h-full items-center rounded border px-5 text-sm">
       {{ props.label }}
     </button>
   </div>
@@ -30,7 +30,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .button-inactive-state {
-  @apply bg-dark-500;
+  @apply bg-dark-500 hocus:bg-brand-300;
 }
 
 .button-active-state {

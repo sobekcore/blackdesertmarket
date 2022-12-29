@@ -63,7 +63,7 @@ const config: UseConfigReturn = useConfig();
 const numberFormat: UseNumberFormatReturn = useNumberFormat();
 
 const itemIcon: Ref<URL> = ref(new URL(`/item/${props.item.id}/icon`, config.marketApiUrl));
-const itemGradeText: Ref<string> = ref('');
+const itemGradeText: Ref<string> = ref('text-sm');
 const itemGradeBorder: Ref<string> = ref('');
 
 const formatBasePrice = (price: number): string => {

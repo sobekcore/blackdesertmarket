@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-y-5">
+  <div class="flex h-full flex-col gap-y-5">
     <div class="flex w-full items-stretch gap-3.5">
       <ListItemIcon :src="itemIcon.href" :class="itemGradeBorder" />
       <ListItemName :name="itemType.name" :class="itemGradeText" />
@@ -16,9 +16,9 @@
         @click="handleButtonClick(3)"
       />
     </div>
-    <div class="flex gap-x-5">
-      <div class="w-1/2">
-        <div class="grid grid-cols-2 gap-6">
+    <div class="flex h-full gap-x-5">
+      <div class="w-1/3">
+        <div class="grid h-full grid-cols-2 gap-6">
           <ItemDetailsOverviewProperty
             data-test="in-stock"
             label="In Stock"
@@ -47,29 +47,26 @@
           />
         </div>
       </div>
-      <div class="w-1/2">
-        <div class="h-full w-full bg-dark-100 bg-opacity-50">
-          <div class="flex h-full w-full items-center justify-center">
-            <span v-if="months === 1">{{ months }}</span>
-            <span v-if="months === 3">{{ months }}</span>
-          </div>
-        </div>
+      <div class="w-2/3">
+        <ItemDetailsOverviewChart :data="props.itemDetails.history" :days="days" class="-mt-4" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { PropType, Ref, defineProps, ref } from 'vue';
+import { ComputedRef, PropType, Ref, computed, defineProps, ref } from 'vue';
 import {
   BlackDesertItemDetails,
   BlackDesertItemDetailsExtended,
   BlackDesertItemType,
 } from '@blackdesertmarket/interfaces';
 import { UseDateFormatReturn, useDateFormat } from '@vueuse/core';
+import { ComponentException } from '@/exceptions/component-exception';
 import { UseConfigReturn, useConfig } from '@/composables/use-config';
 import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 import ItemDetailsOverviewButton from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverviewButton.vue';
+import ItemDetailsOverviewChart from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverviewChart.vue';
 import ItemDetailsOverviewProperty from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverviewProperty.vue';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemName from '@/components/ListItem/ListItemName.vue';
@@ -88,11 +85,22 @@ const props = defineProps({
 const config: UseConfigReturn = useConfig();
 const numberFormat: UseNumberFormatReturn = useNumberFormat();
 
-const months: Ref<number> = ref(1);
-
 const itemIcon: Ref<URL> = ref(new URL(`/item/${props.itemType.id}/icon`, config.marketApiUrl));
 const itemGradeText: Ref<string> = ref('');
 const itemGradeBorder: Ref<string> = ref('');
+
+const months: Ref<number> = ref(1);
+
+const days: ComputedRef<number> = computed((): number => {
+  switch (months.value) {
+    case 1:
+      return 31;
+    case 3:
+      return 89;
+  }
+
+  throw new ComponentException(`Could not compute days number for ${months.value} months`);
+});
 
 const handleButtonClick = (month: number): void => {
   months.value = month;

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ServiceUnavailableException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   BlackDesertItem,
@@ -29,7 +29,9 @@ import {
   ExternalMarketParams,
 } from '@/interfaces/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
+import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { ExternalMarketAsset } from '@/enums/external-market-asset.enum';
+import { ExternalMarketRequestPath } from '@/enums/external-market.enum';
 import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
 import { ExternalMarketAssetService } from '@/modules/external-market/external-market-asset.service';
 import { ExternalMarketRawService } from '@/modules/external-market/external-market-raw.service';
@@ -241,6 +243,13 @@ export class ItemService {
       .buildRequest(InternalMarketEndpoint.ITEM, params, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
+          if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
+            throw new ServiceUnavailableException({
+              code: ControllerResponseCode.MAINTENANCE,
+              messages: ['Currently external market is in the maintenance'],
+            });
+          }
+
           return response.data.detailList ? response.data.detailList : [];
         }),
         map((data: unknown[]): BlackDesertItemType[] => {
@@ -315,6 +324,13 @@ export class ItemService {
     let data: BlackDesertItemDetails | BlackDesertItemDetailsExtended = await lastValueFrom(
       this.externalMarketService.buildRequest(InternalMarketEndpoint.ITEM_DETAILS, params, meta).pipe(
         map((response: AxiosResponse): unknown => {
+          if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
+            throw new ServiceUnavailableException({
+              code: ControllerResponseCode.MAINTENANCE,
+              messages: ['Currently external market is in the maintenance'],
+            });
+          }
+
           return response.data ? response.data : {};
         }),
         map((data: unknown): BlackDesertItemDetails => {
@@ -331,6 +347,13 @@ export class ItemService {
       const additional: BlackDesertItemDetailsExtendedOnly = await lastValueFrom(
         this.externalMarketRawService.buildRequest(InternalMarketEndpoint.ITEM_DETAILS, params, meta).pipe(
           map((response: AxiosResponse): unknown => {
+            if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
+              throw new ServiceUnavailableException({
+                code: ControllerResponseCode.MAINTENANCE,
+                messages: ['Currently external market is in the maintenance'],
+              });
+            }
+
             return response.data ? response.data : '';
           }),
           map((additional: unknown): BlackDesertItemDetailsExtendedOnly => {

@@ -13,6 +13,7 @@ import { mockExternalMarketItemType } from '@test/mocks/external-market-item-typ
 import { ControllerResponse } from '@/interfaces/controller-response.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
 import { ExternalMarketModule } from '@/modules/external-market/external-market.module';
+import { ExternalMarketService } from '@/modules/external-market/external-market.service';
 import { FindDetailsByIdParamsDto, FindDetailsByIdQueryDto } from '@/modules/item/dto/find-details-by-id.dto';
 import { FindIconByIdParamsDto } from '@/modules/item/dto/find-icon-by-id.dto';
 import { FindTypesByIdParamsDto, FindTypesByIdQueryDto } from '@/modules/item/dto/find-types-by-id.dto';
@@ -22,6 +23,7 @@ import { CoreModule } from '@/core.module';
 
 describe('ItemController', () => {
   let itemController: ItemController;
+  let externalMarketService: ExternalMarketService;
   let httpService: HttpService;
 
   beforeEach(async () => {
@@ -32,6 +34,7 @@ describe('ItemController', () => {
     }).compile();
 
     itemController = module.get<ItemController>(ItemController);
+    externalMarketService = module.get<ExternalMarketService>(ExternalMarketService);
     httpService = module.get<HttpService>(HttpService);
   });
 
@@ -101,7 +104,7 @@ describe('ItemController', () => {
       });
 
       const params: FindDetailsByIdParamsDto = { id: 5600, enhancement: 0 };
-      const query: FindDetailsByIdQueryDto = {};
+      const query: FindDetailsByIdQueryDto = { extended: true };
 
       const response: ControllerResponse<BlackDesertItemDetails> = await itemController.findDetailsById(params, query);
       const validItemDetails: boolean = isValidBlackDesertItemDetails(response.data);
@@ -115,7 +118,7 @@ describe('ItemController', () => {
       });
 
       const params: FindDetailsByIdParamsDto = { id: 5600, enhancement: 0 };
-      const query: FindDetailsByIdQueryDto = {};
+      const query: FindDetailsByIdQueryDto = { extended: true };
 
       const promise: Promise<ControllerResponse<unknown>> = itemController.findDetailsById(params, query);
 

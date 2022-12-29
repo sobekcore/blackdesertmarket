@@ -8,6 +8,7 @@ module.exports = {
   importOrder: [
     '^vue',
     '<THIRD_PARTY_MODULES>',
+    '^~/(.*)$',
     '^@test/(.*)$',
     '^@/types/(.*)$',
     '^@/interfaces/(.*)$',

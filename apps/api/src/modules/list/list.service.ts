@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ServiceUnavailableException } from '@nestjs/common';
 import { BlackDesertItem, BlackDesertItemHot, BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
 import { AxiosResponse } from 'axios';
 import { Observable, lastValueFrom, map } from 'rxjs';
@@ -10,6 +10,8 @@ import {
   ExternalMarketParams,
 } from '@/interfaces/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
+import { ControllerResponseCode } from '@/enums/controller-response.enum';
+import { ExternalMarketRequestPath } from '@/enums/external-market.enum';
 import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
 import { ExternalMarketService } from '@/modules/external-market/external-market.service';
 import { ItemService } from '@/modules/item/item.service';
@@ -28,6 +30,13 @@ export class ListService {
       .buildRequest(InternalMarketEndpoint.LIST_HOT, {}, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
+          if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
+            throw new ServiceUnavailableException({
+              code: ControllerResponseCode.MAINTENANCE,
+              messages: ['Currently external market is in the maintenance'],
+            });
+          }
+
           return response.data.hotList ? response.data.hotList : [];
         }),
         map((data: unknown[]): BlackDesertItemHot[] => {
@@ -60,6 +69,13 @@ export class ListService {
       .buildRequest(InternalMarketEndpoint.LIST_QUEUE, {}, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
+          if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
+            throw new ServiceUnavailableException({
+              code: ControllerResponseCode.MAINTENANCE,
+              messages: ['Currently external market is in the maintenance'],
+            });
+          }
+
           return response.data._waitList ? response.data._waitList : [];
         }),
         map((data: unknown[]): BlackDesertItemQueue[] => {
@@ -102,6 +118,13 @@ export class ListService {
       .buildRequest(InternalMarketEndpoint.LIST, params, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
+          if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
+            throw new ServiceUnavailableException({
+              code: ControllerResponseCode.MAINTENANCE,
+              messages: ['Currently external market is in the maintenance'],
+            });
+          }
+
           return response.data.marketList ? response.data.marketList : [];
         }),
         map((data: unknown[]): BlackDesertItem[] => {
