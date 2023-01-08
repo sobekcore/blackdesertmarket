@@ -8,6 +8,7 @@ import { useMarketApi } from '@/composables/use-market-api';
 export interface UseItemTypeListReturn {
   fetch(): Promise<BlackDesertItemType[]>;
   fetchBaseType(): Promise<BlackDesertItemType | null>;
+  fetchByEnhancement(enhancement: number): Promise<BlackDesertItemType | null>;
 }
 
 export function useItemList(id: number): UseItemTypeListReturn {
@@ -51,8 +52,34 @@ export function useItemList(id: number): UseItemTypeListReturn {
     return null;
   };
 
+  const fetchByEnhancement = async (enhancement: number): Promise<BlackDesertItemType | null> => {
+    const marketApi = useMarketApi<BlackDesertItemType[]>(HttpMethod.GET, `/item/${id}`, {
+      region: preferencesStore.getRegion,
+      language: preferencesStore.getLanguage,
+    });
+
+    const response = await marketApi.execute();
+
+    if (response.error.value) {
+      throw new ComposableException('Could not fetch base item type from market API');
+    }
+
+    if (response.data.value) {
+      const itemType: BlackDesertItemType | undefined = response.data.value.data.find(
+        (item: BlackDesertItemType): boolean => item.enhancement === enhancement,
+      );
+
+      if (itemType) {
+        return itemType;
+      }
+    }
+
+    return null;
+  };
+
   return {
     fetch,
     fetchBaseType,
+    fetchByEnhancement,
   };
 }

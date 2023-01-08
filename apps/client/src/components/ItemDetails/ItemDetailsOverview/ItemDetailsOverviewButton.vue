@@ -30,10 +30,10 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .button-inactive-state {
-  @apply bg-dark-500 hocus:bg-brand-300;
+  @apply bg-dark-500 hocus:bg-brand-200;
 }
 
 .button-active-state {
-  @apply bg-brand-400;
+  @apply bg-brand-300;
 }
 </style>

@@ -2,6 +2,7 @@ import { Controller, Get, Header, Param, Query, StreamableFile } from '@nestjs/c
 import {
   BlackDesertItemDetails,
   BlackDesertItemDetailsExtended,
+  BlackDesertItemTooltip,
   BlackDesertItemType,
 } from '@blackdesertmarket/interfaces';
 import { ControllerResponse } from '@/interfaces/controller-response.interface';
@@ -9,6 +10,7 @@ import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { HttpHeader } from '@/enums/http.enum';
 import { FindDetailsByIdParamsDto, FindDetailsByIdQueryDto } from '@/modules/item/dto/find-details-by-id.dto';
 import { FindIconByIdParamsDto } from '@/modules/item/dto/find-icon-by-id.dto';
+import { FindTooltipByIdParamsDto, FindTooltipByIdQueryDto } from '@/modules/item/dto/find-tooltip-by-id.dto';
 import { FindTypesByIdParamsDto, FindTypesByIdQueryDto } from '@/modules/item/dto/find-types-by-id.dto';
 import { ItemService } from '@/modules/item/item.service';
 
@@ -47,6 +49,17 @@ export class ItemController {
         query.region,
         query.language,
       ),
+    };
+  }
+
+  @Get('/:id/:enhancement/tooltip')
+  public async findTooltipById(
+    @Param() params: FindTooltipByIdParamsDto,
+    @Query() query: FindTooltipByIdQueryDto,
+  ): Promise<ControllerResponse<BlackDesertItemTooltip>> {
+    return {
+      code: ControllerResponseCode.SUCCESS,
+      data: await this.itemService.findTooltipById(params.id, params.enhancement, query.language),
     };
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <ul class="flex flex-col gap-2 p-2.5">
-    <template v-for="item in list" :key="item.id">
+    <template v-for="item in itemList" :key="item.id">
       <ListItem :item="item" @effect="handleListItemClick(item)">
         <template #append>
           <ListItemSeparator />
@@ -31,7 +31,7 @@ import ListItemSeparator from '@/components/ListItem/ListItemSeparator.vue';
 const queueItemList: UseQueueItemListReturn = useQueueItemList();
 const numberFormat: UseNumberFormatReturn = useNumberFormat();
 
-const list: Ref<BlackDesertItemQueue[]> = ref([]);
+const itemList: Ref<BlackDesertItemQueue[]> = ref([]);
 const activeItem: Ref<BlackDesertItemQueue | null> = ref(null);
 
 const formatRegisteredPrice = (price: number): string => {
@@ -47,9 +47,9 @@ const handleListItemClick = (item: BlackDesertItemQueue): void => {
   activeItem.value = activeItem.value !== item ? item : null;
 };
 
-if (!list.value.length) {
+if (!itemList.value.length) {
   queueItemList.fetch().then((data: BlackDesertItemQueue[]): void => {
-    list.value = data;
+    itemList.value = data;
   });
 }
 </script>

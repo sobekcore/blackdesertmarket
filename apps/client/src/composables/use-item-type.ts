@@ -1,8 +1,15 @@
 import { BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { MarketEnhancementConfigFeverEnhancementLevel } from '@/interfaces/market-config';
 import marketEnhancementConfig from '@/configs/market-enhancement.config';
+import {
+  ItemEnhancementNameData,
+  UseItemEnhancementReturn,
+  useItemEnhancement,
+} from '@/composables/use-item-enhancement';
 
 export interface UseItemTypeReturn {
+  getItemName(): string;
+  getItemIconText(): string;
   isItemPRI(): boolean;
   isItemDUO(): boolean;
   isItemTRI(): boolean;
@@ -28,6 +35,32 @@ export function useItemType(itemType: BlackDesertItemType): UseItemTypeReturn {
     }
 
     return found.items.includes(itemType.id);
+  };
+
+  const getItemName = (): string => {
+    const itemEnhancement: UseItemEnhancementReturn = useItemEnhancement(itemType);
+    const itemEnhancementName: ItemEnhancementNameData = itemEnhancement.getName();
+
+    if (!itemEnhancementName.name) {
+      return itemType.name;
+    }
+
+    if (itemEnhancementName.advanced) {
+      return `${itemEnhancementName.name}: ${itemType.name}`;
+    }
+
+    return `${itemEnhancementName.name} ${itemType.name}`;
+  };
+
+  const getItemIconText = (): string => {
+    const itemEnhancement: UseItemEnhancementReturn = useItemEnhancement(itemType);
+    const itemEnhancementName: ItemEnhancementNameData = itemEnhancement.getName();
+
+    if (!itemEnhancementName.name) {
+      return '';
+    }
+
+    return itemEnhancementName.short;
   };
 
   const isItemPRI = (): boolean => {
@@ -71,6 +104,8 @@ export function useItemType(itemType: BlackDesertItemType): UseItemTypeReturn {
   };
 
   return {
+    getItemName,
+    getItemIconText,
     isItemPRI,
     isItemDUO,
     isItemTRI,

@@ -189,6 +189,8 @@ const chartOptions: Ref<ChartOptions<ChartType>> = ref({
   plugins: {
     tooltip: {
       displayColors: false,
+      caretSize: 0,
+      caretPadding: documentSize.remToRaw(tailwindConfig.getValue('padding', '2.5')),
       backgroundColor: color.hexToRGB(tailwindConfig.getValue('colors', 'dark-100'), '90%'),
       borderColor: tailwindConfig.getValue('colors', 'dark-600'),
       borderWidth: documentSize.pixelToRaw(tailwindConfig.getValue('borderWidth', 'DEFAULT')),

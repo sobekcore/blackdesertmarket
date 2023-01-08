@@ -12,29 +12,29 @@ import { mockExternalMarketItemDetails } from '@test/mocks/external-market-item-
 import { mockExternalMarketItemType } from '@test/mocks/external-market-item-type.mock';
 import { ControllerResponse } from '@/interfaces/controller-response.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
+import { BdoCodexModule } from '@/modules/bdo-codex/bdo-codex.module';
 import { ExternalMarketModule } from '@/modules/external-market/external-market.module';
-import { ExternalMarketService } from '@/modules/external-market/external-market.service';
 import { FindDetailsByIdParamsDto, FindDetailsByIdQueryDto } from '@/modules/item/dto/find-details-by-id.dto';
 import { FindIconByIdParamsDto } from '@/modules/item/dto/find-icon-by-id.dto';
 import { FindTypesByIdParamsDto, FindTypesByIdQueryDto } from '@/modules/item/dto/find-types-by-id.dto';
+import { ItemTransformerService } from '@/modules/item/item-transformer.service';
+import { ItemValidatorService } from '@/modules/item/item-validator.service';
 import { ItemController } from '@/modules/item/item.controller';
 import { ItemService } from '@/modules/item/item.service';
 import { CoreModule } from '@/core.module';
 
 describe('ItemController', () => {
   let itemController: ItemController;
-  let externalMarketService: ExternalMarketService;
   let httpService: HttpService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [CoreModule, ExternalMarketModule],
+      imports: [CoreModule, ExternalMarketModule, BdoCodexModule],
       controllers: [ItemController],
-      providers: [ItemService],
+      providers: [ItemService, ItemValidatorService, ItemTransformerService],
     }).compile();
 
     itemController = module.get<ItemController>(ItemController);
-    externalMarketService = module.get<ExternalMarketService>(ExternalMarketService);
     httpService = module.get<HttpService>(HttpService);
   });
 

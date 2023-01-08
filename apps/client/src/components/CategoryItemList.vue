@@ -1,6 +1,6 @@
 <template>
   <ul class="flex flex-col gap-2 p-2.5">
-    <template v-for="item in list" :key="item.id">
+    <template v-for="item in itemList" :key="item.id">
       <ListItem :item="item" @effect="handleListItemClick(item)" />
     </template>
   </ul>
@@ -29,7 +29,7 @@ const locationStore = useLocationStore();
 const router: Router = useRouter();
 const route: RouteLocationNormalizedLoaded = useRoute();
 
-const list: Ref<BlackDesertItem[]> = ref([]);
+const itemList: Ref<BlackDesertItem[]> = ref([]);
 
 const refetchCategoryItemList = (mainCategory: number, subCategory: number): void => {
   locationStore.mainCategory = mainCategory;
@@ -38,7 +38,7 @@ const refetchCategoryItemList = (mainCategory: number, subCategory: number): voi
   const categoryItemList: UseCategoryItemListReturn = useCategoryItemList(mainCategory, subCategory);
 
   categoryItemList.fetch().then((data: BlackDesertItem[]): void => {
-    list.value = data;
+    itemList.value = data;
   });
 };
 
@@ -51,7 +51,7 @@ const handleListItemClick = (item: BlackDesertItem): void => {
   });
 };
 
-if (!list.value.length) {
+if (!itemList.value.length) {
   refetchCategoryItemList(props.mainCategory, props.subCategory);
 }
 

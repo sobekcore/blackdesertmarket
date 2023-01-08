@@ -14,7 +14,7 @@ const MOCK_ITEM_DETAILS_ITEM_DETAILS: BlackDesertItemDetails = mockBlackDesertIt
 
 jest.mock('@/composables/use-item-list', () => ({
   useItemList: () => ({
-    fetchBaseType: () => Promise.resolve(MOCK_ITEM_DETAILS_ITEM_TYPE),
+    fetchByEnhancement: () => Promise.resolve(MOCK_ITEM_DETAILS_ITEM_TYPE),
   }),
 }));
 

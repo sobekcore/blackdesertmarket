@@ -4,7 +4,7 @@
 
 <template>
   <ul class="flex flex-col gap-2 p-2.5">
-    <template v-for="item in list" :key="item.id">
+    <template v-for="item in itemList" :key="item.id">
       <ListItem :item="item" :class="getFluctuationTypeClass(item)" @effect="handleListItemClick(item)">
         <template #append>
           <ListItemSeparator />
@@ -12,12 +12,12 @@
             <template #label>
               <span>Base Price</span>
               <span class="flex-grow" />
-              <span>({{ formatFluctuationPrice(item) }})</span>
+              <span>({{ getFluctuationPrice(item) }})</span>
             </template>
             <template #value>
               <AppIcon :src="getFluctuationTypeIcon(item)" class="h-[20px] drop-shadow" />
               <span class="flex-grow" />
-              <span>{{ formatBasePrice(item.basePrice) }}</span>
+              <span>{{ getBasePrice(item) }}</span>
             </template>
           </ListItemProperty>
           <ListItemSeparator />
@@ -37,6 +37,7 @@ import { Ref, ref } from 'vue';
 import { BlackDesertItemHot } from '@blackdesertmarket/interfaces';
 import { UseFluctuationTypeReturn, useFluctuationType } from '@/composables/use-fluctuation-type';
 import { UseHotItemListReturn, useHotItemList } from '@/composables/use-hot-item-list';
+import { UseItemReturn, useItem } from '@/composables/use-item';
 import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 import AppIcon from '@/components/Base/AppIcon.vue';
 import ItemDetailsModal from '@/components/ItemDetails/ItemDetailsModal.vue';
@@ -47,14 +48,15 @@ import ListItemSeparator from '@/components/ListItem/ListItemSeparator.vue';
 const hotItemList: UseHotItemListReturn = useHotItemList();
 const numberFormat: UseNumberFormatReturn = useNumberFormat();
 
-const list: Ref<BlackDesertItemHot[]> = ref([]);
+const itemList: Ref<BlackDesertItemHot[]> = ref([]);
 const activeItem: Ref<BlackDesertItemHot | null> = ref(null);
 
-const formatBasePrice = (price: number): string => {
-  return numberFormat.format(price);
+const getBasePrice = (item: BlackDesertItemHot): string => {
+  const itemComposable: UseItemReturn = useItem(item);
+  return itemComposable.getBasePrice();
 };
 
-const formatFluctuationPrice = (item: BlackDesertItemHot): string => {
+const getFluctuationPrice = (item: BlackDesertItemHot): string => {
   const fluctuationType: UseFluctuationTypeReturn = useFluctuationType(item.fluctuationType);
   const operator: string = fluctuationType.getOperator();
   const price: string = numberFormat.format(item.fluctuationPrice);
@@ -76,9 +78,9 @@ const handleListItemClick = (item: BlackDesertItemHot): void => {
   activeItem.value = activeItem.value !== item ? item : null;
 };
 
-if (!list.value.length) {
+if (!itemList.value.length) {
   hotItemList.fetch().then((data: BlackDesertItemHot[]): void => {
-    list.value = data;
+    itemList.value = data;
   });
 }
 </script>

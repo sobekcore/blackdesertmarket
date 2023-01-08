@@ -11,14 +11,18 @@ import {
 } from '@/interfaces/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
-import { ExternalMarketRequestPath } from '@/enums/external-market.enum';
-import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
+import { ExternalMarketEndpoint, ExternalMarketRequestPath } from '@/enums/external-market.enum';
 import { ExternalMarketService } from '@/modules/external-market/external-market.service';
-import { ItemService } from '@/modules/item/item.service';
+import { ItemTransformerService } from '@/modules/item/item-transformer.service';
+import { ItemValidatorService } from '@/modules/item/item-validator.service';
 
 @Injectable()
 export class ListService {
-  constructor(private readonly itemService: ItemService, private readonly marketService: ExternalMarketService) {}
+  constructor(
+    private readonly itemValidatorService: ItemValidatorService,
+    private readonly itemTransformerService: ItemTransformerService,
+    private readonly marketService: ExternalMarketService,
+  ) {}
 
   public findHotItems(region?: string, language?: string): Promise<BlackDesertItemHot[]> {
     const meta: ExternalMarketMeta = {
@@ -27,7 +31,7 @@ export class ListService {
     };
 
     const data: Observable<BlackDesertItemHot[]> = this.marketService
-      .buildRequest(InternalMarketEndpoint.LIST_HOT, {}, meta)
+      .buildRequest(ExternalMarketEndpoint.LIST_HOT, {}, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
           if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
@@ -45,13 +49,13 @@ export class ListService {
           }
 
           data.forEach((itemHot: unknown): void => {
-            if (!this.itemService.isValidExternalMarketItemHot(itemHot)) {
+            if (!this.itemValidatorService.isValidExternalMarketItemHot(itemHot)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
             }
           });
 
           return data.map((itemHot: ExternalMarketItemHot): BlackDesertItemHot => {
-            return this.itemService.transformExternalMarketItemHot(itemHot);
+            return this.itemTransformerService.transformExternalMarketItemHot(itemHot);
           });
         }),
       );
@@ -66,7 +70,7 @@ export class ListService {
     };
 
     const data: Observable<BlackDesertItemQueue[]> = this.marketService
-      .buildRequest(InternalMarketEndpoint.LIST_QUEUE, {}, meta)
+      .buildRequest(ExternalMarketEndpoint.LIST_QUEUE, {}, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
           if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
@@ -84,13 +88,13 @@ export class ListService {
           }
 
           data.forEach((itemQueue: unknown): void => {
-            if (!this.itemService.isValidExternalMarketItemQueue(itemQueue)) {
+            if (!this.itemValidatorService.isValidExternalMarketItemQueue(itemQueue)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
             }
           });
 
           return data.map((itemQueue: ExternalMarketItemQueue): BlackDesertItemQueue => {
-            return this.itemService.transformExternalMarketItemQueue(itemQueue);
+            return this.itemTransformerService.transformExternalMarketItemQueue(itemQueue);
           });
         }),
       );
@@ -115,7 +119,7 @@ export class ListService {
     };
 
     const data: Observable<BlackDesertItem[]> = this.marketService
-      .buildRequest(InternalMarketEndpoint.LIST, params, meta)
+      .buildRequest(ExternalMarketEndpoint.LIST, params, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
           if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
@@ -133,13 +137,13 @@ export class ListService {
           }
 
           data.forEach((item: unknown): void => {
-            if (!this.itemService.isValidExternalMarketItem(item)) {
+            if (!this.itemValidatorService.isValidExternalMarketItem(item)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
             }
           });
 
           return data.map((item: ExternalMarketItem): BlackDesertItem => {
-            return this.itemService.transformExternalMarketItem(item);
+            return this.itemTransformerService.transformExternalMarketItem(item);
           });
         }),
       );

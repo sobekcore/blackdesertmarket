@@ -90,7 +90,7 @@ watch(
 
 <style lang="scss" scoped>
 .button-inactive-state {
-  @apply border-dark-200 bg-dark-300 text-brand-700 hocus:bg-dark-500 hocus:text-dark-900;
+  @apply border-dark-200 bg-dark-300 text-brand-600 hocus:bg-dark-500 hocus:text-dark-900;
 }
 
 .button-active-state {

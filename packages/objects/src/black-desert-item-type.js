@@ -5,8 +5,7 @@ export function isValidBlackDesertItemType(itemType) {
     isValidBlackDesertItem(itemType) &&
     itemType.hasOwnProperty('mainCategory') &&
     itemType.hasOwnProperty('subCategory') &&
-    itemType.hasOwnProperty('enhancement') &&
-    itemType.hasOwnProperty('tradeCount')
+    itemType.hasOwnProperty('enhancement')
   );
 }
 

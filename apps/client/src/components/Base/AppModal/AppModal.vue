@@ -6,7 +6,7 @@
         <div
           data-test="inner"
           :class="{
-            'flex flex-col overflow-hidden rounded-lg border border-brand-700 shadow-xl': true,
+            'flex flex-col overflow-hidden rounded-lg border border-brand-600 shadow-xl': true,
             'modal-active-fullsize': props.fullsize,
             'modal-inactive-fullsize': !props.fullsize,
           }"

@@ -14,8 +14,10 @@ import { mockExternalMarketItemHot, mockExternalMarketItemQueue } from '@test/mo
 import { mockExternalMarketItem } from '@test/mocks/external-market-item.mock';
 import { ControllerResponse } from '@/interfaces/controller-response.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
+import { BdoCodexModule } from '@/modules/bdo-codex/bdo-codex.module';
 import { ExternalMarketModule } from '@/modules/external-market/external-market.module';
-import { ItemService } from '@/modules/item/item.service';
+import { ItemTransformerService } from '@/modules/item/item-transformer.service';
+import { ItemValidatorService } from '@/modules/item/item-validator.service';
 import { FindByCategoryParamsDto, FindByCategoryQueryDto } from '@/modules/list/dto/find-by-category.dto';
 import { FindHotItemsQueryDto } from '@/modules/list/dto/find-hot-items.dto';
 import { FindQueueItemsQueryDto } from '@/modules/list/dto/find-queue-items.dto';
@@ -29,9 +31,9 @@ describe('ListController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [CoreModule, ExternalMarketModule],
+      imports: [CoreModule, ExternalMarketModule, BdoCodexModule],
       controllers: [ListController],
-      providers: [ListService, ItemService],
+      providers: [ListService, ItemValidatorService, ItemTransformerService],
     }).compile();
 
     listController = module.get<ListController>(ListController);

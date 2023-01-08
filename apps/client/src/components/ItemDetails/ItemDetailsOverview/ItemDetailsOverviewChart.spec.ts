@@ -1,4 +1,5 @@
 import { Line } from 'vue-chartjs';
+import { getFirstElement } from '@blackdesertmarket/helpers';
 import { BlackDesertItemDetailsHistory } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItemDetailsHistory } from '@blackdesertmarket/mocks';
 import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
@@ -66,6 +67,6 @@ describe('ItemDetailsOverviewChart', () => {
     const data: number[] = [MOCK_ITEM_DETAILS_OVERVIEW_CHART_DATA_ITEM.onePrice / unit];
 
     expect(datasets).toHaveLength(1);
-    expect(datasets[0]).toHaveProperty('data', data);
+    expect(getFirstElement(datasets)).toHaveProperty('data', data);
   });
 });

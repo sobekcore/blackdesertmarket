@@ -61,7 +61,6 @@ export interface ExternalMarketItemQueue extends ExternalMarketItemQueueUnused {
   mainCategory: number;
   subCategory: number;
   chooseKey: number;
-  totalTradeCount: number;
   _waitEndTime: number;
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-full flex-col gap-y-5">
     <div class="flex w-full items-stretch gap-3.5">
-      <ListItemIcon :src="itemIcon.href" :class="itemGradeBorder" />
+      <ListItemIcon :src="itemIcon.href" :item="props.itemType" :class="itemGradeBorder" />
       <ListItemName :name="itemType.name" :class="itemGradeText" />
       <ItemDetailsOverviewButton
         data-test="1-month"
@@ -33,7 +33,7 @@
           <ItemDetailsOverviewProperty
             data-test="recent-price"
             label="Recent Price"
-            :value="formatRecentPrice(props.itemDetails)"
+            :value="getRecentPrice(props.itemDetails)"
           />
           <ItemDetailsOverviewProperty
             data-test="total-trades"
@@ -43,7 +43,7 @@
           <ItemDetailsOverviewProperty
             data-test="recent-transaction"
             label="Recent Transaction"
-            :value="formatRecentTransaction(props.itemDetails)"
+            :value="getRecentTransaction(props.itemDetails)"
           />
         </div>
       </div>
@@ -114,7 +114,7 @@ const formatBasePrice = (price: number): string => {
   return numberFormat.format(price);
 };
 
-const formatRecentPrice = (itemDetails: BlackDesertItemDetails): string => {
+const getRecentPrice = (itemDetails: BlackDesertItemDetails): string => {
   const itemDetailsExtended = itemDetails as BlackDesertItemDetailsExtended;
 
   if (!itemDetailsExtended.recentPrice) {
@@ -128,7 +128,7 @@ const formatTradeCount = (count: number): string => {
   return numberFormat.format(count);
 };
 
-const formatRecentTransaction = (itemDetails: BlackDesertItemDetails): string => {
+const getRecentTransaction = (itemDetails: BlackDesertItemDetails): string => {
   const itemDetailsExtended = itemDetails as BlackDesertItemDetailsExtended;
 
   if (!itemDetailsExtended.recentTransaction) {

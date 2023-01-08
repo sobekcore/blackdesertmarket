@@ -5,24 +5,21 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
 import { ExternalMarketMeta, ExternalMarketParams } from '@/interfaces/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
-import { ExternalMarketEndpoint } from '@/enums/external-market.enum';
+import { ExternalMarketEndpoint, ExternalMarketLanguageCode } from '@/enums/external-market.enum';
 import { HttpHeader } from '@/enums/http.enum';
-import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
+import { LanguageCode } from '@/enums/language.enum';
 
 @Injectable()
 export class ExternalMarketService {
   constructor(private readonly configService: ConfigService, private readonly httpService: HttpService) {}
 
-  private readonly matchExternalMarketEndpoint: Record<InternalMarketEndpoint, ExternalMarketEndpoint> = {
-    [InternalMarketEndpoint.LIST]: ExternalMarketEndpoint.GET_WORLD_MARKET_LIST,
-    [InternalMarketEndpoint.LIST_HOT]: ExternalMarketEndpoint.GET_WORLD_MARKET_HOT_LIST,
-    [InternalMarketEndpoint.LIST_QUEUE]: ExternalMarketEndpoint.GET_WORLD_MARKET_WAIT_LIST,
-    [InternalMarketEndpoint.ITEM]: ExternalMarketEndpoint.GET_WORLD_MARKET_SUB_LIST,
-    [InternalMarketEndpoint.ITEM_DETAILS]: ExternalMarketEndpoint.GET_ITEM_SELL_BUY_INFO,
+  private readonly matchExternalMarketLanguage: Record<LanguageCode, ExternalMarketLanguageCode> = {
+    [LanguageCode.ENGLISH]: ExternalMarketLanguageCode.ENGLISH,
+    [LanguageCode.SPANISH]: ExternalMarketLanguageCode.SPANISH,
   };
 
   public buildRequest(
-    endpoint: InternalMarketEndpoint,
+    endpoint: ExternalMarketEndpoint,
     params: ExternalMarketParams,
     meta?: ExternalMarketMeta,
   ): Observable<AxiosResponse> {
@@ -41,7 +38,9 @@ export class ExternalMarketService {
       meta.language = this.configService.get('defaultRequestLanguage');
     }
 
-    const url: URL = this.getRequestUrl(this.getRequestEndpoint(endpoint), meta.region);
+    const language: ExternalMarketLanguageCode = this.matchExternalMarketLanguage[meta.language];
+
+    const url: URL = this.getRequestUrl(endpoint, meta.region);
     const data: URLSearchParams = new URLSearchParams();
     data.append('__RequestVerificationToken', paramsRequestToken);
 
@@ -51,7 +50,7 @@ export class ExternalMarketService {
 
     const config: AxiosRequestConfig = {
       headers: {
-        [HttpHeader.COOKIE]: `__RequestVerificationToken=${cookieRequestToken}; lang=${meta.language};`,
+        [HttpHeader.COOKIE]: `__RequestVerificationToken=${cookieRequestToken}; lang=${language};`,
         [HttpHeader.CONTENT_TYPE]: 'application/x-www-form-urlencoded',
         [HttpHeader.USER_AGENT]: 'BlackDesert',
       },
@@ -60,15 +59,7 @@ export class ExternalMarketService {
     return this.httpService.post(url.href, data, config);
   }
 
-  private getRequestUrl(endpoint: string, region: string): URL {
+  private getRequestUrl(endpoint: ExternalMarketEndpoint, region: string): URL {
     return new URL(`https://${region}-trade.naeu.playblackdesert.com/Home/${endpoint}`);
-  }
-
-  private getRequestEndpoint(endpoint: string): string {
-    if (!this.matchExternalMarketEndpoint[endpoint]) {
-      throw new ExternalMarketException(`Could not match endpoint ${endpoint} with any external market endpoint`);
-    }
-
-    return this.matchExternalMarketEndpoint[endpoint];
   }
 }

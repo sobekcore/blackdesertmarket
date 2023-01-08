@@ -19,7 +19,6 @@ describe('AppController', () => {
       const information: unknown = appController.root();
 
       expect(information).toHaveProperty('name');
-      expect(information).toHaveProperty('version');
     });
   });
 });

@@ -8,6 +8,10 @@ export interface UseItemDetailsReturn {
   fetch(): Promise<BlackDesertItemDetails | BlackDesertItemDetailsExtended | null>;
 }
 
+/**
+ * TODO: Split useItemDetails into two composables where the first one will fetch data
+ *  and second one will execute operations on given BlackDesertItemDetails object
+ */
 export function useItemDetails(id: number, enhancement: number, extended?: boolean): UseItemDetailsReturn {
   const preferencesStore = usePreferencesStore();
 

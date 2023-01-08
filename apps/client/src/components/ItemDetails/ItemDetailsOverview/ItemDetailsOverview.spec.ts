@@ -3,6 +3,7 @@ import { BlackDesertItemDetailsExtended, BlackDesertItemType } from '@blackdeser
 import { mockBlackDesertItemDetailsExtended, mockBlackDesertItemType } from '@blackdesertmarket/mocks';
 import { VueWrapper, shallowMount } from '@vue/test-utils';
 import { UseDateFormatReturn, useDateFormat } from '@vueuse/core';
+import { UnitTestException } from '@/exceptions/unit-test-exception';
 import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 import ItemDetailsOverview from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverview.vue';
 import ItemDetailsOverviewButton from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverviewButton.vue';
@@ -159,6 +160,10 @@ describe('ItemDetailsOverview', () => {
     it('when data-test = total-trades', () => {
       const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>('[data-test="total-trades"]');
       const componentAttributes: Record<string, string> = componentWrapper.attributes();
+
+      if (!MOCK_ITEM_DETAILS_OVERVIEW_ITEM_TYPE.tradeCount) {
+        throw new UnitTestException('Item property tradeCount is missing from the test object');
+      }
 
       expect(componentAttributes).toHaveProperty('value');
       expect(componentAttributes.value).toBe(numberFormat.format(MOCK_ITEM_DETAILS_OVERVIEW_ITEM_TYPE.tradeCount));

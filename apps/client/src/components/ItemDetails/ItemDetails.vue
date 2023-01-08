@@ -108,7 +108,7 @@ const getItemAvailabilityTextClass = (
 };
 
 if (!itemType.value) {
-  itemListComposable.fetchBaseType().then((data: BlackDesertItemType | null): void => {
+  itemListComposable.fetchByEnhancement(props.enhancement).then((data: BlackDesertItemType | null): void => {
     itemType.value = data;
   });
 }

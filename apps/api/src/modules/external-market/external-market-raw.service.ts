@@ -5,24 +5,21 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
 import { ExternalMarketMeta, ExternalMarketParams } from '@/interfaces/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
-import { ExternalMarketRawEndpoint } from '@/enums/external-market-raw.enum';
+import { ExternalMarketRawEndpoint, ExternalMarketRawLanguageCode } from '@/enums/external-market-raw.enum';
 import { HttpHeader } from '@/enums/http.enum';
-import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
+import { LanguageCode } from '@/enums/language.enum';
 
 @Injectable()
 export class ExternalMarketRawService {
   constructor(private readonly configService: ConfigService, private readonly httpService: HttpService) {}
 
-  private readonly matchExternalMarketRawEndpoint: Record<InternalMarketEndpoint, ExternalMarketRawEndpoint> = {
-    [InternalMarketEndpoint.LIST]: null,
-    [InternalMarketEndpoint.LIST_HOT]: null,
-    [InternalMarketEndpoint.LIST_QUEUE]: null,
-    [InternalMarketEndpoint.ITEM]: null,
-    [InternalMarketEndpoint.ITEM_DETAILS]: ExternalMarketRawEndpoint.GET_WORLD_MARKET_SUB_LIST,
+  private readonly matchExternalMarketRawLanguage: Record<LanguageCode, ExternalMarketRawLanguageCode> = {
+    [LanguageCode.ENGLISH]: ExternalMarketRawLanguageCode.ENGLISH,
+    [LanguageCode.SPANISH]: ExternalMarketRawLanguageCode.SPANISH,
   };
 
   public buildRequest(
-    endpoint: InternalMarketEndpoint,
+    endpoint: ExternalMarketRawEndpoint,
     params: ExternalMarketParams,
     meta?: ExternalMarketMeta,
   ): Observable<AxiosResponse> {
@@ -41,7 +38,12 @@ export class ExternalMarketRawService {
       meta.language = this.configService.get('defaultRequestLanguage');
     }
 
-    const url: URL = this.getRequestUrl(this.getRequestEndpoint(endpoint), meta.region);
+    /**
+     * TODO: Add language information to the request to fetch data in proper language
+     */
+    const language: ExternalMarketRawLanguageCode = this.matchExternalMarketRawLanguage[meta.language];
+
+    const url: URL = this.getRequestUrl(endpoint, meta.region);
     const data: URLSearchParams = new URLSearchParams();
 
     for (const [key, value] of Object.entries(params)) {
@@ -58,15 +60,7 @@ export class ExternalMarketRawService {
     return this.httpService.post(url.href, data, config);
   }
 
-  private getRequestUrl(endpoint: string, region: string): URL {
+  private getRequestUrl(endpoint: ExternalMarketRawEndpoint, region: string): URL {
     return new URL(`https://${region}-trade.naeu.playblackdesert.com/Trademarket/${endpoint}`);
-  }
-
-  private getRequestEndpoint(endpoint: string): string {
-    if (!this.matchExternalMarketRawEndpoint[endpoint]) {
-      throw new ExternalMarketException(`Could not match endpoint ${endpoint} with any external market endpoint`);
-    }
-
-    return this.matchExternalMarketRawEndpoint[endpoint];
   }
 }
