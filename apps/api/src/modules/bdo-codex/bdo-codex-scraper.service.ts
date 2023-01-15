@@ -1,8 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { I18nContext } from 'nestjs-i18n';
+import { I18nContextInjectable } from '@/interfaces/classes/i18n-context-injectable';
 import { AbstractHtmlScraperService } from '@/modules/html-scraper/abstract-html-scraper.service';
 
 @Injectable()
-export class BdoCodexScraperService extends AbstractHtmlScraperService {
+export class BdoCodexScraperService extends AbstractHtmlScraperService implements I18nContextInjectable {
+  private i18n: I18nContext = I18nContext.current();
+
+  public injectI18nContext(i18n: I18nContext): void {
+    this.i18n = i18n;
+  }
+
   public scrapeName(element: HTMLElement): string {
     return this.match(element, '.item_title').find().text();
   }
@@ -23,59 +31,99 @@ export class BdoCodexScraperService extends AbstractHtmlScraperService {
     return this.match(element, '#accuracy').find().text();
   }
 
+  public scrapeEvasion(element: HTMLElement): string {
+    const evasion = this.match(element, '#evasion').find().text();
+    const bonusEvasion = this.match(element, '#hevasion').find().text();
+
+    if (!bonusEvasion) {
+      return evasion;
+    }
+
+    return `${evasion} ${bonusEvasion}`;
+  }
+
+  public scrapeDamageReduction(element: HTMLElement): string {
+    const damageReduction = this.match(element, '#dreduction').find().text();
+    const bonusDamageReduction = this.match(element, '#hdreduction').find().text();
+
+    if (!bonusDamageReduction) {
+      return damageReduction;
+    }
+
+    return `${damageReduction} ${bonusDamageReduction}`;
+  }
+
   public scrapeWeight(element: HTMLElement): string {
-    return this.matchRegex(element, /Weight: ([\d.]+) LT/)
+    const word: string = this.i18n.translate('bdo-codex.weight');
+
+    return this.matchRegex(element, new RegExp(`${word}: ([\\d.]+) LT`))
       .find()
       .getRegexGroup(1);
   }
 
   public scrapePersonalTransaction(element: HTMLElement): string {
-    return this.matchRegex(element, /Personal transaction (\w+)/)
+    const word: string = this.i18n.translate('bdo-codex.personalTransaction');
+
+    return this.matchRegex(element, new RegExp(`${word} ([\\w ]+)`))
       .find()
       .getRegexGroup(1);
   }
 
   public scrapeEnhancementType(element: HTMLElement): string {
-    return this.matchRegex(element, /Enhancement Type: (\w+)/)
+    const word: string = this.i18n.translate('bdo-codex.enhancementType');
+
+    return this.matchRegex(element, new RegExp(`${word}: (\\w+)`))
       .find()
       .getRegexGroup(1);
   }
 
   public scrapeClassExclusive(element: HTMLElement): string {
-    return this.matchRegex(element, /Exclusive: ([\w, ]+)/)
+    const word: string = this.i18n.translate('bdo-codex.classExclusive');
+
+    return this.matchRegex(element, new RegExp(`${word}: ([\\w, ]+)`))
       .find()
       .getRegexGroup(1);
   }
 
   public scrapeDescription(element: HTMLElement): string {
-    return this.matchRegex(element, /Description:<br>(<.+?>)?(.+?(?=<))/)
+    const word: string = this.i18n.translate('bdo-codex.description');
+
+    return this.matchRegex(element, new RegExp(`${word}:<br>(<.+?>)?(.+?(?=<))`))
       .find()
       .getRegexGroup(2);
   }
 
   public scrapeItemEffect(element: HTMLElement): string[] {
-    return this.matchRegexMultiple(element, /Item Effect <br>(.+?(?=<br><br>|<br><\/div>))/)
+    const word: string = this.i18n.translate('bdo-codex.itemEffect');
+
+    return this.matchRegexMultiple(element, new RegExp(`${word} <br>(.+?(?=<br><br>|<br><\/div>))`))
       .find()
       .matchRegexGroup(1, /<span.*?>(.+?)<\/span>/)
       .getChildRegexGroup(1);
   }
 
   public scrapeEnhancementEffect(element: HTMLElement): string[] {
-    return this.matchRegexMultiple(element, /Enhancement Effect <br>(.+?(?=<br><br>|<br><\/div>))/)
+    const word: string = this.i18n.translate('bdo-codex.enhancementEffect');
+
+    return this.matchRegexMultiple(element, new RegExp(`${word} <br>(.+?(?=<br><br>|<br><\/div>))`))
       .find()
       .matchRegexGroup(1, /<span.*?>(.+?)<\/span>/)
       .getChildRegexGroup(1);
   }
 
   public scrapeSpecialEffect(element: HTMLElement): string[] {
-    return this.matchRegexMultiple(element, /Special Effect <br>(.+?(?=<br><\/div>))/)
+    const word: string = this.i18n.translate('bdo-codex.specialEffect');
+
+    return this.matchRegexMultiple(element, new RegExp(`${word} <br>(.+?(?=<br><\/div>))`))
       .find()
       .matchRegexGroup(1, /<span.*?>(.+?)<\/span>/)
       .getChildRegexGroup(1);
   }
 
   public scrapePrice(element: HTMLElement): string {
-    return this.matchRegex(element, /Sell price: ([\d,]+)/)
+    const word: string = this.i18n.translate('bdo-codex.price');
+
+    return this.matchRegex(element, new RegExp(`${word}: ([\\d,]+)`))
       .find()
       .getRegexGroup(1);
   }

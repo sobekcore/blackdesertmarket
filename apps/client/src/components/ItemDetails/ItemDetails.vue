@@ -18,13 +18,13 @@
         <template v-for="item in itemDetails.availability" :key="item.onePrice">
           <ItemDetailsAvailabilityItem :class="getItemAvailabilityBackgroundClass(itemDetails, item)">
             <span class="w-full text-left text-sm text-dark-800">
-              {{ formatSellCount(item.sellCount) }}
+              {{ getSellCount(itemDetails, item) }}
             </span>
             <span :class="getItemAvailabilityTextClass(itemDetails, item)" class="w-full text-center">
-              {{ formatOnePrice(item.onePrice) }}
+              {{ getOnePrice(itemDetails, item) }}
             </span>
             <span class="w-full text-right text-sm text-dark-800">
-              {{ formatBuyCount(item.buyCount) }}
+              {{ getBuyCount(itemDetails, item) }}
             </span>
           </ItemDetailsAvailabilityItem>
         </template>
@@ -43,10 +43,9 @@ import {
   BlackDesertItemDetailsAvailability,
   BlackDesertItemType,
 } from '@blackdesertmarket/interfaces';
-import { UseItemAvailabilityReturn, useItemAvailability } from '@/composables/use-item-availability';
-import { UseItemDetailsReturn, useItemDetails } from '@/composables/use-item-details';
-import { UseItemTypeListReturn, useItemList } from '@/composables/use-item-list';
-import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
+import { UseItemAvailabilityReturn, useItemAvailability } from '@/composables/item-details/use-item-availability';
+import { UseItemDetailsFetchReturn, useItemDetailsFetch } from '@/composables/item-details/use-item-details-fetch';
+import { UseItemTypeFetchReturn, useItemTypeFetch } from '@/composables/item-type/use-item-type-fetch';
 import AppLoader from '@/components/Base/AppLoader.vue';
 import ItemDetailsAdditional from '@/components/ItemDetails/ItemDetailsAdditional.vue';
 import ItemDetailsAvailability from '@/components/ItemDetails/ItemDetailsAvailability.vue';
@@ -64,31 +63,34 @@ const props = defineProps({
   },
 });
 
-const itemListComposable: UseItemTypeListReturn = useItemList(props.id);
-const itemDetailsComposable: UseItemDetailsReturn = useItemDetails(props.id, props.enhancement, true);
-const numberFormat: UseNumberFormatReturn = useNumberFormat();
+const itemListComposable: UseItemTypeFetchReturn = useItemTypeFetch(props.id);
+const itemDetailsComposable: UseItemDetailsFetchReturn = useItemDetailsFetch(props.id, props.enhancement, true);
 
 const itemType: Ref<BlackDesertItemType | null> = ref(null);
 const itemDetails: Ref<BlackDesertItemDetails | null> = ref(null);
 
-const formatOnePrice = (price: number): string => {
-  return numberFormat.format(price);
+const getOnePrice = (
+  itemDetails: BlackDesertItemDetails,
+  itemAvailability: BlackDesertItemDetailsAvailability,
+): string => {
+  const itemAvailabilityComposable: UseItemAvailabilityReturn = useItemAvailability(itemDetails, itemAvailability);
+  return itemAvailabilityComposable.getOnePrice();
 };
 
-const formatSellCount = (count: number): string => {
-  if (count === 0) {
-    return '';
-  }
-
-  return `Listed: ${count}`;
+const getSellCount = (
+  itemDetails: BlackDesertItemDetails,
+  itemAvailability: BlackDesertItemDetailsAvailability,
+): string => {
+  const itemAvailabilityComposable: UseItemAvailabilityReturn = useItemAvailability(itemDetails, itemAvailability);
+  return itemAvailabilityComposable.getSellCount();
 };
 
-const formatBuyCount = (count: number): string => {
-  if (count === 0) {
-    return '';
-  }
-
-  return `Orders: ${count}`;
+const getBuyCount = (
+  itemDetails: BlackDesertItemDetails,
+  itemAvailability: BlackDesertItemDetailsAvailability,
+): string => {
+  const itemAvailabilityComposable: UseItemAvailabilityReturn = useItemAvailability(itemDetails, itemAvailability);
+  return itemAvailabilityComposable.getBuyCount();
 };
 
 const getItemAvailabilityBackgroundClass = (

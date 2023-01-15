@@ -1,11 +1,11 @@
-import { HtmlScraperMatch } from '@/interfaces/html-scraper-match.interface';
+import { HtmlScraperMatch } from '@/interfaces/classes/html-scraper-match';
 import { HtmlScraperException } from '@/exceptions/html-scraper.exception';
 
 export class MatchRegexMultiple implements HtmlScraperMatch {
   protected found: RegExpMatchArray;
   private matches: RegExpMatchArray[];
 
-  public constructor(private readonly element: HTMLElement, private readonly query: RegExp) {}
+  constructor(private readonly element: HTMLElement, private readonly query: RegExp) {}
 
   public find(): this {
     this.found = this.element.outerHTML.match(this.query);

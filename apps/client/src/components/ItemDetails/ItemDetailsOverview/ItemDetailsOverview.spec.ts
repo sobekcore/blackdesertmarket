@@ -10,9 +10,9 @@ import ItemDetailsOverviewButton from '@/components/ItemDetails/ItemDetailsOverv
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemName from '@/components/ListItem/ListItemName.vue';
 
-const MOCK_ITEM_DETAILS_OVERVIEW_ITEM_TYPE: BlackDesertItemType = mockBlackDesertItemType();
-const MOCK_ITEM_DETAILS_OVERVIEW_ITEM_DETAILS: BlackDesertItemDetailsExtended = mockBlackDesertItemDetailsExtended();
-const MOCK_ITEM_DETAILS_OVERVIEW_GRADE: number = 1;
+const MOCK_ITEM_TYPE: BlackDesertItemType = mockBlackDesertItemType();
+const MOCK_ITEM_DETAILS: BlackDesertItemDetailsExtended = mockBlackDesertItemDetailsExtended();
+const MOCK_GRADE: number = 1;
 
 jest.mock('@/composables/use-config', () => ({
   useConfig: () => ({
@@ -26,8 +26,8 @@ describe('ItemDetailsOverview', () => {
   beforeEach(() => {
     wrapper = shallowMount(ItemDetailsOverview, {
       props: {
-        itemType: MOCK_ITEM_DETAILS_OVERVIEW_ITEM_TYPE,
-        itemDetails: MOCK_ITEM_DETAILS_OVERVIEW_ITEM_DETAILS,
+        itemType: MOCK_ITEM_TYPE,
+        itemDetails: MOCK_ITEM_DETAILS,
       },
     });
   });
@@ -66,8 +66,8 @@ describe('ItemDetailsOverview', () => {
   it('should pass name prop to ListItemIcon depending on itemType prop', () => {
     wrapper = shallowMount(ItemDetailsOverview, {
       props: {
-        itemType: MOCK_ITEM_DETAILS_OVERVIEW_ITEM_TYPE,
-        itemDetails: MOCK_ITEM_DETAILS_OVERVIEW_ITEM_DETAILS,
+        itemType: MOCK_ITEM_TYPE,
+        itemDetails: MOCK_ITEM_DETAILS,
       },
     });
 
@@ -75,14 +75,14 @@ describe('ItemDetailsOverview', () => {
     const listItemIconAttributes: Record<string, string> = listItemIconWrapper.attributes();
 
     expect(listItemIconAttributes).toHaveProperty('src');
-    expect(listItemIconAttributes.src).toContain(String(MOCK_ITEM_DETAILS_OVERVIEW_ITEM_TYPE.id));
+    expect(listItemIconAttributes.src).toContain(String(MOCK_ITEM_TYPE.id));
   });
 
   it('should pass class prop to ListItemIcon depending on itemType prop', () => {
     wrapper = shallowMount(ItemDetailsOverview, {
       props: {
-        itemType: { ...MOCK_ITEM_DETAILS_OVERVIEW_ITEM_TYPE, grade: MOCK_ITEM_DETAILS_OVERVIEW_GRADE },
-        itemDetails: MOCK_ITEM_DETAILS_OVERVIEW_ITEM_DETAILS,
+        itemType: { ...MOCK_ITEM_TYPE, grade: MOCK_GRADE },
+        itemDetails: MOCK_ITEM_DETAILS,
       },
     });
 
@@ -90,14 +90,14 @@ describe('ItemDetailsOverview', () => {
     const listItemIconAttributes: Record<string, string> = listItemIconWrapper.attributes();
 
     expect(listItemIconAttributes).toHaveProperty('class');
-    expect(listItemIconAttributes.class).toContain(String(MOCK_ITEM_DETAILS_OVERVIEW_GRADE));
+    expect(listItemIconAttributes.class).toContain(String(MOCK_GRADE));
   });
 
   it('should pass name prop to ListItemName depending on itemType prop', () => {
     wrapper = shallowMount(ItemDetailsOverview, {
       props: {
-        itemType: MOCK_ITEM_DETAILS_OVERVIEW_ITEM_TYPE,
-        itemDetails: MOCK_ITEM_DETAILS_OVERVIEW_ITEM_DETAILS,
+        itemType: MOCK_ITEM_TYPE,
+        itemDetails: MOCK_ITEM_DETAILS,
       },
     });
 
@@ -105,14 +105,14 @@ describe('ItemDetailsOverview', () => {
     const listItemNameAttributes: Record<string, string> = listItemNameWrapper.attributes();
 
     expect(listItemNameAttributes).toHaveProperty('name');
-    expect(listItemNameAttributes.name).toBe(MOCK_ITEM_DETAILS_OVERVIEW_ITEM_TYPE.name);
+    expect(listItemNameAttributes.name).toBe(MOCK_ITEM_TYPE.name);
   });
 
   it('should pass class prop to ListItemName depending on itemType prop', () => {
     wrapper = shallowMount(ItemDetailsOverview, {
       props: {
-        itemType: { ...MOCK_ITEM_DETAILS_OVERVIEW_ITEM_TYPE, grade: MOCK_ITEM_DETAILS_OVERVIEW_GRADE },
-        itemDetails: MOCK_ITEM_DETAILS_OVERVIEW_ITEM_DETAILS,
+        itemType: { ...MOCK_ITEM_TYPE, grade: MOCK_GRADE },
+        itemDetails: MOCK_ITEM_DETAILS,
       },
     });
 
@@ -120,14 +120,14 @@ describe('ItemDetailsOverview', () => {
     const listItemNameAttributes: Record<string, string> = listItemNameWrapper.attributes();
 
     expect(listItemNameAttributes).toHaveProperty('class');
-    expect(listItemNameAttributes.class).toContain(String(MOCK_ITEM_DETAILS_OVERVIEW_GRADE));
+    expect(listItemNameAttributes.class).toContain(String(MOCK_GRADE));
   });
 
   describe('should pass value prop to ItemDetailsOverviewProperty depending on itemType and itemDetails props', () => {
     wrapper = shallowMount(ItemDetailsOverview, {
       props: {
-        itemType: MOCK_ITEM_DETAILS_OVERVIEW_ITEM_TYPE,
-        itemDetails: MOCK_ITEM_DETAILS_OVERVIEW_ITEM_DETAILS,
+        itemType: MOCK_ITEM_TYPE,
+        itemDetails: MOCK_ITEM_DETAILS,
       },
     });
 
@@ -138,7 +138,7 @@ describe('ItemDetailsOverview', () => {
       const componentAttributes: Record<string, string> = componentWrapper.attributes();
 
       expect(componentAttributes).toHaveProperty('value');
-      expect(componentAttributes.value).toBe(String(MOCK_ITEM_DETAILS_OVERVIEW_ITEM_DETAILS.sellCount));
+      expect(componentAttributes.value).toBe(String(MOCK_ITEM_DETAILS.sellCount));
     });
 
     it('when data-test = base-price', () => {
@@ -146,7 +146,7 @@ describe('ItemDetailsOverview', () => {
       const componentAttributes: Record<string, string> = componentWrapper.attributes();
 
       expect(componentAttributes).toHaveProperty('value');
-      expect(componentAttributes.value).toBe(numberFormat.format(MOCK_ITEM_DETAILS_OVERVIEW_ITEM_DETAILS.basePrice));
+      expect(componentAttributes.value).toBe(numberFormat.format(MOCK_ITEM_DETAILS.basePrice));
     });
 
     it('when data-test = recent-price', () => {
@@ -154,19 +154,19 @@ describe('ItemDetailsOverview', () => {
       const componentAttributes: Record<string, string> = componentWrapper.attributes();
 
       expect(componentAttributes).toHaveProperty('value');
-      expect(componentAttributes.value).toBe(numberFormat.format(MOCK_ITEM_DETAILS_OVERVIEW_ITEM_DETAILS.recentPrice));
+      expect(componentAttributes.value).toBe(numberFormat.format(MOCK_ITEM_DETAILS.recentPrice));
     });
 
     it('when data-test = total-trades', () => {
       const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>('[data-test="total-trades"]');
       const componentAttributes: Record<string, string> = componentWrapper.attributes();
 
-      if (!MOCK_ITEM_DETAILS_OVERVIEW_ITEM_TYPE.tradeCount) {
+      if (!MOCK_ITEM_TYPE.tradeCount) {
         throw new UnitTestException('Item property tradeCount is missing from the test object');
       }
 
       expect(componentAttributes).toHaveProperty('value');
-      expect(componentAttributes.value).toBe(numberFormat.format(MOCK_ITEM_DETAILS_OVERVIEW_ITEM_TYPE.tradeCount));
+      expect(componentAttributes.value).toBe(numberFormat.format(MOCK_ITEM_TYPE.tradeCount));
     });
 
     it('when data-test = recent-transaction', () => {
@@ -175,7 +175,7 @@ describe('ItemDetailsOverview', () => {
       );
       const componentAttributes: Record<string, string> = componentWrapper.attributes();
 
-      const timeInMilliseconds: number = MOCK_ITEM_DETAILS_OVERVIEW_ITEM_DETAILS.recentTransaction * 1000;
+      const timeInMilliseconds: number = MOCK_ITEM_DETAILS.recentTransaction * 1000;
       const dateFormat: UseDateFormatReturn = useDateFormat(timeInMilliseconds, 'MM-DD HH:mm');
 
       expect(componentAttributes).toHaveProperty('value');

@@ -5,7 +5,7 @@ import { ControllerResponseCode } from '@/enums/controller-response.enum';
 
 @Catch(NotFoundException)
 export class NotFoundExceptionFilter implements ExceptionFilter {
-  public catch(exception: unknown, host: ArgumentsHost): void {
+  public catch(exception: NotFoundException, host: ArgumentsHost): void {
     const context: HttpArgumentsHost = host.switchToHttp();
     const response: Response = context.getResponse();
 

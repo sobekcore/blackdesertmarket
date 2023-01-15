@@ -2,9 +2,9 @@
   <div class="w-[320px]">
     <div data-test="category" class="mb-0.5 text-right text-xs">{{ props.itemTooltip.category }}</div>
     <div data-test="name" class="mb-0.5 text-lg">{{ itemTypeComposable.getItemName() }}</div>
-    <div class="flex gap-x-6">
+    <div class="flex gap-x-3">
       <ListItemIcon :src="itemIcon.href" :text="itemTypeComposable.getItemIconText()" />
-      <div class="tooltip-properties grid items-center gap-x-3">
+      <div class="flex flex-col gap-x-3">
         <ListItemTooltipProperty
           v-if="props.itemTooltip.damage"
           data-test="damage"
@@ -25,6 +25,18 @@
           label="Accuracy"
           :value="props.itemTooltip.accuracy"
           class="text-lg leading-6"
+        />
+        <ListItemTooltipProperty
+          v-if="props.itemTooltip.evasion"
+          data-test="evasion"
+          label="Evasion"
+          :value="props.itemTooltip.evasion"
+        />
+        <ListItemTooltipProperty
+          v-if="props.itemTooltip.evasion"
+          data-test="damageReduction"
+          label="Damage Reduction"
+          :value="props.itemTooltip.evasion"
         />
         <ListItemTooltipProperty
           v-if="props.itemTooltip.weight"
@@ -65,10 +77,10 @@ import {
   BlackDesertItemType,
 } from '@blackdesertmarket/interfaces';
 import { ItemTooltipSectionId } from '@/enums/item-tooltip';
+import { UseItemTooltipReturn, useItemTooltip } from '@/composables/item-tooltip/use-item-tooltip';
+import { UseItemTypeReturn, useItemType } from '@/composables/item-type/use-item-type';
+import { UseItemReturn, useItem } from '@/composables/item/use-item';
 import { UseConfigReturn, useConfig } from '@/composables/use-config';
-import { UseItemReturn, useItem } from '@/composables/use-item';
-import { UseItemTooltipReturn, useItemTooltip } from '@/composables/use-item-tooltip';
-import { UseItemTypeReturn, useItemType } from '@/composables/use-item-type';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemTooltipProperty from '@/components/ListItem/ListItemTooltip/ListItemTooltipProperty.vue';
 import ListItemTooltipSection from '@/components/ListItem/ListItemTooltip/ListItemTooltipSection.vue';
@@ -118,9 +130,3 @@ if (!centralMarketInformationId.value) {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.tooltip-properties {
-  grid-template-columns: auto 1fr;
-}
-</style>

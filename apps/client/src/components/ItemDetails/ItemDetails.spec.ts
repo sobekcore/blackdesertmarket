@@ -7,20 +7,20 @@ import ItemDetailsAdditional from '@/components/ItemDetails/ItemDetailsAdditiona
 import ItemDetailsAvailability from '@/components/ItemDetails/ItemDetailsAvailability.vue';
 import ItemDetailsOverview from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverview.vue';
 
-const MOCK_ITEM_DETAILS_ID: number = 5600;
-const MOCK_ITEM_DETAILS_ENHANCEMENT: number = 0;
-const MOCK_ITEM_DETAILS_ITEM_TYPE: BlackDesertItemType = mockBlackDesertItemType();
-const MOCK_ITEM_DETAILS_ITEM_DETAILS: BlackDesertItemDetails = mockBlackDesertItemDetails();
+const MOCK_ID: number = 5600;
+const MOCK_ENHANCEMENT: number = 0;
+const MOCK_ITEM_TYPE: BlackDesertItemType = mockBlackDesertItemType();
+const MOCK_ITEM_DETAILS: BlackDesertItemDetails = mockBlackDesertItemDetails();
 
-jest.mock('@/composables/use-item-list', () => ({
-  useItemList: () => ({
-    fetchByEnhancement: () => Promise.resolve(MOCK_ITEM_DETAILS_ITEM_TYPE),
+jest.mock('@/composables/item-type/use-item-type-fetch', () => ({
+  useItemTypeFetch: () => ({
+    fetchByEnhancement: () => Promise.resolve(MOCK_ITEM_TYPE),
   }),
 }));
 
-jest.mock('@/composables/use-item-details', () => ({
-  useItemDetails: () => ({
-    fetch: () => Promise.resolve(MOCK_ITEM_DETAILS_ITEM_DETAILS),
+jest.mock('@/composables/item-details/use-item-details-fetch', () => ({
+  useItemDetailsFetch: () => ({
+    fetch: () => Promise.resolve(MOCK_ITEM_DETAILS),
   }),
 }));
 
@@ -33,8 +33,8 @@ describe('ItemDetails', () => {
         plugins: mockPlugins(),
       },
       props: {
-        id: MOCK_ITEM_DETAILS_ID,
-        enhancement: MOCK_ITEM_DETAILS_ENHANCEMENT,
+        id: MOCK_ID,
+        enhancement: MOCK_ENHANCEMENT,
       },
     });
   });
@@ -63,8 +63,8 @@ describe('ItemDetails', () => {
         plugins: mockPlugins(),
       },
       props: {
-        id: MOCK_ITEM_DETAILS_ID,
-        enhancement: MOCK_ITEM_DETAILS_ENHANCEMENT,
+        id: MOCK_ID,
+        enhancement: MOCK_ENHANCEMENT,
       },
     });
 
@@ -74,7 +74,7 @@ describe('ItemDetails', () => {
     const itemDetailsOverviewVM: Record<string, any> = itemDetailsOverviewWrapper.vm as Record<string, any>;
 
     expect(itemDetailsOverviewVM).toHaveProperty('itemType');
-    expect(itemDetailsOverviewVM.itemType).toEqual(MOCK_ITEM_DETAILS_ITEM_TYPE);
+    expect(itemDetailsOverviewVM.itemType).toEqual(MOCK_ITEM_TYPE);
   });
 
   it('should pass itemDetails prop to ItemDetailsOverview depending on id and enhancement props', async () => {
@@ -83,8 +83,8 @@ describe('ItemDetails', () => {
         plugins: mockPlugins(),
       },
       props: {
-        id: MOCK_ITEM_DETAILS_ID,
-        enhancement: MOCK_ITEM_DETAILS_ENHANCEMENT,
+        id: MOCK_ID,
+        enhancement: MOCK_ENHANCEMENT,
       },
     });
 
@@ -94,6 +94,6 @@ describe('ItemDetails', () => {
     const itemDetailsOverviewVM: Record<string, any> = itemDetailsOverviewWrapper.vm as Record<string, any>;
 
     expect(itemDetailsOverviewVM).toHaveProperty('itemDetails');
-    expect(itemDetailsOverviewVM.itemDetails).toEqual(MOCK_ITEM_DETAILS_ITEM_DETAILS);
+    expect(itemDetailsOverviewVM.itemDetails).toEqual(MOCK_ITEM_DETAILS);
   });
 });

@@ -22,28 +22,28 @@
           <ItemDetailsOverviewProperty
             data-test="in-stock"
             label="In Stock"
-            :value="formatSellCount(props.itemDetails.sellCount)"
+            :value="itemDetailsComposable.getSellCount()"
           />
           <ItemDetailsOverviewProperty label="Warehouse Capacity" value="" />
           <ItemDetailsOverviewProperty
             data-test="base-price"
             label="Base Price"
-            :value="formatBasePrice(props.itemDetails.basePrice)"
+            :value="itemDetailsComposable.getBasePrice()"
           />
           <ItemDetailsOverviewProperty
             data-test="recent-price"
             label="Recent Price"
-            :value="getRecentPrice(props.itemDetails)"
+            :value="itemDetailsComposable.getRecentPrice()"
           />
           <ItemDetailsOverviewProperty
             data-test="total-trades"
             label="Total Trades"
-            :value="formatTradeCount(props.itemType.tradeCount)"
+            :value="itemTypeComposable.getTradeCount()"
           />
           <ItemDetailsOverviewProperty
             data-test="recent-transaction"
             label="Recent Transaction"
-            :value="getRecentTransaction(props.itemDetails)"
+            :value="itemDetailsComposable.getRecentTransaction()"
           />
         </div>
       </div>
@@ -56,15 +56,11 @@
 
 <script lang="ts" setup>
 import { ComputedRef, PropType, Ref, computed, defineProps, ref } from 'vue';
-import {
-  BlackDesertItemDetails,
-  BlackDesertItemDetailsExtended,
-  BlackDesertItemType,
-} from '@blackdesertmarket/interfaces';
-import { UseDateFormatReturn, useDateFormat } from '@vueuse/core';
+import { BlackDesertItemDetails, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { ComponentException } from '@/exceptions/component-exception';
+import { UseItemDetailsReturn, useItemDetails } from '@/composables/item-details/use-item-details';
+import { UseItemTypeReturn, useItemType } from '@/composables/item-type/use-item-type';
 import { UseConfigReturn, useConfig } from '@/composables/use-config';
-import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 import ItemDetailsOverviewButton from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverviewButton.vue';
 import ItemDetailsOverviewChart from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverviewChart.vue';
 import ItemDetailsOverviewProperty from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverviewProperty.vue';
@@ -83,7 +79,8 @@ const props = defineProps({
 });
 
 const config: UseConfigReturn = useConfig();
-const numberFormat: UseNumberFormatReturn = useNumberFormat();
+const itemTypeComposable: UseItemTypeReturn = useItemType(props.itemType);
+const itemDetailsComposable: UseItemDetailsReturn = useItemDetails(props.itemDetails);
 
 const itemIcon: Ref<URL> = ref(new URL(`/item/${props.itemType.id}/icon`, config.marketApiUrl));
 const itemGradeText: Ref<string> = ref('');
@@ -104,41 +101,6 @@ const days: ComputedRef<number> = computed((): number => {
 
 const handleButtonClick = (month: number): void => {
   months.value = month;
-};
-
-const formatSellCount = (count: number): string => {
-  return `${count}`;
-};
-
-const formatBasePrice = (price: number): string => {
-  return numberFormat.format(price);
-};
-
-const getRecentPrice = (itemDetails: BlackDesertItemDetails): string => {
-  const itemDetailsExtended = itemDetails as BlackDesertItemDetailsExtended;
-
-  if (!itemDetailsExtended.recentPrice) {
-    return '';
-  }
-
-  return numberFormat.format(itemDetailsExtended.recentPrice);
-};
-
-const formatTradeCount = (count: number): string => {
-  return numberFormat.format(count);
-};
-
-const getRecentTransaction = (itemDetails: BlackDesertItemDetails): string => {
-  const itemDetailsExtended = itemDetails as BlackDesertItemDetailsExtended;
-
-  if (!itemDetailsExtended.recentTransaction) {
-    return '';
-  }
-
-  const timeInMilliseconds: number = itemDetailsExtended.recentTransaction * 1000;
-  const dateFormat: UseDateFormatReturn = useDateFormat(timeInMilliseconds, 'MM-DD HH:mm');
-
-  return dateFormat.value;
 };
 
 if (props.itemType.grade) {

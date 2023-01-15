@@ -1,10 +1,12 @@
 <template>
-  <span data-test="label" class="text-right text-xs">
-    {{ formatItemTooltipPropertyLabel(props.label) }}
-  </span>
-  <span data-test="value" :class="props.class">
-    {{ props.value }}
-  </span>
+  <div class="tooltip-property">
+    <span data-test="label" class="text-right text-xs">
+      {{ formatItemTooltipPropertyLabel(props.label) }}
+    </span>
+    <span data-test="value" :class="props.class">
+      {{ props.value }}
+    </span>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -30,3 +32,10 @@ const formatItemTooltipPropertyLabel = (label: string): string => {
   return `${label}:`;
 };
 </script>
+
+<style lang="scss" scoped>
+.tooltip-property {
+  @apply grid items-center gap-x-3;
+  grid-template-columns: minmax(60px, auto) 1fr;
+}
+</style>

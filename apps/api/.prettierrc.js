@@ -12,6 +12,8 @@ module.exports = {
     '^@/interfaces/(.*)$',
     '^@/exceptions/(.*)$',
     '^@/enums/(.*)$',
+    '^@/decorators/(.*)$',
+    '^@/contexts/(.*)$',
     '^@/modules/(.*)$',
     '^@/filters/(.*)$',
     '^@/(.*)$',

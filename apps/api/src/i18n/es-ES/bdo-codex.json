@@ -1,0 +1,11 @@
+{
+  "weight": "Peso",
+  "personalTransaction": "Transacción privada",
+  "enhancementType": "Tipo de Refuerzo",
+  "classExclusive": "únicamente",
+  "description": "Descripción",
+  "itemEffect": "Efecto de objeto",
+  "enhancementEffect": "Efecto de mejora",
+  "specialEffect": "Efecto especial",
+  "price": "Precio de venta"
+}

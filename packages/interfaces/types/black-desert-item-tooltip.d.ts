@@ -6,6 +6,8 @@ export interface BlackDesertItemTooltip {
   damage?: string;
   defense?: string;
   accuracy?: string;
+  evasion?: string;
+  damageReduction?: string;
   weight: string;
   sections: BlackDesertItemTooltipSection[];
 }

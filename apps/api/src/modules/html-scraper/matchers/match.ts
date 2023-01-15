@@ -1,9 +1,9 @@
-import { HtmlScraperMatch } from '@/interfaces/html-scraper-match.interface';
+import { HtmlScraperMatch } from '@/interfaces/classes/html-scraper-match';
 
 export class Match implements HtmlScraperMatch {
   private found: HTMLElement;
 
-  public constructor(private readonly element: HTMLElement, private readonly query: string) {}
+  constructor(private readonly element: HTMLElement, private readonly query: string) {}
 
   public find(): this {
     this.found = this.element.querySelector(this.query);

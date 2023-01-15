@@ -11,11 +11,12 @@ import {
   BlackDesertItemType,
 } from '@blackdesertmarket/interfaces';
 import { JSDOM } from 'jsdom';
-import { BlackDesertItemDetailsExtendedOnly } from '@/interfaces/black-desert-item-details.interface';
+import { I18nContext } from 'nestjs-i18n';
+import { BlackDesertItemDetailsExtendedOnly } from '@/interfaces/objects/black-desert-item-details.interface';
 import {
   ExternalMarketRawItemDetails,
   ExternalMarketRawItemDetailsElement,
-} from '@/interfaces/external-market-raw.interface';
+} from '@/interfaces/objects/external-market-raw.interface';
 import {
   ExternalMarketItem,
   ExternalMarketItemDetails,
@@ -23,7 +24,7 @@ import {
   ExternalMarketItemHot,
   ExternalMarketItemQueue,
   ExternalMarketItemType,
-} from '@/interfaces/external-market.interface';
+} from '@/interfaces/objects/external-market.interface';
 import { BdoCodexScraperService } from '@/modules/bdo-codex/bdo-codex-scraper.service';
 
 @Injectable()
@@ -139,7 +140,12 @@ export class ItemTransformerService {
     }
   }
 
-  public transformBdoCodexItemTooltip(itemTooltip: string, id: number, enhancement: number): BlackDesertItemTooltip {
+  public transformBdoCodexItemTooltip(
+    i18n: I18nContext,
+    itemTooltip: string,
+    id: number,
+    enhancement: number,
+  ): BlackDesertItemTooltip {
     const addConditionalObjectElement = <T>(condition: unknown, key: string, element: T): Record<string, T> => {
       return condition ? { [key]: element } : {};
     };
@@ -151,11 +157,15 @@ export class ItemTransformerService {
     const dom: JSDOM = new JSDOM(itemTooltip);
     const document: Document = dom.window.document;
 
+    this.bdoCodexScraperService.injectI18nContext(i18n);
+
     const name: string = this.bdoCodexScraperService.scrapeName(document.body);
     const category: string = this.bdoCodexScraperService.scrapeCategory(document.body);
     const damage: string = this.bdoCodexScraperService.scrapeDamage(document.body);
     const defense: string = this.bdoCodexScraperService.scrapeDefense(document.body);
     const accuracy: string = this.bdoCodexScraperService.scrapeAccuracy(document.body);
+    const evasion: string = this.bdoCodexScraperService.scrapeEvasion(document.body);
+    const damageReduction: string = this.bdoCodexScraperService.scrapeDamageReduction(document.body);
     const weight: string = this.bdoCodexScraperService.scrapeWeight(document.body);
     const personalTransaction: string = this.bdoCodexScraperService.scrapePersonalTransaction(document.body);
     const enhancementType: string = this.bdoCodexScraperService.scrapeEnhancementType(document.body);
@@ -167,9 +177,6 @@ export class ItemTransformerService {
     const price: string = this.bdoCodexScraperService.scrapePrice(document.body);
     const durability: string = this.bdoCodexScraperService.scrapeDurability(document.body);
 
-    /**
-     * TODO: Scrape and return data that is missing from the tooltip content
-     */
     return {
       id: id,
       enhancement: enhancement,
@@ -178,49 +185,51 @@ export class ItemTransformerService {
       ...addConditionalObjectElement<string>(damage !== '0~0' && damage !== '0', 'damage', damage),
       ...addConditionalObjectElement<string>(defense !== '0', 'defense', defense),
       ...addConditionalObjectElement<string>(accuracy !== '0', 'accuracy', accuracy),
+      ...addConditionalObjectElement<string>(evasion !== '0', 'evasion', evasion),
+      ...addConditionalObjectElement<string>(damageReduction !== '0', 'damageReduction', damageReduction),
       weight: weight,
       sections: [
         {
           id: 'personalTransaction',
-          name: `Personal transaction ${personalTransaction}`,
+          name: `${i18n.translate('tooltip.personalTransaction')} ${personalTransaction}`,
         },
         ...addConditionalArrayElement<BlackDesertItemTooltipSection>(enhancementType, {
           id: 'enhancementType',
-          name: 'Enhancement Type',
+          name: i18n.translate('tooltip.enhancementType'),
           values: [enhancementType],
         }),
         ...addConditionalArrayElement<BlackDesertItemTooltipSection>(classExclusive, {
           id: 'classExclusive',
-          name: `${classExclusive} Exclusive`,
+          name: `${classExclusive} ${i18n.translate('tooltip.classExclusive')}`,
         }),
         {
           id: 'description',
-          name: `Description`,
+          name: i18n.translate('tooltip.description'),
           values: [description],
         },
         ...addConditionalArrayElement<BlackDesertItemTooltipSection>(itemEffect.length, {
           id: 'itemEffect',
-          name: 'Item Effect',
+          name: i18n.translate('tooltip.itemEffect'),
           values: itemEffect,
         }),
         ...addConditionalArrayElement<BlackDesertItemTooltipSection>(enhancementEffect.length, {
           id: 'enhancementEffect',
-          name: 'Enhancement Effect',
+          name: i18n.translate('tooltip.enhancementEffect'),
           values: enhancementEffect,
         }),
         ...addConditionalArrayElement<BlackDesertItemTooltipSection>(specialEffect.length, {
           id: 'specialEffect',
-          name: 'Special Effect',
+          name: i18n.translate('tooltip.specialEffect'),
           values: specialEffect,
         }),
         {
           id: 'price',
-          name: `Price`,
+          name: i18n.translate('tooltip.price'),
           values: [price || 'N/A'],
         },
         ...addConditionalArrayElement<BlackDesertItemTooltipSection>(durability, {
           id: 'durability',
-          name: 'Durability',
+          name: i18n.translate('tooltip.durability'),
           values: [durability],
         }),
       ],

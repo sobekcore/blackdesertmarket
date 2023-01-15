@@ -2,7 +2,7 @@ import { DefineComponent, defineComponent } from 'vue';
 import { VueWrapper, mount } from '@vue/test-utils';
 import { useStringWrap } from '@/composables/use-string-wrap';
 
-const MOCK_USE_STRING_WRAP_STRING: string = 'Use String Wrap String';
+const MOCK_STRING: string = 'Mock String';
 
 describe('useStringWrap', () => {
   let component: DefineComponent;
@@ -21,8 +21,8 @@ describe('useStringWrap', () => {
 
   it('should return proper data from wrap', () => {
     const componentVM: Record<string, any> = wrapper.vm as Record<string, any>;
-    const size: number = componentVM.wrap(MOCK_USE_STRING_WRAP_STRING, '@', 3);
+    const size: number = componentVM.wrap(MOCK_STRING, '@', 3);
 
-    expect(size).toBe(`@@@${MOCK_USE_STRING_WRAP_STRING}@@@`);
+    expect(size).toBe(`@@@${MOCK_STRING}@@@`);
   });
 });

@@ -2,7 +2,7 @@ import {
   ExternalMarketItemDetails,
   ExternalMarketItemDetailsAvailability,
   ExternalMarketItemDetailsHistory,
-} from '@/interfaces/external-market.interface';
+} from '@/interfaces/objects/external-market.interface';
 
 export function mockExternalMarketItemDetails(): ExternalMarketItemDetails {
   return {

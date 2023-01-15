@@ -1,8 +1,8 @@
 import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
 import ListItemTooltipProperty from '@/components/ListItem/ListItemTooltip/ListItemTooltipProperty.vue';
 
-const MOCK_LABEL: string = 'List Item Tooltip Property Label';
-const MOCK_VALUE: string = 'List Item Tooltip Property Value';
+const MOCK_LABEL: string = 'Mock Label';
+const MOCK_VALUE: string = 'Mock Value';
 
 describe('ListItemTooltipProperty', () => {
   let wrapper: VueWrapper;

@@ -1,12 +1,12 @@
 <template>
   <div data-test="outer" :class="props.class" class="flex flex-col rounded p-1.5 text-xs text-dark-900">
     <span data-test="name" :class="props.nameClass" class="section-name">
-      {{ formatItemTooltipSectionName(props.itemTooltipSection.name) }}
+      {{ getItemTooltipSectionName() }}
     </span>
     <div v-if="props.itemTooltipSection.values" class="section-values mt-0.5 ml-2.5 flex flex-col gap-0.5">
       <template v-for="value in props.itemTooltipSection.values" :key="value">
         <span data-test="value" :class="props.valueClass">
-          {{ formatItemTooltipSectionValue(value) }}
+          {{ getItemTooltipSectionValue(value) }}
         </span>
       </template>
     </div>
@@ -17,7 +17,11 @@
 import { PropType, defineProps } from 'vue';
 import { BlackDesertItemTooltipSection } from '@blackdesertmarket/interfaces';
 import { VueAttributeClass } from '@/types/attributes-vue';
-import { FormatNameFunction, FormatValueFunction } from '@/composables/use-item-tooltip';
+import { FormatNameFunction, FormatValueFunction } from '@/composables/item-tooltip/use-item-tooltip';
+import {
+  UseItemTooltipSectionReturn,
+  useItemTooltipSection,
+} from '@/composables/item-tooltip/use-item-tooltip-section';
 
 const props = defineProps({
   itemTooltipSection: {
@@ -41,15 +45,17 @@ const props = defineProps({
   },
 });
 
-const formatItemTooltipSectionName = (name: string): string => {
+const itemTooltipSectionComposable: UseItemTooltipSectionReturn = useItemTooltipSection(props.itemTooltipSection);
+
+const getItemTooltipSectionName = (): string => {
   if (!props.formatName) {
-    return `– ${name}`;
+    return itemTooltipSectionComposable.getSectionName();
   }
 
-  return `– ${props.formatName(name)}`;
+  return props.formatName(itemTooltipSectionComposable.getSectionName());
 };
 
-const formatItemTooltipSectionValue = (value: string): string => {
+const getItemTooltipSectionValue = (value: string): string => {
   if (!props.formatValue) {
     return value;
   }

@@ -9,9 +9,9 @@ import ItemDetailsOverviewChart from '@/components/ItemDetails/ItemDetailsOvervi
 
 type ChartType = 'line';
 
-const MOCK_ITEM_DETAILS_OVERVIEW_CHART_DATA_ITEM: BlackDesertItemDetailsHistory = mockBlackDesertItemDetailsHistory();
-const MOCK_ITEM_DETAILS_OVERVIEW_CHART_DAYS: number = 31;
-const MOCK_ITEM_DETAILS_OVERVIEW_CHART_CLASS: string = 'item-details-overview-chart-class';
+const MOCK_DATA_ITEM: BlackDesertItemDetailsHistory = mockBlackDesertItemDetailsHistory();
+const MOCK_DAYS: number = 31;
+const MOCK_CLASS: string = 'mock-class';
 
 describe('ItemDetailsOverviewChart', () => {
   let wrapper: VueWrapper;
@@ -19,8 +19,8 @@ describe('ItemDetailsOverviewChart', () => {
   beforeEach(() => {
     wrapper = shallowMount(ItemDetailsOverviewChart, {
       props: {
-        data: [MOCK_ITEM_DETAILS_OVERVIEW_CHART_DATA_ITEM],
-        days: MOCK_ITEM_DETAILS_OVERVIEW_CHART_DAYS,
+        data: [MOCK_DATA_ITEM],
+        days: MOCK_DAYS,
       },
     });
   });
@@ -34,9 +34,9 @@ describe('ItemDetailsOverviewChart', () => {
   it('should pass class attribute to div depending on class prop', () => {
     wrapper = shallowMount(ItemDetailsOverviewChart, {
       props: {
-        data: [MOCK_ITEM_DETAILS_OVERVIEW_CHART_DATA_ITEM],
-        days: MOCK_ITEM_DETAILS_OVERVIEW_CHART_DAYS,
-        class: MOCK_ITEM_DETAILS_OVERVIEW_CHART_CLASS,
+        data: [MOCK_DATA_ITEM],
+        days: MOCK_DAYS,
+        class: MOCK_CLASS,
       },
     });
 
@@ -44,14 +44,14 @@ describe('ItemDetailsOverviewChart', () => {
     const outerAttributes: Record<string, string> = outer.attributes();
 
     expect(outerAttributes).toHaveProperty('class');
-    expect(outerAttributes.class).toContain(MOCK_ITEM_DETAILS_OVERVIEW_CHART_CLASS);
+    expect(outerAttributes.class).toContain(MOCK_CLASS);
   });
 
   it('should pass data prop to Line depending on data prop', () => {
     wrapper = shallowMount(ItemDetailsOverviewChart, {
       props: {
-        data: [MOCK_ITEM_DETAILS_OVERVIEW_CHART_DATA_ITEM],
-        days: MOCK_ITEM_DETAILS_OVERVIEW_CHART_DAYS,
+        data: [MOCK_DATA_ITEM],
+        days: MOCK_DAYS,
       },
     });
 
@@ -64,7 +64,7 @@ describe('ItemDetailsOverviewChart', () => {
     expect(lineVM.data).toHaveProperty('datasets');
 
     const datasets: DefaultDataPoint<ChartType> = lineVM.data.datasets;
-    const data: number[] = [MOCK_ITEM_DETAILS_OVERVIEW_CHART_DATA_ITEM.onePrice / unit];
+    const data: number[] = [MOCK_DATA_ITEM.onePrice / unit];
 
     expect(datasets).toHaveLength(1);
     expect(getFirstElement(datasets)).toHaveProperty('data', data);

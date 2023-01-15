@@ -6,17 +6,17 @@ import { BlackDesertItemDetails, BlackDesertItemType } from '@blackdesertmarket/
 import { isValidBlackDesertItemDetails, isValidBlackDesertItemType } from '@blackdesertmarket/objects';
 import { AxiosResponse } from 'axios';
 import { createReadStream } from 'fs';
+import { I18nService } from 'nestjs-i18n';
 import { Observable, of } from 'rxjs';
 import { mockAxiosResponse } from '@test/mocks/axios-response.mock';
 import { mockExternalMarketItemDetails } from '@test/mocks/external-market-item-details.mock';
 import { mockExternalMarketItemType } from '@test/mocks/external-market-item-type.mock';
-import { ControllerResponse } from '@/interfaces/controller-response.interface';
+import { mockI18nContext } from '@test/mocks/i18n-context.mock';
+import { mockRegionContext } from '@test/mocks/region-context.mock';
+import { ControllerResponse } from '@/interfaces/objects/controller-response.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
 import { BdoCodexModule } from '@/modules/bdo-codex/bdo-codex.module';
 import { ExternalMarketModule } from '@/modules/external-market/external-market.module';
-import { FindDetailsByIdParamsDto, FindDetailsByIdQueryDto } from '@/modules/item/dto/find-details-by-id.dto';
-import { FindIconByIdParamsDto } from '@/modules/item/dto/find-icon-by-id.dto';
-import { FindTypesByIdParamsDto, FindTypesByIdQueryDto } from '@/modules/item/dto/find-types-by-id.dto';
 import { ItemTransformerService } from '@/modules/item/item-transformer.service';
 import { ItemValidatorService } from '@/modules/item/item-validator.service';
 import { ItemController } from '@/modules/item/item.controller';
@@ -26,6 +26,7 @@ import { CoreModule } from '@/core.module';
 describe('ItemController', () => {
   let itemController: ItemController;
   let httpService: HttpService;
+  let i18nService: I18nService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -36,6 +37,7 @@ describe('ItemController', () => {
 
     itemController = module.get<ItemController>(ItemController);
     httpService = module.get<HttpService>(HttpService);
+    i18nService = module.get<I18nService>(I18nService);
   });
 
   describe('findTypesById', () => {
@@ -44,10 +46,12 @@ describe('ItemController', () => {
         return of(mockAxiosResponse({ detailList: [mockExternalMarketItemType()] }));
       });
 
-      const params: FindTypesByIdParamsDto = { id: 5600 };
-      const query: FindTypesByIdQueryDto = {};
+      const response: ControllerResponse<BlackDesertItemType[]> = await itemController.findTypesById(
+        mockRegionContext(),
+        mockI18nContext(i18nService),
+        { id: 5600 },
+      );
 
-      const response: ControllerResponse<BlackDesertItemType[]> = await itemController.findTypesById(params, query);
       const validItemType: boolean = isValidBlackDesertItemType(getFirstElement<BlackDesertItemType>(response.data));
 
       expect(validItemType).toBeTruthy();
@@ -58,10 +62,11 @@ describe('ItemController', () => {
         return of(mockAxiosResponse({}));
       });
 
-      const params: FindTypesByIdParamsDto = { id: 5600 };
-      const query: FindTypesByIdQueryDto = {};
-
-      const promise: Promise<ControllerResponse<unknown>> = itemController.findTypesById(params, query);
+      const promise: Promise<ControllerResponse<unknown>> = itemController.findTypesById(
+        mockRegionContext(),
+        mockI18nContext(i18nService),
+        { id: 5600 },
+      );
 
       expect(promise).rejects.toThrow(ExternalMarketException);
     });
@@ -73,9 +78,7 @@ describe('ItemController', () => {
         return of(mockAxiosResponse(createReadStream('test/mocks/external-market-item-icon.mock.png')));
       });
 
-      const params: FindIconByIdParamsDto = { id: 5600 };
-
-      const response: StreamableFile = await itemController.findIconById(params);
+      const response: StreamableFile = await itemController.findIconById({ id: 5600 });
       const validItemIconStream = typeof response.getStream() !== 'undefined';
       const validItemIconType = response.getHeaders().type === 'image/png';
 
@@ -89,9 +92,7 @@ describe('ItemController', () => {
         return of(mockAxiosResponse({}));
       });
 
-      const params: FindIconByIdParamsDto = { id: 5600 };
-
-      const promise: Promise<unknown> = itemController.findIconById(params);
+      const promise: Promise<unknown> = itemController.findIconById({ id: 5600 });
 
       expect(promise).rejects.toThrow(ExternalMarketException);
     });
@@ -103,10 +104,13 @@ describe('ItemController', () => {
         return of(mockAxiosResponse(mockExternalMarketItemDetails()));
       });
 
-      const params: FindDetailsByIdParamsDto = { id: 5600, enhancement: 0 };
-      const query: FindDetailsByIdQueryDto = { extended: true };
+      const response: ControllerResponse<BlackDesertItemDetails> = await itemController.findDetailsById(
+        mockRegionContext(),
+        mockI18nContext(i18nService),
+        { id: 5600, enhancement: 0 },
+        { extended: true },
+      );
 
-      const response: ControllerResponse<BlackDesertItemDetails> = await itemController.findDetailsById(params, query);
       const validItemDetails: boolean = isValidBlackDesertItemDetails(response.data);
 
       expect(validItemDetails).toBeTruthy();
@@ -117,10 +121,12 @@ describe('ItemController', () => {
         return of(mockAxiosResponse({}));
       });
 
-      const params: FindDetailsByIdParamsDto = { id: 5600, enhancement: 0 };
-      const query: FindDetailsByIdQueryDto = { extended: true };
-
-      const promise: Promise<ControllerResponse<unknown>> = itemController.findDetailsById(params, query);
+      const promise: Promise<ControllerResponse<unknown>> = itemController.findDetailsById(
+        mockRegionContext(),
+        mockI18nContext(i18nService),
+        { id: 5600, enhancement: 0 },
+        { extended: true },
+      );
 
       expect(promise).rejects.toThrow(ExternalMarketException);
     });

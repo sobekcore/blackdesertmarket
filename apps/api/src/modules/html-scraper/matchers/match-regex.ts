@@ -1,9 +1,9 @@
-import { HtmlScraperMatch } from '@/interfaces/html-scraper-match.interface';
+import { HtmlScraperMatch } from '@/interfaces/classes/html-scraper-match';
 
 export class MatchRegex implements HtmlScraperMatch {
   protected found: RegExpMatchArray;
 
-  public constructor(private readonly element: HTMLElement, private readonly query: RegExp) {}
+  constructor(private readonly element: HTMLElement, private readonly query: RegExp) {}
 
   public find(): this {
     this.found = this.element.outerHTML.match(this.query);

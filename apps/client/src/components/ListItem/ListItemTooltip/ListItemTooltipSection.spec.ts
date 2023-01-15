@@ -3,13 +3,17 @@ import { BlackDesertItemTooltipSection } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItemTooltipSection } from '@blackdesertmarket/mocks';
 import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
 import { UnitTestException } from '@/exceptions/unit-test-exception';
-import { FormatNameFunction } from '@/composables/use-item-tooltip';
+import { FormatNameFunction } from '@/composables/item-tooltip/use-item-tooltip';
+import {
+  UseItemTooltipSectionReturn,
+  useItemTooltipSection,
+} from '@/composables/item-tooltip/use-item-tooltip-section';
 import ListItemTooltipSection from '@/components/ListItem/ListItemTooltip/ListItemTooltipSection.vue';
 
 const MOCK_ITEM_TOOLTIP_SECTION: BlackDesertItemTooltipSection = mockBlackDesertItemTooltipSection();
 const MOCK_FORMAT_NAME: FormatNameFunction = (name: string): string => `@@@${name}`;
 const MOCK_FORMAT_VALUE: FormatNameFunction = (value: string): string => `@@@${value}`;
-const MOCK_CLASS: string = 'list-item-tooltip-section-class';
+const MOCK_CLASS: string = 'mock-class';
 
 describe('ListItemTooltipSection', () => {
   let wrapper: VueWrapper;
@@ -54,9 +58,11 @@ describe('ListItemTooltipSection', () => {
       },
     });
 
+    const itemTooltipSectionComposable: UseItemTooltipSectionReturn = useItemTooltipSection(MOCK_ITEM_TOOLTIP_SECTION);
+
     const name: DOMWrapper<HTMLElement> = wrapper.find('[data-test="name"]');
 
-    expect(name.text()).toContain(`@@@${MOCK_ITEM_TOOLTIP_SECTION.name}`);
+    expect(name.text()).toContain(`@@@${itemTooltipSectionComposable.getSectionName()}`);
   });
 
   it('should render content depending on formatValue prop', () => {

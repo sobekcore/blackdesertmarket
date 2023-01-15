@@ -8,16 +8,17 @@ import {
 } from '@blackdesertmarket/interfaces';
 import { AxiosResponse } from 'axios';
 import { ReadStream, createReadStream, createWriteStream, existsSync } from 'fs';
+import { I18nContext } from 'nestjs-i18n';
 import { Observable, lastValueFrom, map } from 'rxjs';
-import { BdoCodexMeta, BdoCodexParams } from '@/interfaces/bdo-codex.interface';
-import { BlackDesertItemDetailsExtendedOnly } from '@/interfaces/black-desert-item-details.interface';
-import { ExternalMarketRawItemDetails } from '@/interfaces/external-market-raw.interface';
+import { BdoCodexMeta, BdoCodexParams } from '@/interfaces/objects/bdo-codex.interface';
+import { BlackDesertItemDetailsExtendedOnly } from '@/interfaces/objects/black-desert-item-details.interface';
+import { ExternalMarketRawItemDetails } from '@/interfaces/objects/external-market-raw.interface';
 import {
   ExternalMarketItemDetails,
   ExternalMarketItemType,
   ExternalMarketMeta,
   ExternalMarketParams,
-} from '@/interfaces/external-market.interface';
+} from '@/interfaces/objects/external-market.interface';
 import { BdoCodexException } from '@/exceptions/bdo-codex.exception';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
 import { BdoCodexEndpoint } from '@/enums/bdo-codex.enum';
@@ -25,6 +26,7 @@ import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { ExternalMarketAsset } from '@/enums/external-market-asset.enum';
 import { ExternalMarketRawEndpoint } from '@/enums/external-market-raw.enum';
 import { ExternalMarketEndpoint, ExternalMarketRequestPath } from '@/enums/external-market.enum';
+import { RegionContext } from '@/contexts/region.context';
 import { BdoCodexService } from '@/modules/bdo-codex/bdo-codex.service';
 import { ExternalMarketAssetService } from '@/modules/external-market/external-market-asset.service';
 import { ExternalMarketRawService } from '@/modules/external-market/external-market-raw.service';
@@ -44,14 +46,14 @@ export class ItemService {
     private readonly bdoCodexService: BdoCodexService,
   ) {}
 
-  public findTypesById(id: number, region?: string, language?: string): Promise<BlackDesertItemType[]> {
+  public findTypesById(region: RegionContext, i18n: I18nContext, id: number): Promise<BlackDesertItemType[]> {
     const params: ExternalMarketParams = {
       mainKey: String(id),
     };
 
     const meta: ExternalMarketMeta = {
-      region: region,
-      language: language,
+      region: region.code,
+      language: i18n.lang,
     };
 
     const data: Observable<BlackDesertItemType[]> = this.externalMarketService
@@ -118,11 +120,11 @@ export class ItemService {
   }
 
   public async findDetailsById(
+    region: RegionContext,
+    i18n: I18nContext,
     id: number,
     enhancement: number,
     extended?: boolean,
-    region?: string,
-    language?: string,
   ): Promise<BlackDesertItemDetails | BlackDesertItemDetailsExtended> {
     const params: ExternalMarketParams = {
       mainKey: String(id),
@@ -132,8 +134,8 @@ export class ItemService {
     };
 
     const meta: ExternalMarketMeta = {
-      region: region,
-      language: language,
+      region: region.code,
+      language: i18n.lang,
     };
 
     let data: BlackDesertItemDetails | BlackDesertItemDetailsExtended = await lastValueFrom(
@@ -193,7 +195,7 @@ export class ItemService {
     return data;
   }
 
-  public findTooltipById(id: number, enhancement: number, language?: string): Promise<BlackDesertItemTooltip> {
+  public findTooltipById(i18n: I18nContext, id: number, enhancement: number): Promise<BlackDesertItemTooltip> {
     const params: BdoCodexParams = {
       id: String(`item--${id}`),
       enchant: String(enhancement),
@@ -201,7 +203,7 @@ export class ItemService {
     };
 
     const meta: BdoCodexMeta = {
-      language: language,
+      language: i18n.lang,
     };
 
     const data: Observable<BlackDesertItemTooltip> = this.bdoCodexService
@@ -209,7 +211,7 @@ export class ItemService {
       .pipe(
         map((response: AxiosResponse): BlackDesertItemTooltip => {
           try {
-            return this.itemTransformerService.transformBdoCodexItemTooltip(response.data, id, enhancement);
+            return this.itemTransformerService.transformBdoCodexItemTooltip(i18n, response.data, id, enhancement);
           } catch {
             throw new BdoCodexException('Response from BDO Codex did contain invalid data');
           }

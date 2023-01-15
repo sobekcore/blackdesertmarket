@@ -2,7 +2,7 @@ import {
   ExternalMarketItemHot,
   ExternalMarketItemQueue,
   ExternalMarketItemType,
-} from '@/interfaces/external-market.interface';
+} from '@/interfaces/objects/external-market.interface';
 
 export function mockExternalMarketItemType(): ExternalMarketItemType {
   return {

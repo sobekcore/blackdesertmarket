@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
-import { ExternalMarketMeta, ExternalMarketParams } from '@/interfaces/external-market.interface';
+import { ExternalMarketMeta, ExternalMarketParams } from '@/interfaces/objects/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
 import { ExternalMarketEndpoint, ExternalMarketLanguageCode } from '@/enums/external-market.enum';
 import { HttpHeader } from '@/enums/http.enum';
@@ -13,6 +13,9 @@ import { LanguageCode } from '@/enums/language.enum';
 export class ExternalMarketService {
   constructor(private readonly configService: ConfigService, private readonly httpService: HttpService) {}
 
+  /**
+   * TODO: Match all the available languages in external market
+   */
   private readonly matchExternalMarketLanguage: Record<LanguageCode, ExternalMarketLanguageCode> = {
     [LanguageCode.ENGLISH]: ExternalMarketLanguageCode.ENGLISH,
     [LanguageCode.SPANISH]: ExternalMarketLanguageCode.SPANISH,

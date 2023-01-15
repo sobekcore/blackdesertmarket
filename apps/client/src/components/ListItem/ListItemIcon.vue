@@ -28,7 +28,7 @@ import { isValidBlackDesertItemType } from '@blackdesertmarket/objects';
 import { VueAttributeClass } from '@/types/attributes-vue';
 import { HttpMethod } from '@/enums/http';
 import { usePreferencesStore } from '@/stores/preferences';
-import { UseItemTypeListReturn, useItemList } from '@/composables/use-item-list';
+import { UseItemTypeFetchReturn, useItemTypeFetch } from '@/composables/item-type/use-item-type-fetch';
 import { useMarketApi } from '@/composables/use-market-api';
 import AppIcon from '@/components/Base/AppIcon.vue';
 import AppLoader from '@/components/Base/AppLoader.vue';
@@ -68,8 +68,8 @@ const handleTooltipShow = async (): Promise<void> => {
   sent.value = true;
 
   if (!isValidBlackDesertItemType(props.item)) {
-    const itemList: UseItemTypeListReturn = useItemList(props.item.id);
-    itemType.value = await itemList.fetchBaseType();
+    const itemTypeFetch: UseItemTypeFetchReturn = useItemTypeFetch(props.item.id);
+    itemType.value = await itemTypeFetch.fetchBaseType();
   } else {
     itemType.value = props.item as BlackDesertItemType;
   }

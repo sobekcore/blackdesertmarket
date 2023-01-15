@@ -38,9 +38,9 @@
 import { PropType, Ref, defineEmits, defineProps, ref } from 'vue';
 import { BlackDesertItem, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { VueAttributeClass } from '@/types/attributes-vue';
+import { UseItemTypeReturn, useItemType } from '@/composables/item-type/use-item-type';
+import { UseItemReturn, useItem } from '@/composables/item/use-item';
 import { UseConfigReturn, useConfig } from '@/composables/use-config';
-import { UseItemReturn, useItem } from '@/composables/use-item';
-import { UseItemTypeReturn, useItemType } from '@/composables/use-item-type';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemName from '@/components/ListItem/ListItemName.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';

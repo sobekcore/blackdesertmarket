@@ -1,6 +1,7 @@
 import { Injectable, ServiceUnavailableException } from '@nestjs/common';
 import { BlackDesertItem, BlackDesertItemHot, BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
 import { AxiosResponse } from 'axios';
+import { I18nContext } from 'nestjs-i18n';
 import { Observable, lastValueFrom, map } from 'rxjs';
 import {
   ExternalMarketItem,
@@ -8,10 +9,11 @@ import {
   ExternalMarketItemQueue,
   ExternalMarketMeta,
   ExternalMarketParams,
-} from '@/interfaces/external-market.interface';
+} from '@/interfaces/objects/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { ExternalMarketEndpoint, ExternalMarketRequestPath } from '@/enums/external-market.enum';
+import { RegionContext } from '@/contexts/region.context';
 import { ExternalMarketService } from '@/modules/external-market/external-market.service';
 import { ItemTransformerService } from '@/modules/item/item-transformer.service';
 import { ItemValidatorService } from '@/modules/item/item-validator.service';
@@ -24,10 +26,10 @@ export class ListService {
     private readonly marketService: ExternalMarketService,
   ) {}
 
-  public findHotItems(region?: string, language?: string): Promise<BlackDesertItemHot[]> {
+  public findHotItems(region: RegionContext, i18n: I18nContext): Promise<BlackDesertItemHot[]> {
     const meta: ExternalMarketMeta = {
-      region: region,
-      language: language,
+      region: region.code,
+      language: i18n.lang,
     };
 
     const data: Observable<BlackDesertItemHot[]> = this.marketService
@@ -63,10 +65,10 @@ export class ListService {
     return lastValueFrom(data);
   }
 
-  public findQueueItems(region?: string, language?: string): Promise<BlackDesertItemQueue[]> {
+  public findQueueItems(region: RegionContext, i18n: I18nContext): Promise<BlackDesertItemQueue[]> {
     const meta: ExternalMarketMeta = {
-      region: region,
-      language: language,
+      region: region.code,
+      language: i18n.lang,
     };
 
     const data: Observable<BlackDesertItemQueue[]> = this.marketService
@@ -103,10 +105,10 @@ export class ListService {
   }
 
   public findByCategory(
+    region: RegionContext,
+    i18n: I18nContext,
     mainCategory: number,
     subCategory: number,
-    region?: string,
-    language?: string,
   ): Promise<BlackDesertItem[]> {
     const params: ExternalMarketParams = {
       mainCategory: String(mainCategory),
@@ -114,8 +116,8 @@ export class ListService {
     };
 
     const meta: ExternalMarketMeta = {
-      region: region,
-      language: language,
+      region: region.code,
+      language: i18n.lang,
     };
 
     const data: Observable<BlackDesertItem[]> = this.marketService

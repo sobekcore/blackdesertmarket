@@ -1,8 +1,8 @@
 import { VueWrapper, shallowMount } from '@vue/test-utils';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';
 
-const MOCK_LIST_ITEM_PROPERTY_LABEL: string = 'List Item Property Label';
-const MOCK_LIST_ITEM_PROPERTY_VALUE: string = 'List Item Property Value';
+const MOCK_LABEL: string = 'Mock Label';
+const MOCK_VALUE: string = 'Mock Value';
 
 describe('ListItemProperty', () => {
   let wrapper: VueWrapper;
@@ -14,20 +14,20 @@ describe('ListItemProperty', () => {
   it('should render content depending on label prop', () => {
     wrapper = shallowMount(ListItemProperty, {
       props: {
-        label: MOCK_LIST_ITEM_PROPERTY_LABEL,
+        label: MOCK_LABEL,
       },
     });
 
-    expect(wrapper.text()).toContain(MOCK_LIST_ITEM_PROPERTY_LABEL);
+    expect(wrapper.text()).toContain(MOCK_LABEL);
   });
 
   it('should render content depending on value prop', () => {
     wrapper = shallowMount(ListItemProperty, {
       props: {
-        value: MOCK_LIST_ITEM_PROPERTY_VALUE,
+        value: MOCK_VALUE,
       },
     });
 
-    expect(wrapper.text()).toContain(MOCK_LIST_ITEM_PROPERTY_VALUE);
+    expect(wrapper.text()).toContain(MOCK_VALUE);
   });
 });

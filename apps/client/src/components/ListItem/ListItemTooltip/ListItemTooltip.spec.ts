@@ -1,8 +1,8 @@
 import { BlackDesertItemTooltip, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItemTooltip, mockBlackDesertItemType } from '@blackdesertmarket/mocks';
 import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
-import { UseItemTooltipReturn, useItemTooltip } from '@/composables/use-item-tooltip';
-import { UseItemTypeReturn, useItemType } from '@/composables/use-item-type';
+import { UseItemTooltipReturn, useItemTooltip } from '@/composables/item-tooltip/use-item-tooltip';
+import { UseItemTypeReturn, useItemType } from '@/composables/item-type/use-item-type';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemTooltip from '@/components/ListItem/ListItemTooltip/ListItemTooltip.vue';
 import ListItemTooltipSection from '@/components/ListItem/ListItemTooltip/ListItemTooltipSection.vue';
@@ -105,6 +105,22 @@ describe('ListItemTooltip', () => {
 
       expect(accuracyAttributes).toHaveProperty('value');
       expect(accuracyAttributes.value).toBe(MOCK_ITEM_TOOLTIP.accuracy);
+    });
+
+    it('when data-test = evasion', () => {
+      const accuracy: DOMWrapper<HTMLElement> = wrapper.find('[data-test="evasion"]');
+      const accuracyAttributes: Record<string, string> = accuracy.attributes();
+
+      expect(accuracyAttributes).toHaveProperty('value');
+      expect(accuracyAttributes.value).toBe(MOCK_ITEM_TOOLTIP.evasion);
+    });
+
+    it('when data-test = damageReduction', () => {
+      const accuracy: DOMWrapper<HTMLElement> = wrapper.find('[data-test="damageReduction"]');
+      const accuracyAttributes: Record<string, string> = accuracy.attributes();
+
+      expect(accuracyAttributes).toHaveProperty('value');
+      expect(accuracyAttributes.value).toBe(MOCK_ITEM_TOOLTIP.damageReduction);
     });
 
     it('when data-test = weight', () => {

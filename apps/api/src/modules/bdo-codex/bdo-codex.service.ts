@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
-import { BdoCodexMeta, BdoCodexParams } from '@/interfaces/bdo-codex.interface';
+import { BdoCodexMeta, BdoCodexParams } from '@/interfaces/objects/bdo-codex.interface';
 import { BdoCodexEndpoint, BdoCodexLanguageCode } from '@/enums/bdo-codex.enum';
 import { LanguageCode } from '@/enums/language.enum';
 
@@ -11,7 +11,7 @@ import { LanguageCode } from '@/enums/language.enum';
 export class BdoCodexService {
   constructor(private readonly configService: ConfigService, private readonly httpService: HttpService) {}
 
-  private readonly matchBdoCodexLanguage: Record<LanguageCode, BdoCodexLanguageCode> = {
+  public readonly matchBdoCodexLanguage: Record<LanguageCode, BdoCodexLanguageCode> = {
     [LanguageCode.ENGLISH]: BdoCodexLanguageCode.ENGLISH,
     [LanguageCode.SPANISH]: BdoCodexLanguageCode.SPANISH,
   };

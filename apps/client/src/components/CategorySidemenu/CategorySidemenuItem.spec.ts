@@ -3,10 +3,10 @@ import AppDropdownIcon from '@/components/Base/AppDropdownIcon.vue';
 import AppIcon from '@/components/Base/AppIcon.vue';
 import CategorySidemenuItem from '@/components/CategorySidemenu/CategorySidemenuItem.vue';
 
-const MOCK_CATEGORY_SIDEMENU_ITEM_TITLE: string = 'Category Sidemenu Item Title';
-const MOCK_CATEGORY_SIDEMENU_ITEM_ICON: string = 'images/other/in-registration-queue.png';
-const MOCK_CATEGORY_SIDEMENU_ITEM_ACTIVE: boolean = true;
-const MOCK_CATEGORY_SIDEMENU_ITEM_CONTENT: string = '<span>Category Sidemenu Item Content</span>';
+const MOCK_TITLE: string = 'Mock Title';
+const MOCK_ICON: string = 'images/other/in-registration-queue.png';
+const MOCK_ACTIVE: boolean = true;
+const MOCK_CONTENT: string = '<span>Category Sidemenu Item Content</span>';
 
 describe('CategorySidemenuItem', () => {
   let wrapper: VueWrapper;
@@ -14,8 +14,8 @@ describe('CategorySidemenuItem', () => {
   beforeEach(() => {
     wrapper = shallowMount(CategorySidemenuItem, {
       props: {
-        title: MOCK_CATEGORY_SIDEMENU_ITEM_TITLE,
-        icon: MOCK_CATEGORY_SIDEMENU_ITEM_ICON,
+        title: MOCK_TITLE,
+        icon: MOCK_ICON,
       },
     });
   });
@@ -35,44 +35,44 @@ describe('CategorySidemenuItem', () => {
   it('should render before slot content', () => {
     wrapper = shallowMount(CategorySidemenuItem, {
       slots: {
-        before: `<div data-slot>${MOCK_CATEGORY_SIDEMENU_ITEM_CONTENT}</div>`,
+        before: `<div data-slot>${MOCK_CONTENT}</div>`,
       },
       props: {
-        title: MOCK_CATEGORY_SIDEMENU_ITEM_TITLE,
-        icon: MOCK_CATEGORY_SIDEMENU_ITEM_ICON,
+        title: MOCK_TITLE,
+        icon: MOCK_ICON,
       },
     });
 
     const slot: DOMWrapper<HTMLElement> = wrapper.find('[data-slot]');
 
-    expect(slot.element.innerHTML).toBe(MOCK_CATEGORY_SIDEMENU_ITEM_CONTENT);
+    expect(slot.element.innerHTML).toBe(MOCK_CONTENT);
   });
 
   it('should render after slot content', () => {
     wrapper = shallowMount(CategorySidemenuItem, {
       slots: {
-        after: `<div data-slot>${MOCK_CATEGORY_SIDEMENU_ITEM_CONTENT}</div>`,
+        after: `<div data-slot>${MOCK_CONTENT}</div>`,
       },
       props: {
-        title: MOCK_CATEGORY_SIDEMENU_ITEM_TITLE,
-        icon: MOCK_CATEGORY_SIDEMENU_ITEM_ICON,
+        title: MOCK_TITLE,
+        icon: MOCK_ICON,
       },
     });
 
     const slot: DOMWrapper<HTMLElement> = wrapper.find('[data-slot]');
 
-    expect(slot.element.innerHTML).toBe(MOCK_CATEGORY_SIDEMENU_ITEM_CONTENT);
+    expect(slot.element.innerHTML).toBe(MOCK_CONTENT);
   });
 
   it('should render content depending on title prop', () => {
     wrapper = shallowMount(CategorySidemenuItem, {
       props: {
-        title: MOCK_CATEGORY_SIDEMENU_ITEM_TITLE,
-        icon: MOCK_CATEGORY_SIDEMENU_ITEM_ICON,
+        title: MOCK_TITLE,
+        icon: MOCK_ICON,
       },
     });
 
-    expect(wrapper.text()).toBe(MOCK_CATEGORY_SIDEMENU_ITEM_TITLE);
+    expect(wrapper.text()).toBe(MOCK_TITLE);
   });
 
   it('should emit effect event on click', () => {
@@ -88,9 +88,9 @@ describe('CategorySidemenuItem', () => {
   it('should pass active prop to AppDropdownIcon depending on active prop', () => {
     wrapper = shallowMount(CategorySidemenuItem, {
       props: {
-        title: MOCK_CATEGORY_SIDEMENU_ITEM_TITLE,
-        icon: MOCK_CATEGORY_SIDEMENU_ITEM_ICON,
-        active: MOCK_CATEGORY_SIDEMENU_ITEM_ACTIVE,
+        title: MOCK_TITLE,
+        icon: MOCK_ICON,
+        active: MOCK_ACTIVE,
       },
     });
 
@@ -98,15 +98,15 @@ describe('CategorySidemenuItem', () => {
     const dropdownIconAttributes: Record<string, string> = dropdownIconWrapper.attributes();
 
     expect(dropdownIconAttributes).toHaveProperty('active');
-    expect(dropdownIconAttributes.active).toBe(String(MOCK_CATEGORY_SIDEMENU_ITEM_ACTIVE));
+    expect(dropdownIconAttributes.active).toBe(String(MOCK_ACTIVE));
   });
 
   it('should contain class depending on active prop', () => {
     wrapper = shallowMount(CategorySidemenuItem, {
       props: {
-        title: MOCK_CATEGORY_SIDEMENU_ITEM_TITLE,
-        icon: MOCK_CATEGORY_SIDEMENU_ITEM_ICON,
-        active: MOCK_CATEGORY_SIDEMENU_ITEM_ACTIVE,
+        title: MOCK_TITLE,
+        icon: MOCK_ICON,
+        active: MOCK_ACTIVE,
       },
     });
 

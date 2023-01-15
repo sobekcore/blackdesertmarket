@@ -1,6 +1,6 @@
 <template>
   <section>
-    <ItemList :id="id" />
+    <ItemTypeList :id="id" />
   </section>
   <Teleport to="#modal">
     <RouterView />
@@ -11,7 +11,7 @@
 import { Ref, ref, watch } from 'vue';
 import { RouteLocationNormalizedLoaded, RouteParams, useRoute } from 'vue-router';
 import { ComponentException } from '@/exceptions/component-exception';
-import ItemList from '@/components/ItemList.vue';
+import ItemTypeList from '@/components/ItemTypeList.vue';
 
 const route: RouteLocationNormalizedLoaded = useRoute();
 
