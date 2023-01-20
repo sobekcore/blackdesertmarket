@@ -62,9 +62,10 @@ export function useItemTooltip(itemTooltip: BlackDesertItemTooltip): UseItemTool
       case ItemTooltipSectionId.CENTRAL_MARKET_INFORMATION:
         return 'text-brand-900';
       case ItemTooltipSectionId.DESCRIPTION:
+      case ItemTooltipSectionId.ITEM_EFFECT:
       case ItemTooltipSectionId.ENHANCEMENT_EFFECT:
       case ItemTooltipSectionId.SPECIAL_EFFECT:
-      case ItemTooltipSectionId.ITEM_EFFECT:
+      case ItemTooltipSectionId.SET_EFFECT:
         return 'text-brand-800';
       case ItemTooltipSectionId.PRICE:
         return 'text-dark-800';
@@ -79,9 +80,10 @@ export function useItemTooltip(itemTooltip: BlackDesertItemTooltip): UseItemTool
         return 'text-brand-900';
       case ItemTooltipSectionId.DESCRIPTION:
         return 'text-brand-800';
+      case ItemTooltipSectionId.ITEM_EFFECT:
       case ItemTooltipSectionId.ENHANCEMENT_EFFECT:
       case ItemTooltipSectionId.SPECIAL_EFFECT:
-      case ItemTooltipSectionId.ITEM_EFFECT:
+      case ItemTooltipSectionId.SET_EFFECT:
         return 'text-item-stat-highlight';
       case ItemTooltipSectionId.PRICE:
         return 'text-item-price';

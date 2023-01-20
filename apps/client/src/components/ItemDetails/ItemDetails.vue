@@ -5,7 +5,7 @@
         <ItemDetailsOverview :item-type="itemType" :item-details="itemDetails" />
       </template>
       <template v-else>
-        <AppLoader />
+        <AppLoader :size="LoaderSize.LARGE" />
       </template>
     </div>
     <div class="item-details-additional">
@@ -31,7 +31,7 @@
       </ItemDetailsAvailability>
     </template>
     <template v-else>
-      <AppLoader />
+      <AppLoader :size="LoaderSize.LARGE" />
     </template>
   </div>
 </template>
@@ -43,10 +43,11 @@ import {
   BlackDesertItemDetailsAvailability,
   BlackDesertItemType,
 } from '@blackdesertmarket/interfaces';
+import { LoaderSize } from '@/enums/loader';
 import { UseItemAvailabilityReturn, useItemAvailability } from '@/composables/item-details/use-item-availability';
 import { UseItemDetailsFetchReturn, useItemDetailsFetch } from '@/composables/item-details/use-item-details-fetch';
 import { UseItemTypeFetchReturn, useItemTypeFetch } from '@/composables/item-type/use-item-type-fetch';
-import AppLoader from '@/components/Base/AppLoader.vue';
+import AppLoader from '@/components/Base/AppLoader/AppLoader.vue';
 import ItemDetailsAdditional from '@/components/ItemDetails/ItemDetailsAdditional.vue';
 import ItemDetailsAvailability from '@/components/ItemDetails/ItemDetailsAvailability.vue';
 import ItemDetailsAvailabilityItem from '@/components/ItemDetails/ItemDetailsAvailabilityItem.vue';
@@ -123,7 +124,7 @@ if (!itemDetails.value) {
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/variables';
+@import '@/styles/variables.scss';
 
 .item-details {
   @apply relative h-1/2 overflow-y-auto bg-dark-200 bg-opacity-90 p-5;

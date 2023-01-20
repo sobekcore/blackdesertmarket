@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { CoreModuleMock } from '@test/mocks/core-module.mock';
 import { AppController } from '@/app.controller';
-import { CoreModule } from '@/core.module';
 
 describe('AppController', () => {
   let appController: AppController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [CoreModule],
+      imports: [CoreModuleMock],
       controllers: [AppController],
     }).compile();
 

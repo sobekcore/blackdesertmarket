@@ -1,5 +1,5 @@
 <template>
-  <AppTooltip placement="right-start" :disabled="!props.item" @show="handleTooltipShow">
+  <AppTooltip placement="right-start" :disabled="!props.item" :class="itemGradeClass" @show="handleTooltipShow">
     <span class="relative flex items-center">
       <AppIcon
         :src="props.src"
@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, Ref, defineProps, ref } from 'vue';
+import { ComputedRef, PropType, Ref, computed, defineProps, ref } from 'vue';
 import { BlackDesertItem, BlackDesertItemTooltip, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { isValidBlackDesertItemType } from '@blackdesertmarket/objects';
 import { VueAttributeClass } from '@/types/attributes-vue';
@@ -31,7 +31,7 @@ import { usePreferencesStore } from '@/stores/preferences';
 import { UseItemTypeFetchReturn, useItemTypeFetch } from '@/composables/item-type/use-item-type-fetch';
 import { useMarketApi } from '@/composables/use-market-api';
 import AppIcon from '@/components/Base/AppIcon.vue';
-import AppLoader from '@/components/Base/AppLoader.vue';
+import AppLoader from '@/components/Base/AppLoader/AppLoader.vue';
 import AppTooltip from '@/components/Base/AppTooltip.vue';
 import ListItemTooltip from '@/components/ListItem/ListItemTooltip/ListItemTooltip.vue';
 
@@ -54,8 +54,18 @@ const props = defineProps({
 const preferencesStore = usePreferencesStore();
 
 const sent: Ref<boolean> = ref(false);
+const loaded: Ref<boolean> = ref(false);
+
 const itemType: Ref<BlackDesertItemType | null> = ref(null);
 const itemTooltip: Ref<BlackDesertItemTooltip | null> = ref(null);
+
+const itemGradeClass: ComputedRef<string> = computed((): string => {
+  if (!loaded.value || !itemType.value || !itemType.value.grade) {
+    return 'tooltip:item-default';
+  }
+
+  return `tooltip:item-grade-${itemType.value.grade}`;
+});
 
 /**
  * TODO: Call this function only when user has hovered on ListItemIcon for some time
@@ -90,12 +100,13 @@ const handleTooltipShow = async (): Promise<void> => {
 
   if (response.data.value) {
     itemTooltip.value = response.data.value.data;
+    loaded.value = true;
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/variables';
+@import '@/styles/variables.scss';
 
 .text-over-icon {
   @apply absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 select-none font-dejavu-sans-condensed text-lg;

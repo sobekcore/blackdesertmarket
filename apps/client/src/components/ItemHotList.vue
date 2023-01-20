@@ -30,16 +30,21 @@
       </Teleport>
     </template>
   </ul>
+  <template v-if="!loaded">
+    <AppLoader :size="LoaderSize.LARGE" overlay />
+  </template>
 </template>
 
 <script lang="ts" setup>
 import { Ref, ref } from 'vue';
 import { BlackDesertItemHot } from '@blackdesertmarket/interfaces';
+import { LoaderSize } from '@/enums/loader';
 import { UseFluctuationTypeReturn, useFluctuationType } from '@/composables/item-hot/use-fluctuation-type';
 import { UseItemHotReturn, useItemHot } from '@/composables/item-hot/use-item-hot';
 import { UseItemHotFetchReturn, useItemHotFetch } from '@/composables/item-hot/use-item-hot-fetch';
 import { UseItemReturn, useItem } from '@/composables/item/use-item';
 import AppIcon from '@/components/Base/AppIcon.vue';
+import AppLoader from '@/components/Base/AppLoader/AppLoader.vue';
 import ItemDetailsModal from '@/components/ItemDetails/ItemDetailsModal.vue';
 import ListItem from '@/components/ListItem/ListItem.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';
@@ -47,6 +52,7 @@ import ListItemSeparator from '@/components/ListItem/ListItemSeparator.vue';
 
 const itemHotFetch: UseItemHotFetchReturn = useItemHotFetch();
 
+const loaded: Ref<boolean> = ref(false);
 const itemList: Ref<BlackDesertItemHot[]> = ref([]);
 const activeItem: Ref<BlackDesertItemHot | null> = ref(null);
 
@@ -77,6 +83,7 @@ const handleListItemClick = (itemHot: BlackDesertItemHot): void => {
 if (!itemList.value.length) {
   itemHotFetch.fetch().then((data: BlackDesertItemHot[]): void => {
     itemList.value = data;
+    loaded.value = true;
   });
 }
 </script>

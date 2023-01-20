@@ -4,14 +4,19 @@
       <ListItem :item="item" @effect="handleListItemClick(item)" />
     </template>
   </ul>
+  <template v-if="!loaded">
+    <AppLoader :size="LoaderSize.LARGE" overlay />
+  </template>
 </template>
 
 <script lang="ts" setup>
 import { Ref, defineProps, onBeforeUnmount, ref, watch } from 'vue';
 import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from 'vue-router';
 import { BlackDesertItem } from '@blackdesertmarket/interfaces';
+import { LoaderSize } from '@/enums/loader';
 import { useLocationStore } from '@/stores/location';
 import { UseItemFetchReturn, useItemFetch } from '@/composables/item/use-item-fetch';
+import AppLoader from '@/components/Base/AppLoader/AppLoader.vue';
 import ListItem from '@/components/ListItem/ListItem.vue';
 
 const props = defineProps({
@@ -29,6 +34,7 @@ const locationStore = useLocationStore();
 const router: Router = useRouter();
 const route: RouteLocationNormalizedLoaded = useRoute();
 
+const loaded: Ref<boolean> = ref(false);
 const itemList: Ref<BlackDesertItem[]> = ref([]);
 
 const refetchCategoryItemList = (mainCategory: number, subCategory: number): void => {
@@ -39,6 +45,7 @@ const refetchCategoryItemList = (mainCategory: number, subCategory: number): voi
 
   itemFetch.fetch().then((data: BlackDesertItem[]): void => {
     itemList.value = data;
+    loaded.value = true;
   });
 };
 
@@ -69,6 +76,7 @@ watch(
     return [props.mainCategory, props.subCategory];
   },
   (): void => {
+    loaded.value = false;
     refetchCategoryItemList(props.mainCategory, props.subCategory);
   },
 );

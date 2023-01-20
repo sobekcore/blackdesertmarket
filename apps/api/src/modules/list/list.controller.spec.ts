@@ -11,6 +11,7 @@ import { AxiosResponse } from 'axios';
 import { I18nService } from 'nestjs-i18n';
 import { Observable, of } from 'rxjs';
 import { mockAxiosResponse } from '@test/mocks/axios-response.mock';
+import { CoreModuleMock } from '@test/mocks/core-module.mock';
 import { mockExternalMarketItemHot, mockExternalMarketItemQueue } from '@test/mocks/external-market-item-type.mock';
 import { mockExternalMarketItem } from '@test/mocks/external-market-item.mock';
 import { mockI18nContext } from '@test/mocks/i18n-context.mock';
@@ -23,7 +24,6 @@ import { ItemTransformerService } from '@/modules/item/item-transformer.service'
 import { ItemValidatorService } from '@/modules/item/item-validator.service';
 import { ListController } from '@/modules/list/list.controller';
 import { ListService } from '@/modules/list/list.service';
-import { CoreModule } from '@/core.module';
 
 describe('ListController', () => {
   let listController: ListController;
@@ -32,7 +32,7 @@ describe('ListController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [CoreModule, ExternalMarketModule, BdoCodexModule],
+      imports: [CoreModuleMock, ExternalMarketModule, BdoCodexModule],
       controllers: [ListController],
       providers: [ListService, ItemValidatorService, ItemTransformerService],
     }).compile();

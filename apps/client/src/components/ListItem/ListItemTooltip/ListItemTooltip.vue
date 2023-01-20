@@ -1,10 +1,12 @@
 <template>
   <div class="w-[320px]">
-    <div data-test="category" class="mb-0.5 text-right text-xs">{{ props.itemTooltip.category }}</div>
-    <div data-test="name" class="mb-0.5 text-lg">{{ itemTypeComposable.getItemName() }}</div>
+    <div data-test="category" class="item-tooltip-category">
+      {{ props.itemTooltip.category }}
+    </div>
+    <ListItemName :name="itemTypeComposable.getItemName()" :class="itemGradeText" />
     <div class="flex gap-x-3">
-      <ListItemIcon :src="itemIcon.href" :text="itemTypeComposable.getItemIconText()" />
-      <div class="flex flex-col gap-x-3">
+      <ListItemIcon :src="itemIcon.href" :text="itemTypeComposable.getItemIconText()" :class="itemGradeBorder" />
+      <div class="flex flex-col justify-center gap-x-3">
         <ListItemTooltipProperty
           v-if="props.itemTooltip.damage"
           data-test="damage"
@@ -82,6 +84,7 @@ import { UseItemTypeReturn, useItemType } from '@/composables/item-type/use-item
 import { UseItemReturn, useItem } from '@/composables/item/use-item';
 import { UseConfigReturn, useConfig } from '@/composables/use-config';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
+import ListItemName from '@/components/ListItem/ListItemName.vue';
 import ListItemTooltipProperty from '@/components/ListItem/ListItemTooltip/ListItemTooltipProperty.vue';
 import ListItemTooltipSection from '@/components/ListItem/ListItemTooltip/ListItemTooltipSection.vue';
 
@@ -102,6 +105,8 @@ const itemTypeComposable: UseItemTypeReturn = useItemType(props.itemType);
 const itemTooltipComposable: UseItemTooltipReturn = useItemTooltip(props.itemTooltip);
 
 const itemIcon: Ref<URL> = ref(new URL(`/item/${props.itemType.id}/icon`, config.marketApiUrl));
+const itemGradeText: Ref<string> = ref('mb-0.5 text-lg');
+const itemGradeBorder: Ref<string> = ref('');
 const centralMarketInformationId: Ref<string> = ref('');
 
 const centralMarketInformationOrder: ItemTooltipSectionId[] = [
@@ -117,6 +122,11 @@ const getCentralMarketInformationData = (): BlackDesertItemTooltipSection => {
   };
 };
 
+if (props.itemType.grade) {
+  itemGradeText.value = `mb-0.5 text-lg text:item-grade-${props.itemType.grade}`;
+  itemGradeBorder.value = `border:item-grade-${props.itemType.grade}`;
+}
+
 if (!centralMarketInformationId.value) {
   for (const sectionId of centralMarketInformationOrder) {
     const itemTooltipSection: BlackDesertItemTooltipSection | undefined = props.itemTooltip.sections.find(
@@ -130,3 +140,12 @@ if (!centralMarketInformationId.value) {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '@/styles/variables.scss';
+
+.item-tooltip-category {
+  @apply mb-0.5 text-right text-xs text-item-category;
+  text-shadow: 1px 1px 1px $DARK_100;
+}
+</style>

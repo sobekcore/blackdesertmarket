@@ -3,8 +3,8 @@ export interface ExternalMarketParams {
 }
 
 export interface ExternalMarketMeta {
-  region?: string;
-  language?: string;
+  region: string;
+  language: string;
 }
 
 export interface ExternalMarketItem {

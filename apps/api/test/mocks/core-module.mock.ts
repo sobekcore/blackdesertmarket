@@ -17,11 +17,10 @@ import { configuration, files } from '@/configuration';
       useFactory: async (configService: ConfigService) => ({
         fallbackLanguage: configService.get('defaultRequestLanguage'),
         loaderOptions: {
-          path: join(__dirname, 'i18n'),
-          watch: true,
+          path: join(__dirname, '../../src/i18n'),
         },
       }),
     }),
   ],
 })
-export class CoreModule {}
+export class CoreModuleMock {}

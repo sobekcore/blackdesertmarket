@@ -4,11 +4,13 @@ import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
 import { UseItemTooltipReturn, useItemTooltip } from '@/composables/item-tooltip/use-item-tooltip';
 import { UseItemTypeReturn, useItemType } from '@/composables/item-type/use-item-type';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
+import ListItemName from '@/components/ListItem/ListItemName.vue';
 import ListItemTooltip from '@/components/ListItem/ListItemTooltip/ListItemTooltip.vue';
 import ListItemTooltipSection from '@/components/ListItem/ListItemTooltip/ListItemTooltipSection.vue';
 
 const MOCK_ITEM_TYPE: BlackDesertItemType = mockBlackDesertItemType();
 const MOCK_ITEM_TOOLTIP: BlackDesertItemTooltip = mockBlackDesertItemTooltip();
+const MOCK_GRADE: number = 1;
 
 describe('ListItemTooltip', () => {
   let wrapper: VueWrapper;
@@ -28,21 +30,6 @@ describe('ListItemTooltip', () => {
     });
   });
 
-  it('should render content depending on itemType prop', () => {
-    wrapper = shallowMount(ListItemTooltip, {
-      props: {
-        itemType: MOCK_ITEM_TYPE,
-        itemTooltip: MOCK_ITEM_TOOLTIP,
-      },
-    });
-
-    const itemTypeComposable: UseItemTypeReturn = useItemType(MOCK_ITEM_TYPE);
-
-    const name: DOMWrapper<HTMLElement> = wrapper.find('[data-test="name"]');
-
-    expect(name.text()).toBe(itemTypeComposable.getItemName());
-  });
-
   it('should render content depending on itemTooltip prop', () => {
     wrapper = shallowMount(ListItemTooltip, {
       props: {
@@ -54,6 +41,38 @@ describe('ListItemTooltip', () => {
     const category: DOMWrapper<HTMLElement> = wrapper.find('[data-test="category"]');
 
     expect(category.text()).toBe(MOCK_ITEM_TOOLTIP.category);
+  });
+
+  it('should pass name prop to ListItemName depending on itemType prop', () => {
+    wrapper = shallowMount(ListItemTooltip, {
+      props: {
+        itemType: MOCK_ITEM_TYPE,
+        itemTooltip: MOCK_ITEM_TOOLTIP,
+      },
+    });
+
+    const itemTypeComposable: UseItemTypeReturn = useItemType(MOCK_ITEM_TYPE);
+
+    const listItemNameWrapper: VueWrapper = wrapper.findComponent(ListItemName);
+    const listItemNameAttributes: Record<string, string> = listItemNameWrapper.attributes();
+
+    expect(listItemNameAttributes).toHaveProperty('name');
+    expect(listItemNameAttributes.name).toBe(itemTypeComposable.getItemName());
+  });
+
+  it('should pass class prop to ListItemName depending on itemType prop', () => {
+    wrapper = shallowMount(ListItemTooltip, {
+      props: {
+        itemType: { ...MOCK_ITEM_TYPE, grade: MOCK_GRADE },
+        itemTooltip: MOCK_ITEM_TOOLTIP,
+      },
+    });
+
+    const listItemNameWrapper: VueWrapper = wrapper.findComponent(ListItemName);
+    const listItemNameAttributes: Record<string, string> = listItemNameWrapper.attributes();
+
+    expect(listItemNameAttributes).toHaveProperty('class');
+    expect(listItemNameAttributes.class).toContain(String(MOCK_GRADE));
   });
 
   it('should pass text prop to ListItemIcon depending on itemType prop', () => {
@@ -71,6 +90,21 @@ describe('ListItemTooltip', () => {
 
     expect(listItemIconAttributes).toHaveProperty('text');
     expect(listItemIconAttributes.text).toBe(itemTypeComposable.getItemIconText());
+  });
+
+  it('should pass class prop to ListItemIcon depending on itemType prop', () => {
+    wrapper = shallowMount(ListItemTooltip, {
+      props: {
+        itemType: { ...MOCK_ITEM_TYPE, grade: MOCK_GRADE },
+        itemTooltip: MOCK_ITEM_TOOLTIP,
+      },
+    });
+
+    const listItemIconWrapper: VueWrapper = wrapper.findComponent(ListItemIcon);
+    const listItemIconAttributes: Record<string, string> = listItemIconWrapper.attributes();
+
+    expect(listItemIconAttributes).toHaveProperty('class');
+    expect(listItemIconAttributes.class).toContain(String(MOCK_GRADE));
   });
 
   describe('should pass value prop to ListItemTooltipProperty depending on itemTooltip prop', () => {

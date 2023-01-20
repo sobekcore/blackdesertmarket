@@ -1,5 +1,5 @@
 <template>
-  <div role="dialog" aria-modal="true" class="relative z-10">
+  <div role="dialog" aria-modal="true" class="relative z-20">
     <AppModalBackdrop />
     <div ref="container" class="fixed inset-0">
       <div ref="modal" :style="modalStyle" class="fixed">

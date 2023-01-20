@@ -3,5 +3,5 @@ export interface BdoCodexParams {
 }
 
 export interface BdoCodexMeta {
-  language?: string;
+  language: string;
 }

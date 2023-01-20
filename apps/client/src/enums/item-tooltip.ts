@@ -7,6 +7,7 @@ export enum ItemTooltipSectionId {
   ITEM_EFFECT = 'itemEffect',
   ENHANCEMENT_EFFECT = 'enhancementEffect',
   SPECIAL_EFFECT = 'specialEffect',
+  SET_EFFECT = 'setEffect',
   PRICE = 'price',
   DURABILITY = 'durability',
 }

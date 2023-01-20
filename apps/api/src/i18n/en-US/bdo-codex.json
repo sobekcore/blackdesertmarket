@@ -7,5 +7,6 @@
   "itemEffect": "Item Effect",
   "enhancementEffect": "Enhancement Effect",
   "specialEffect": "Special Effect",
+  "setEffect": "Set Effect",
   "price": "Sell price"
 }

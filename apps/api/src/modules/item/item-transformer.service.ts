@@ -174,6 +174,7 @@ export class ItemTransformerService {
     const itemEffect: string[] = this.bdoCodexScraperService.scrapeItemEffect(document.body);
     const enhancementEffect: string[] = this.bdoCodexScraperService.scrapeEnhancementEffect(document.body);
     const specialEffect: string[] = this.bdoCodexScraperService.scrapeSpecialEffect(document.body);
+    const setEffect: string[] = this.bdoCodexScraperService.scrapeSetEffect(document.body);
     const price: string = this.bdoCodexScraperService.scrapePrice(document.body);
     const durability: string = this.bdoCodexScraperService.scrapeDurability(document.body);
 
@@ -221,6 +222,11 @@ export class ItemTransformerService {
           id: 'specialEffect',
           name: i18n.translate('tooltip.specialEffect'),
           values: specialEffect,
+        }),
+        ...addConditionalArrayElement<BlackDesertItemTooltipSection>(setEffect.length, {
+          id: 'setEffect',
+          name: i18n.translate('tooltip.setEffect'),
+          values: setEffect,
         }),
         {
           id: 'price',

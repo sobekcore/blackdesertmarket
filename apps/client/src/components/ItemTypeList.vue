@@ -4,6 +4,9 @@
       <ListItem :item="item" @effect="handleListItemClick(item)" />
     </template>
   </ul>
+  <template v-if="!loaded">
+    <AppLoader :size="LoaderSize.LARGE" overlay />
+  </template>
 </template>
 
 <script lang="ts" setup>
@@ -11,8 +14,10 @@ import { Ref, defineProps, onBeforeUnmount, ref, watch } from 'vue';
 import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from 'vue-router';
 import { getFirstElement } from '@blackdesertmarket/helpers';
 import { BlackDesertItemType } from '@blackdesertmarket/interfaces';
+import { LoaderSize } from '@/enums/loader';
 import { useLocationStore } from '@/stores/location';
 import { UseItemTypeFetchReturn, useItemTypeFetch } from '@/composables/item-type/use-item-type-fetch';
+import AppLoader from '@/components/Base/AppLoader/AppLoader.vue';
 import ListItem from '@/components/ListItem/ListItem.vue';
 
 const props = defineProps({
@@ -26,6 +31,7 @@ const locationStore = useLocationStore();
 const router: Router = useRouter();
 const route: RouteLocationNormalizedLoaded = useRoute();
 
+const loaded: Ref<boolean> = ref(false);
 const itemList: Ref<BlackDesertItemType[]> = ref([]);
 
 const refetchItemTypeList = (id: number): void => {
@@ -40,6 +46,7 @@ const refetchItemTypeList = (id: number): void => {
     }
 
     itemList.value = data;
+    loaded.value = true;
   });
 };
 
@@ -71,6 +78,7 @@ watch(
     return props.id;
   },
   (): void => {
+    loaded.value = false;
     refetchItemTypeList(props.id);
   },
 );

@@ -65,7 +65,7 @@ const getItemTooltipSectionValue = (value: string): string => {
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/variables';
+@import '@/styles/variables.scss';
 
 .inline-name-values {
   @apply inline;

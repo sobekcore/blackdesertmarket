@@ -7,5 +7,6 @@
   "itemEffect": "Efecto de objeto",
   "enhancementEffect": "Efecto de mejora",
   "specialEffect": "Efecto especial",
+  "setEffect": "Efecto de conjunto",
   "price": "Precio de venta"
 }

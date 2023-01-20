@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="relative min-h-full">
     <ItemQueueList />
   </section>
 </template>

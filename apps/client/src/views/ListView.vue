@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="relative min-h-full">
     <ItemList :main-category="mainCategory" :sub-category="subCategory" />
   </section>
 </template>

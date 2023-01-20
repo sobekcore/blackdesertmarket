@@ -9,6 +9,7 @@ import { createReadStream } from 'fs';
 import { I18nService } from 'nestjs-i18n';
 import { Observable, of } from 'rxjs';
 import { mockAxiosResponse } from '@test/mocks/axios-response.mock';
+import { CoreModuleMock } from '@test/mocks/core-module.mock';
 import { mockExternalMarketItemDetails } from '@test/mocks/external-market-item-details.mock';
 import { mockExternalMarketItemType } from '@test/mocks/external-market-item-type.mock';
 import { mockI18nContext } from '@test/mocks/i18n-context.mock';
@@ -21,7 +22,6 @@ import { ItemTransformerService } from '@/modules/item/item-transformer.service'
 import { ItemValidatorService } from '@/modules/item/item-validator.service';
 import { ItemController } from '@/modules/item/item.controller';
 import { ItemService } from '@/modules/item/item.service';
-import { CoreModule } from '@/core.module';
 
 describe('ItemController', () => {
   let itemController: ItemController;
@@ -30,7 +30,7 @@ describe('ItemController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [CoreModule, ExternalMarketModule, BdoCodexModule],
+      imports: [CoreModuleMock, ExternalMarketModule, BdoCodexModule],
       controllers: [ItemController],
       providers: [ItemService, ItemValidatorService, ItemTransformerService],
     }).compile();

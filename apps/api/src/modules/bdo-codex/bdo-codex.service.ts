@@ -1,6 +1,5 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
 import { BdoCodexMeta, BdoCodexParams } from '@/interfaces/objects/bdo-codex.interface';
@@ -9,7 +8,7 @@ import { LanguageCode } from '@/enums/language.enum';
 
 @Injectable()
 export class BdoCodexService {
-  constructor(private readonly configService: ConfigService, private readonly httpService: HttpService) {}
+  constructor(private readonly httpService: HttpService) {}
 
   public readonly matchBdoCodexLanguage: Record<LanguageCode, BdoCodexLanguageCode> = {
     [LanguageCode.ENGLISH]: BdoCodexLanguageCode.ENGLISH,
@@ -19,12 +18,8 @@ export class BdoCodexService {
   public buildRequest(
     endpoint: BdoCodexEndpoint,
     params: BdoCodexParams,
-    meta?: BdoCodexMeta,
+    meta: BdoCodexMeta,
   ): Observable<AxiosResponse> {
-    if (!meta.language) {
-      meta.language = this.configService.get('defaultRequestLanguage');
-    }
-
     const language: BdoCodexLanguageCode = this.matchBdoCodexLanguage[meta.language];
 
     const url: URL = this.getRequestUrl(endpoint);

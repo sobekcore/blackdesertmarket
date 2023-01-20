@@ -120,6 +120,15 @@ export class BdoCodexScraperService extends AbstractHtmlScraperService implement
       .getChildRegexGroup(1);
   }
 
+  public scrapeSetEffect(element: HTMLElement): string[] {
+    const word: string = this.i18n.translate('bdo-codex.setEffect');
+
+    return this.matchRegexMultiple(element, new RegExp(`${word} <br>(.+?(?=<br><\/div>))`))
+      .find()
+      .matchRegexGroup(1, /<span.*?>(.+?)<\/span>/)
+      .getChildRegexGroup(1);
+  }
+
   public scrapePrice(element: HTMLElement): string {
     const word: string = this.i18n.translate('bdo-codex.price');
 

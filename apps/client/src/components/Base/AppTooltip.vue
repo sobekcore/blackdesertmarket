@@ -4,6 +4,7 @@
     :distance="distance"
     :placement="props.placement"
     :disabled="props.disabled"
+    :popper-class="props.class"
     auto-boundary-max-size
     handle-resize
     @show="triggerTooltipShow"
@@ -18,6 +19,7 @@
 <script lang="ts" setup>
 import { PropType, defineEmits, defineProps } from 'vue';
 import { Placement, Tooltip } from 'floating-vue';
+import { VueAttributeClass } from '@/types/attributes-vue';
 import { UseDocumentSizeReturn, useDocumentSize } from '@/composables/use-document-size';
 import { UseTailwindConfigReturn, useTailwindConfig } from '@/composables/use-tailwind-config';
 
@@ -34,6 +36,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  class: {
+    type: [String, Object] as PropType<VueAttributeClass>,
+    default: 'tooltip:item-default',
+  },
 });
 
 const tailwindConfig: UseTailwindConfigReturn = useTailwindConfig();
@@ -47,10 +53,27 @@ const triggerTooltipShow = (): void => {
 </script>
 
 <style lang="scss">
-@import '@/styles/variables';
+@import '@/styles/variables.scss';
+@import '@/styles/modules/item-grade.scss';
+
+@each $itemGrade, $color in $itemGrades {
+  .v-popper--theme-tooltip.tooltip\:item-grade-#{$itemGrade} .v-popper__inner {
+    @apply border-item-grade-#{$itemGrade};
+    background: linear-gradient(to top, rgba($DARK_100, 90%) 60%, map-get($itemGradesBackground, $itemGrade));
+
+    .text\:item-grade-#{$itemGrade} {
+      color: map-get($itemGradesText, $itemGrade);
+      text-shadow: 1px 1px 1px $DARK_100;
+    }
+  }
+}
+
+.v-popper--theme-tooltip.tooltip\:item-default .v-popper__inner {
+  @apply border-dark-600 bg-dark-100 bg-opacity-90;
+}
 
 .v-popper--theme-tooltip .v-popper__inner {
-  @apply border border-dark-600 bg-dark-100 bg-opacity-90 p-3 text-sm text-dark-900;
+  @apply border p-3 text-sm text-dark-900;
 }
 
 .v-popper--theme-tooltip .v-popper__arrow-outer {

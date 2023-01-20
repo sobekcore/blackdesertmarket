@@ -24,21 +24,13 @@ export class ExternalMarketService {
   public buildRequest(
     endpoint: ExternalMarketEndpoint,
     params: ExternalMarketParams,
-    meta?: ExternalMarketMeta,
+    meta: ExternalMarketMeta,
   ): Observable<AxiosResponse> {
     const paramsRequestToken: string = this.configService.get('paramsRequestToken');
     const cookieRequestToken: string = this.configService.get('cookieRequestToken');
 
     if (!paramsRequestToken || !cookieRequestToken) {
       throw new ExternalMarketException('Request verification tokens are missing');
-    }
-
-    if (!meta.region) {
-      meta.region = this.configService.get('defaultRequestRegion');
-    }
-
-    if (!meta.language) {
-      meta.language = this.configService.get('defaultRequestLanguage');
     }
 
     const language: ExternalMarketLanguageCode = this.matchExternalMarketLanguage[meta.language];
