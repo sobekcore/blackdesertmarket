@@ -3,6 +3,15 @@ export function mockBlackDesertItemDetails() {
     availability: [mockBlackDesertItemDetailsAvailability()],
     history: [mockBlackDesertItemDetailsHistory()],
     basePrice: 3000,
+    sellCount: 1000,
+  }
+}
+
+export function mockBlackDesertItemDetailsExtended() {
+  return {
+    ...mockBlackDesertItemDetails(),
+    recentPrice: 3000,
+    recentTransaction: 1666389600,
   }
 }
 

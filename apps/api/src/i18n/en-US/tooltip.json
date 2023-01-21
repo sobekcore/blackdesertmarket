@@ -1,0 +1,12 @@
+{
+  "personalTransaction": "Personal transaction",
+  "enhancementType": "Enhancement Type",
+  "description": "Description",
+  "classExclusive": "Exclusive",
+  "itemEffect": "Item Effect",
+  "enhancementEffect": "Enhancement Effect",
+  "specialEffect": "Special Effect",
+  "setEffect": "Set Effect",
+  "price": "Price",
+  "durability": "Durability"
+}

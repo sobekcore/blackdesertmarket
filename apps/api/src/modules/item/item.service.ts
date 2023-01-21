@@ -1,197 +1,72 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ServiceUnavailableException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
-  BlackDesertItem,
   BlackDesertItemDetails,
-  BlackDesertItemDetailsAvailability,
-  BlackDesertItemDetailsHistory,
-  BlackDesertItemHot,
-  BlackDesertItemQueue,
+  BlackDesertItemDetailsExtended,
+  BlackDesertItemTooltip,
   BlackDesertItemType,
 } from '@blackdesertmarket/interfaces';
 import { AxiosResponse } from 'axios';
 import { ReadStream, createReadStream, createWriteStream, existsSync } from 'fs';
+import { I18nContext } from 'nestjs-i18n';
 import { Observable, lastValueFrom, map } from 'rxjs';
+import { BdoCodexMeta, BdoCodexParams } from '@/interfaces/objects/bdo-codex.interface';
+import { BlackDesertItemDetailsExtendedOnly } from '@/interfaces/objects/black-desert-item-details.interface';
+import { ExternalMarketRawItemDetails } from '@/interfaces/objects/external-market-raw.interface';
 import {
-  ExternalMarketItem,
   ExternalMarketItemDetails,
-  ExternalMarketItemDetailsHistory,
-  ExternalMarketItemHot,
-  ExternalMarketItemQueue,
   ExternalMarketItemType,
   ExternalMarketMeta,
   ExternalMarketParams,
-} from '@/interfaces/external-market.interface';
+} from '@/interfaces/objects/external-market.interface';
+import { BdoCodexException } from '@/exceptions/bdo-codex.exception';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
-import { ExternalMarketAsset } from '@/enums/external-market.enum';
-import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
+import { BdoCodexEndpoint } from '@/enums/bdo-codex.enum';
+import { ControllerResponseCode } from '@/enums/controller-response.enum';
+import { ExternalMarketAsset } from '@/enums/external-market-asset.enum';
+import { ExternalMarketRawEndpoint } from '@/enums/external-market-raw.enum';
+import { ExternalMarketEndpoint, ExternalMarketRequestPath } from '@/enums/external-market.enum';
+import { RegionContext } from '@/contexts/region.context';
+import { BdoCodexService } from '@/modules/bdo-codex/bdo-codex.service';
+import { ExternalMarketAssetService } from '@/modules/external-market/external-market-asset.service';
+import { ExternalMarketRawService } from '@/modules/external-market/external-market-raw.service';
 import { ExternalMarketService } from '@/modules/external-market/external-market.service';
+import { ItemTransformerService } from '@/modules/item/item-transformer.service';
+import { ItemValidatorService } from '@/modules/item/item-validator.service';
 
 @Injectable()
 export class ItemService {
   constructor(
     private readonly configService: ConfigService,
+    private readonly itemValidatorService: ItemValidatorService,
+    private readonly itemTransformerService: ItemTransformerService,
     private readonly externalMarketService: ExternalMarketService,
+    private readonly externalMarketRawService: ExternalMarketRawService,
+    private readonly externalMarketAssetService: ExternalMarketAssetService,
+    private readonly bdoCodexService: BdoCodexService,
   ) {}
 
-  public isValidExternalMarketItem(item: unknown): boolean {
-    return (
-      item &&
-      item.hasOwnProperty('mainKey') &&
-      item.hasOwnProperty('name') &&
-      item.hasOwnProperty('sumCount') &&
-      item.hasOwnProperty('grade') &&
-      item.hasOwnProperty('minPrice')
-    );
-  }
-
-  public isValidExternalMarketItemType(itemType: unknown): boolean {
-    return (
-      itemType &&
-      itemType.hasOwnProperty('mainKey') &&
-      itemType.hasOwnProperty('name') &&
-      itemType.hasOwnProperty('count') &&
-      itemType.hasOwnProperty('grade') &&
-      itemType.hasOwnProperty('pricePerOne') &&
-      itemType.hasOwnProperty('mainCategory') &&
-      itemType.hasOwnProperty('subCategory') &&
-      itemType.hasOwnProperty('chooseKey')
-    );
-  }
-
-  public isValidExternalMarketItemHot(itemHot: unknown): boolean {
-    return (
-      itemHot &&
-      itemHot.hasOwnProperty('mainKey') &&
-      itemHot.hasOwnProperty('name') &&
-      itemHot.hasOwnProperty('count') &&
-      itemHot.hasOwnProperty('grade') &&
-      itemHot.hasOwnProperty('pricePerOne') &&
-      itemHot.hasOwnProperty('mainCategory') &&
-      itemHot.hasOwnProperty('subCategory') &&
-      itemHot.hasOwnProperty('chooseKey') &&
-      itemHot.hasOwnProperty('fluctuationType') &&
-      itemHot.hasOwnProperty('fluctuationPrice')
-    );
-  }
-
-  public isValidExternalMarketItemQueue(itemQueue: unknown): boolean {
-    return (
-      itemQueue &&
-      itemQueue.hasOwnProperty('mainKey') &&
-      itemQueue.hasOwnProperty('name') &&
-      itemQueue.hasOwnProperty('count') &&
-      itemQueue.hasOwnProperty('grade') &&
-      itemQueue.hasOwnProperty('_pricePerOne') &&
-      itemQueue.hasOwnProperty('mainCategory') &&
-      itemQueue.hasOwnProperty('subCategory') &&
-      itemQueue.hasOwnProperty('chooseKey') &&
-      itemQueue.hasOwnProperty('_waitEndTime')
-    );
-  }
-
-  public isValidExternalMarketItemDetails(itemDetails: unknown): boolean {
-    return (
-      itemDetails.hasOwnProperty('marketConditionList') &&
-      itemDetails.hasOwnProperty('resultMsg') &&
-      itemDetails.hasOwnProperty('basePrice')
-    );
-  }
-
-  public transformExternalMarketItem(item: ExternalMarketItem): BlackDesertItem {
-    return {
-      id: item.mainKey,
-      name: item.name,
-      count: item.sumCount,
-      grade: item.grade,
-      basePrice: item.minPrice,
-    };
-  }
-
-  public transformExternalMarketItemType(itemType: ExternalMarketItemType): BlackDesertItemType {
-    return {
-      id: itemType.mainKey,
-      name: itemType.name,
-      count: itemType.count,
-      grade: itemType.grade,
-      basePrice: itemType.pricePerOne,
-      mainCategory: itemType.mainCategory,
-      subCategory: itemType.subCategory,
-      enhancement: itemType.chooseKey,
-    };
-  }
-
-  public transformExternalMarketItemHot(itemHot: ExternalMarketItemHot): BlackDesertItemHot {
-    return {
-      id: itemHot.mainKey,
-      name: itemHot.name,
-      count: itemHot.count,
-      grade: itemHot.grade,
-      basePrice: itemHot.pricePerOne,
-      mainCategory: itemHot.mainCategory,
-      subCategory: itemHot.subCategory,
-      enhancement: itemHot.chooseKey,
-      fluctuationType: itemHot.fluctuationType,
-      fluctuationPrice: itemHot.fluctuationPrice,
-    };
-  }
-
-  public transformExternalMarketItemQueue(itemQueue: ExternalMarketItemQueue): BlackDesertItemQueue {
-    return {
-      id: itemQueue.mainKey,
-      name: itemQueue.name,
-      count: itemQueue.count,
-      grade: itemQueue.grade,
-      basePrice: itemQueue._pricePerOne,
-      mainCategory: itemQueue.mainCategory,
-      subCategory: itemQueue.subCategory,
-      enhancement: itemQueue.chooseKey,
-      endTime: itemQueue._waitEndTime,
-    };
-  }
-
-  public transformExternalMarketItemDetails(itemDetails: ExternalMarketItemDetails): BlackDesertItemDetails {
-    const availability: BlackDesertItemDetailsAvailability[] = [];
-    const history: BlackDesertItemDetailsHistory[] = [];
-
-    const parsedHistory: ExternalMarketItemDetailsHistory[] = JSON.parse(itemDetails.resultMsg);
-
-    for (const oneAvailability of itemDetails.marketConditionList) {
-      availability.push({
-        sellCount: oneAvailability.sellCount,
-        buyCount: oneAvailability.buyCount,
-        onePrice: oneAvailability.pricePerOne,
-      });
-    }
-
-    for (const oneHistory of parsedHistory) {
-      history.push({
-        date: oneHistory.days,
-        onePrice: oneHistory.value,
-      });
-    }
-
-    return {
-      availability: availability,
-      history: history,
-      basePrice: itemDetails.basePrice,
-    };
-  }
-
-  public findTypesById(id: number, region?: string, language?: string): Promise<BlackDesertItemType[]> {
+  public findTypesById(region: RegionContext, i18n: I18nContext, id: number): Promise<BlackDesertItemType[]> {
     const params: ExternalMarketParams = {
       mainKey: String(id),
     };
 
     const meta: ExternalMarketMeta = {
-      region: region,
-      language: language,
+      region: region.code,
+      language: i18n.lang,
     };
 
     const data: Observable<BlackDesertItemType[]> = this.externalMarketService
-      .buildExternalMarketRequest(InternalMarketEndpoint.ITEM, params, meta)
+      .buildRequest(ExternalMarketEndpoint.ITEM, params, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
+          if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
+            throw new ServiceUnavailableException({
+              code: ControllerResponseCode.MAINTENANCE,
+              messages: ['Currently external market is in the maintenance'],
+            });
+          }
+
           return response.data.detailList ? response.data.detailList : [];
         }),
         map((data: unknown[]): BlackDesertItemType[] => {
@@ -200,13 +75,13 @@ export class ItemService {
           }
 
           data.forEach((itemType: unknown): void => {
-            if (!this.isValidExternalMarketItemType(itemType)) {
+            if (!this.itemValidatorService.isValidExternalMarketItemType(itemType)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
             }
           });
 
           return data.map((itemType: ExternalMarketItemType): BlackDesertItemType => {
-            return this.transformExternalMarketItemType(itemType);
+            return this.itemTransformerService.transformExternalMarketItemType(itemType);
           });
         }),
       );
@@ -225,8 +100,8 @@ export class ItemService {
       });
     }
 
-    const data: Observable<ReadStream> = this.externalMarketService
-      .getExternalMarketAsset(`img/BDO/item/${id}.png`, ExternalMarketAsset.IMAGE)
+    const data: Observable<ReadStream> = this.externalMarketAssetService
+      .buildRequest(`img/BDO/item/${id}.png`, ExternalMarketAsset.IMAGE)
       .pipe(
         map((response: AxiosResponse): ReadStream => {
           if (!Object.keys(response.data).length) {
@@ -244,12 +119,13 @@ export class ItemService {
     return lastValueFrom(data);
   }
 
-  public findDetailsById(
+  public async findDetailsById(
+    region: RegionContext,
+    i18n: I18nContext,
     id: number,
     enhancement: number,
-    region?: string,
-    language?: string,
-  ): Promise<BlackDesertItemDetails> {
+    extended?: boolean,
+  ): Promise<BlackDesertItemDetails | BlackDesertItemDetailsExtended> {
     const params: ExternalMarketParams = {
       mainKey: String(id),
       subKey: String(enhancement),
@@ -258,22 +134,87 @@ export class ItemService {
     };
 
     const meta: ExternalMarketMeta = {
-      region: region,
-      language: language,
+      region: region.code,
+      language: i18n.lang,
     };
 
-    const data: Observable<BlackDesertItemDetails> = this.externalMarketService
-      .buildExternalMarketRequest(InternalMarketEndpoint.ITEM_DETAILS, params, meta)
-      .pipe(
+    let data: BlackDesertItemDetails | BlackDesertItemDetailsExtended = await lastValueFrom(
+      this.externalMarketService.buildRequest(ExternalMarketEndpoint.ITEM_DETAILS, params, meta).pipe(
         map((response: AxiosResponse): unknown => {
+          if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
+            throw new ServiceUnavailableException({
+              code: ControllerResponseCode.MAINTENANCE,
+              messages: ['Currently external market is in the maintenance'],
+            });
+          }
+
           return response.data ? response.data : {};
         }),
         map((data: unknown): BlackDesertItemDetails => {
-          if (!this.isValidExternalMarketItemDetails(data)) {
+          if (!this.itemValidatorService.isValidExternalMarketItemDetails(data)) {
             throw new ExternalMarketException('Response from external market did contain invalid data');
           }
 
-          return this.transformExternalMarketItemDetails(data as ExternalMarketItemDetails);
+          return this.itemTransformerService.transformExternalMarketItemDetails(data as ExternalMarketItemDetails);
+        }),
+      ),
+    );
+
+    if (extended) {
+      const additional: BlackDesertItemDetailsExtendedOnly = await lastValueFrom(
+        this.externalMarketRawService.buildRequest(ExternalMarketRawEndpoint.ITEM_DETAILS, params, meta).pipe(
+          map((response: AxiosResponse): unknown => {
+            if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
+              throw new ServiceUnavailableException({
+                code: ControllerResponseCode.MAINTENANCE,
+                messages: ['Currently external market is in the maintenance'],
+              });
+            }
+
+            return response.data ? response.data : '';
+          }),
+          map((additional: unknown): BlackDesertItemDetailsExtendedOnly => {
+            if (!this.itemValidatorService.isValidExternalMarketRawItemDetails(additional)) {
+              throw new ExternalMarketException('Response from external market did contain invalid data');
+            }
+
+            return this.itemTransformerService.transformExternalMarketRawItemDetails(
+              additional as ExternalMarketRawItemDetails,
+              enhancement,
+            );
+          }),
+        ),
+      );
+
+      data = {
+        ...data,
+        ...additional,
+      };
+    }
+
+    return data;
+  }
+
+  public findTooltipById(i18n: I18nContext, id: number, enhancement: number): Promise<BlackDesertItemTooltip> {
+    const params: BdoCodexParams = {
+      id: String(`item--${id}`),
+      enchant: String(enhancement),
+      nf: String('on'),
+    };
+
+    const meta: BdoCodexMeta = {
+      language: i18n.lang,
+    };
+
+    const data: Observable<BlackDesertItemTooltip> = this.bdoCodexService
+      .buildRequest(BdoCodexEndpoint.ITEM_TOOLTIP, params, meta)
+      .pipe(
+        map((response: AxiosResponse): BlackDesertItemTooltip => {
+          try {
+            return this.itemTransformerService.transformBdoCodexItemTooltip(i18n, response.data, id, enhancement);
+          } catch {
+            throw new BdoCodexException('Response from BDO Codex did contain invalid data');
+          }
         }),
       );
 

@@ -2,8 +2,8 @@ import { VueWrapper, shallowMount } from '@vue/test-utils';
 import AppDropdownIcon from '@/components/Base/AppDropdownIcon.vue';
 import AppIcon from '@/components/Base/AppIcon.vue';
 
-const MOCK_DROPDOWN_ICON_ACTIVE: boolean = true;
-const MOCK_DROPDOWN_ICON_CLASS: string = 'dropdown-icon-class';
+const MOCK_ACTIVE: boolean = true;
+const MOCK_CLASS: string = 'mock-class';
 
 describe('AppDropdownIcon', () => {
   let wrapper: VueWrapper;
@@ -11,7 +11,7 @@ describe('AppDropdownIcon', () => {
   beforeEach(() => {
     wrapper = shallowMount(AppDropdownIcon, {
       props: {
-        active: MOCK_DROPDOWN_ICON_ACTIVE,
+        active: MOCK_ACTIVE,
       },
     });
   });
@@ -25,8 +25,8 @@ describe('AppDropdownIcon', () => {
   it('should pass class prop to AppIcon depending on class prop', () => {
     wrapper = shallowMount(AppDropdownIcon, {
       props: {
-        active: MOCK_DROPDOWN_ICON_ACTIVE,
-        class: MOCK_DROPDOWN_ICON_CLASS,
+        active: MOCK_ACTIVE,
+        class: MOCK_CLASS,
       },
     });
 
@@ -34,6 +34,6 @@ describe('AppDropdownIcon', () => {
     const iconAttributes: Record<string, string> = iconWrapper.attributes();
 
     expect(iconAttributes).toHaveProperty('class');
-    expect(iconAttributes.class).toBe(MOCK_DROPDOWN_ICON_CLASS);
+    expect(iconAttributes.class).toBe(MOCK_CLASS);
   });
 });

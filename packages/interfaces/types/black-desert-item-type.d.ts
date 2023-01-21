@@ -4,6 +4,7 @@ export interface BlackDesertItemType extends BlackDesertItem {
   mainCategory: number;
   subCategory: number;
   enhancement: number;
+  tradeCount?: number;
 }
 
 export interface BlackDesertItemHot extends BlackDesertItemType {

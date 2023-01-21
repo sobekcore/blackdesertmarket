@@ -16,6 +16,13 @@ function removeAttributeTestFromNode(node) {
 module.exports = defineConfig({
   transpileDependencies: true,
   parallel: false,
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '~': __dirname,
+      },
+    },
+  },
   chainWebpack: (config) => {
     config.module
       .rule('vue')

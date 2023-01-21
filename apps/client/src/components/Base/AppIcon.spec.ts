@@ -1,8 +1,8 @@
 import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
 import AppIcon from '@/components/Base/AppIcon.vue';
 
-const MOCK_ICON_SRC: string = 'images/other/in-registration-queue.png';
-const MOCK_ICON_CLASS: string = 'icon-class';
+const MOCK_SRC: string = 'images/other/in-registration-queue.png';
+const MOCK_CLASS: string = 'mock-class';
 
 describe('AppIcon', () => {
   let wrapper: VueWrapper;
@@ -10,7 +10,7 @@ describe('AppIcon', () => {
   beforeEach(() => {
     wrapper = shallowMount(AppIcon, {
       props: {
-        src: MOCK_ICON_SRC,
+        src: MOCK_SRC,
       },
     });
   });
@@ -18,7 +18,7 @@ describe('AppIcon', () => {
   it('should pass src attribute to img depending on src prop', () => {
     wrapper = shallowMount(AppIcon, {
       props: {
-        src: MOCK_ICON_SRC,
+        src: MOCK_SRC,
       },
     });
 
@@ -26,14 +26,14 @@ describe('AppIcon', () => {
     const iconAttributes: Record<string, string> = icon.attributes();
 
     expect(iconAttributes).toHaveProperty('src');
-    expect(iconAttributes.src).toBe(MOCK_ICON_SRC);
+    expect(iconAttributes.src).toBe(MOCK_SRC);
   });
 
   it('should pass class attribute to img depending on class prop', () => {
     wrapper = shallowMount(AppIcon, {
       props: {
-        src: MOCK_ICON_SRC,
-        class: MOCK_ICON_CLASS,
+        src: MOCK_SRC,
+        class: MOCK_CLASS,
       },
     });
 
@@ -41,6 +41,6 @@ describe('AppIcon', () => {
     const iconAttributes: Record<string, string> = icon.attributes();
 
     expect(iconAttributes).toHaveProperty('class');
-    expect(iconAttributes.class).toContain(MOCK_ICON_CLASS);
+    expect(iconAttributes.class).toContain(MOCK_CLASS);
   });
 });

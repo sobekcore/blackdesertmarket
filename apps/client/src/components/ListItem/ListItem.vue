@@ -12,14 +12,19 @@
       >
         <span class="relative flex items-stretch gap-2.5">
           <slot name="icon">
-            <ListItemIcon :src="itemIcon.href" :text="getItemIconText(props.item)" :class="itemGradeBorder" />
+            <ListItemIcon
+              :src="itemIcon.href"
+              :item="props.item"
+              :text="itemTypeComposable.getItemIconText()"
+              :class="itemGradeBorder"
+            />
           </slot>
           <slot name="name">
-            <ListItemName :name="getItemName(props.item)" :class="itemGradeText" />
+            <ListItemName :name="itemTypeComposable.getItemName()" :class="itemGradeText" />
           </slot>
           <slot name="append">
             <ListItemSeparator />
-            <ListItemProperty data-test="price" label="Base Price" :value="formatBasePrice(props.item.basePrice)" />
+            <ListItemProperty data-test="price" label="Base Price" :value="itemComposable.getBasePrice()" />
             <ListItemSeparator />
             <ListItemProperty data-test="count" label="In Stock" :value="props.item.count" />
           </slot>
@@ -33,13 +38,9 @@
 import { PropType, Ref, defineEmits, defineProps, ref } from 'vue';
 import { BlackDesertItem, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { VueAttributeClass } from '@/types/attributes-vue';
+import { UseItemTypeReturn, useItemType } from '@/composables/item-type/use-item-type';
+import { UseItemReturn, useItem } from '@/composables/item/use-item';
 import { UseConfigReturn, useConfig } from '@/composables/use-config';
-import {
-  ItemEnhancementNameData,
-  UseItemEnhancementReturn,
-  useItemEnhancement,
-} from '@/composables/use-item-enhancement';
-import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemName from '@/components/ListItem/ListItemName.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';
@@ -60,43 +61,12 @@ const props = defineProps({
 });
 
 const config: UseConfigReturn = useConfig();
-const numberFormat: UseNumberFormatReturn = useNumberFormat();
+const itemComposable: UseItemReturn = useItem(props.item);
+const itemTypeComposable: UseItemTypeReturn = useItemType(props.item as BlackDesertItemType);
 
 const itemIcon: Ref<URL> = ref(new URL(`/item/${props.item.id}/icon`, config.marketApiUrl));
-const itemGradeText: Ref<string> = ref('');
+const itemGradeText: Ref<string> = ref('text-sm');
 const itemGradeBorder: Ref<string> = ref('');
-
-const formatBasePrice = (price: number): string => {
-  return numberFormat.format(price);
-};
-
-const getItemIconText = (item: BlackDesertItem): string => {
-  const itemType: BlackDesertItemType = item as BlackDesertItemType;
-  const itemEnhancement: UseItemEnhancementReturn = useItemEnhancement(itemType);
-  const itemEnhancementName: ItemEnhancementNameData = itemEnhancement.getName();
-
-  if (!itemEnhancementName.name) {
-    return '';
-  }
-
-  return itemEnhancementName.short;
-};
-
-const getItemName = (item: BlackDesertItem): string => {
-  const itemType: BlackDesertItemType = item as BlackDesertItemType;
-  const itemEnhancement: UseItemEnhancementReturn = useItemEnhancement(itemType);
-  const itemEnhancementName: ItemEnhancementNameData = itemEnhancement.getName();
-
-  if (!itemEnhancementName.name) {
-    return itemType.name;
-  }
-
-  if (itemEnhancementName.advanced) {
-    return `${itemEnhancementName.name}: ${itemType.name}`;
-  }
-
-  return `${itemEnhancementName.name} ${itemType.name}`;
-};
 
 const triggerListItemEffect = (): void => {
   emit('effect');

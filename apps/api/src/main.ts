@@ -2,6 +2,7 @@ import { BadRequestException, INestApplication, ValidationError, ValidationPipe 
 import { NestFactory } from '@nestjs/core';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { AllExceptionsFilter } from '@/filters/all-exceptions.filter';
+import { BadRequestExceptionFilter } from '@/filters/bad-request-exception.filter';
 import { NotFoundExceptionFilter } from '@/filters/not-found-exception.filter';
 import { AppModule } from '@/app.module';
 
@@ -11,6 +12,7 @@ async function bootstrap() {
   });
 
   app.useGlobalFilters(new AllExceptionsFilter());
+  app.useGlobalFilters(new BadRequestExceptionFilter());
   app.useGlobalFilters(new NotFoundExceptionFilter());
 
   app.useGlobalPipes(

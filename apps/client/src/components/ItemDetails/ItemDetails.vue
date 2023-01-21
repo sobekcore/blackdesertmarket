@@ -5,7 +5,7 @@
         <ItemDetailsOverview :item-type="itemType" :item-details="itemDetails" />
       </template>
       <template v-else>
-        <AppLoader />
+        <AppLoader :size="LoaderSize.LARGE" />
       </template>
     </div>
     <div class="item-details-additional">
@@ -18,20 +18,20 @@
         <template v-for="item in itemDetails.availability" :key="item.onePrice">
           <ItemDetailsAvailabilityItem :class="getItemAvailabilityBackgroundClass(itemDetails, item)">
             <span class="w-full text-left text-sm text-dark-800">
-              {{ formatSellCount(item.sellCount) }}
+              {{ getSellCount(itemDetails, item) }}
             </span>
             <span :class="getItemAvailabilityTextClass(itemDetails, item)" class="w-full text-center">
-              {{ formatOnePrice(item.onePrice) }}
+              {{ getOnePrice(itemDetails, item) }}
             </span>
             <span class="w-full text-right text-sm text-dark-800">
-              {{ formatBuyCount(item.buyCount) }}
+              {{ getBuyCount(itemDetails, item) }}
             </span>
           </ItemDetailsAvailabilityItem>
         </template>
       </ItemDetailsAvailability>
     </template>
     <template v-else>
-      <AppLoader />
+      <AppLoader :size="LoaderSize.LARGE" />
     </template>
   </div>
 </template>
@@ -43,15 +43,15 @@ import {
   BlackDesertItemDetailsAvailability,
   BlackDesertItemType,
 } from '@blackdesertmarket/interfaces';
-import { UseItemAvailabilityReturn, useItemAvailability } from '@/composables/use-item-availability';
-import { UseItemDetailsReturn, useItemDetails } from '@/composables/use-item-details';
-import { UseItemTypeListReturn, useItemList } from '@/composables/use-item-list';
-import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
-import AppLoader from '@/components/Base/AppLoader.vue';
+import { LoaderSize } from '@/enums/loader';
+import { UseItemAvailabilityReturn, useItemAvailability } from '@/composables/item-details/use-item-availability';
+import { UseItemDetailsFetchReturn, useItemDetailsFetch } from '@/composables/item-details/use-item-details-fetch';
+import { UseItemTypeFetchReturn, useItemTypeFetch } from '@/composables/item-type/use-item-type-fetch';
+import AppLoader from '@/components/Base/AppLoader/AppLoader.vue';
 import ItemDetailsAdditional from '@/components/ItemDetails/ItemDetailsAdditional.vue';
 import ItemDetailsAvailability from '@/components/ItemDetails/ItemDetailsAvailability.vue';
 import ItemDetailsAvailabilityItem from '@/components/ItemDetails/ItemDetailsAvailabilityItem.vue';
-import ItemDetailsOverview from '@/components/ItemDetails/ItemDetailsOverview.vue';
+import ItemDetailsOverview from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverview.vue';
 
 const props = defineProps({
   id: {
@@ -64,31 +64,34 @@ const props = defineProps({
   },
 });
 
-const itemListComposable: UseItemTypeListReturn = useItemList(props.id);
-const itemDetailsComposable: UseItemDetailsReturn = useItemDetails(props.id, props.enhancement);
-const numberFormat: UseNumberFormatReturn = useNumberFormat();
+const itemListComposable: UseItemTypeFetchReturn = useItemTypeFetch(props.id);
+const itemDetailsComposable: UseItemDetailsFetchReturn = useItemDetailsFetch(props.id, props.enhancement, true);
 
 const itemType: Ref<BlackDesertItemType | null> = ref(null);
 const itemDetails: Ref<BlackDesertItemDetails | null> = ref(null);
 
-const formatOnePrice = (price: number): string => {
-  return numberFormat.format(price);
+const getOnePrice = (
+  itemDetails: BlackDesertItemDetails,
+  itemAvailability: BlackDesertItemDetailsAvailability,
+): string => {
+  const itemAvailabilityComposable: UseItemAvailabilityReturn = useItemAvailability(itemDetails, itemAvailability);
+  return itemAvailabilityComposable.getOnePrice();
 };
 
-const formatSellCount = (count: number): string => {
-  if (count === 0) {
-    return '';
-  }
-
-  return `Listed: ${count}`;
+const getSellCount = (
+  itemDetails: BlackDesertItemDetails,
+  itemAvailability: BlackDesertItemDetailsAvailability,
+): string => {
+  const itemAvailabilityComposable: UseItemAvailabilityReturn = useItemAvailability(itemDetails, itemAvailability);
+  return itemAvailabilityComposable.getSellCount();
 };
 
-const formatBuyCount = (count: number): string => {
-  if (count === 0) {
-    return '';
-  }
-
-  return `Orders: ${count}`;
+const getBuyCount = (
+  itemDetails: BlackDesertItemDetails,
+  itemAvailability: BlackDesertItemDetailsAvailability,
+): string => {
+  const itemAvailabilityComposable: UseItemAvailabilityReturn = useItemAvailability(itemDetails, itemAvailability);
+  return itemAvailabilityComposable.getBuyCount();
 };
 
 const getItemAvailabilityBackgroundClass = (
@@ -108,7 +111,7 @@ const getItemAvailabilityTextClass = (
 };
 
 if (!itemType.value) {
-  itemListComposable.fetchBaseType().then((data: BlackDesertItemType | null): void => {
+  itemListComposable.fetchByEnhancement(props.enhancement).then((data: BlackDesertItemType | null): void => {
     itemType.value = data;
   });
 }
@@ -121,7 +124,7 @@ if (!itemDetails.value) {
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/variables';
+@import '@/styles/variables.scss';
 
 .item-details {
   @apply relative h-1/2 overflow-y-auto bg-dark-200 bg-opacity-90 p-5;

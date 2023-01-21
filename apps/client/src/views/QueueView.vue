@@ -1,9 +1,9 @@
 <template>
-  <section>
-    <QueueItemList />
+  <section class="relative min-h-full">
+    <ItemQueueList />
   </section>
 </template>
 
 <script lang="ts" setup>
-import QueueItemList from '@/components/QueueItemList.vue';
+import ItemQueueList from '@/components/ItemQueueList.vue';
 </script>

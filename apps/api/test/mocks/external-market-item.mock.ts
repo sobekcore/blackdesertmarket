@@ -1,4 +1,4 @@
-import { ExternalMarketItem } from '@/interfaces/external-market.interface';
+import { ExternalMarketItem } from '@/interfaces/objects/external-market.interface';
 
 export function mockExternalMarketItem(): ExternalMarketItem {
   return {

@@ -3,7 +3,7 @@
     <button
       data-test="button"
       :class="{
-        'flex w-full rounded-sm border py-3 px-6 hocus:text-dark-900': true,
+        'flex w-full rounded-sm border py-3 px-6': true,
         'button-inactive-state': !isActive,
         'border-lighten button-active-state': isActive,
       }"
@@ -90,10 +90,10 @@ watch(
 
 <style lang="scss" scoped>
 .button-inactive-state {
-  @apply border-dark-200 bg-dark-300 text-brand-700 hocus:bg-dark-500;
+  @apply border-dark-200 bg-dark-300 text-brand-600 hocus:bg-dark-500 hocus:text-dark-900;
 }
 
 .button-active-state {
-  @apply bg-dark-500 text-dark-800;
+  @apply bg-dark-500 text-dark-800 hocus:text-dark-900;
 }
 </style>

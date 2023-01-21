@@ -3,7 +3,16 @@ export function isValidBlackDesertItemDetails(itemDetails) {
     itemDetails &&
     itemDetails.hasOwnProperty('availability') &&
     itemDetails.hasOwnProperty('history') &&
-    itemDetails.hasOwnProperty('basePrice')
+    itemDetails.hasOwnProperty('basePrice') &&
+    itemDetails.hasOwnProperty('sellCount')
+  );
+}
+
+export function isValidBlackDesertItemDetailsExtended(itemDetails) {
+  return (
+    isValidBlackDesertItemDetails(itemDetails) &&
+    itemDetails.hasOwnProperty('recentPrice') &&
+    itemDetails.hasOwnProperty('recentTransaction')
   );
 }
 

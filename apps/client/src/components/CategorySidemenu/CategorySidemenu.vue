@@ -14,6 +14,7 @@
     />
     <template v-for="category in categories" :key="category.mainCategory">
       <CategorySidemenuItem
+        data-test="config"
         :title="category.title"
         :icon="category.icon"
         :active="activeMainCategory === category.mainCategory"

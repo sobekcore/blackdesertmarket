@@ -1,16 +1,16 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { mockArgumentsHost, mockJson, mockStatus } from '@test/mocks/arguments-host.mock';
+import { CoreModuleMock } from '@test/mocks/core-module.mock';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { AllExceptionsFilter } from '@/filters/all-exceptions.filter';
-import { CoreModule } from '@/core.module';
 
 describe('AllExceptionsFilter', () => {
   let allExceptionsFilter: AllExceptionsFilter;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [CoreModule],
+      imports: [CoreModuleMock],
       providers: [AllExceptionsFilter],
     }).compile();
 

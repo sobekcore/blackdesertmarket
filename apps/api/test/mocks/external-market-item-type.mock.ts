@@ -2,7 +2,7 @@ import {
   ExternalMarketItemHot,
   ExternalMarketItemQueue,
   ExternalMarketItemType,
-} from '@/interfaces/external-market.interface';
+} from '@/interfaces/objects/external-market.interface';
 
 export function mockExternalMarketItemType(): ExternalMarketItemType {
   return {
@@ -14,6 +14,7 @@ export function mockExternalMarketItemType(): ExternalMarketItemType {
     mainCategory: 25,
     subCategory: 2,
     chooseKey: 0,
+    totalTradeCount: 1000,
   };
 }
 
@@ -27,6 +28,7 @@ export function mockExternalMarketItemHot(): ExternalMarketItemHot {
     mainCategory: 25,
     subCategory: 2,
     chooseKey: 0,
+    totalTradeCount: 1000,
     fluctuationType: 1,
     fluctuationPrice: 500,
   };

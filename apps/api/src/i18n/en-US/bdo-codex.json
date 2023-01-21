@@ -1,0 +1,12 @@
+{
+  "weight": "Weight",
+  "personalTransaction": "Personal transaction",
+  "enhancementType": "Enhancement Type",
+  "classExclusive": "Exclusive",
+  "description": "Description",
+  "itemEffect": "Item Effect",
+  "enhancementEffect": "Enhancement Effect",
+  "specialEffect": "Special Effect",
+  "setEffect": "Set Effect",
+  "price": "Sell price"
+}

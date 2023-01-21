@@ -2,7 +2,7 @@ import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
 import ItemDetailsAvailability from '@/components/ItemDetails/ItemDetailsAvailability.vue';
 import ItemDetailsAvailabilityHeader from '@/components/ItemDetails/ItemDetailsAvailabilityHeader.vue';
 
-const MOCK_ITEM_DETAILS_AVAILABILITY_CONTENT: string = '<span>Item Details Availability Content</span>';
+const MOCK_CONTENT: string = '<span>Mock Content</span>';
 
 describe('ItemDetailsAvailability', () => {
   let wrapper: VueWrapper;
@@ -20,12 +20,12 @@ describe('ItemDetailsAvailability', () => {
   it('should render default slot content', () => {
     wrapper = shallowMount(ItemDetailsAvailability, {
       slots: {
-        default: `<div data-slot>${MOCK_ITEM_DETAILS_AVAILABILITY_CONTENT}</div>`,
+        default: `<div data-slot>${MOCK_CONTENT}</div>`,
       },
     });
 
     const slot: DOMWrapper<HTMLElement> = wrapper.find('[data-slot]');
 
-    expect(slot.element.innerHTML).toBe(MOCK_ITEM_DETAILS_AVAILABILITY_CONTENT);
+    expect(slot.element.innerHTML).toBe(MOCK_CONTENT);
   });
 });

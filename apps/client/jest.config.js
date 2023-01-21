@@ -6,6 +6,9 @@ module.exports = {
   moduleFileExtensions: ['ts', 'js', 'cjs', 'vue'],
   testMatch: ['**/src/**/*.spec.(t|j)s'],
   moduleNameMapper: {
+    '^axios$': require.resolve('axios'),
+    '^chart.js$': require.resolve('chart.js'),
+    '~/(.*)': '<rootDir>/$1',
     '@/(.*)': '<rootDir>/src/$1',
     '@test/(.*)': '<rootDir>/test/$1',
   },
