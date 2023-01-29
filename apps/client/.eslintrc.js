@@ -20,7 +20,6 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    'vue/setup-compiler-macros': 'off',
     'vue/require-default-prop': 'off',
     'vue/one-component-per-file': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

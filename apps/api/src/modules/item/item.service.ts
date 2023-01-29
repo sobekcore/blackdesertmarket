@@ -1,3 +1,4 @@
+import { AxiosResponse } from '@nestjs/axios/node_modules/axios';
 import { Injectable, ServiceUnavailableException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
@@ -6,7 +7,6 @@ import {
   BlackDesertItemTooltip,
   BlackDesertItemType,
 } from '@blackdesertmarket/interfaces';
-import { AxiosResponse } from 'axios';
 import { ReadStream, createReadStream, createWriteStream, existsSync } from 'fs';
 import { I18nContext } from 'nestjs-i18n';
 import { Observable, lastValueFrom, map } from 'rxjs';

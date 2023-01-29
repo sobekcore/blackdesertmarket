@@ -1,21 +1,21 @@
 <template>
   <ul class="flex flex-col gap-0.5 p-0.5">
     <CategorySidemenuItem
-      title="Volatile Price Items"
-      icon="images/other/volatile-price-items.png"
+      :title="translate('sidemenu.volatilePriceItems')"
+      icon="other/volatile-price-items.png"
       :active="volatilePriceItemsActive"
       @effect="volatilePriceItemsEffect"
     />
     <CategorySidemenuItem
-      title="In Registration Queue"
-      icon="images/other/in-registration-queue.png"
+      :title="translate('sidemenu.inRegistrationQueue')"
+      icon="other/in-registration-queue.png"
       :active="inRegistrationQueueActive"
       @effect="inRegistrationQueueEffect"
     />
     <template v-for="category in categories" :key="category.mainCategory">
       <CategorySidemenuItem
         data-test="config"
-        :title="category.title"
+        :title="translate(category.title)"
         :icon="category.icon"
         :active="activeMainCategory === category.mainCategory"
         @effect="categorySidemenuItemEffect(category.mainCategory)"
@@ -25,7 +25,7 @@
             <template v-if="category.subCategories.length">
               <template v-for="subCategory in category.subCategories" :key="subCategory.subCategory">
                 <CategorySidemenuSubItem
-                  :title="subCategory.title"
+                  :title="translate(subCategory.title)"
                   :main-category="category.mainCategory"
                   :sub-category="subCategory.subCategory"
                   @effect="categorySidemenuSubItemEffect(category.mainCategory)"
@@ -43,21 +43,19 @@
 </template>
 
 <script lang="ts" setup>
-import { ComputedRef, Ref, computed, inject, ref } from 'vue';
+import { ComputedRef, Ref, computed, ref } from 'vue';
 import { RouteLocationNamedRaw, Router, useLink, useRouter } from 'vue-router';
-import { MarketCategoriesConfig, MarketCategoriesConfigCategory } from '@/interfaces/market-config';
+import { MarketCategoriesConfigCategory } from '@/interfaces/market-config';
+import { MarketCategoriesConfigKey, TranslateKey, useInject } from '@/composables/use-inject';
 import CategorySidemenuItem from '@/components/CategorySidemenu/CategorySidemenuItem.vue';
 import CategorySidemenuSubItem from '@/components/CategorySidemenu/CategorySidemenuSubItem.vue';
 
-const marketCategoriesConfig: MarketCategoriesConfig | undefined = inject('marketCategoriesConfig');
+const translate = useInject(TranslateKey);
+const marketCategoriesConfig = useInject(MarketCategoriesConfigKey);
 const router: Router = useRouter();
 
-const categories: Ref<MarketCategoriesConfigCategory[]> = ref([]);
+const categories: Ref<MarketCategoriesConfigCategory[]> = ref(marketCategoriesConfig.categories);
 const activeMainCategory: Ref<number | null> = ref(null);
-
-if (marketCategoriesConfig) {
-  categories.value = marketCategoriesConfig.categories;
-}
 
 /**
  * Volatile Price Items

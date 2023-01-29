@@ -3,6 +3,7 @@ import { BlackDesertItemDetailsExtended, BlackDesertItemType } from '@blackdeser
 import { mockBlackDesertItemDetailsExtended, mockBlackDesertItemType } from '@blackdesertmarket/mocks';
 import { VueWrapper, shallowMount } from '@vue/test-utils';
 import { UseDateFormatReturn, useDateFormat } from '@vueuse/core';
+import { mockProvide } from '@test/mocks/provide.mock';
 import { UnitTestException } from '@/exceptions/unit-test-exception';
 import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 import ItemDetailsOverview from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverview.vue';
@@ -14,10 +15,10 @@ const MOCK_ITEM_TYPE: BlackDesertItemType = mockBlackDesertItemType();
 const MOCK_ITEM_DETAILS: BlackDesertItemDetailsExtended = mockBlackDesertItemDetailsExtended();
 const MOCK_GRADE: number = 1;
 
-jest.mock('@/composables/use-config', () => ({
-  useConfig: () => ({
+jest.mock('@/config', () => ({
+  config: {
     marketApiUrl: 'https://api.blackdesertmarket.com',
-  }),
+  },
 }));
 
 describe('ItemDetailsOverview', () => {
@@ -25,6 +26,9 @@ describe('ItemDetailsOverview', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(ItemDetailsOverview, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         itemType: MOCK_ITEM_TYPE,
         itemDetails: MOCK_ITEM_DETAILS,
@@ -65,6 +69,9 @@ describe('ItemDetailsOverview', () => {
 
   it('should pass name prop to ListItemIcon depending on itemType prop', () => {
     wrapper = shallowMount(ItemDetailsOverview, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         itemType: MOCK_ITEM_TYPE,
         itemDetails: MOCK_ITEM_DETAILS,
@@ -80,6 +87,9 @@ describe('ItemDetailsOverview', () => {
 
   it('should pass class prop to ListItemIcon depending on itemType prop', () => {
     wrapper = shallowMount(ItemDetailsOverview, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         itemType: { ...MOCK_ITEM_TYPE, grade: MOCK_GRADE },
         itemDetails: MOCK_ITEM_DETAILS,
@@ -95,6 +105,9 @@ describe('ItemDetailsOverview', () => {
 
   it('should pass name prop to ListItemName depending on itemType prop', () => {
     wrapper = shallowMount(ItemDetailsOverview, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         itemType: MOCK_ITEM_TYPE,
         itemDetails: MOCK_ITEM_DETAILS,
@@ -110,6 +123,9 @@ describe('ItemDetailsOverview', () => {
 
   it('should pass class prop to ListItemName depending on itemType prop', () => {
     wrapper = shallowMount(ItemDetailsOverview, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         itemType: { ...MOCK_ITEM_TYPE, grade: MOCK_GRADE },
         itemDetails: MOCK_ITEM_DETAILS,
@@ -125,6 +141,9 @@ describe('ItemDetailsOverview', () => {
 
   describe('should pass value prop to ItemDetailsOverviewProperty depending on itemType and itemDetails props', () => {
     wrapper = shallowMount(ItemDetailsOverview, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         itemType: MOCK_ITEM_TYPE,
         itemDetails: MOCK_ITEM_DETAILS,

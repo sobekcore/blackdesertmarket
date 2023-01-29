@@ -1,5 +1,5 @@
+import { AxiosResponse } from '@nestjs/axios/node_modules/axios';
 import { HttpStatus } from '@nestjs/common';
-import { AxiosResponse } from 'axios';
 import { STATUS_CODES } from 'http';
 
 export function mockAxiosResponse(data: any): AxiosResponse {

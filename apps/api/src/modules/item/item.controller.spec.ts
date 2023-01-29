@@ -1,10 +1,10 @@
 import { HttpService } from '@nestjs/axios';
+import { AxiosResponse } from '@nestjs/axios/node_modules/axios';
 import { StreamableFile } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getFirstElement } from '@blackdesertmarket/helpers';
 import { BlackDesertItemDetails, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { isValidBlackDesertItemDetails, isValidBlackDesertItemType } from '@blackdesertmarket/objects';
-import { AxiosResponse } from 'axios';
 import { createReadStream } from 'fs';
 import { I18nService } from 'nestjs-i18n';
 import { Observable, of } from 'rxjs';

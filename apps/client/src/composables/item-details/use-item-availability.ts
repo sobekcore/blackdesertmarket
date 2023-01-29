@@ -1,4 +1,5 @@
 import { BlackDesertItemDetails, BlackDesertItemDetailsAvailability } from '@blackdesertmarket/interfaces';
+import { TranslateKey, useInject } from '@/composables/use-inject';
 import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 
 export interface UseItemAvailabilityReturn {
@@ -13,6 +14,7 @@ export function useItemAvailability(
   itemDetails: BlackDesertItemDetails,
   itemAvailability: BlackDesertItemDetailsAvailability,
 ): UseItemAvailabilityReturn {
+  const translate = useInject(TranslateKey);
   const numberFormat: UseNumberFormatReturn = useNumberFormat();
 
   const getOnePrice = (): string => {
@@ -24,7 +26,8 @@ export function useItemAvailability(
       return '';
     }
 
-    return `Listed: ${itemAvailability.sellCount}`;
+    const sellCount: string = translate('itemDetails.availability.sellCount');
+    return `${sellCount}: ${itemAvailability.sellCount}`;
   };
 
   const getBuyCount = () => {
@@ -32,7 +35,8 @@ export function useItemAvailability(
       return '';
     }
 
-    return `Orders: ${itemAvailability.buyCount}`;
+    const buyCount: string = translate('itemDetails.availability.buyCount');
+    return `${buyCount}: ${itemAvailability.buyCount}`;
   };
 
   const getBackgroundClass = (): string => {

@@ -1,6 +1,6 @@
+import { AxiosResponse } from '@nestjs/axios/node_modules/axios';
 import { Injectable, ServiceUnavailableException } from '@nestjs/common';
 import { BlackDesertItem, BlackDesertItemHot, BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
-import { AxiosResponse } from 'axios';
 import { I18nContext } from 'nestjs-i18n';
 import { Observable, lastValueFrom, map } from 'rxjs';
 import {

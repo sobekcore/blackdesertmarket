@@ -1,7 +1,7 @@
 import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
 import AppIcon from '@/components/Base/AppIcon.vue';
 
-const MOCK_SRC: string = 'images/other/in-registration-queue.png';
+const MOCK_SRC: string = 'other/in-registration-queue.png';
 const MOCK_CLASS: string = 'mock-class';
 
 describe('AppIcon', () => {

@@ -10,7 +10,7 @@
       }"
       @click="triggerCategorySidemenuItemEffect"
     >
-      <AppIcon class="-my-[4px] h-[24px]" :src="require(`@/assets/${props.icon}`)" />
+      <AppIcon class="-my-[4px] h-[24px]" :src="require(`@/assets/images/${props.icon}`)" />
       <span class="text-sm">
         {{ props.title }}
       </span>

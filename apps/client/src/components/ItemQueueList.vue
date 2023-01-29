@@ -4,9 +4,9 @@
       <ListItem :item="item" @effect="handleListItemClick(item)">
         <template #append>
           <ListItemSeparator />
-          <ListItemProperty label="Registered Price" :value="getBasePrice(item)" />
+          <ListItemProperty :label="translate('itemQueue.basePrice')" :value="getBasePrice(item)" />
           <ListItemSeparator />
-          <ListItemProperty label="Registered Time" :value="getEndTime(item)" />
+          <ListItemProperty :label="translate('itemQueue.endTime')" :value="getEndTime(item)" />
         </template>
       </ListItem>
 
@@ -27,12 +27,14 @@ import { LoaderSize } from '@/enums/loader';
 import { UseItemQueueReturn, useItemQueue } from '@/composables/item-queue/use-item-queue';
 import { UseQueueItemListReturn, useItemQueueFetch } from '@/composables/item-queue/use-item-queue-fetch';
 import { UseItemReturn, useItem } from '@/composables/item/use-item';
+import { TranslateKey, useInject } from '@/composables/use-inject';
 import AppLoader from '@/components/Base/AppLoader/AppLoader.vue';
 import ItemDetailsModal from '@/components/ItemDetails/ItemDetailsModal.vue';
 import ListItem from '@/components/ListItem/ListItem.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';
 import ListItemSeparator from '@/components/ListItem/ListItemSeparator.vue';
 
+const translate = useInject(TranslateKey);
 const itemQueueFetch: UseQueueItemListReturn = useItemQueueFetch();
 
 const loaded: Ref<boolean> = ref(false);

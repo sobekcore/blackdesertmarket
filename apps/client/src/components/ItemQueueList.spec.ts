@@ -3,6 +3,7 @@ import { BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItemQueue } from '@blackdesertmarket/mocks';
 import { VueWrapper, flushPromises, shallowMount } from '@vue/test-utils';
 import { mockPlugins } from '@test/mocks/plugins.mock';
+import { mockProvide } from '@test/mocks/provide.mock';
 import ItemDetailsModal from '@/components/ItemDetails/ItemDetailsModal.vue';
 import ItemQueueList from '@/components/ItemQueueList.vue';
 import ListItem from '@/components/ListItem/ListItem.vue';
@@ -22,6 +23,7 @@ describe('ItemQueueList', () => {
     wrapper = shallowMount(ItemQueueList, {
       global: {
         plugins: mockPlugins(),
+        provide: mockProvide(),
         stubs: {
           teleport: true,
         },

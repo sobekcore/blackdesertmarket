@@ -4,7 +4,7 @@ import AppIcon from '@/components/Base/AppIcon.vue';
 import CategorySidemenuItem from '@/components/CategorySidemenu/CategorySidemenuItem.vue';
 
 const MOCK_TITLE: string = 'Mock Title';
-const MOCK_ICON: string = 'images/other/in-registration-queue.png';
+const MOCK_ICON: string = 'other/in-registration-queue.png';
 const MOCK_ACTIVE: boolean = true;
 const MOCK_CONTENT: string = '<span>Category Sidemenu Item Content</span>';
 

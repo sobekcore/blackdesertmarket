@@ -2,14 +2,14 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { I18nModule, QueryResolver } from 'nestjs-i18n';
 import { join } from 'path';
-import { configuration, files } from '@/configuration';
+import { config, files } from '@/config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: files,
-      load: [configuration],
+      load: [config],
     }),
     I18nModule.forRootAsync({
       inject: [ConfigService],

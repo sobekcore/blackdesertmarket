@@ -2,6 +2,7 @@ import { DefineComponent, defineComponent } from 'vue';
 import { BlackDesertItemTooltip } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItemTooltip } from '@blackdesertmarket/mocks';
 import { VueWrapper, mount } from '@vue/test-utils';
+import { mockProvide } from '@test/mocks/provide.mock';
 import { useItemTooltip } from '@/composables/item-tooltip/use-item-tooltip';
 
 const MOCK_ITEM_TOOLTIP: BlackDesertItemTooltip = mockBlackDesertItemTooltip();
@@ -18,7 +19,11 @@ describe('useItemTooltip', () => {
       template: '<slot></slot>',
     });
 
-    wrapper = mount(component);
+    wrapper = mount(component, {
+      global: {
+        provide: mockProvide(),
+      },
+    });
   });
 
   it('should return proper data from getItemWeight', () => {

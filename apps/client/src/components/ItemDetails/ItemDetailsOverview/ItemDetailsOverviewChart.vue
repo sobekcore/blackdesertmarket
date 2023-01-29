@@ -29,6 +29,7 @@ import { VueAttributeClass } from '@/types/attributes-vue';
 import { UseChartReturn, useChart } from '@/composables/use-chart';
 import { UseColorReturn, useColor } from '@/composables/use-color';
 import { UseDocumentSizeReturn, useDocumentSize } from '@/composables/use-document-size';
+import { TranslateKey, useInject } from '@/composables/use-inject';
 import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 import { UseStringWrapReturn, useStringWrap } from '@/composables/use-string-wrap';
 import { UseTailwindConfigReturn, useTailwindConfig } from '@/composables/use-tailwind-config';
@@ -57,6 +58,7 @@ const props = defineProps({
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Title);
 
+const translate = useInject(TranslateKey);
 const tailwindConfig: UseTailwindConfigReturn = useTailwindConfig();
 const chart: UseChartReturn = useChart();
 const color: UseColorReturn = useColor();
@@ -109,6 +111,25 @@ const max: ComputedRef<number> = computed((): number => {
   const components: MinMaxComponents = getMinMaxComponents();
   return components.max + components.delta;
 });
+
+const getMinMaxComponents = (): MinMaxComponents => {
+  const min: number = Math.min(...data.value);
+  const max: number = Math.max(...data.value);
+  const delta: number = Math.round((max - min) * 0.05) || 2;
+
+  return { min, max, delta };
+};
+
+const getChartTitle = (): string => {
+  const units: string = translate('generic.units');
+  const silvers: string = translate('generic.silvers');
+
+  return stringWrap.wrap(`(${units}: ${numberFormat.format(unit.value)} ${silvers})`, ' ', 8);
+};
+
+const formatChartValue = (value: number): string => {
+  return numberFormat.format(Math.round(value));
+};
 
 const chartData: Ref<ChartData<ChartType>> = ref({
   labels: labels,
@@ -208,7 +229,7 @@ const chartOptions: Ref<ChartOptions<ChartType>> = ref({
     },
     title: {
       display: true,
-      text: stringWrap.wrap(`(Units: ${numberFormat.format(unit.value)} Silvers)`, ' ', 8),
+      text: getChartTitle(),
       align: 'end',
       padding: documentSize.remToRaw(tailwindConfig.getValue('padding', '1')),
       color: tailwindConfig.getValue('colors', 'dark-800'),
@@ -223,16 +244,4 @@ const chartOptions: Ref<ChartOptions<ChartType>> = ref({
 });
 
 const chartPlugins: Ref<Plugin<ChartType>[]> = ref([chart.chartAreaPlugin]);
-
-const getMinMaxComponents = (): MinMaxComponents => {
-  const min: number = Math.min(...data.value);
-  const max: number = Math.max(...data.value);
-  const delta: number = Math.round((max - min) * 0.05) || 2;
-
-  return { min, max, delta };
-};
-
-const formatChartValue = (value: number): string => {
-  return numberFormat.format(Math.round(value));
-};
 </script>

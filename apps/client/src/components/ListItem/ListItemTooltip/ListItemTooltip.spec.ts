@@ -1,7 +1,7 @@
 import { BlackDesertItemTooltip, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItemTooltip, mockBlackDesertItemType } from '@blackdesertmarket/mocks';
 import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
-import { UseItemTooltipReturn, useItemTooltip } from '@/composables/item-tooltip/use-item-tooltip';
+import { mockProvide } from '@test/mocks/provide.mock';
 import { UseItemTypeReturn, useItemType } from '@/composables/item-type/use-item-type';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemName from '@/components/ListItem/ListItemName.vue';
@@ -17,6 +17,9 @@ describe('ListItemTooltip', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(ListItemTooltip, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         itemType: MOCK_ITEM_TYPE,
         itemTooltip: MOCK_ITEM_TOOLTIP,
@@ -32,6 +35,9 @@ describe('ListItemTooltip', () => {
 
   it('should render content depending on itemTooltip prop', () => {
     wrapper = shallowMount(ListItemTooltip, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         itemType: MOCK_ITEM_TYPE,
         itemTooltip: MOCK_ITEM_TOOLTIP,
@@ -45,6 +51,9 @@ describe('ListItemTooltip', () => {
 
   it('should pass name prop to ListItemName depending on itemType prop', () => {
     wrapper = shallowMount(ListItemTooltip, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         itemType: MOCK_ITEM_TYPE,
         itemTooltip: MOCK_ITEM_TOOLTIP,
@@ -62,6 +71,9 @@ describe('ListItemTooltip', () => {
 
   it('should pass class prop to ListItemName depending on itemType prop', () => {
     wrapper = shallowMount(ListItemTooltip, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         itemType: { ...MOCK_ITEM_TYPE, grade: MOCK_GRADE },
         itemTooltip: MOCK_ITEM_TOOLTIP,
@@ -77,6 +89,9 @@ describe('ListItemTooltip', () => {
 
   it('should pass text prop to ListItemIcon depending on itemType prop', () => {
     wrapper = shallowMount(ListItemTooltip, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         itemType: MOCK_ITEM_TYPE,
         itemTooltip: MOCK_ITEM_TOOLTIP,
@@ -94,6 +109,9 @@ describe('ListItemTooltip', () => {
 
   it('should pass class prop to ListItemIcon depending on itemType prop', () => {
     wrapper = shallowMount(ListItemTooltip, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         itemType: { ...MOCK_ITEM_TYPE, grade: MOCK_GRADE },
         itemTooltip: MOCK_ITEM_TOOLTIP,
@@ -109,13 +127,14 @@ describe('ListItemTooltip', () => {
 
   describe('should pass value prop to ListItemTooltipProperty depending on itemTooltip prop', () => {
     wrapper = shallowMount(ListItemTooltip, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         itemType: MOCK_ITEM_TYPE,
         itemTooltip: MOCK_ITEM_TOOLTIP,
       },
     });
-
-    const itemTooltipComposable: UseItemTooltipReturn = useItemTooltip(MOCK_ITEM_TOOLTIP);
 
     it('when data-test = damage', () => {
       const damage: DOMWrapper<HTMLElement> = wrapper.find('[data-test="damage"]');
@@ -162,7 +181,7 @@ describe('ListItemTooltip', () => {
       const weightAttributes: Record<string, string> = weight.attributes();
 
       expect(weightAttributes).toHaveProperty('value');
-      expect(weightAttributes.value).toBe(itemTooltipComposable.getItemWeight());
+      expect(weightAttributes.value).toBe(`${MOCK_ITEM_TOOLTIP.weight} LT`);
     });
   });
 });

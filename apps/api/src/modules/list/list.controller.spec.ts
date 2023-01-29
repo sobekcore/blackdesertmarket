@@ -1,4 +1,5 @@
 import { HttpService } from '@nestjs/axios';
+import { AxiosResponse } from '@nestjs/axios/node_modules/axios';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getFirstElement } from '@blackdesertmarket/helpers';
 import { BlackDesertItem, BlackDesertItemHot, BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
@@ -7,7 +8,6 @@ import {
   isValidBlackDesertItemHot,
   isValidBlackDesertItemQueue,
 } from '@blackdesertmarket/objects';
-import { AxiosResponse } from 'axios';
 import { I18nService } from 'nestjs-i18n';
 import { Observable, of } from 'rxjs';
 import { mockAxiosResponse } from '@test/mocks/axios-response.mock';

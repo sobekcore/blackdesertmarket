@@ -1,0 +1,13 @@
+{
+  "availability": {
+    "header": {
+      "sellCount": "Sellers",
+      "buyCount": "Buyers",
+      "onePrice": "Prices"
+    },
+    "sellCount": "Listed",
+    "buyCount": "Orders"
+  },
+  "recentPrice": "Recent Price",
+  "recentTransaction": "Recent Transaction"
+}

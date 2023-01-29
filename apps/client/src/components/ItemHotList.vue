@@ -10,7 +10,7 @@
           <ListItemSeparator />
           <ListItemProperty>
             <template #label>
-              <span>Base Price</span>
+              <span>{{ translate('item.basePrice') }}</span>
               <span class="flex-grow" />
               <span>({{ getFluctuationPrice(item) }})</span>
             </template>
@@ -21,7 +21,7 @@
             </template>
           </ListItemProperty>
           <ListItemSeparator />
-          <ListItemProperty label="In Stock" :value="item.count" />
+          <ListItemProperty :label="translate('item.count')" :value="item.count" />
         </template>
       </ListItem>
 
@@ -43,6 +43,7 @@ import { UseFluctuationTypeReturn, useFluctuationType } from '@/composables/item
 import { UseItemHotReturn, useItemHot } from '@/composables/item-hot/use-item-hot';
 import { UseItemHotFetchReturn, useItemHotFetch } from '@/composables/item-hot/use-item-hot-fetch';
 import { UseItemReturn, useItem } from '@/composables/item/use-item';
+import { TranslateKey, useInject } from '@/composables/use-inject';
 import AppIcon from '@/components/Base/AppIcon.vue';
 import AppLoader from '@/components/Base/AppLoader/AppLoader.vue';
 import ItemDetailsModal from '@/components/ItemDetails/ItemDetailsModal.vue';
@@ -50,6 +51,7 @@ import ListItem from '@/components/ListItem/ListItem.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';
 import ListItemSeparator from '@/components/ListItem/ListItemSeparator.vue';
 
+const translate = useInject(TranslateKey);
 const itemHotFetch: UseItemHotFetchReturn = useItemHotFetch();
 
 const loaded: Ref<boolean> = ref(false);

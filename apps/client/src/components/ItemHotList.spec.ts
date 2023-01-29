@@ -3,6 +3,7 @@ import { BlackDesertItemHot } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItemHot } from '@blackdesertmarket/mocks';
 import { VueWrapper, flushPromises, shallowMount } from '@vue/test-utils';
 import { mockPlugins } from '@test/mocks/plugins.mock';
+import { mockProvide } from '@test/mocks/provide.mock';
 import ItemDetailsModal from '@/components/ItemDetails/ItemDetailsModal.vue';
 import ItemHotList from '@/components/ItemHotList.vue';
 import ListItem from '@/components/ListItem/ListItem.vue';
@@ -22,6 +23,7 @@ describe('ItemHotList', () => {
     wrapper = shallowMount(ItemHotList, {
       global: {
         plugins: mockPlugins(),
+        provide: mockProvide(),
         stubs: {
           teleport: true,
         },

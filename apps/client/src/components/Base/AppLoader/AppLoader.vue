@@ -69,7 +69,7 @@ if (!size.value || !radius.value) {
       break;
     case LoaderSize.EXTRA_LARGE:
       size.value = 56;
-      radius.value = 4.32;
+      radius.value = 4.48;
       break;
   }
 }
