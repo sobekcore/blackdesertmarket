@@ -9,6 +9,9 @@ body {
 }
 
 *:focus-visible {
-  outline: 2px solid $DARK_900;
-  outline-offset: 0;
+  outline-color: $DARK_900;
+}
+
+img {
+  user-select: none;
 }

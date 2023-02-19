@@ -1,18 +1,14 @@
 <template>
-  <img
-    data-test="icon"
-    role="presentation"
-    :class="props.class"
-    class="select-none object-contain"
-    :src="props.src"
-    alt="Icon"
-  />
+  <img data-test="icon" role="presentation" :src="props.src" alt="Icon" :class="props.class" class="object-contain" />
 </template>
 
 <script lang="ts" setup>
 import { PropType, defineProps } from 'vue';
 import { VueAttributeClass } from '@/types/attributes-vue';
 
+/**
+ * TODO: Create alt prop to customize image attribute on different AppIcon instances
+ */
 const props = defineProps({
   src: {
     type: String,

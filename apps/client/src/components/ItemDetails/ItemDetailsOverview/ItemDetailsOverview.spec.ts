@@ -67,7 +67,7 @@ describe('ItemDetailsOverview', () => {
       });
   });
 
-  it('should pass name prop to ListItemIcon depending on itemType prop', () => {
+  it('should pass src prop to ListItemIcon depending on itemType prop', () => {
     wrapper = shallowMount(ItemDetailsOverview, {
       global: {
         provide: mockProvide(),

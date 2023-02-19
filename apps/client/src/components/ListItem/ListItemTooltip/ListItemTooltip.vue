@@ -58,14 +58,13 @@
           :name-class="itemTooltipComposable.getSectionNameClass(section.id)"
           :value-class="itemTooltipComposable.getSectionValueClass(section.id)"
         />
-        <template v-if="section.id === centralMarketInformationId">
-          <ListItemTooltipSection
-            :item-tooltip-section="getCentralMarketInformationData()"
-            :class="itemTooltipComposable.getSectionClass(ItemTooltipSectionId.CENTRAL_MARKET_INFORMATION)"
-            :name-class="itemTooltipComposable.getSectionNameClass(ItemTooltipSectionId.CENTRAL_MARKET_INFORMATION)"
-            :value-class="itemTooltipComposable.getSectionValueClass(ItemTooltipSectionId.CENTRAL_MARKET_INFORMATION)"
-          />
-        </template>
+        <ListItemTooltipSection
+          v-if="section.id === centralMarketInformationId"
+          :item-tooltip-section="getCentralMarketInformationData()"
+          :class="itemTooltipComposable.getSectionClass(ItemTooltipSectionId.CENTRAL_MARKET_INFORMATION)"
+          :name-class="itemTooltipComposable.getSectionNameClass(ItemTooltipSectionId.CENTRAL_MARKET_INFORMATION)"
+          :value-class="itemTooltipComposable.getSectionValueClass(ItemTooltipSectionId.CENTRAL_MARKET_INFORMATION)"
+        />
       </template>
     </div>
   </div>

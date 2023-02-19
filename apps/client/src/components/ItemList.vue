@@ -1,12 +1,8 @@
 <template>
   <ul class="flex flex-col gap-2 p-2.5">
-    <template v-for="item in itemList" :key="item.id">
-      <ListItem :item="item" @effect="handleListItemClick(item)" />
-    </template>
+    <ListItem v-for="item in itemList" :key="item.id" :item="item" @effect="handleListItemClick(item)" />
   </ul>
-  <template v-if="!loaded">
-    <AppLoader :size="LoaderSize.LARGE" overlay />
-  </template>
+  <AppLoader v-if="!loaded" :size="LoaderSize.LARGE" overlay />
 </template>
 
 <script lang="ts" setup>

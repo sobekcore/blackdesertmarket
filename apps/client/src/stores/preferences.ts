@@ -1,3 +1,4 @@
+import { Composer } from 'vue-i18n';
 import { defineStore } from 'pinia';
 import { config } from '@/config';
 
@@ -17,6 +18,12 @@ export const usePreferencesStore = defineStore('preferences', {
     },
     getLanguage(state: PreferencesStoreState): string {
       return state.language;
+    },
+  },
+  actions: {
+    setLanguage(i18n: Composer, language: string): void {
+      i18n.locale.value = language;
+      this.language = language;
     },
   },
 });

@@ -34,7 +34,7 @@
 
 <script lang="ts" setup>
 import { ComputedRef, Ref, computed, defineEmits, defineProps, nextTick, onMounted, ref } from 'vue';
-import { UseDraggableReturn, clamp, useDraggable, useElementBounding, useResizeObserver } from '@vueuse/core';
+import { Position, UseDraggableReturn, clamp, useDraggable, useElementBounding, useResizeObserver } from '@vueuse/core';
 import { UseFocusTrapReturn, useFocusTrap } from '@vueuse/integrations/useFocusTrap';
 import { VueAttributeStyle } from '@/types/attributes-vue';
 import AppModalBackdrop from '@/components/Base/AppModal/AppModalBackdrop.vue';
@@ -85,7 +85,13 @@ if (props.draggable) {
   const draggable: UseDraggableReturn = useDraggable(modal, {
     preventDefault: true,
     handle: handle,
-    onStart: (): void => {
+    onStart: (position: Position, event: PointerEvent): false | void => {
+      const target: HTMLElement = event.target as HTMLElement;
+
+      if (target.classList.contains('modal-handle-ignore')) {
+        return false;
+      }
+
       document.body.classList.add('cursor-move');
     },
     onEnd: (): void => {

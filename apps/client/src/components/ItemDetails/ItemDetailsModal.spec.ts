@@ -28,18 +28,6 @@ describe('ItemDetailsModal', () => {
     expect(modalWrapper.exists()).toBeTruthy();
   });
 
-  it('should emit close event on close', () => {
-    const modalWrapper: VueWrapper = wrapper.findComponent(AppModal);
-
-    const component: ComponentInternalInstance = modalWrapper.getCurrentComponent();
-    component.emit('close');
-
-    const emitted: Record<string, unknown[]> = wrapper.emitted();
-    const [events] = emitted.close;
-
-    expect(Array.isArray(events)).toBeTruthy();
-  });
-
   it('should handle close event from AppModal', () => {
     const modalWrapper: VueWrapper = wrapper.findComponent(AppModal);
 
@@ -47,6 +35,18 @@ describe('ItemDetailsModal', () => {
     component.emit('close');
 
     const emitted: Record<string, unknown[]> = modalWrapper.emitted();
+    const [events] = emitted.close;
+
+    expect(Array.isArray(events)).toBeTruthy();
+  });
+
+  it('should emit close event on close', () => {
+    const modalWrapper: VueWrapper = wrapper.findComponent(AppModal);
+
+    const component: ComponentInternalInstance = modalWrapper.getCurrentComponent();
+    component.emit('close');
+
+    const emitted: Record<string, unknown[]> = wrapper.emitted();
     const [events] = emitted.close;
 
     expect(Array.isArray(events)).toBeTruthy();

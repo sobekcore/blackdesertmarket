@@ -30,9 +30,7 @@
       </Teleport>
     </template>
   </ul>
-  <template v-if="!loaded">
-    <AppLoader :size="LoaderSize.LARGE" overlay />
-  </template>
+  <AppLoader v-if="!loaded" :size="LoaderSize.LARGE" overlay />
 </template>
 
 <script lang="ts" setup>

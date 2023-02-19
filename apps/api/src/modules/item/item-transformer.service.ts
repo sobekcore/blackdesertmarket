@@ -178,8 +178,6 @@ export class ItemTransformerService {
     const price: string = this.bdoCodexScraperService.scrapePrice(document.body);
     const durability: string = this.bdoCodexScraperService.scrapeDurability(document.body);
 
-    console.log(document.body.outerHTML);
-
     return {
       id: id,
       enhancement: enhancement,

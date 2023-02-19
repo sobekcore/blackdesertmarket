@@ -11,12 +11,8 @@
       </span>
     </span>
     <template #popper>
-      <template v-if="itemType && itemTooltip">
-        <ListItemTooltip :item-type="itemType" :item-tooltip="itemTooltip" />
-      </template>
-      <template v-else>
-        <AppLoader />
-      </template>
+      <ListItemTooltip v-if="itemType && itemTooltip" :item-type="itemType" :item-tooltip="itemTooltip" />
+      <AppLoader v-else />
     </template>
   </AppTooltip>
 </template>

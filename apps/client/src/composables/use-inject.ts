@@ -1,9 +1,7 @@
-import { InjectionKey, WritableComputedRef, inject } from 'vue';
+import { InjectionKey, inject } from 'vue';
 import { ComposerTranslation } from 'vue-i18n';
 import { MarketCategoriesConfig, MarketEnhancementConfig } from '@/interfaces/market-config';
 import { ComposableException } from '@/exceptions/composable-exception';
-
-export const LocaleKey: InjectionKey<WritableComputedRef<string>> = Symbol('locale');
 
 export const TranslateKey: InjectionKey<ComposerTranslation> = Symbol('translate');
 

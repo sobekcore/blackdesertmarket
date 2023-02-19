@@ -215,6 +215,10 @@ const chartOptions: Ref<ChartOptions<ChartType>> = ref({
       backgroundColor: color.hexToRGB(tailwindConfig.getValue('colors', 'dark-100'), '90%'),
       borderColor: tailwindConfig.getValue('colors', 'dark-600'),
       borderWidth: documentSize.pixelToRaw(tailwindConfig.getValue('borderWidth', 'DEFAULT')),
+      interaction: {
+        intersect: false,
+        mode: 'index',
+      },
       callbacks: {
         label: (item: TooltipItem<ChartType>): string => {
           return formatChartValue(Number(item.raw));

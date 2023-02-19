@@ -1,38 +1,32 @@
 <template>
   <div class="flex w-2/3 flex-col">
     <div class="item-details">
-      <template v-if="itemType && itemDetails">
-        <ItemDetailsOverview :item-type="itemType" :item-details="itemDetails" />
-      </template>
-      <template v-else>
-        <AppLoader :size="LoaderSize.LARGE" />
-      </template>
+      <ItemDetailsOverview v-if="itemType && itemDetails" :item-type="itemType" :item-details="itemDetails" />
+      <AppLoader v-else :size="LoaderSize.LARGE" />
     </div>
     <div class="item-details-additional">
       <ItemDetailsAdditional />
     </div>
   </div>
   <div class="item-details-availability">
-    <template v-if="itemDetails">
-      <ItemDetailsAvailability>
-        <template v-for="item in itemDetails.availability" :key="item.onePrice">
-          <ItemDetailsAvailabilityItem :class="getItemAvailabilityBackgroundClass(itemDetails, item)">
-            <span class="w-full text-left text-sm text-dark-800">
-              {{ getSellCount(itemDetails, item) }}
-            </span>
-            <span :class="getItemAvailabilityTextClass(itemDetails, item)" class="w-full text-center">
-              {{ getOnePrice(itemDetails, item) }}
-            </span>
-            <span class="w-full text-right text-sm text-dark-800">
-              {{ getBuyCount(itemDetails, item) }}
-            </span>
-          </ItemDetailsAvailabilityItem>
-        </template>
-      </ItemDetailsAvailability>
-    </template>
-    <template v-else>
-      <AppLoader :size="LoaderSize.LARGE" />
-    </template>
+    <ItemDetailsAvailability v-if="itemDetails">
+      <ItemDetailsAvailabilityItem
+        v-for="item in itemDetails.availability"
+        :key="item.onePrice"
+        :class="getItemAvailabilityBackgroundClass(itemDetails, item)"
+      >
+        <span class="w-full text-left text-sm text-dark-800">
+          {{ getSellCount(itemDetails, item) }}
+        </span>
+        <span :class="getItemAvailabilityTextClass(itemDetails, item)" class="w-full text-center">
+          {{ getOnePrice(itemDetails, item) }}
+        </span>
+        <span class="w-full text-right text-sm text-dark-800">
+          {{ getBuyCount(itemDetails, item) }}
+        </span>
+      </ItemDetailsAvailabilityItem>
+    </ItemDetailsAvailability>
+    <AppLoader v-else :size="LoaderSize.LARGE" />
   </div>
 </template>
 
@@ -132,7 +126,7 @@ if (!itemDetails.value) {
 
 .item-details-additional {
   @apply relative h-1/2 overflow-y-auto border-t border-t-dark-700 p-5;
-  background: url('@/assets/images/other/modal-noise.png'), $DARK_300;
+  background: url('@/assets/images/modal/modal-noise.png'), $DARK_300;
 }
 
 .item-details-availability {
