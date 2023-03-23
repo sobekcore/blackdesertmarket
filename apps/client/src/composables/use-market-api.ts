@@ -18,5 +18,5 @@ export function useMarketApi<T>(
     params: params,
   };
 
-  return useAxios(url, axiosConfig, axiosInstance);
+  return useAxios(url, axiosConfig, axiosInstance, { immediate: false });
 }

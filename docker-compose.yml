@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  client:
+    build:
+      context: .
+      dockerfile: ./apps/client/Dockerfile
+      args:
+        DOCKER_CLIENT_ENV: ${DOCKER_CLIENT_ENV:-prod}
+    ports:
+      - "8080:8080"
+    networks:
+      blackdesertmarket-network:
+        ipv4_address: 172.80.0.80
+    volumes:
+      - ./apps/client/:/home/node/apps/client
+      - /home/node/apps/client/node_modules
+      - /home/node/apps/client/dist
+
+  api:
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+      args:
+        DOCKER_API_ENV: ${DOCKER_API_ENV:-prod}
+    ports:
+      - "8081:3000"
+    networks:
+      blackdesertmarket-network:
+        ipv4_address: 172.80.0.81
+    volumes:
+      - ./apps/api/:/home/node/apps/api
+      - /home/node/apps/api/node_modules
+      - /home/node/apps/api/dist
+
+networks:
+  blackdesertmarket-network:
+    name: blackdesertmarket-network
+    ipam:
+      config:
+        - subnet: 172.80.0.0/16
