@@ -23,5 +23,5 @@ export function useMarketApi<T>(
    * These parameters may have typings imported from different node_modules than VueUse
    * That may throw TypeScript TypeErrors so its more secure to cast it into any
    */
-  return useAxios(url, axiosConfig as any, axiosInstance as any);
+  return useAxios(url, axiosConfig as any, axiosInstance as any, { immediate: false });
 }

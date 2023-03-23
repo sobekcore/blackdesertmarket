@@ -1,5 +1,8 @@
 # Compiled output
 /node_modules
 
-# IDEs and editors
+# Environment
+/.env
+
+# Configs
 /.idea
