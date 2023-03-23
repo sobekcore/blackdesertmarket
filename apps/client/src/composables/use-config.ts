@@ -1,5 +1,5 @@
 export interface UseConfigReturn {
-  marketApiUrl: string;
+  marketApiUrl?: string;
 }
 
 export function useConfig(): UseConfigReturn {

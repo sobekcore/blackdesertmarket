@@ -9,7 +9,7 @@ export interface UseTailwindConfigReturn {
 
 export function useTailwindConfig(): UseTailwindConfigReturn {
   const getValue = (property: string, name: string): string => {
-    const tailwindConfig: Config = resolveConfig(config as unknown as Config);
+    const tailwindConfig: any = resolveConfig(config as unknown as Config);
     const properties: Record<string, string> = tailwindConfig?.theme?.[property] as Record<string, string>;
 
     if (!properties || !properties[name]) {

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# For this script to work the application must be located in /home/node/apps/client
+# There also need to be locally installed @vue/cli-service and globally installed http-server
+
+ENVIRONMENT=$1
+
+if [ -z "$ENVIRONMENT" ]; then
+  echo "Required argument is not passed to the script"
+  exit 1
+fi
+
+if [ "$ENVIRONMENT" = "dev" ]; then
+  cd /home/node/apps/client
+  npm run serve
+  sleep infinity
+fi
+
+if [ "$ENVIRONMENT" = "prod" ]; then
+  cd /home/node/apps/client
+  http-server dist --proxy http://localhost:8080?
+  sleep infinity
+fi
