@@ -8,7 +8,7 @@ export interface Config {
 }
 
 export const config: Config = {
-  marketApiUrl: process.env.VUE_APP_MARKET_API_URL,
+  marketApiUrl: process.env.VUE_APP_MARKET_API_URL || '',
   defaultRegion: process.env.VUE_APP_DEFAULT_REGION || RegionCode.EUROPE,
   defaultLanguage: process.env.VUE_APP_DEFAULT_LANGUAGE || LanguageCode.ENGLISH,
 };

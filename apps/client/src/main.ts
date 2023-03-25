@@ -1,5 +1,7 @@
 import { App as Application, createApp } from 'vue';
 import { I18n, createI18n } from 'vue-i18n';
+import virtualScroll from 'vue-virtual-scroller';
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
 import floating from 'floating-vue';
 import 'floating-vue/dist/style.css';
 import { Pinia, createPinia } from 'pinia';
@@ -25,5 +27,6 @@ const i18n: I18n = createI18n({
 app.use(i18n);
 app.use(router);
 app.use(floating);
+app.use(virtualScroll);
 
 app.mount('#app');

@@ -17,6 +17,9 @@ const routes: RouteRecordRaw[] = [
     path: '/hot',
     name: 'hot',
     component: HotView,
+    meta: {
+      scroll: false,
+    },
   },
   {
     path: '/queue',

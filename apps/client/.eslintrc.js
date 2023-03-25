@@ -1,3 +1,9 @@
+const typescriptEslintBanTypesSettings = {
+  types: {
+    '{}': false,
+  },
+};
+
 const sortImportsSettings = {
   ignoreDeclarationSort: true,
 };
@@ -18,6 +24,7 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
+    '@typescript-eslint/ban-types': ['error', typescriptEslintBanTypesSettings],
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'vue/require-default-prop': 'off',

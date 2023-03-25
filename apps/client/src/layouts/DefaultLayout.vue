@@ -5,7 +5,11 @@
         <nav class="w-1/4 min-w-[250px] border-r border-r-dark-600 bg-dark-200">
           <CategorySidemenu />
         </nav>
-        <main :key="locationStore.reload" class="w-3/4 overflow-y-scroll bg-dark-100">
+        <main
+          :key="locationStore.reload"
+          :class="[scroll ? 'overflow-y-scroll' : 'overflow-y-hidden']"
+          class="w-3/4 bg-dark-100"
+        >
           <AppMaintenance v-if="maintenance" />
           <slot v-else></slot>
         </main>
@@ -16,7 +20,7 @@
 
 <script lang="ts" setup>
 import { ComputedRef, computed } from 'vue';
-import { Router, useRouter } from 'vue-router';
+import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from 'vue-router';
 import { useLocationStore } from '@/stores/location';
 import AppMaintenance from '@/components/Base/AppMaintenance.vue';
 import AppMarketplaceProvider from '@/components/Base/AppMarketplaceProvider.vue';
@@ -25,9 +29,14 @@ import CategorySidemenu from '@/components/CategorySidemenu/CategorySidemenu.vue
 
 const locationStore = useLocationStore();
 const router: Router = useRouter();
+const route: RouteLocationNormalizedLoaded = useRoute();
 
 const maintenance: ComputedRef<boolean> = computed((): boolean => {
   return locationStore.maintenance;
+});
+
+const scroll: ComputedRef<boolean> = computed((): boolean => {
+  return typeof route.meta?.scroll !== 'undefined' ? Boolean(route.meta.scroll) : true;
 });
 
 router.afterEach((): void => {

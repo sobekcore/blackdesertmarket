@@ -1,5 +1,5 @@
 <template>
-  <ul class="flex flex-col gap-2 p-2.5">
+  <div class="flex flex-col gap-2 p-2.5">
     <template v-for="item in itemList" :key="item.id">
       <ListItem :item="item" @effect="handleListItemClick(item)">
         <template #append>
@@ -14,7 +14,7 @@
         <ItemDetailsModal :id="item.id" :enhancement="item.enhancement" @close="handleListItemClick(item)" />
       </Teleport>
     </template>
-  </ul>
+  </div>
   <AppLoader v-if="!loaded" :size="LoaderSize.LARGE" overlay />
 </template>
 

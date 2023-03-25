@@ -3,39 +3,37 @@
 -->
 
 <template>
-  <li>
-    <div data-test="inner" :class="props.class" class="flex rounded bg-dark-400 shadow-md">
-      <button
-        data-test="button"
-        class="border-lighten hocus:bg-lighten-sm w-full cursor-pointer rounded border-t py-1.5 px-2"
-        @click="triggerListItemEffect"
-      >
-        <span class="relative flex items-stretch gap-2.5">
-          <slot name="icon">
-            <ListItemIcon
-              :src="itemIcon.href"
-              :item="props.item"
-              :text="itemTypeComposable.getItemIconText()"
-              :class="itemGradeBorder"
-            />
-          </slot>
-          <slot name="name">
-            <ListItemName :name="itemTypeComposable.getItemName()" :class="itemGradeText" />
-          </slot>
-          <slot name="append">
-            <ListItemSeparator />
-            <ListItemProperty
-              data-test="price"
-              :label="translate('item.basePrice')"
-              :value="itemComposable.getBasePrice()"
-            />
-            <ListItemSeparator />
-            <ListItemProperty data-test="count" :label="translate('item.count')" :value="props.item.count" />
-          </slot>
-        </span>
-      </button>
-    </div>
-  </li>
+  <div data-test="inner" :class="props.class" class="flex rounded bg-dark-400 shadow-md">
+    <button
+      data-test="button"
+      class="border-lighten hocus:bg-lighten-sm w-full cursor-pointer rounded border-t py-1.5 px-2 -outline-offset-1"
+      @click="triggerListItemEffect"
+    >
+      <span class="relative flex items-stretch gap-2.5">
+        <slot name="icon">
+          <ListItemIcon
+            :src="itemIcon.href"
+            :item="props.item"
+            :text="itemTypeComposable.getItemIconText()"
+            :class="itemGradeBorder"
+          />
+        </slot>
+        <slot name="name">
+          <ListItemName :name="itemTypeComposable.getItemName()" :class="itemGradeText" />
+        </slot>
+        <slot name="append">
+          <ListItemSeparator />
+          <ListItemProperty
+            data-test="price"
+            :label="translate('item.basePrice')"
+            :value="itemComposable.getBasePrice()"
+          />
+          <ListItemSeparator />
+          <ListItemProperty data-test="count" :label="translate('item.count')" :value="props.item.count" />
+        </slot>
+      </span>
+    </button>
+  </div>
 </template>
 
 <script lang="ts" setup>
