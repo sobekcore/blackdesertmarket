@@ -10,10 +10,10 @@
       <CategorySidemenuHeaderSection :title="translate('header.region')">
         <FieldRegionSelect v-model="region" @update:model-value="updateRegionInStore" />
       </CategorySidemenuHeaderSection>
-      <CategorySidemenuHeaderSection :title="translate('header.social')">
+      <CategorySidemenuHeaderSection :title="translate('header.more')">
         <div class="flex gap-2">
-          <AppSocialIcon :name="SocialIcon.GITHUB" />
-          <AppSocialIcon :name="SocialIcon.TWITTER" />
+          <AppLinkIcon :name="LinkIcon.LEGAL" />
+          <AppLinkIcon :name="LinkIcon.GITHUB" />
         </div>
       </CategorySidemenuHeaderSection>
     </div>
@@ -23,12 +23,12 @@
 <script lang="ts" setup>
 import { Ref, ref } from 'vue';
 import { Composer, useI18n } from 'vue-i18n';
-import { SocialIcon } from '@/enums/social-icon';
+import { LinkIcon } from '@/enums/link-icon';
 import { useLocationStore } from '@/stores/location';
 import { usePreferencesStore } from '@/stores/preferences';
 import { TranslateKey, useInject } from '@/composables/use-inject';
+import AppLinkIcon from '@/components/Base/AppLinkIcon.vue';
 import AppLogo from '@/components/Base/AppLogo.vue';
-import AppSocialIcon from '@/components/Base/AppSocialIcon.vue';
 import CategorySidemenuHeaderSection from '@/components/CategorySidemenu/CategorySidemenuHeader/CategorySidemenuHeaderSection.vue';
 import FieldLanguageSelect from '@/components/Fields/FieldLanguageSelect.vue';
 import FieldRegionSelect from '@/components/Fields/FieldRegionSelect.vue';

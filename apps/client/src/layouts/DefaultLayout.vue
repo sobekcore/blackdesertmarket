@@ -36,7 +36,7 @@ const maintenance: ComputedRef<boolean> = computed((): boolean => {
 });
 
 const scroll: ComputedRef<boolean> = computed((): boolean => {
-  return typeof route.meta?.scroll !== 'undefined' ? Boolean(route.meta.scroll) : true;
+  return typeof route.meta?.scroll !== 'undefined' ? (route.meta.scroll as boolean) : true;
 });
 
 router.afterEach((): void => {

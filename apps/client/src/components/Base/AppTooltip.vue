@@ -5,6 +5,7 @@
     :placement="props.placement"
     :disabled="props.disabled"
     :popper-class="props.class"
+    class="flex"
     auto-boundary-max-size
     handle-resize
     @show="triggerTooltipShow"
@@ -38,7 +39,7 @@ const props = defineProps({
   },
   class: {
     type: [String, Object] as PropType<VueAttributeClass>,
-    default: 'tooltip:item-default',
+    default: 'tooltip:default',
   },
 });
 
@@ -58,7 +59,7 @@ const triggerTooltipShow = (): void => {
 
 @each $itemGrade, $color in $itemGrades {
   .v-popper--theme-tooltip.tooltip\:item-grade-#{$itemGrade} .v-popper__inner {
-    @apply border-item-grade-#{$itemGrade};
+    @apply border-item-grade-#{$itemGrade} rounded-md p-3;
     background: linear-gradient(to top, rgba($DARK_100, 90%) 60%, map-get($itemGradesBackground, $itemGrade));
 
     .text\:item-grade-#{$itemGrade} {
@@ -68,12 +69,16 @@ const triggerTooltipShow = (): void => {
   }
 }
 
+.v-popper--theme-tooltip.tooltip\:default .v-popper__inner {
+  @apply rounded-md border-dark-600 bg-dark-100 bg-opacity-90 p-1.5 text-sm;
+}
+
 .v-popper--theme-tooltip.tooltip\:item-default .v-popper__inner {
-  @apply border-dark-600 bg-dark-100 bg-opacity-90;
+  @apply rounded-md border-dark-600 bg-dark-100 bg-opacity-90 p-3;
 }
 
 .v-popper--theme-tooltip .v-popper__inner {
-  @apply border p-3 text-sm text-dark-900;
+  @apply border text-sm text-dark-900;
 }
 
 .v-popper--theme-tooltip .v-popper__arrow-outer {
