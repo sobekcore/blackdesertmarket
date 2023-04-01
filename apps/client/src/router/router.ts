@@ -31,6 +31,9 @@ const routes: RouteRecordRaw[] = [
     path: '/list/:mainCategory/:subCategory',
     name: 'list',
     component: ListView,
+    meta: {
+      scroll: false,
+    },
   },
   {
     path: '/item/:id',

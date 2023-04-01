@@ -1,6 +1,6 @@
 <template>
   <div>
-    <select v-model="fieldValue" v-bind="attrs" data-test="select" @change="handleSelectChange">
+    <select v-model="fieldValue" v-bind="attrs" data-test="select" @change="handleChange">
       <option v-for="option in props.options" :key="option.value" data-test="option" :value="option.value">
         {{ option.label }}
       </option>
@@ -30,7 +30,7 @@ const attrs = useAttrs();
 
 const fieldValue: Ref<string | undefined> = ref(props.modelValue);
 
-const handleSelectChange = (event: Event): void => {
+const handleChange = (event: Event): void => {
   const target: HTMLSelectElement = event.target as HTMLSelectElement;
   emit('update:modelValue', target.value);
 };
@@ -38,7 +38,7 @@ const handleSelectChange = (event: Event): void => {
 
 <style lang="scss" scoped>
 select {
-  @apply h-8 appearance-none rounded border-2 border-dark-100 bg-dark-100 bg-no-repeat py-1 pl-3 text-sm text-dark-900;
+  @apply h-8 w-full appearance-none rounded border-2 border-dark-100 bg-dark-100 bg-no-repeat py-1 pl-3 text-sm text-dark-900;
   padding-right: calc(2rem + 1px);
   background-position: right calc(0.375rem + 1px) center;
   background-image: url('@/assets/svg/select-arrows.svg');

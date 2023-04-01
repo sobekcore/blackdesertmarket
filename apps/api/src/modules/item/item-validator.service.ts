@@ -13,6 +13,17 @@ export class ItemValidatorService {
     );
   }
 
+  public isValidExternalMarketItemSearch(itemSearch: unknown): boolean {
+    return (
+      itemSearch &&
+      itemSearch.hasOwnProperty('mainKey') &&
+      itemSearch.hasOwnProperty('name') &&
+      itemSearch.hasOwnProperty('sumCount') &&
+      itemSearch.hasOwnProperty('grade') &&
+      itemSearch.hasOwnProperty('totalSumCount')
+    );
+  }
+
   public isValidExternalMarketItemType(itemType: unknown): boolean {
     return (
       itemType &&
