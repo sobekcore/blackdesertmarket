@@ -1,5 +1,7 @@
-export function isValidBlackDesertItemType(itemType: unknown): boolean;
+import { BlackDesertItemType, BlackDesertItemHot, BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
 
-export function isValidBlackDesertItemHot(itemHot: unknown): boolean;
+export function isValidBlackDesertItemType(itemType: unknown): itemType is BlackDesertItemType;
 
-export function isValidBlackDesertItemQueue(itemQueue: unknown): boolean;
+export function isValidBlackDesertItemHot(itemHot: unknown): itemHot is BlackDesertItemHot;
+
+export function isValidBlackDesertItemQueue(itemQueue: unknown): itemQueue is BlackDesertItemQueue;

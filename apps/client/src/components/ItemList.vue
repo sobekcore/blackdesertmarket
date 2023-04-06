@@ -15,7 +15,6 @@ import { BlackDesertItem } from '@blackdesertmarket/interfaces';
 import { ListFilterData } from '@/interfaces/list-filter';
 import { LoaderSize } from '@/enums/loader';
 import { useLocationStore } from '@/stores/location';
-import { UseItemSearchFetchReturn, useItemSearchFetch } from '@/composables/item-search/use-item-search-fetch';
 import { UseItemFetchReturn, useItemFetch } from '@/composables/item/use-item-fetch';
 import { UseListFilterReturn, useListFilter } from '@/composables/list-filter/use-list-filter';
 import AppLoader from '@/components/Base/AppLoader/AppLoader.vue';
@@ -62,22 +61,15 @@ const handleListItemClick = (item: BlackDesertItem): void => {
 };
 
 const handleListFilter = async (data: ListFilterData): Promise<void> => {
-  loaded.value = false;
-
-  if (data.search) {
-    const itemSearchFetch: UseItemSearchFetchReturn = useItemSearchFetch(data.search);
-
-    await itemSearchFetch.fetch().then((data: BlackDesertItem[]): void => {
-      itemList.value = data;
-      loaded.value = true;
-    });
-  } else {
-    await refetchCategoryItemList(props.mainCategory, props.subCategory);
-  }
-
   const listFilter: UseListFilterReturn = useListFilter(data);
 
-  listFilter.sortItemList(itemList.value);
+  await listFilter.processItemList({
+    itemList: itemList,
+    loaded: loaded,
+    fallback(): Promise<void> {
+      return refetchCategoryItemList(props.mainCategory, props.subCategory);
+    },
+  });
 };
 
 if (!itemList.value.length) {

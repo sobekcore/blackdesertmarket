@@ -1,6 +1,6 @@
 <template>
   <div>
-    <select v-model="fieldValue" v-bind="attrs" data-test="select" @change="handleChange">
+    <select v-model="fieldValue" v-bind="attrs" data-test="select">
       <option v-for="option in props.options" :key="option.value" data-test="option" :value="option.value">
         {{ option.label }}
       </option>
@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, Ref, defineEmits, defineProps, ref, useAttrs } from 'vue';
+import { PropType, WritableComputedRef, computed, defineEmits, defineProps, useAttrs } from 'vue';
 import { FieldSelectOption } from '@/interfaces/field-select-option';
 
 const emit = defineEmits({
@@ -28,12 +28,14 @@ const props = defineProps({
 
 const attrs = useAttrs();
 
-const fieldValue: Ref<string | undefined> = ref(props.modelValue);
-
-const handleChange = (event: Event): void => {
-  const target: HTMLSelectElement = event.target as HTMLSelectElement;
-  emit('update:modelValue', target.value);
-};
+const fieldValue: WritableComputedRef<string | undefined> = computed({
+  get(): string | undefined {
+    return props.modelValue;
+  },
+  set(value: string | undefined): void {
+    emit('update:modelValue', value);
+  },
+});
 </script>
 
 <style lang="scss" scoped>

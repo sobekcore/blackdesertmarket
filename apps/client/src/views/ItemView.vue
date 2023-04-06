@@ -1,5 +1,5 @@
 <template>
-  <section class="relative min-h-full">
+  <section class="relative h-full max-h-full">
     <ItemTypeList :id="id" />
   </section>
   <Teleport to="#modal">

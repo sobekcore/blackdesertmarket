@@ -14,11 +14,11 @@
         'hocus:bg-lighten-sm cursor-pointer': !props.disabled,
         'cursor-not-allowed': props.disabled,
       }"
-      @click="updateButtonState"
+      @click="buttonClick"
     >
       <AppTooltip placement="bottom" :disabled="!props.tooltip">
         <span class="w-full">
-          <slot v-bind="{ state: state }"></slot>
+          <slot></slot>
         </span>
         <template #popper>
           {{ props.tooltip }}
@@ -29,26 +29,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ComputedRef, PropType, Ref, computed, defineEmits, defineProps, ref } from 'vue';
-import { ListFilterButtonState, ListFilterButtonVariant } from '@/enums/list-filter';
+import { ComputedRef, PropType, computed, defineEmits, defineProps } from 'vue';
+import { ListFilterButtonVariant } from '@/enums/list-filter';
 import AppTooltip from '@/components/Base/AppTooltip.vue';
 
 const emit = defineEmits({
-  'update:modelValue': null,
+  click: null,
 });
 
 const props = defineProps({
-  modelValue: {
-    type: String as PropType<ListFilterButtonState>,
-  },
-  indeterminate: {
-    type: Boolean,
-    default: true,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
   variant: {
     type: String as PropType<ListFilterButtonVariant>,
     default: ListFilterButtonVariant.DEFAULT,
@@ -57,9 +46,11 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
-
-const state: Ref<ListFilterButtonState | undefined> = ref(props.modelValue);
 
 const buttonVariantClassMap: ComputedRef<Record<ListFilterButtonVariant, string>> = computed(
   (): Record<ListFilterButtonVariant, string> => ({
@@ -69,16 +60,8 @@ const buttonVariantClassMap: ComputedRef<Record<ListFilterButtonVariant, string>
   }),
 );
 
-const updateButtonState = (): void => {
-  if (state.value === ListFilterButtonState.DEFAULT) {
-    state.value = ListFilterButtonState.DESC;
-  } else if (state.value === ListFilterButtonState.DESC) {
-    state.value = ListFilterButtonState.ASC;
-  } else if (state.value === ListFilterButtonState.ASC) {
-    state.value = props.indeterminate ? ListFilterButtonState.DEFAULT : ListFilterButtonState.DESC;
-  }
-
-  emit('update:modelValue', state.value);
+const buttonClick = (): void => {
+  emit('click');
 };
 </script>
 

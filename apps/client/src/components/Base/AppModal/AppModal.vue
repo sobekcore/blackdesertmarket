@@ -76,7 +76,7 @@ const { width, height } = useElementBounding(modal);
 const focusTrap: UseFocusTrapReturn = useFocusTrap(modal, {
   escapeDeactivates: false,
   fallbackFocus: fallbackFocus.value,
-  initialFocus: (): HTMLElement => {
+  initialFocus(): HTMLElement {
     return focus.value || fallbackFocus.value;
   },
 });
@@ -85,7 +85,7 @@ if (props.draggable) {
   const draggable: UseDraggableReturn = useDraggable(modal, {
     preventDefault: true,
     handle: handle,
-    onStart: (position: Position, event: PointerEvent): false | void => {
+    onStart(position: Position, event: PointerEvent): false | void {
       const target: HTMLElement = event.target as HTMLElement;
 
       if (target.classList.contains('modal-handle-ignore')) {
@@ -94,7 +94,7 @@ if (props.draggable) {
 
       document.body.classList.add('cursor-move');
     },
-    onEnd: (): void => {
+    onEnd(): void {
       document.body.classList.remove('cursor-move');
     },
   });

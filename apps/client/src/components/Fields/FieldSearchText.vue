@@ -1,9 +1,9 @@
 <template>
-  <FieldText v-model="fieldValue" :placeholder="props.placeholder" @update:model-value="updateSearch" />
+  <FieldText v-model="fieldValue" :placeholder="props.placeholder" />
 </template>
 
 <script lang="ts" setup>
-import { Ref, defineEmits, defineProps, ref } from 'vue';
+import { WritableComputedRef, computed, defineEmits, defineProps } from 'vue';
 import FieldText from '@/components/Fields/Base/FieldText.vue';
 
 const emit = defineEmits({
@@ -20,11 +20,14 @@ const props = defineProps({
   },
 });
 
-const fieldValue: Ref<string | undefined> = ref(props.modelValue);
-
-const updateSearch = (value: string): void => {
-  emit('update:modelValue', value);
-};
+const fieldValue: WritableComputedRef<string | undefined> = computed({
+  get(): string | undefined {
+    return props.modelValue;
+  },
+  set(value: string | undefined): void {
+    emit('update:modelValue', value);
+  },
+});
 </script>
 
 <style lang="scss" scoped>

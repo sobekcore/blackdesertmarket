@@ -18,9 +18,6 @@ const routes: RouteRecordRaw[] = [
     path: '/hot',
     name: 'hot',
     component: HotView,
-    meta: {
-      scroll: false,
-    },
   },
   {
     path: '/queue',
@@ -31,9 +28,6 @@ const routes: RouteRecordRaw[] = [
     path: '/list/:mainCategory/:subCategory',
     name: 'list',
     component: ListView,
-    meta: {
-      scroll: false,
-    },
   },
   {
     path: '/item/:id',

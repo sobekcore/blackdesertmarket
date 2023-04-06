@@ -1,11 +1,11 @@
 <template>
   <div>
-    <input v-model="fieldValue" v-bind="attrs" type="text" @input="handleInput" />
+    <input v-model="fieldValue" v-bind="attrs" type="text" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { Ref, defineEmits, defineProps, ref, useAttrs } from 'vue';
+import { WritableComputedRef, computed, defineEmits, defineProps, useAttrs } from 'vue';
 
 const emit = defineEmits({
   'update:modelValue': null,
@@ -19,12 +19,14 @@ const props = defineProps({
 
 const attrs = useAttrs();
 
-const fieldValue: Ref<string | undefined> = ref(props.modelValue);
-
-const handleInput = (event: Event): void => {
-  const target: HTMLSelectElement = event.target as HTMLSelectElement;
-  emit('update:modelValue', target.value);
-};
+const fieldValue: WritableComputedRef<string | undefined> = computed({
+  get(): string | undefined {
+    return props.modelValue;
+  },
+  set(value: string | undefined): void {
+    emit('update:modelValue', value);
+  },
+});
 </script>
 
 <style lang="scss" scoped>

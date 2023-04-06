@@ -1,10 +1,10 @@
 <template>
-  <FieldSelect v-model="fieldValue" :options="regions" @update:model-value="changeRegion" />
+  <FieldSelect v-model="fieldValue" :options="regions" />
 </template>
 
 <script lang="ts" setup>
-import { Ref, defineEmits, defineProps, ref } from 'vue';
-import { LanguageCode } from '@/enums/language';
+import { PropType, WritableComputedRef, computed, defineEmits, defineProps } from 'vue';
+import { RegionCode } from '@/enums/region';
 import regions from '@/configs/regions.config';
 import FieldSelect from '@/components/Fields/Base/FieldSelect.vue';
 
@@ -14,13 +14,16 @@ const emit = defineEmits({
 
 const props = defineProps({
   modelValue: {
-    type: String,
+    type: String as PropType<RegionCode>,
   },
 });
 
-const fieldValue: Ref<string | undefined> = ref(props.modelValue);
-
-const changeRegion = (value: LanguageCode): void => {
-  emit('update:modelValue', value);
-};
+const fieldValue: WritableComputedRef<RegionCode | undefined> = computed({
+  get(): RegionCode | undefined {
+    return props.modelValue;
+  },
+  set(value: RegionCode | undefined): void {
+    emit('update:modelValue', value);
+  },
+});
 </script>

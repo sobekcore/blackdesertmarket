@@ -4,7 +4,12 @@ export enum ListFilterButtonVariant {
   BRAND = 'BRAND',
 }
 
-export enum ListFilterButtonState {
+export enum ListFilterButtonSearchState {
+  ALL = 'ALL',
+  BY_CATEGORY = 'BY_CATEGORY',
+}
+
+export enum ListFilterButtonSortState {
   DEFAULT = 'DEFAULT',
   DESC = 'DESC',
   ASC = 'ASC',

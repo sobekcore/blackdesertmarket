@@ -1,9 +1,9 @@
 <template>
-  <FieldSelect v-model="fieldValue" :options="languages" @update:model-value="changeLanguage" />
+  <FieldSelect v-model="fieldValue" :options="languages" />
 </template>
 
 <script lang="ts" setup>
-import { Ref, defineEmits, defineProps, ref } from 'vue';
+import { PropType, WritableComputedRef, computed, defineEmits, defineProps } from 'vue';
 import { LanguageCode } from '@/enums/language';
 import languages from '@/configs/languages.config';
 import FieldSelect from '@/components/Fields/Base/FieldSelect.vue';
@@ -14,13 +14,16 @@ const emit = defineEmits({
 
 const props = defineProps({
   modelValue: {
-    type: String,
+    type: String as PropType<LanguageCode>,
   },
 });
 
-const fieldValue: Ref<string | undefined> = ref(props.modelValue);
-
-const changeLanguage = (value: LanguageCode): void => {
-  emit('update:modelValue', value);
-};
+const fieldValue: WritableComputedRef<LanguageCode | undefined> = computed({
+  get(): LanguageCode | undefined {
+    return props.modelValue;
+  },
+  set(value: LanguageCode | undefined): void {
+    emit('update:modelValue', value);
+  },
+});
 </script>

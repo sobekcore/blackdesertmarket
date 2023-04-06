@@ -1,8 +1,9 @@
-import { ListFilterButtonState } from '@/enums/list-filter';
+import { ListFilterButtonSearchState, ListFilterButtonSortState } from '@/enums/list-filter';
 
 export interface ListFilterData {
   search: string;
-  sortCount: ListFilterButtonState;
-  sortPrice: ListFilterButtonState;
-  sortGrade: ListFilterButtonState;
+  searchContext: ListFilterButtonSearchState;
+  sortCount: ListFilterButtonSortState;
+  sortPrice: ListFilterButtonSortState;
+  sortGrade: ListFilterButtonSortState;
 }

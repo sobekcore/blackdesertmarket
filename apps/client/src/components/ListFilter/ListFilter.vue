@@ -1,18 +1,22 @@
 <template>
-  <form class="flex flex-col gap-2 p-2.5" @submit="handleSubmit">
+  <form class="flex flex-col gap-2 p-2.5" @submit.prevent="handleSubmit">
     <div class="border-lighten w-full rounded border-t bg-dark-400 py-1.5 px-2 shadow-md">
       <div class="list-filter-main grid grid-flow-col gap-2">
-        <ListFilterButton v-slot="slot" v-model="filter" :indeterminate="false" @update:model-value="updateFilterState">
+        <ListFilterButton @click="updateButtonSearchState('searchContext')">
           <ListFilterButtonContent :icon="require('@/assets/images/list-filter/filter.png')" icon-class="h-[16px]">
-            <template v-if="slot.state === ListFilterButtonState.DESC">
+            <template v-if="state.searchContext === ListFilterButtonSearchState.ALL">
               {{ translate('listFilter.all') }}
             </template>
-            <template v-else-if="slot.state === ListFilterButtonState.ASC">
+            <template v-else-if="state.searchContext === ListFilterButtonSearchState.BY_CATEGORY">
               {{ translate('listFilter.byCategory') }}
             </template>
           </ListFilterButtonContent>
         </ListFilterButton>
-        <FieldSearchText v-model="search" :placeholder="translate('listFilter.itemName')" @change="updateFilterState" />
+        <FieldSearchText
+          v-model="state.search"
+          :placeholder="translate('listFilter.itemName')"
+          @change="updateFilterState"
+        />
         <ListFilterButton
           :variant="ListFilterButtonVariant.LIGHT"
           :tooltip="`${translate('generic.comingSoon')}...`"
@@ -30,34 +34,19 @@
       </div>
     </div>
     <div class="flex gap-2">
-      <ListFilterButton
-        v-slot="slot"
-        v-model="sortCount"
-        :tooltip="translate('listFilter.sortCount')"
-        @update:model-value="updateFilterState"
-      >
+      <ListFilterButton :tooltip="translate('listFilter.sortCount')" @click="updateButtonSortState('sortCount')">
         <ListFilterButtonContent :icon="require('@/assets/images/list-filter/sort-count.png')" class="gap-4">
-          <AppIcon :src="getListFilterButtonIcon(slot.state)" class="h-[20px] scale-125 drop-shadow-md" />
+          <AppIcon :src="getListFilterButtonIcon(state.sortCount)" class="h-[20px] scale-125 drop-shadow-md" />
         </ListFilterButtonContent>
       </ListFilterButton>
-      <ListFilterButton
-        v-slot="slot"
-        v-model="sortPrice"
-        :tooltip="translate('listFilter.sortPrice')"
-        @update:model-value="updateFilterState"
-      >
+      <ListFilterButton :tooltip="translate('listFilter.sortPrice')" @click="updateButtonSortState('sortPrice')">
         <ListFilterButtonContent :icon="require('@/assets/images/list-filter/sort-price.png')" class="gap-4">
-          <AppIcon :src="getListFilterButtonIcon(slot.state)" class="h-[20px] scale-125 drop-shadow-md" />
+          <AppIcon :src="getListFilterButtonIcon(state.sortPrice)" class="h-[20px] scale-125 drop-shadow-md" />
         </ListFilterButtonContent>
       </ListFilterButton>
-      <ListFilterButton
-        v-slot="slot"
-        v-model="sortGrade"
-        :tooltip="translate('listFilter.sortGrade')"
-        @update:model-value="updateFilterState"
-      >
+      <ListFilterButton :tooltip="translate('listFilter.sortGrade')" @click="updateButtonSortState('sortGrade')">
         <ListFilterButtonContent :icon="require('@/assets/images/list-filter/sort-grade.png')" class="gap-4">
-          <AppIcon :src="getListFilterButtonIcon(slot.state)" class="h-[20px] scale-125 drop-shadow-md" />
+          <AppIcon :src="getListFilterButtonIcon(state.sortGrade)" class="h-[20px] scale-125 drop-shadow-md" />
         </ListFilterButtonContent>
       </ListFilterButton>
     </div>
@@ -65,13 +54,14 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref, defineEmits, ref } from 'vue';
+import { defineEmits, defineExpose, reactive } from 'vue';
 import { ListFilterData } from '@/interfaces/list-filter';
-import { ListFilterButtonState, ListFilterButtonVariant } from '@/enums/list-filter';
+import { ListFilterButtonSearchState, ListFilterButtonSortState, ListFilterButtonVariant } from '@/enums/list-filter';
 import { useDropdownIcon } from '@/composables/use-dropdown-icon';
 import { TranslateKey, useInject } from '@/composables/use-inject';
 import AppIcon from '@/components/Base/AppIcon.vue';
 import FieldSearchText from '@/components/Fields/FieldSearchText.vue';
+import { ListFilterExposed } from '@/components/ListFilter/ListFilter.d';
 import ListFilterButton from '@/components/ListFilter/ListFilterButton.vue';
 import ListFilterButtonContent from '@/components/ListFilter/ListFilterButtonContent.vue';
 
@@ -81,34 +71,64 @@ const emit = defineEmits({
 
 const translate = useInject(TranslateKey);
 
-const search: Ref<string> = ref('');
-const filter: Ref<ListFilterButtonState> = ref(ListFilterButtonState.DESC);
-const sortCount: Ref<ListFilterButtonState> = ref(ListFilterButtonState.DEFAULT);
-const sortPrice: Ref<ListFilterButtonState> = ref(ListFilterButtonState.DEFAULT);
-const sortGrade: Ref<ListFilterButtonState> = ref(ListFilterButtonState.DEFAULT);
+const state: ListFilterData = reactive({
+  search: '',
+  searchContext: ListFilterButtonSearchState.ALL,
+  sortCount: ListFilterButtonSortState.DEFAULT,
+  sortPrice: ListFilterButtonSortState.DEFAULT,
+  sortGrade: ListFilterButtonSortState.DEFAULT,
+});
 
-const getListFilterButtonIcon = (state: ListFilterButtonState): string => {
+const getListFilterButtonIcon = (state: ListFilterButtonSortState): string => {
   return useDropdownIcon(
-    [ListFilterButtonState.DESC, ListFilterButtonState.ASC].includes(state),
-    state === ListFilterButtonState.ASC,
+    [ListFilterButtonSortState.DESC, ListFilterButtonSortState.ASC].includes(state),
+    state === ListFilterButtonSortState.ASC,
   );
 };
 
-const updateFilterState = (): void => {
-  const listFilterData: ListFilterData = {
-    search: search.value,
-    sortCount: sortCount.value,
-    sortPrice: sortPrice.value,
-    sortGrade: sortGrade.value,
-  };
+const updateButtonSearchState = (key: 'searchContext'): void => {
+  if (state[key] === ListFilterButtonSearchState.ALL) {
+    state[key] = ListFilterButtonSearchState.BY_CATEGORY;
+  } else if (state[key] === ListFilterButtonSearchState.BY_CATEGORY) {
+    state[key] = ListFilterButtonSearchState.ALL;
+  }
 
-  emit('filter', listFilterData);
-};
-
-const handleSubmit = (event: SubmitEvent): void => {
-  event.preventDefault();
   updateFilterState();
 };
+
+const updateButtonSortState = (key: 'sortCount' | 'sortPrice' | 'sortGrade'): void => {
+  if (state[key] === ListFilterButtonSortState.DEFAULT) {
+    state[key] = ListFilterButtonSortState.DESC;
+  } else if (state[key] === ListFilterButtonSortState.DESC) {
+    state[key] = ListFilterButtonSortState.ASC;
+  } else if (state[key] === ListFilterButtonSortState.ASC) {
+    state[key] = ListFilterButtonSortState.DEFAULT;
+  }
+
+  updateFilterState();
+};
+
+const updateFilterState = (): void => {
+  emit('filter', state);
+};
+
+const resetFilterState = (): void => {
+  state.search = '';
+  state.searchContext = ListFilterButtonSearchState.ALL;
+  state.sortCount = ListFilterButtonSortState.DEFAULT;
+  state.sortPrice = ListFilterButtonSortState.DEFAULT;
+  state.sortGrade = ListFilterButtonSortState.DEFAULT;
+
+  updateFilterState();
+};
+
+const handleSubmit = (): void => {
+  updateFilterState();
+};
+
+defineExpose<ListFilterExposed>({
+  resetFilterState,
+});
 </script>
 
 <style lang="scss" scoped>
