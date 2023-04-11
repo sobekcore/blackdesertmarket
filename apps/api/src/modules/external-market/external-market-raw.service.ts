@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios';
+import { AxiosRequestConfig, AxiosResponse } from '@nestjs/axios/node_modules/axios';
 import { Injectable } from '@nestjs/common';
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
 import { ExternalMarketMeta, ExternalMarketParams } from '@/interfaces/objects/external-market.interface';
 import { ExternalMarketRawEndpoint } from '@/enums/external-market-raw.enum';

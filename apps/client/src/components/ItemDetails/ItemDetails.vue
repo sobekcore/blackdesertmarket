@@ -1,38 +1,57 @@
 <template>
-  <div class="flex w-2/3 flex-col">
-    <div class="item-details">
-      <template v-if="itemType && itemDetails">
-        <ItemDetailsOverview :item-type="itemType" :item-details="itemDetails" />
-      </template>
-      <template v-else>
-        <AppLoader :size="LoaderSize.LARGE" />
-      </template>
+  <div class="flex xl:hidden">
+    <ItemDetailsTab :id="0" v-model="activeTab" :label="translate('itemDetails.detailsTab')" />
+    <ItemDetailsTab :id="1" v-model="activeTab" :label="translate('itemDetails.additionalTab')" />
+    <ItemDetailsTab :id="2" v-model="activeTab" :label="translate('itemDetails.availabilityTab')" />
+  </div>
+  <div
+    :class="{
+      'flex flex-col overflow-y-auto xl:w-2/3': true,
+      'h-full': activeTab !== 2,
+    }"
+  >
+    <div
+      :class="{
+        'item-details': true,
+        'hidden xl:block': activeTab !== 0,
+      }"
+    >
+      <ItemDetailsOverview v-if="itemType && itemDetails" :item-type="itemType" :item-details="itemDetails" />
+      <AppLoader v-else :size="LoaderSize.LARGE" />
     </div>
-    <div class="item-details-additional">
+    <div
+      :class="{
+        'item-details-additional': true,
+        'hidden xl:block': activeTab !== 1,
+      }"
+    >
       <ItemDetailsAdditional />
     </div>
   </div>
-  <div class="item-details-availability">
-    <template v-if="itemDetails">
-      <ItemDetailsAvailability>
-        <template v-for="item in itemDetails.availability" :key="item.onePrice">
-          <ItemDetailsAvailabilityItem :class="getItemAvailabilityBackgroundClass(itemDetails, item)">
-            <span class="w-full text-left text-sm text-dark-800">
-              {{ getSellCount(itemDetails, item) }}
-            </span>
-            <span :class="getItemAvailabilityTextClass(itemDetails, item)" class="w-full text-center">
-              {{ getOnePrice(itemDetails, item) }}
-            </span>
-            <span class="w-full text-right text-sm text-dark-800">
-              {{ getBuyCount(itemDetails, item) }}
-            </span>
-          </ItemDetailsAvailabilityItem>
-        </template>
-      </ItemDetailsAvailability>
-    </template>
-    <template v-else>
-      <AppLoader :size="LoaderSize.LARGE" />
-    </template>
+  <div
+    :class="{
+      'item-details-availability': true,
+      'hidden xl:block': activeTab !== 2,
+    }"
+  >
+    <ItemDetailsAvailability v-if="itemDetails">
+      <ItemDetailsAvailabilityItem
+        v-for="item in itemDetails.availability"
+        :key="item.onePrice"
+        :class="getItemAvailabilityBackgroundClass(itemDetails, item)"
+      >
+        <span class="w-full text-left text-sm text-dark-800">
+          {{ getSellCount(itemDetails, item) }}
+        </span>
+        <span :class="getItemAvailabilityTextClass(itemDetails, item)" class="w-full text-center">
+          {{ getOnePrice(itemDetails, item) }}
+        </span>
+        <span class="w-full text-right text-sm text-dark-800">
+          {{ getBuyCount(itemDetails, item) }}
+        </span>
+      </ItemDetailsAvailabilityItem>
+    </ItemDetailsAvailability>
+    <AppLoader v-else :size="LoaderSize.LARGE" />
   </div>
 </template>
 
@@ -47,11 +66,13 @@ import { LoaderSize } from '@/enums/loader';
 import { UseItemAvailabilityReturn, useItemAvailability } from '@/composables/item-details/use-item-availability';
 import { UseItemDetailsFetchReturn, useItemDetailsFetch } from '@/composables/item-details/use-item-details-fetch';
 import { UseItemTypeFetchReturn, useItemTypeFetch } from '@/composables/item-type/use-item-type-fetch';
+import { TranslateKey, useInject } from '@/composables/use-inject';
 import AppLoader from '@/components/Base/AppLoader/AppLoader.vue';
 import ItemDetailsAdditional from '@/components/ItemDetails/ItemDetailsAdditional.vue';
 import ItemDetailsAvailability from '@/components/ItemDetails/ItemDetailsAvailability.vue';
 import ItemDetailsAvailabilityItem from '@/components/ItemDetails/ItemDetailsAvailabilityItem.vue';
 import ItemDetailsOverview from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverview.vue';
+import ItemDetailsTab from '@/components/ItemDetails/ItemDetailsTab.vue';
 
 const props = defineProps({
   id: {
@@ -64,11 +85,13 @@ const props = defineProps({
   },
 });
 
+const translate = useInject(TranslateKey);
 const itemListComposable: UseItemTypeFetchReturn = useItemTypeFetch(props.id);
 const itemDetailsComposable: UseItemDetailsFetchReturn = useItemDetailsFetch(props.id, props.enhancement, true);
 
 const itemType: Ref<BlackDesertItemType | null> = ref(null);
 const itemDetails: Ref<BlackDesertItemDetails | null> = ref(null);
+const activeTab: Ref<number> = ref(0);
 
 const getOnePrice = (
   itemDetails: BlackDesertItemDetails,
@@ -127,15 +150,15 @@ if (!itemDetails.value) {
 @import '@/styles/variables.scss';
 
 .item-details {
-  @apply relative h-1/2 overflow-y-auto bg-dark-200 bg-opacity-90 p-5;
+  @apply relative h-full w-full overflow-x-hidden bg-dark-200 bg-opacity-90 p-5 xl:h-1/2 xl:overflow-y-auto;
 }
 
 .item-details-additional {
-  @apply relative h-1/2 overflow-y-auto border-t border-t-dark-700 p-5;
-  background: url('@/assets/images/other/modal-noise.png'), $DARK_300;
+  @apply relative h-full overflow-y-auto border-t-dark-700 p-5 xl:h-1/2 xl:border-t;
+  background: url('@/assets/images/modal/modal-noise.png'), $DARK_300;
 }
 
 .item-details-availability {
-  @apply relative w-1/3 overflow-y-auto border-l border-l-dark-600 bg-dark-100 bg-opacity-90;
+  @apply relative w-full overflow-y-auto border-l-dark-600 bg-dark-100 bg-opacity-90 xl:w-1/3 xl:border-l;
 }
 </style>

@@ -23,6 +23,7 @@ import {
   ExternalMarketItemDetailsHistory,
   ExternalMarketItemHot,
   ExternalMarketItemQueue,
+  ExternalMarketItemSearch,
   ExternalMarketItemType,
 } from '@/interfaces/objects/external-market.interface';
 import { BdoCodexScraperService } from '@/modules/bdo-codex/bdo-codex-scraper.service';
@@ -38,6 +39,16 @@ export class ItemTransformerService {
       count: item.sumCount,
       grade: item.grade,
       basePrice: item.minPrice,
+    };
+  }
+
+  public transformExternalMarketItemSearch(itemSearch: ExternalMarketItemSearch): BlackDesertItem {
+    return {
+      id: itemSearch.mainKey,
+      name: itemSearch.name,
+      count: itemSearch.sumCount,
+      grade: itemSearch.grade,
+      basePrice: itemSearch.totalSumCount,
     };
   }
 

@@ -9,7 +9,7 @@
       }"
       @click="triggerCategorySidemenuSubItemEffect"
     >
-      <span class="text-sm">
+      <span class="truncate text-sm">
         {{ props.title }}
       </span>
     </button>

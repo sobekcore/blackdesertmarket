@@ -1,5 +1,6 @@
 import { BlackDesertItemTooltip } from '@blackdesertmarket/interfaces';
 import { ItemTooltipSectionId } from '@/enums/item-tooltip';
+import { TranslateKey, useInject } from '@/composables/use-inject';
 
 export type FormatNameFunction = (name: string) => string;
 
@@ -15,6 +16,8 @@ export interface UseItemTooltipReturn {
 }
 
 export function useItemTooltip(itemTooltip: BlackDesertItemTooltip): UseItemTooltipReturn {
+  const translate = useInject(TranslateKey);
+
   const getItemWeight = (): string => {
     return `${itemTooltip.weight} LT`;
   };
@@ -33,7 +36,7 @@ export function useItemTooltip(itemTooltip: BlackDesertItemTooltip): UseItemTool
   const getSectionFormatValue = (sectionId: string): FormatValueFunction => {
     switch (sectionId) {
       case ItemTooltipSectionId.PRICE:
-        return (value: string): string => (value === 'N/A' ? value : `Silver ${value}`);
+        return (value: string): string => (value === 'N/A' ? value : `${translate('tooltip.silver')} ${value}`);
       default:
         return (value: string): string => value;
     }

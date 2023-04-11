@@ -16,7 +16,7 @@ export class BdoCodexScraperService extends AbstractHtmlScraperService implement
   }
 
   public scrapeCategory(element: HTMLElement): string {
-    return this.match(element, '.category_text').find().text().replace('-', '').trim();
+    return this.match(element, '.titles_cell').find().html().split('<').shift();
   }
 
   public scrapeDamage(element: HTMLElement): string {

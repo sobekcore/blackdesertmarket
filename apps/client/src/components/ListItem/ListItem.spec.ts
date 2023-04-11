@@ -1,6 +1,7 @@
 import { BlackDesertItem, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItem } from '@blackdesertmarket/mocks';
 import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
+import { mockProvide } from '@test/mocks/provide.mock';
 import {
   ItemEnhancementNameData,
   UseItemTypeEnhancementReturn,
@@ -17,10 +18,10 @@ const MOCK_ITEM: BlackDesertItem = mockBlackDesertItem();
 const MOCK_CLASS: string = 'mock-class';
 const MOCK_GRADE: number = 1;
 
-jest.mock('@/composables/use-config', () => ({
-  useConfig: () => ({
+jest.mock('@/config', () => ({
+  config: {
     marketApiUrl: 'https://api.blackdesertmarket.com',
-  }),
+  },
 }));
 
 describe('ListItem', () => {
@@ -28,6 +29,9 @@ describe('ListItem', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(ListItem, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         item: MOCK_ITEM,
       },
@@ -70,6 +74,9 @@ describe('ListItem', () => {
 
   it('should pass class attribute to div depending on class prop', () => {
     wrapper = shallowMount(ListItem, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         item: MOCK_ITEM,
         class: MOCK_CLASS,
@@ -85,6 +92,9 @@ describe('ListItem', () => {
 
   it('should pass src prop to ListItemIcon depending on item prop', () => {
     wrapper = shallowMount(ListItem, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         item: MOCK_ITEM,
         class: MOCK_CLASS,
@@ -100,6 +110,9 @@ describe('ListItem', () => {
 
   it('should pass text prop to ListItemIcon depending on item prop', () => {
     wrapper = shallowMount(ListItem, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         item: MOCK_ITEM,
         class: MOCK_CLASS,
@@ -115,6 +128,9 @@ describe('ListItem', () => {
 
   it('should pass text prop to ListItemIcon depending on item prop', () => {
     wrapper = shallowMount(ListItem, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         item: MOCK_ITEM,
         class: MOCK_CLASS,
@@ -133,6 +149,9 @@ describe('ListItem', () => {
 
   it('should pass class prop to ListItemIcon depending on item prop', () => {
     wrapper = shallowMount(ListItem, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         item: { ...MOCK_ITEM, grade: MOCK_GRADE },
         class: MOCK_CLASS,
@@ -148,6 +167,9 @@ describe('ListItem', () => {
 
   it('should pass name prop to ListItemName depending on item prop', () => {
     wrapper = shallowMount(ListItem, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         item: MOCK_ITEM,
         class: MOCK_CLASS,
@@ -163,6 +185,9 @@ describe('ListItem', () => {
 
   it('should pass value prop to ListItemProperty depending on item prop', () => {
     wrapper = shallowMount(ListItem, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         item: MOCK_ITEM,
         class: MOCK_CLASS,

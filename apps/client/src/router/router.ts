@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue';
 import HotView from '@/views/HotView.vue';
 import ItemDetailsView from '@/views/ItemDetailsView.vue';
 import ItemView from '@/views/ItemView.vue';
+import LegalView from '@/views/LegalView.vue';
 import ListView from '@/views/ListView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
 import QueueView from '@/views/QueueView.vue';
@@ -39,6 +40,14 @@ const routes: RouteRecordRaw[] = [
         component: ItemDetailsView,
       },
     ],
+  },
+  {
+    path: '/legal',
+    name: 'legal',
+    component: LegalView,
+    meta: {
+      layout: 'EmptyLayout',
+    },
   },
   {
     path: '/:catchAll(.*)',

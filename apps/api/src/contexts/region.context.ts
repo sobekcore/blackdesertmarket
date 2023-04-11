@@ -11,7 +11,7 @@ export class RegionContext {
   }
 
   private findRegionNameByRegionCode(code: RegionCode): RegionName {
-    const key: string = Object.keys(RegionCode).find((key): boolean => {
+    const key: string = Object.keys(RegionCode).find((key: string): boolean => {
       return RegionCode[key] === code;
     });
 

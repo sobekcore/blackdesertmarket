@@ -1,6 +1,6 @@
 <template>
-  <button data-test="button" class="translate-x-1 hover:brightness-150" @click="modalClose">
-    <AppIcon :src="require('@/assets/images/other/modal-close.png')" />
+  <button data-test="button" class="modal-handle-ignore translate-x-1 hover:brightness-150" @click="modalClose">
+    <AppIcon :src="require('@/assets/images/modal/modal-close.png')" class="modal-handle-ignore h-[24px]" />
   </button>
 </template>
 

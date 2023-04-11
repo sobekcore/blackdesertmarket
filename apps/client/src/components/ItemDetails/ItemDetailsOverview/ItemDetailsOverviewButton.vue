@@ -2,12 +2,12 @@
   <div
     data-test="outer"
     :class="{
-      'my-1.5 rounded': true,
+      'my-1.5 min-h-[34px] rounded': true,
       'button-inactive-state': !props.active,
       'button-active-state': props.active,
     }"
   >
-    <button class="border-lighten flex h-full items-center rounded border px-5 text-sm">
+    <button class="border-lighten flex h-full items-center whitespace-nowrap rounded border px-5 text-sm">
       {{ props.label }}
     </button>
   </div>

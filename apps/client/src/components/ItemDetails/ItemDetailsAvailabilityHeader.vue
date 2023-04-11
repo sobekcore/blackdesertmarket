@@ -5,14 +5,22 @@
     </div>
     <div class="scroll-gutter-stable relative overflow-y-auto">
       <div class="my-2.5 mx-2 flex items-center p-2">
-        <span class="w-full text-center text-xs">Sellers</span>
-        <span class="w-full text-center text-xs">Prices</span>
-        <span class="w-full text-center text-xs">Buyers</span>
+        <span class="w-full text-center text-xs">
+          {{ translate('itemDetails.availability.header.sellCount') }}
+        </span>
+        <span class="w-full text-center text-xs">
+          {{ translate('itemDetails.availability.header.onePrice') }}
+        </span>
+        <span class="w-full text-center text-xs">
+          {{ translate('itemDetails.availability.header.buyCount') }}
+        </span>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-// eslint-disable-line
+import { TranslateKey, useInject } from '@/composables/use-inject';
+
+const translate = useInject(TranslateKey);
 </script>

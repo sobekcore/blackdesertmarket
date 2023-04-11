@@ -15,6 +15,14 @@ export interface ExternalMarketItem {
   minPrice: number;
 }
 
+export interface ExternalMarketItemSearch {
+  mainKey: number;
+  name: string;
+  sumCount: number;
+  grade: number;
+  totalSumCount: number;
+}
+
 export interface ExternalMarketItemType extends ExternalMarketItemTypeUnused {
   mainKey: number;
   name: string;

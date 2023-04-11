@@ -1,783 +1,783 @@
 export default {
   categories: [
     {
-      title: 'Main Weapon',
-      icon: 'images/categories/1.png',
+      title: 'sidemenu.mainWeapon.title',
+      icon: 'categories/1.png',
       mainCategory: 1,
       subCategories: [
         {
-          title: 'Longsword',
+          title: 'sidemenu.mainWeapon.longsword',
           subCategory: 1,
         },
         {
-          title: 'Longbow',
+          title: 'sidemenu.mainWeapon.longbow',
           subCategory: 2,
         },
         {
-          title: 'Amulet',
+          title: 'sidemenu.mainWeapon.amulet',
           subCategory: 3,
         },
         {
-          title: 'Axe',
+          title: 'sidemenu.mainWeapon.axe',
           subCategory: 4,
         },
         {
-          title: 'Shortsword',
+          title: 'sidemenu.mainWeapon.shortsword',
           subCategory: 5,
         },
         {
-          title: 'Blade',
+          title: 'sidemenu.mainWeapon.blade',
           subCategory: 6,
         },
         {
-          title: 'Staff',
+          title: 'sidemenu.mainWeapon.staff',
           subCategory: 7,
         },
         {
-          title: 'Kriegsmesser',
+          title: 'sidemenu.mainWeapon.kriegsmesser',
           subCategory: 8,
         },
         {
-          title: 'Gauntlet',
+          title: 'sidemenu.mainWeapon.gauntlet',
           subCategory: 9,
         },
         {
-          title: 'Crescent Pendulum',
+          title: 'sidemenu.mainWeapon.crescentPendulum',
           subCategory: 10,
         },
         {
-          title: 'Crossbow',
+          title: 'sidemenu.mainWeapon.crossbow',
           subCategory: 11,
         },
         {
-          title: 'Florang',
+          title: 'sidemenu.mainWeapon.florang',
           subCategory: 12,
         },
         {
-          title: 'Battle Axe',
+          title: 'sidemenu.mainWeapon.battleAxe',
           subCategory: 13,
         },
         {
-          title: 'Shamshir',
+          title: 'sidemenu.mainWeapon.shamshir',
           subCategory: 14,
         },
         {
-          title: 'Morning Star',
+          title: 'sidemenu.mainWeapon.morningStar',
           subCategory: 15,
         },
         {
-          title: 'Kyve',
+          title: 'sidemenu.mainWeapon.kyve',
           subCategory: 16,
         },
         {
-          title: 'Serenaca',
+          title: 'sidemenu.mainWeapon.serenaca',
           subCategory: 17,
         },
         {
-          title: 'Slayer',
+          title: 'sidemenu.mainWeapon.slayer',
           subCategory: 18,
         },
       ],
     },
     {
-      title: 'Sub-weapon',
-      icon: 'images/categories/5.png',
+      title: 'sidemenu.subWeapon.title',
+      icon: 'categories/5.png',
       mainCategory: 5,
       subCategories: [
         {
-          title: 'Shield',
+          title: 'sidemenu.subWeapon.shield',
           subCategory: 1,
         },
         {
-          title: 'Dagger',
+          title: 'sidemenu.subWeapon.dagger',
           subCategory: 2,
         },
         {
-          title: 'Talisman',
+          title: 'sidemenu.subWeapon.talisman',
           subCategory: 3,
         },
         {
-          title: 'Ornamental Knot',
+          title: 'sidemenu.subWeapon.ornamentalKnot',
           subCategory: 4,
         },
         {
-          title: 'Trinket',
+          title: 'sidemenu.subWeapon.trinket',
           subCategory: 5,
         },
         {
-          title: 'Horn Bow',
+          title: 'sidemenu.subWeapon.hornBow',
           subCategory: 6,
         },
         {
-          title: 'Kunai',
+          title: 'sidemenu.subWeapon.kunai',
           subCategory: 7,
         },
         {
-          title: 'Shuriken',
+          title: 'sidemenu.subWeapon.shuriken',
           subCategory: 8,
         },
         {
-          title: 'Vambrace',
+          title: 'sidemenu.subWeapon.vambrace',
           subCategory: 9,
         },
         {
-          title: 'Noble Sword',
+          title: 'sidemenu.subWeapon.nobleSword',
           subCategory: 10,
         },
         {
-          title: "Ra'ghon",
+          title: 'sidemenu.subWeapon.raghon',
           subCategory: 11,
         },
         {
-          title: 'Vitclari',
+          title: 'sidemenu.subWeapon.vitclari',
           subCategory: 12,
         },
         {
-          title: 'Haladie',
+          title: 'sidemenu.subWeapon.haladie',
           subCategory: 13,
         },
         {
-          title: 'Quoratum',
+          title: 'sidemenu.subWeapon.quoratum',
           subCategory: 14,
         },
         {
-          title: 'Mareca',
+          title: 'sidemenu.subWeapon.mareca',
           subCategory: 15,
         },
         {
-          title: 'Shard',
+          title: 'sidemenu.subWeapon.shard',
           subCategory: 16,
         },
       ],
     },
     {
-      title: 'Awakening',
-      icon: 'images/categories/10.png',
+      title: 'sidemenu.awakening.title',
+      icon: 'categories/10.png',
       mainCategory: 10,
       subCategories: [
         {
-          title: 'Greatsword',
+          title: 'sidemenu.awakening.greatsword',
           subCategory: 1,
         },
         {
-          title: 'Scythe',
+          title: 'sidemenu.awakening.scythe',
           subCategory: 2,
         },
         {
-          title: 'Iron Buster',
+          title: 'sidemenu.awakening.ironBuster',
           subCategory: 3,
         },
         {
-          title: 'Kamasylven Sword',
+          title: 'sidemenu.awakening.kamasylvenSword',
           subCategory: 4,
         },
         {
-          title: 'Celestial Bo Staff',
+          title: 'sidemenu.awakening.celestialBoStaff',
           subCategory: 5,
         },
         {
-          title: 'Lancia',
+          title: 'sidemenu.awakening.lancia',
           subCategory: 6,
         },
         {
-          title: 'Crescent Blade',
+          title: 'sidemenu.awakening.crescentBlade',
           subCategory: 7,
         },
         {
-          title: 'Kerispear',
+          title: 'sidemenu.awakening.kerispear',
           subCategory: 8,
         },
         {
-          title: 'Sura Katana',
+          title: 'sidemenu.awakening.suraKatana',
           subCategory: 9,
         },
         {
-          title: 'Sah Chakram',
+          title: 'sidemenu.awakening.sahChakram',
           subCategory: 10,
         },
         {
-          title: 'Aad Sphera',
+          title: 'sidemenu.awakening.aadSphera',
           subCategory: 11,
         },
         {
-          title: 'Godr Sphera',
+          title: 'sidemenu.awakening.godrSphera',
           subCategory: 12,
         },
         {
-          title: 'Vediant',
+          title: 'sidemenu.awakening.vediant',
           subCategory: 13,
         },
         {
-          title: 'Gardbrace',
+          title: 'sidemenu.awakening.gardbrace',
           subCategory: 14,
         },
         {
-          title: 'Cestus',
+          title: 'sidemenu.awakening.cestus',
           subCategory: 15,
         },
         {
-          title: 'Crimson Glaives',
+          title: 'sidemenu.awakening.crimsonGlaives',
           subCategory: 16,
         },
         {
-          title: 'Greatbow',
+          title: 'sidemenu.awakening.greatbow',
           subCategory: 17,
         },
         {
-          title: 'Jordun',
+          title: 'sidemenu.awakening.jordun',
           subCategory: 19,
         },
         {
-          title: 'Dual Glaives',
+          title: 'sidemenu.awakening.dualGlaives',
           subCategory: 20,
         },
         {
-          title: 'Sting',
+          title: 'sidemenu.awakening.sting',
           subCategory: 21,
         },
         {
-          title: 'Kibelius',
+          title: 'sidemenu.awakening.kibelius',
           subCategory: 22,
         },
         {
-          title: 'Patraca',
+          title: 'sidemenu.awakening.patraca',
           subCategory: 23,
         },
         {
-          title: 'Trion',
+          title: 'sidemenu.awakening.trion',
           subCategory: 24,
         },
       ],
     },
     {
-      title: 'Armor',
-      icon: 'images/categories/15.png',
+      title: 'sidemenu.armor.title',
+      icon: 'categories/15.png',
       mainCategory: 15,
       subCategories: [
         {
-          title: 'Helmet',
+          title: 'sidemenu.armor.helmet',
           subCategory: 1,
         },
         {
-          title: 'Armor',
+          title: 'sidemenu.armor.armor',
           subCategory: 2,
         },
         {
-          title: 'Gloves',
+          title: 'sidemenu.armor.gloves',
           subCategory: 3,
         },
         {
-          title: 'Shoes',
+          title: 'sidemenu.armor.shoes',
           subCategory: 4,
         },
         {
-          title: 'Functional Clothes',
+          title: 'sidemenu.armor.functionalClothes',
           subCategory: 5,
         },
         {
-          title: 'Crafted Clothes',
+          title: 'sidemenu.armor.craftedClothes',
           subCategory: 6,
         },
       ],
     },
     {
-      title: 'Accessories',
-      icon: 'images/categories/20.png',
+      title: 'sidemenu.accessories.title',
+      icon: 'categories/20.png',
       mainCategory: 20,
       subCategories: [
         {
-          title: 'Ring',
+          title: 'sidemenu.accessories.ring',
           subCategory: 1,
         },
         {
-          title: 'Necklace',
+          title: 'sidemenu.accessories.necklace',
           subCategory: 2,
         },
         {
-          title: 'Earring',
+          title: 'sidemenu.accessories.earring',
           subCategory: 3,
         },
         {
-          title: 'Belt',
+          title: 'sidemenu.accessories.belt',
           subCategory: 4,
         },
       ],
     },
     {
-      title: 'Lightstone',
-      icon: 'images/categories/85.png',
+      title: 'sidemenu.lightstone.title',
+      icon: 'categories/85.png',
       mainCategory: 85,
       subCategories: [
         {
-          title: 'Lightstone of Fire',
+          title: 'sidemenu.lightstone.lightstoneOfFire',
           subCategory: 1,
         },
         {
-          title: 'Lightstone of Earth',
+          title: 'sidemenu.lightstone.lightstoneOfEarth',
           subCategory: 2,
         },
         {
-          title: 'Lightstone of Wind',
+          title: 'sidemenu.lightstone.lightstoneOfWind',
           subCategory: 3,
         },
         {
-          title: 'Lightstone of Flora',
+          title: 'sidemenu.lightstone.lightstoneOfFlora',
           subCategory: 4,
         },
         {
-          title: 'Special Lightstone',
+          title: 'sidemenu.lightstone.specialLightstone',
           subCategory: 5,
         },
       ],
     },
     {
-      title: 'Material',
-      icon: 'images/categories/25.png',
+      title: 'sidemenu.material.title',
+      icon: 'categories/25.png',
       mainCategory: 25,
       subCategories: [
         {
-          title: 'Ore/Gem',
+          title: 'sidemenu.material.oreGem',
           subCategory: 1,
         },
         {
-          title: 'Plants',
+          title: 'sidemenu.material.plants',
           subCategory: 2,
         },
         {
-          title: 'Seed/Fruit',
+          title: 'sidemenu.material.seedFruit',
           subCategory: 3,
         },
         {
-          title: 'Leather',
+          title: 'sidemenu.material.leather',
           subCategory: 4,
         },
         {
-          title: 'Blood',
+          title: 'sidemenu.material.blood',
           subCategory: 5,
         },
         {
-          title: 'Meat',
+          title: 'sidemenu.material.meat',
           subCategory: 6,
         },
         {
-          title: 'Seafood',
+          title: 'sidemenu.material.seafood',
           subCategory: 7,
         },
         {
-          title: 'Misc.',
+          title: 'sidemenu.material.misc',
           subCategory: 8,
         },
       ],
     },
     {
-      title: 'Enhancement/Upgrade',
-      icon: 'images/categories/30.png',
+      title: 'sidemenu.enhancementUpgrade.title',
+      icon: 'categories/30.png',
       mainCategory: 30,
       subCategories: [
         {
-          title: 'Black Stone',
+          title: 'sidemenu.enhancementUpgrade.blackStone',
           subCategory: 1,
         },
         {
-          title: 'Upgrade',
+          title: 'sidemenu.enhancementUpgrade.upgrade',
           subCategory: 2,
         },
       ],
     },
     {
-      title: 'Consumables',
-      icon: 'images/categories/35.png',
+      title: 'sidemenu.consumables.title',
+      icon: 'categories/35.png',
       mainCategory: 35,
       subCategories: [
         {
-          title: 'Offensive Elixir',
+          title: 'sidemenu.consumables.offensiveElixir',
           subCategory: 1,
         },
         {
-          title: 'Defensive Elixir',
+          title: 'sidemenu.consumables.defensiveElixir',
           subCategory: 2,
         },
         {
-          title: 'Functional Elixir',
+          title: 'sidemenu.consumables.functionalElixir',
           subCategory: 3,
         },
         {
-          title: 'Food',
+          title: 'sidemenu.consumables.food',
           subCategory: 4,
         },
         {
-          title: 'Potion',
+          title: 'sidemenu.consumables.potion',
           subCategory: 5,
         },
         {
-          title: 'Siege Items',
+          title: 'sidemenu.consumables.siegeItems',
           subCategory: 6,
         },
         {
-          title: 'Item Parts',
+          title: 'sidemenu.consumables.itemParts',
           subCategory: 7,
         },
         {
-          title: 'Other Consumables',
+          title: 'sidemenu.consumables.otherConsumables',
           subCategory: 8,
         },
       ],
     },
     {
-      title: 'Life Tools',
-      icon: 'images/categories/40.png',
+      title: 'sidemenu.lifeTools.title',
+      icon: 'categories/40.png',
       mainCategory: 40,
       subCategories: [
         {
-          title: 'Lumbering Axe',
+          title: 'sidemenu.lifeTools.lumberingAxe',
           subCategory: 1,
         },
         {
-          title: 'Fluid Collector',
+          title: 'sidemenu.lifeTools.fluidCollector',
           subCategory: 2,
         },
         {
-          title: 'Butcher Knife',
+          title: 'sidemenu.lifeTools.butcherKnife',
           subCategory: 3,
         },
         {
-          title: 'Pickaxe',
+          title: 'sidemenu.lifeTools.pickaxe',
           subCategory: 4,
         },
         {
-          title: 'Hoe',
+          title: 'sidemenu.lifeTools.hoe',
           subCategory: 5,
         },
         {
-          title: 'Tanning Knife',
+          title: 'sidemenu.lifeTools.tanningKnife',
           subCategory: 6,
         },
         {
-          title: 'Fishing Tools',
+          title: 'sidemenu.lifeTools.fishingTools',
           subCategory: 7,
         },
         {
-          title: 'Matchlock',
+          title: 'sidemenu.lifeTools.matchlock',
           subCategory: 8,
         },
         {
-          title: 'Alchemy/Cooking',
+          title: 'sidemenu.lifeTools.alchemyCooking',
           subCategory: 9,
         },
         {
-          title: 'Other Tools',
+          title: 'sidemenu.lifeTools.otherTools',
           subCategory: 10,
         },
       ],
     },
     {
-      title: 'Alchemy Stone',
-      icon: 'images/categories/45.png',
+      title: 'sidemenu.alchemyStone.title',
+      icon: 'categories/45.png',
       mainCategory: 45,
       subCategories: [
         {
-          title: 'Destruction',
+          title: 'sidemenu.alchemyStone.destruction',
           subCategory: 1,
         },
         {
-          title: 'Protection',
+          title: 'sidemenu.alchemyStone.protection',
           subCategory: 2,
         },
         {
-          title: 'Life',
+          title: 'sidemenu.alchemyStone.life',
           subCategory: 3,
         },
         {
-          title: 'Spirit Stone',
+          title: 'sidemenu.alchemyStone.spiritStone',
           subCategory: 4,
         },
       ],
     },
     {
-      title: 'Magic Crystal',
-      icon: 'images/categories/50.png',
+      title: 'sidemenu.magicCrystal.title',
+      icon: 'categories/50.png',
       mainCategory: 50,
       subCategories: [
         {
-          title: 'Main Weapon',
+          title: 'sidemenu.magicCrystal.mainWeapon',
           subCategory: 1,
         },
         {
-          title: 'Sub-weapon',
+          title: 'sidemenu.magicCrystal.subWeapon',
           subCategory: 2,
         },
         {
-          title: 'Awakening Weapon',
+          title: 'sidemenu.magicCrystal.awakeningWeapon',
           subCategory: 8,
         },
         {
-          title: 'Helmet',
+          title: 'sidemenu.magicCrystal.helmet',
           subCategory: 3,
         },
         {
-          title: 'Armor',
+          title: 'sidemenu.magicCrystal.armor',
           subCategory: 4,
         },
         {
-          title: 'Gloves',
+          title: 'sidemenu.magicCrystal.gloves',
           subCategory: 5,
         },
         {
-          title: 'Shoes',
+          title: 'sidemenu.magicCrystal.shoes',
           subCategory: 6,
         },
         {
-          title: 'Versatile',
+          title: 'sidemenu.magicCrystal.versatile',
           subCategory: 7,
         },
       ],
     },
     {
-      title: 'Pearl Item',
-      icon: 'images/categories/55.png',
+      title: 'sidemenu.pearlItem.title',
+      icon: 'categories/55.png',
       mainCategory: 55,
       subCategories: [
         {
-          title: 'Male Apparel (Set)',
+          title: 'sidemenu.pearlItem.maleApparelSet',
           subCategory: 1,
         },
         {
-          title: 'Female Apparel (Set)',
+          title: 'sidemenu.pearlItem.femaleApparelSet',
           subCategory: 2,
         },
         {
-          title: 'Male Apparel (Individual)',
+          title: 'sidemenu.pearlItem.maleApparelIndividual',
           subCategory: 3,
         },
         {
-          title: 'Female Apparel (Individual)',
+          title: 'sidemenu.pearlItem.femaleApparelIndividual',
           subCategory: 4,
         },
         {
-          title: 'Class-based Apparel (Set)',
+          title: 'sidemenu.pearlItem.classBasedApparelSet',
           subCategory: 5,
         },
         {
-          title: 'Functional',
+          title: 'sidemenu.pearlItem.functional',
           subCategory: 6,
         },
         {
-          title: 'Mount',
+          title: 'sidemenu.pearlItem.mount',
           subCategory: 7,
         },
         {
-          title: 'Pet',
+          title: 'sidemenu.pearlItem.pet',
           subCategory: 8,
         },
       ],
     },
     {
-      title: 'Dye',
-      icon: 'images/categories/60.png',
+      title: 'sidemenu.dye.title',
+      icon: 'categories/60.png',
       mainCategory: 60,
       subCategories: [
         {
-          title: 'Basic',
+          title: 'sidemenu.dye.basic',
           subCategory: 1,
         },
         {
-          title: 'Olvia',
+          title: 'sidemenu.dye.olvia',
           subCategory: 2,
         },
         {
-          title: 'Velia',
+          title: 'sidemenu.dye.velia',
           subCategory: 3,
         },
         {
-          title: 'Heidelian',
+          title: 'sidemenu.dye.heidelian',
           subCategory: 4,
         },
         {
-          title: 'Keplan',
+          title: 'sidemenu.dye.keplan',
           subCategory: 5,
         },
         {
-          title: 'Calpheon',
+          title: 'sidemenu.dye.calpheon',
           subCategory: 6,
         },
         {
-          title: 'Mediah',
+          title: 'sidemenu.dye.mediah',
           subCategory: 7,
         },
         {
-          title: 'Valencia',
+          title: 'sidemenu.dye.valencia',
           subCategory: 8,
         },
       ],
     },
     {
-      title: 'Mount',
-      icon: 'images/categories/65.png',
+      title: 'sidemenu.mount.title',
+      icon: 'categories/65.png',
       mainCategory: 65,
       subCategories: [
         {
-          title: 'Registration',
+          title: 'sidemenu.mount.registration',
           subCategory: 1,
         },
         {
-          title: 'Feed',
+          title: 'sidemenu.mount.feed',
           subCategory: 2,
         },
         {
-          title: 'Champron',
+          title: 'sidemenu.mount.champron',
           subCategory: 3,
         },
         {
-          title: 'Barding',
+          title: 'sidemenu.mount.barding',
           subCategory: 4,
         },
         {
-          title: 'Saddle',
+          title: 'sidemenu.mount.saddle',
           subCategory: 5,
         },
         {
-          title: 'Stirrups',
+          title: 'sidemenu.mount.stirrups',
           subCategory: 6,
         },
         {
-          title: 'Horseshoe',
+          title: 'sidemenu.mount.horseshoe',
           subCategory: 7,
         },
         {
-          title: '[Elephant] Stirrups',
+          title: 'sidemenu.mount.elephantStirrups',
           subCategory: 9,
         },
         {
-          title: '[Elephant] Armor',
+          title: 'sidemenu.mount.elephantArmor',
           subCategory: 10,
         },
         {
-          title: '[Elephant] Mask',
+          title: 'sidemenu.mount.elephantMask',
           subCategory: 11,
         },
         {
-          title: '[Elephant] Saddle',
+          title: 'sidemenu.mount.elephantSaddle',
           subCategory: 12,
         },
         {
-          title: 'Courser Training',
+          title: 'sidemenu.mount.courserTraining',
           subCategory: 13,
         },
       ],
     },
     {
-      title: 'Ship',
-      icon: 'images/categories/70.png',
+      title: 'sidemenu.ship.title',
+      icon: 'categories/70.png',
       mainCategory: 70,
       subCategories: [
         {
-          title: 'Registration',
+          title: 'sidemenu.ship.registration',
           subCategory: 1,
         },
         {
-          title: 'Cargo',
+          title: 'sidemenu.ship.cargo',
           subCategory: 2,
         },
         {
-          title: 'Prow',
+          title: 'sidemenu.ship.prow',
           subCategory: 3,
         },
         {
-          title: 'Decoration',
+          title: 'sidemenu.ship.decoration',
           subCategory: 4,
         },
         {
-          title: 'Totem',
+          title: 'sidemenu.ship.totem',
           subCategory: 5,
         },
         {
-          title: 'Figurehead',
+          title: 'sidemenu.ship.figurehead',
           subCategory: 6,
         },
         {
-          title: 'Plating',
+          title: 'sidemenu.ship.plating',
           subCategory: 7,
         },
         {
-          title: 'Cannon',
+          title: 'sidemenu.ship.cannon',
           subCategory: 8,
         },
         {
-          title: 'Sail',
+          title: 'sidemenu.ship.sail',
           subCategory: 9,
         },
       ],
     },
     {
-      title: 'Wagon',
-      icon: 'images/categories/75.png',
+      title: 'sidemenu.wagon.title',
+      icon: 'categories/75.png',
       mainCategory: 75,
       subCategories: [
         {
-          title: 'Registration',
+          title: 'sidemenu.wagon.registration',
           subCategory: 1,
         },
         {
-          title: 'Wheel',
+          title: 'sidemenu.wagon.wheel',
           subCategory: 2,
         },
         {
-          title: 'Cover',
+          title: 'sidemenu.wagon.cover',
           subCategory: 3,
         },
         {
-          title: 'Flag',
+          title: 'sidemenu.wagon.flag',
           subCategory: 4,
         },
         {
-          title: 'Emblem',
+          title: 'sidemenu.wagon.emblem',
           subCategory: 5,
         },
         {
-          title: 'Lamp',
+          title: 'sidemenu.wagon.lamp',
           subCategory: 6,
         },
       ],
     },
     {
-      title: 'Furniture',
-      icon: 'images/categories/80.png',
+      title: 'sidemenu.furniture.title',
+      icon: 'categories/80.png',
       mainCategory: 80,
       subCategories: [
         {
-          title: 'Bed',
+          title: 'sidemenu.furniture.bed',
           subCategory: 1,
         },
         {
-          title: 'Bedside Table/Table',
+          title: 'sidemenu.furniture.bedsideTableTable',
           subCategory: 2,
         },
         {
-          title: 'Wardrobe/Bookshelf',
+          title: 'sidemenu.furniture.wardrobeBookshelf',
           subCategory: 3,
         },
         {
-          title: 'Sofa/Chair',
+          title: 'sidemenu.furniture.sofaChair',
           subCategory: 4,
         },
         {
-          title: 'Chandelier',
+          title: 'sidemenu.furniture.chandelier',
           subCategory: 5,
         },
         {
-          title: 'Floor/Carpet',
+          title: 'sidemenu.furniture.floorCarpet',
           subCategory: 6,
         },
         {
-          title: 'Wall/Curtain',
+          title: 'sidemenu.furniture.wallCurtain',
           subCategory: 7,
         },
         {
-          title: 'Decoration',
+          title: 'sidemenu.furniture.decoration',
           subCategory: 8,
         },
         {
-          title: 'Others',
+          title: 'sidemenu.furniture.others',
           subCategory: 9,
         },
       ],

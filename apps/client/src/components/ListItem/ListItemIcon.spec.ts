@@ -3,7 +3,7 @@ import { mockPlugins } from '@test/mocks/plugins.mock';
 import AppTooltip from '@/components/Base/AppTooltip.vue';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 
-const MOCK_LIST_ITEM_ICON_SRC: string = 'images/other/in-registration-queue.png';
+const MOCK_LIST_ITEM_ICON_SRC: string = 'other/in-registration-queue.png';
 
 describe('ListItemIcon', () => {
   let wrapper: VueWrapper;

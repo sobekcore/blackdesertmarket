@@ -1,0 +1,16 @@
+{
+  "detailsTab": "Detalles",
+  "additionalTab": "Adicional",
+  "availabilityTab": "Disponibilidad",
+  "availability": {
+    "header": {
+      "sellCount": "Vendedores",
+      "buyCount": "Compradores",
+      "onePrice": "Precios"
+    },
+    "sellCount": "Listado",
+    "buyCount": "Pedidos"
+  },
+  "recentPrice": "Precio Reciente",
+  "recentTransaction": "Transacción Reciente"
+}

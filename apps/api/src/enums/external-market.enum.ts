@@ -4,6 +4,7 @@ export enum ExternalMarketEndpoint {
   LIST_QUEUE = 'GetWorldMarketWaitList',
   ITEM = 'GetWorldMarketSubList',
   ITEM_DETAILS = 'GetItemSellBuyInfo',
+  SEARCH = 'GetWorldMarketSearchList',
 }
 
 export enum ExternalMarketRequestPath {

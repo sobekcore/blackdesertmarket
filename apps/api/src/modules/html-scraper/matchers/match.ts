@@ -14,4 +14,8 @@ export class Match implements HtmlScraperMatch {
   public text(): string {
     return this.found?.textContent?.trim() || '';
   }
+
+  public html(): string {
+    return this.found?.innerHTML || '';
+  }
 }

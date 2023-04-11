@@ -46,7 +46,14 @@ module.exports = {
       'dejavu-sans': 'DejaVu Sans',
       'dejavu-sans-condensed': 'DejaVu Sans Condensed',
     },
-    extend: {},
+    extend: {
+      minWidth: {
+        '1/5': '20%',
+      },
+      height: {
+        'dynamic-screen': '100dvh',
+      },
+    },
   },
   plugins: [
     plugin(function (plugin) {

@@ -3,14 +3,13 @@ import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { MarketApiResponse } from '@/interfaces/market-api-response';
 import { HttpMethod } from '@/enums/http';
 import { useAxiosInstance } from '@/composables/use-axios-instance';
-import { UseConfigReturn, useConfig } from '@/composables/use-config';
+import { config } from '@/config';
 
 export function useMarketApi<T>(
   method: HttpMethod,
   url: string,
   params?: Record<string, any>,
 ): StrictUseAxiosReturn<MarketApiResponse<T>, AxiosResponse<MarketApiResponse<T>>, any> {
-  const config: UseConfigReturn = useConfig();
   const axiosInstance: AxiosInstance = useAxiosInstance();
 
   const axiosConfig: AxiosRequestConfig = {

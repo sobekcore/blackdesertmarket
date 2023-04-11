@@ -1,15 +1,11 @@
-import { MarketCategoriesConfig, MarketEnhancementConfig } from '@/interfaces/market-config';
 import marketCategoriesConfig from '@/configs/market-categories.config';
 import marketEnhancementConfig from '@/configs/market-enhancement.config';
+import { MarketCategoriesConfigKey, MarketEnhancementConfigKey, TranslateKey } from '@/composables/use-inject';
 
-interface MockProvide {
-  marketCategoriesConfig: MarketCategoriesConfig;
-  marketEnhancementConfig: MarketEnhancementConfig;
-}
-
-export function mockProvide(): MockProvide {
+export function mockProvide(): Record<symbol, unknown> {
   return {
-    marketCategoriesConfig: marketCategoriesConfig,
-    marketEnhancementConfig: marketEnhancementConfig,
+    [TranslateKey as symbol]: (key: string) => key,
+    [MarketCategoriesConfigKey as symbol]: marketCategoriesConfig,
+    [MarketEnhancementConfigKey as symbol]: marketEnhancementConfig,
   };
 }

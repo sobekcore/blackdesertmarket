@@ -2,6 +2,7 @@ import { DefineComponent, defineComponent } from 'vue';
 import { BlackDesertItemDetails, BlackDesertItemDetailsAvailability } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItemDetails, mockBlackDesertItemDetailsAvailability } from '@blackdesertmarket/mocks';
 import { VueWrapper, mount } from '@vue/test-utils';
+import { mockProvide } from '@test/mocks/provide.mock';
 import { useItemAvailability } from '@/composables/item-details/use-item-availability';
 
 const MOCK_ITEM_DETAILS: BlackDesertItemDetails = mockBlackDesertItemDetails();
@@ -19,7 +20,11 @@ describe('useItemAvailability', () => {
       template: '<slot></slot>',
     });
 
-    wrapper = mount(component);
+    wrapper = mount(component, {
+      global: {
+        provide: mockProvide(),
+      },
+    });
   });
 
   describe('should return proper class from getBackgroundClass', () => {
@@ -34,7 +39,11 @@ describe('useItemAvailability', () => {
         template: '<slot></slot>',
       });
 
-      wrapper = mount(component);
+      wrapper = mount(component, {
+        global: {
+          provide: mockProvide(),
+        },
+      });
 
       const componentVM: Record<string, any> = wrapper.vm as Record<string, any>;
       const backgroundClass: string = componentVM.getBackgroundClass();
@@ -53,7 +62,11 @@ describe('useItemAvailability', () => {
         template: '<slot></slot>',
       });
 
-      wrapper = mount(component);
+      wrapper = mount(component, {
+        global: {
+          provide: mockProvide(),
+        },
+      });
 
       const componentVM: Record<string, any> = wrapper.vm as Record<string, any>;
       const backgroundClass: string = componentVM.getBackgroundClass();
@@ -80,7 +93,11 @@ describe('useItemAvailability', () => {
         template: '<slot></slot>',
       });
 
-      wrapper = mount(component);
+      wrapper = mount(component, {
+        global: {
+          provide: mockProvide(),
+        },
+      });
 
       const componentVM: Record<string, any> = wrapper.vm as Record<string, any>;
       const backgroundClass: string = componentVM.getTextClass();
@@ -105,7 +122,11 @@ describe('useItemAvailability', () => {
         template: '<slot></slot>',
       });
 
-      wrapper = mount(component);
+      wrapper = mount(component, {
+        global: {
+          provide: mockProvide(),
+        },
+      });
 
       const componentVM: Record<string, any> = wrapper.vm as Record<string, any>;
       const backgroundClass: string = componentVM.getTextClass();

@@ -7,9 +7,7 @@
       <template v-if="props.value">
         {{ props.value }}
       </template>
-      <template v-else>
-        <AppMissingData />
-      </template>
+      <AppMissingData v-else />
     </div>
   </div>
 </template>

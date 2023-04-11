@@ -1,9 +1,11 @@
 <template>
   <div class="flex h-full w-full items-center justify-center">
-    <h2>Coming soon...</h2>
+    <h2>{{ translate('generic.comingSoon') }}...</h2>
   </div>
 </template>
 
 <script lang="ts" setup>
-// eslint-disable-line
+import { TranslateKey, useInject } from '@/composables/use-inject';
+
+const translate = useInject(TranslateKey);
 </script>

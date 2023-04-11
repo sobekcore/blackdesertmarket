@@ -1,5 +1,5 @@
 <template>
-  <section class="flex h-full w-full items-center justify-center">
+  <section class="flex h-full w-full items-center justify-center p-2">
     <AppLogo />
   </section>
 </template>

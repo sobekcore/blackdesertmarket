@@ -5,6 +5,7 @@ import { mockBlackDesertItemDetailsHistory } from '@blackdesertmarket/mocks';
 import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
 import { DefaultDataPoint } from 'chart.js/dist/types';
 import { extractFromSetup } from '@test/helpers/extract-from-setup';
+import { mockProvide } from '@test/mocks/provide.mock';
 import ItemDetailsOverviewChart from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverviewChart.vue';
 
 type ChartType = 'line';
@@ -18,6 +19,9 @@ describe('ItemDetailsOverviewChart', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(ItemDetailsOverviewChart, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         data: [MOCK_DATA_ITEM],
         days: MOCK_DAYS,
@@ -33,6 +37,9 @@ describe('ItemDetailsOverviewChart', () => {
 
   it('should pass class attribute to div depending on class prop', () => {
     wrapper = shallowMount(ItemDetailsOverviewChart, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         data: [MOCK_DATA_ITEM],
         days: MOCK_DAYS,
@@ -49,6 +56,9 @@ describe('ItemDetailsOverviewChart', () => {
 
   it('should pass data prop to Line depending on data prop', () => {
     wrapper = shallowMount(ItemDetailsOverviewChart, {
+      global: {
+        provide: mockProvide(),
+      },
       props: {
         data: [MOCK_DATA_ITEM],
         days: MOCK_DAYS,

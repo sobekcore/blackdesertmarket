@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen">
+  <div class="h-dynamic-screen">
     <slot></slot>
   </div>
 </template>

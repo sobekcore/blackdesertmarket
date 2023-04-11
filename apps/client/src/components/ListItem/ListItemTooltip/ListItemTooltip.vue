@@ -24,26 +24,26 @@
         <ListItemTooltipProperty
           v-if="props.itemTooltip.accuracy"
           data-test="accuracy"
-          label="Accuracy"
+          :label="translate('tooltip.accuracy')"
           :value="props.itemTooltip.accuracy"
           class="text-lg leading-6"
         />
         <ListItemTooltipProperty
           v-if="props.itemTooltip.evasion"
           data-test="evasion"
-          label="Evasion"
+          :label="translate('tooltip.evasion')"
           :value="props.itemTooltip.evasion"
         />
         <ListItemTooltipProperty
           v-if="props.itemTooltip.evasion"
           data-test="damageReduction"
-          label="Damage Reduction"
+          :label="translate('tooltip.damageReduction')"
           :value="props.itemTooltip.evasion"
         />
         <ListItemTooltipProperty
           v-if="props.itemTooltip.weight"
           data-test="weight"
-          label="Weight"
+          :label="translate('tooltip.weight')"
           :value="itemTooltipComposable.getItemWeight()"
         />
       </div>
@@ -58,14 +58,13 @@
           :name-class="itemTooltipComposable.getSectionNameClass(section.id)"
           :value-class="itemTooltipComposable.getSectionValueClass(section.id)"
         />
-        <template v-if="section.id === centralMarketInformationId">
-          <ListItemTooltipSection
-            :item-tooltip-section="getCentralMarketInformationData()"
-            :class="itemTooltipComposable.getSectionClass(ItemTooltipSectionId.CENTRAL_MARKET_INFORMATION)"
-            :name-class="itemTooltipComposable.getSectionNameClass(ItemTooltipSectionId.CENTRAL_MARKET_INFORMATION)"
-            :value-class="itemTooltipComposable.getSectionValueClass(ItemTooltipSectionId.CENTRAL_MARKET_INFORMATION)"
-          />
-        </template>
+        <ListItemTooltipSection
+          v-if="section.id === centralMarketInformationId"
+          :item-tooltip-section="getCentralMarketInformationData()"
+          :class="itemTooltipComposable.getSectionClass(ItemTooltipSectionId.CENTRAL_MARKET_INFORMATION)"
+          :name-class="itemTooltipComposable.getSectionNameClass(ItemTooltipSectionId.CENTRAL_MARKET_INFORMATION)"
+          :value-class="itemTooltipComposable.getSectionValueClass(ItemTooltipSectionId.CENTRAL_MARKET_INFORMATION)"
+        />
       </template>
     </div>
   </div>
@@ -82,11 +81,12 @@ import { ItemTooltipSectionId } from '@/enums/item-tooltip';
 import { UseItemTooltipReturn, useItemTooltip } from '@/composables/item-tooltip/use-item-tooltip';
 import { UseItemTypeReturn, useItemType } from '@/composables/item-type/use-item-type';
 import { UseItemReturn, useItem } from '@/composables/item/use-item';
-import { UseConfigReturn, useConfig } from '@/composables/use-config';
+import { TranslateKey, useInject } from '@/composables/use-inject';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemName from '@/components/ListItem/ListItemName.vue';
 import ListItemTooltipProperty from '@/components/ListItem/ListItemTooltip/ListItemTooltipProperty.vue';
 import ListItemTooltipSection from '@/components/ListItem/ListItemTooltip/ListItemTooltipSection.vue';
+import { config } from '@/config';
 
 const props = defineProps({
   itemType: {
@@ -99,7 +99,7 @@ const props = defineProps({
   },
 });
 
-const config: UseConfigReturn = useConfig();
+const translate = useInject(TranslateKey);
 const itemComposable: UseItemReturn = useItem(props.itemType);
 const itemTypeComposable: UseItemTypeReturn = useItemType(props.itemType);
 const itemTooltipComposable: UseItemTooltipReturn = useItemTooltip(props.itemTooltip);
@@ -115,10 +115,14 @@ const centralMarketInformationOrder: ItemTooltipSectionId[] = [
 ];
 
 const getCentralMarketInformationData = (): BlackDesertItemTooltipSection => {
+  const centralMarketInformation: string = translate('tooltip.centralMarketInformation');
+  const marketPrice: string = translate('tooltip.marketPrice');
+  const warehouseCapacity: string = translate('generic.warehouseCapacity');
+
   return {
     id: ItemTooltipSectionId.CENTRAL_MARKET_INFORMATION,
-    name: 'Central Market Information',
-    values: [`Market Price: ${itemComposable.getBasePrice()}`, 'Warehouse Capacity: —'],
+    name: centralMarketInformation,
+    values: [`${marketPrice}: ${itemComposable.getBasePrice()}`, `${warehouseCapacity}: —`],
   };
 };
 

@@ -1,7 +1,14 @@
-export function isValidBlackDesertItemDetails(itemDetails: unknown): boolean;
+import {
+  BlackDesertItemDetails,
+  BlackDesertItemDetailsExtended,
+  BlackDesertItemDetailsAvailability,
+  BlackDesertItemDetailsHistory,
+} from '@blackdesertmarket/interfaces';
 
-export function isValidBlackDesertItemDetailsExtended(itemDetails: unknown): boolean;
+export function isValidBlackDesertItemDetails(itemDetails: unknown): itemDetails is BlackDesertItemDetails;
 
-export function isValidBlackDesertItemDetailsAvailability(itemAvailability: unknown): boolean;
+export function isValidBlackDesertItemDetailsExtended(itemDetails: unknown): itemDetails is BlackDesertItemDetailsExtended;
 
-export function isValidBlackDesertItemDetailsHistory(itemHistory: unknown): boolean;
+export function isValidBlackDesertItemDetailsAvailability(itemAvailability: unknown): itemAvailability is BlackDesertItemDetailsAvailability;
+
+export function isValidBlackDesertItemDetailsHistory(itemHistory: unknown): itemHistory is BlackDesertItemDetailsHistory;
