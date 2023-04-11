@@ -1,24 +1,28 @@
 <template>
   <div class="flex h-full flex-col gap-y-5">
-    <div class="flex w-full items-stretch gap-3.5">
-      <ListItemIcon :src="itemIcon.href" :item="props.itemType" :class="itemGradeBorder" />
-      <ListItemName :name="itemType.name" :class="itemGradeText" />
-      <ItemDetailsOverviewButton
-        data-test="1-month"
-        :label="`1 ${translate('date.month')}`"
-        :active="months === 1"
-        @click="handleButtonClick(1)"
-      />
-      <ItemDetailsOverviewButton
-        data-test="3-months"
-        :label="`3 ${translate('date.months')}`"
-        :active="months === 3"
-        @click="handleButtonClick(3)"
-      />
+    <div class="flex flex-col-reverse gap-3.5 sm:flex-row">
+      <div class="flex w-full gap-3.5 overflow-hidden">
+        <ListItemIcon :src="itemIcon.href" :item="props.itemType" :class="itemGradeBorder" />
+        <ListItemName :name="itemType.name" :class="itemGradeText" />
+      </div>
+      <div class="flex gap-3.5">
+        <ItemDetailsOverviewButton
+          data-test="1-month"
+          :label="`1 ${translate('date.month')}`"
+          :active="months === 1"
+          @click="handleButtonClick(1)"
+        />
+        <ItemDetailsOverviewButton
+          data-test="3-months"
+          :label="`3 ${translate('date.months')}`"
+          :active="months === 3"
+          @click="handleButtonClick(3)"
+        />
+      </div>
     </div>
-    <div class="flex h-full gap-x-5">
-      <div class="w-1/3">
-        <div class="grid h-full grid-cols-2 gap-6">
+    <div class="flex flex-grow flex-col gap-5 pb-5 xl:flex-row">
+      <div class="xl:w-1/3">
+        <div class="grid h-full grid-cols-1 gap-6 sm:grid-cols-2">
           <ItemDetailsOverviewProperty
             data-test="in-stock"
             :label="translate('item.count')"
@@ -47,8 +51,8 @@
           />
         </div>
       </div>
-      <div class="w-2/3">
-        <ItemDetailsOverviewChart :data="props.itemDetails.history" :days="days" class="-mt-4" />
+      <div class="h-full min-h-[300px] xl:w-2/3">
+        <ItemDetailsOverviewChart :data="props.itemDetails.history" :days="days" class="xl:-mt-4" />
       </div>
     </div>
   </div>

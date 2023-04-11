@@ -4,14 +4,14 @@
     <button
       data-test="button"
       :class="{
-        'flex w-full cursor-pointer items-center justify-between border p-3': true,
+        'flex w-full cursor-pointer items-center justify-between gap-x-3 border p-3': true,
         'button-inactive-state': !isActive,
         'border-lighten button-active-state': isActive,
       }"
       @click="triggerCategorySidemenuItemEffect"
     >
       <AppIcon class="-my-[4px] h-[24px]" :src="require(`@/assets/images/${props.icon}`)" />
-      <span class="text-sm">
+      <span class="truncate text-sm">
         {{ props.title }}
       </span>
       <AppDropdownIcon class="-my-[8px] h-[32px] drop-shadow-md" :active="isActive" />

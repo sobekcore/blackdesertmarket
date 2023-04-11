@@ -9,7 +9,7 @@
       class="border-lighten hocus:bg-lighten-sm w-full cursor-pointer rounded border-t py-1.5 px-2 -outline-offset-1"
       @click="triggerListItemEffect"
     >
-      <span class="relative flex items-stretch gap-2.5">
+      <span class="relative flex items-stretch gap-2.5 overflow-hidden">
         <slot name="icon">
           <ListItemIcon
             :src="itemIcon.href"

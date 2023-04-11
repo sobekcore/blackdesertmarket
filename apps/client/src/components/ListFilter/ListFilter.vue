@@ -1,7 +1,7 @@
 <template>
   <form class="flex flex-col gap-2 p-2.5" @submit.prevent="handleSubmit">
     <div class="border-lighten w-full rounded border-t bg-dark-400 py-1.5 px-2 shadow-md">
-      <div class="list-filter-main grid grid-flow-col gap-2">
+      <div class="list-filter-main grid grid-flow-row gap-2 sm:grid-flow-col">
         <ListFilterButton @click="updateButtonSearchState('searchContext')">
           <ListFilterButtonContent :icon="require('@/assets/images/list-filter/filter.png')" icon-class="h-[16px]">
             <template v-if="state.searchContext === ListFilterButtonSearchState.ALL">
@@ -33,7 +33,7 @@
         </ListFilterButton>
       </div>
     </div>
-    <div class="flex gap-2">
+    <div class="flex flex-wrap gap-2">
       <ListFilterButton :tooltip="translate('listFilter.sortCount')" @click="updateButtonSortState('sortCount')">
         <ListFilterButtonContent :icon="require('@/assets/images/list-filter/sort-count.png')" class="gap-4">
           <AppIcon :src="getListFilterButtonIcon(state.sortCount)" class="h-[20px] scale-125 drop-shadow-md" />
@@ -133,6 +133,12 @@ defineExpose<ListFilterExposed>({
 
 <style lang="scss" scoped>
 .list-filter-main {
-  grid-template-columns: 2fr 3fr 2fr 2fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+
+  @screen sm {
+    grid-template-columns: 2fr 3fr 2fr 2fr;
+    grid-template-rows: 1fr;
+  }
 }
 </style>

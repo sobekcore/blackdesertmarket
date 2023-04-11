@@ -1,12 +1,12 @@
 <template>
-  <div role="dialog" aria-modal="true" class="relative z-20">
+  <div role="dialog" aria-modal="true" class="relative z-30">
     <AppModalBackdrop />
     <div ref="container" class="fixed inset-0">
       <div ref="modal" :style="modalStyle" class="fixed">
         <div
           data-test="inner"
           :class="{
-            'flex flex-col overflow-hidden rounded-lg border border-brand-600 shadow-xl': true,
+            'flex flex-col overflow-hidden rounded-none border-0 border-brand-600 shadow-xl xl:rounded-lg xl:border': true,
             'modal-active-fullsize': props.fullsize,
             'modal-inactive-fullsize': !props.fullsize,
           }"
@@ -23,7 +23,7 @@
             <span class="flex-grow"></span>
             <AppModalClose @close="modalClose" />
           </div>
-          <div class="relative flex flex-grow overflow-y-hidden">
+          <div class="relative flex flex-grow flex-col overflow-y-hidden xl:flex-row">
             <slot></slot>
           </div>
         </div>
@@ -147,11 +147,19 @@ useResizeObserver(modal, (): void => {
 
 <style lang="scss" scoped>
 .modal-active-fullsize {
-  @apply h-[90vh] w-[90vw];
+  @apply h-dynamic-screen w-screen;
+
+  @screen xl {
+    @apply h-[90dvh] w-[90vw];
+  }
 }
 
 .modal-inactive-fullsize {
-  @apply max-h-[90vh] w-[400px] max-w-[90vw];
+  @apply max-h-[100dvh] w-[400px] max-w-[100vw];
+
+  @screen xl {
+    @apply max-h-[90dvh] max-w-[90vw];
+  }
 }
 
 .modal-handle-draggable {

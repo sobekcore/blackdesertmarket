@@ -1,6 +1,6 @@
 <template>
-  <span data-test="name" :class="props.class" class="flex flex-grow items-center">
-    {{ props.name }}
+  <span data-test="name" :class="props.class" class="flex flex-grow items-center overflow-hidden">
+    <span class="truncate">{{ props.name }}</span>
   </span>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
-  <span class="flex w-1/5 flex-col justify-between">
-    <span class="flex items-center justify-start text-xs text-dark-800">
+  <span class="hidden w-1/5 min-w-1/5 flex-col justify-between sm:flex">
+    <span class="flex items-center justify-start gap-1 text-xs text-dark-800">
       <slot name="label">
         {{ props.label }}
       </slot>

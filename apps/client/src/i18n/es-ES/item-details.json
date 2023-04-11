@@ -1,4 +1,7 @@
 {
+  "detailsTab": "Detalles",
+  "additionalTab": "Adicional",
+  "availabilityTab": "Disponibilidad",
   "availability": {
     "header": {
       "sellCount": "Vendedores",
