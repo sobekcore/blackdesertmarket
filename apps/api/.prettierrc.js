@@ -9,6 +9,7 @@ module.exports = {
     '^@nestjs',
     '<THIRD_PARTY_MODULES>',
     '^@test/(.*)$',
+    '^@/swagger/(.*)$',
     '^@/interfaces/(.*)$',
     '^@/exceptions/(.*)$',
     '^@/enums/(.*)$',

@@ -1,4 +1,5 @@
 import { Controller, Get, Header, Param, Query, StreamableFile } from '@nestjs/common';
+import { ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import {
   BlackDesertItemDetails,
   BlackDesertItemDetailsExtended,
@@ -6,6 +7,10 @@ import {
   BlackDesertItemType,
 } from '@blackdesertmarket/interfaces';
 import { I18n, I18nContext } from 'nestjs-i18n';
+import { EnhancementParam } from '@/swagger/enhancement.param';
+import { IdParam } from '@/swagger/id.param';
+import { LanguageQuery } from '@/swagger/language.query';
+import { RegionQuery } from '@/swagger/region.query';
 import { ControllerResponse } from '@/interfaces/objects/controller-response.interface';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
 import { HttpHeader } from '@/enums/http.enum';
@@ -17,10 +22,14 @@ import { FindTooltipByIdParamsDto } from '@/modules/item/dto/find-tooltip-by-id.
 import { FindTypesByIdParamsDto } from '@/modules/item/dto/find-types-by-id.dto';
 import { ItemService } from '@/modules/item/item.service';
 
+@ApiTags('Item')
 @Controller('item')
 export class ItemController {
   constructor(private readonly itemService: ItemService) {}
 
+  @ApiQuery(LanguageQuery)
+  @ApiQuery(RegionQuery)
+  @ApiParam(IdParam)
   @Get('/:id')
   public async findTypesById(
     @Region() region: RegionContext,
@@ -33,12 +42,17 @@ export class ItemController {
     };
   }
 
+  @ApiParam(IdParam)
   @Get('/:id/icon')
   @Header(HttpHeader.CONTENT_TYPE, 'image/png')
   public async findIconById(@Param() params: FindIconByIdParamsDto): Promise<StreamableFile> {
     return new StreamableFile(await this.itemService.findIconById(params.id), { type: 'image/png' });
   }
 
+  @ApiQuery(LanguageQuery)
+  @ApiQuery(RegionQuery)
+  @ApiParam(EnhancementParam)
+  @ApiParam(IdParam)
   @Get('/:id/:enhancement')
   public async findDetailsById(
     @Region() region: RegionContext,
@@ -52,6 +66,9 @@ export class ItemController {
     };
   }
 
+  @ApiQuery(LanguageQuery)
+  @ApiParam(EnhancementParam)
+  @ApiParam(IdParam)
   @Get('/:id/:enhancement/tooltip')
   public async findTooltipById(
     @I18n() i18n: I18nContext,

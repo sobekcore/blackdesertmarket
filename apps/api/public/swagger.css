@@ -1,0 +1,61 @@
+:root {
+  --DARK_100: #16161a;
+  --DARK_400: #2b2b32;
+  --DARK_600: #43434e;
+  --DARK_900: #eeeeee;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--DARK_100);
+  color: var(--DARK_900);
+}
+
+* {
+  outline: none !important;
+}
+
+*:is(:not(.btn.cancel, .parameter__in)) {
+  color: var(--DARK_900) !important;
+}
+
+.swagger-ui select,
+.swagger-ui select[disabled],
+.swagger-ui input[type=text] {
+  background: var(--DARK_100);
+  border-color: var(--DARK_600);
+}
+
+.swagger-ui .topbar {
+  display: none;
+}
+
+.swagger-ui .copy-to-clipboard {
+  background: none;
+}
+
+.swagger-ui .opblock {
+  background: var(--DARK_400) !important;
+  border-color: var(--DARK_600) !important;
+}
+
+.swagger-ui .opblock .opblock-summary {
+  border: none !important;
+  padding: 10px;
+}
+
+.swagger-ui .opblock .opblock-section-header {
+  background: var(--DARK_400);
+}
+
+.swagger-ui .opblock-tag {
+  border-color: var(--DARK_600);
+}
+
+.swagger-ui .opblock-tag .arrow,
+.swagger-ui .opblock-summary-control .arrow {
+  fill: var(--DARK_900);
+}
