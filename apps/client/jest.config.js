@@ -1,4 +1,18 @@
 module.exports = {
   preset: '@vue/cli-plugin-unit-jest/presets/typescript-and-babel',
-  testMatch: ['**/src/**/*.spec.ts'],
+  verbose: true,
+  rootDir: '.',
+  testEnvironment: 'jsdom',
+  moduleFileExtensions: ['ts', 'js', 'cjs', 'vue'],
+  testMatch: ['**/src/**/*.spec.(t|j)s'],
+  moduleNameMapper: {
+    '^axios$': require.resolve('axios'),
+    '^chart.js$': require.resolve('chart.js'),
+    '~/(.*)': '<rootDir>/$1',
+    '@/(.*)': '<rootDir>/src/$1',
+    '@test/(.*)': '<rootDir>/test/$1',
+  },
+  collectCoverageFrom: ['<rootDir>/src/**/*.(t|j)s', '<rootDir>/src/**/*.vue'],
+  coveragePathIgnorePatterns: ['<rootDir>/src/layouts', '<rootDir>/src/main.ts', '<rootDir>/src/App.vue'],
+  coverageDirectory: 'coverage',
 };

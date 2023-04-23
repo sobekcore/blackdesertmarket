@@ -1,14 +1,15 @@
 <template>
   <li>
     <button
+      data-test="button"
       :class="{
-        'flex w-full rounded-sm border py-3 px-6 hocus:text-dark-900': true,
+        'flex w-full rounded-sm border py-3 px-6': true,
         'button-inactive-state': !isActive,
         'border-lighten button-active-state': isActive,
       }"
       @click="triggerCategorySidemenuSubItemEffect"
     >
-      <span class="text-sm">
+      <span class="truncate text-sm">
         {{ props.title }}
       </span>
     </button>
@@ -16,8 +17,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ComputedRef, Ref, defineEmits, defineProps, watch, ref, computed } from 'vue';
-import { Router, RouteLocationNamedRaw, useRouter, useLink } from 'vue-router';
+import { ComputedRef, Ref, computed, defineEmits, defineProps, ref, watch } from 'vue';
+import { RouteLocationNamedRaw, Router, useLink, useRouter } from 'vue-router';
 import { useLocationStore } from '@/stores/location';
 
 const emit = defineEmits({
@@ -83,15 +84,16 @@ watch(
 
     itemListActiveRoute.value = matchMainCategory && matchSubCategory;
   },
+  { immediate: process.env.NODE_ENV === 'test' },
 );
 </script>
 
 <style lang="scss" scoped>
 .button-inactive-state {
-  @apply border-dark-200 bg-dark-300 text-brand-700 hocus:bg-dark-500;
+  @apply border-dark-200 bg-dark-300 text-brand-600 hocus:bg-dark-500 hocus:text-dark-900;
 }
 
 .button-active-state {
-  @apply bg-dark-500 text-dark-800;
+  @apply bg-dark-500 text-dark-800 hocus:text-dark-900;
 }
 </style>

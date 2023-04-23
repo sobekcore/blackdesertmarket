@@ -1,44 +1,63 @@
-import { Injectable } from '@nestjs/common';
-import { Observable, lastValueFrom, map } from 'rxjs';
-import { AxiosResponse } from 'axios';
+import { AxiosResponse } from '@nestjs/axios/node_modules/axios';
+import { Injectable, ServiceUnavailableException } from '@nestjs/common';
 import { BlackDesertItem, BlackDesertItemHot, BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
+import { I18nContext } from 'nestjs-i18n';
+import { Observable, lastValueFrom, map } from 'rxjs';
 import {
-  ExternalMarketMeta,
-  ExternalMarketParams,
   ExternalMarketItem,
   ExternalMarketItemHot,
   ExternalMarketItemQueue,
-} from '@/interfaces/external-market.interface';
+  ExternalMarketMeta,
+  ExternalMarketParams,
+} from '@/interfaces/objects/external-market.interface';
 import { ExternalMarketException } from '@/exceptions/external-market.exception';
-import { InternalMarketEndpoint } from '@/enums/internal-market.enum';
-import { ItemService } from '@/modules/item/item.service';
+import { ControllerResponseCode } from '@/enums/controller-response.enum';
+import { ExternalMarketEndpoint, ExternalMarketRequestPath } from '@/enums/external-market.enum';
+import { RegionContext } from '@/contexts/region.context';
 import { ExternalMarketService } from '@/modules/external-market/external-market.service';
+import { ItemTransformerService } from '@/modules/item/item-transformer.service';
+import { ItemValidatorService } from '@/modules/item/item-validator.service';
 
 @Injectable()
 export class ListService {
-  constructor(private readonly itemService: ItemService, private readonly marketService: ExternalMarketService) {}
+  constructor(
+    private readonly itemValidatorService: ItemValidatorService,
+    private readonly itemTransformerService: ItemTransformerService,
+    private readonly marketService: ExternalMarketService,
+  ) {}
 
-  public findHotItems(region?: string, language?: string): Promise<BlackDesertItemHot[]> {
+  public findHotItems(region: RegionContext, i18n: I18nContext): Promise<BlackDesertItemHot[]> {
     const meta: ExternalMarketMeta = {
-      region: region,
-      language: language,
+      region: region.code,
+      language: i18n.lang,
     };
 
     const data: Observable<BlackDesertItemHot[]> = this.marketService
-      .buildExternalMarketRequest(InternalMarketEndpoint.LIST_HOT, {}, meta)
+      .buildRequest(ExternalMarketEndpoint.LIST_HOT, {}, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
+          if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
+            throw new ServiceUnavailableException({
+              code: ControllerResponseCode.MAINTENANCE,
+              messages: ['Currently external market is in the maintenance'],
+            });
+          }
+
           return response.data.hotList ? response.data.hotList : [];
         }),
         map((data: unknown[]): BlackDesertItemHot[] => {
+          if (!data.length) {
+            throw new ExternalMarketException('Response from external market did contain invalid data');
+          }
+
           data.forEach((itemHot: unknown): void => {
-            if (!this.itemService.isValidExternalMarketItemHot(itemHot)) {
+            if (!this.itemValidatorService.isValidExternalMarketItemHot(itemHot)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
             }
           });
 
           return data.map((itemHot: ExternalMarketItemHot): BlackDesertItemHot => {
-            return this.itemService.transformExternalMarketItemHot(itemHot);
+            return this.itemTransformerService.transformExternalMarketItemHot(itemHot);
           });
         }),
       );
@@ -46,27 +65,38 @@ export class ListService {
     return lastValueFrom(data);
   }
 
-  public findQueueItems(region?: string, language?: string): Promise<BlackDesertItemQueue[]> {
+  public findQueueItems(region: RegionContext, i18n: I18nContext): Promise<BlackDesertItemQueue[]> {
     const meta: ExternalMarketMeta = {
-      region: region,
-      language: language,
+      region: region.code,
+      language: i18n.lang,
     };
 
     const data: Observable<BlackDesertItemQueue[]> = this.marketService
-      .buildExternalMarketRequest(InternalMarketEndpoint.LIST_QUEUE, {}, meta)
+      .buildRequest(ExternalMarketEndpoint.LIST_QUEUE, {}, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
+          if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
+            throw new ServiceUnavailableException({
+              code: ControllerResponseCode.MAINTENANCE,
+              messages: ['Currently external market is in the maintenance'],
+            });
+          }
+
           return response.data._waitList ? response.data._waitList : [];
         }),
         map((data: unknown[]): BlackDesertItemQueue[] => {
+          if (!data.length) {
+            throw new ExternalMarketException('Response from external market did contain invalid data');
+          }
+
           data.forEach((itemQueue: unknown): void => {
-            if (!this.itemService.isValidExternalMarketItemQueue(itemQueue)) {
+            if (!this.itemValidatorService.isValidExternalMarketItemQueue(itemQueue)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
             }
           });
 
           return data.map((itemQueue: ExternalMarketItemQueue): BlackDesertItemQueue => {
-            return this.itemService.transformExternalMarketItemQueue(itemQueue);
+            return this.itemTransformerService.transformExternalMarketItemQueue(itemQueue);
           });
         }),
       );
@@ -75,10 +105,10 @@ export class ListService {
   }
 
   public findByCategory(
+    region: RegionContext,
+    i18n: I18nContext,
     mainCategory: number,
     subCategory: number,
-    region?: string,
-    language?: string,
   ): Promise<BlackDesertItem[]> {
     const params: ExternalMarketParams = {
       mainCategory: String(mainCategory),
@@ -86,25 +116,36 @@ export class ListService {
     };
 
     const meta: ExternalMarketMeta = {
-      region: region,
-      language: language,
+      region: region.code,
+      language: i18n.lang,
     };
 
     const data: Observable<BlackDesertItem[]> = this.marketService
-      .buildExternalMarketRequest(InternalMarketEndpoint.LIST, params, meta)
+      .buildRequest(ExternalMarketEndpoint.LIST, params, meta)
       .pipe(
         map((response: AxiosResponse): unknown[] => {
+          if (response.request.path === ExternalMarketRequestPath.MAINTENANCE) {
+            throw new ServiceUnavailableException({
+              code: ControllerResponseCode.MAINTENANCE,
+              messages: ['Currently external market is in the maintenance'],
+            });
+          }
+
           return response.data.marketList ? response.data.marketList : [];
         }),
         map((data: unknown[]): BlackDesertItem[] => {
+          if (!data.length) {
+            throw new ExternalMarketException('Response from external market did contain invalid data');
+          }
+
           data.forEach((item: unknown): void => {
-            if (!this.itemService.isValidExternalMarketItem(item)) {
+            if (!this.itemValidatorService.isValidExternalMarketItem(item)) {
               throw new ExternalMarketException('Response from external market did contain invalid data');
             }
           });
 
           return data.map((item: ExternalMarketItem): BlackDesertItem => {
-            return this.itemService.transformExternalMarketItem(item);
+            return this.itemTransformerService.transformExternalMarketItem(item);
           });
         }),
       );

@@ -1,6 +1,6 @@
 <template>
-  <section>
-    <CategoryItemList :main-category="mainCategory" :sub-category="subCategory" />
+  <section class="relative h-full max-h-full">
+    <ItemList :main-category="mainCategory" :sub-category="subCategory" />
   </section>
 </template>
 
@@ -8,7 +8,7 @@
 import { Ref, ref, watch } from 'vue';
 import { RouteLocationNormalizedLoaded, RouteParams, useRoute } from 'vue-router';
 import { ComponentException } from '@/exceptions/component-exception';
-import CategoryItemList from '@/components/CategoryItemList.vue';
+import ItemList from '@/components/ItemList.vue';
 
 const route: RouteLocationNormalizedLoaded = useRoute();
 

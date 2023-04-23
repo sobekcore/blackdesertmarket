@@ -1,5 +1,5 @@
 <template>
-  <li :class="props.class" class="flex rounded">
+  <li data-test="item" :class="props.class" class="flex rounded">
     <div class="hocus:bg-lighten-xs flex w-full cursor-pointer items-center rounded py-1 px-5">
       <slot></slot>
     </div>

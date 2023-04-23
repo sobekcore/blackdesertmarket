@@ -1,0 +1,10 @@
+{
+  "all": "All",
+  "byCategory": "By Category",
+  "itemName": "Item Name",
+  "favorites": "Favorites",
+  "status": "Status",
+  "sortCount": "Sort by the number of items registered",
+  "sortPrice": "Sort by the average exchange price",
+  "sortGrade": "Sort by item grade"
+}

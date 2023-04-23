@@ -1,47 +1,62 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
+import { ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { BlackDesertItem, BlackDesertItemHot, BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
-import { ControllerResponse } from '@/interfaces/controller-response.interface';
+import { I18n, I18nContext } from 'nestjs-i18n';
+import { LanguageQuery } from '@/swagger/language.query';
+import { MainCategoryParam } from '@/swagger/main-category.param';
+import { RegionQuery } from '@/swagger/region.query';
+import { SubCategoryParam } from '@/swagger/sub-category.param';
+import { ControllerResponse } from '@/interfaces/objects/controller-response.interface';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
+import { Region } from '@/decorators/region.decorator';
+import { RegionContext } from '@/contexts/region.context';
+import { FindByCategoryParamsDto } from '@/modules/list/dto/find-by-category.dto';
 import { ListService } from '@/modules/list/list.service';
-import { FindHotItemsDTOQuery } from '@/modules/list/dto/find-hot-items.dto';
-import { FindQueueItemsDTOQuery } from '@/modules/list/dto/find-queue-items.dto';
-import { FindByCategoryDTOParams, FindByCategoryDTOQuery } from '@/modules/list/dto/find-by-category.dto';
 
+@ApiTags('List')
 @Controller('list')
 export class ListController {
   constructor(private readonly listService: ListService) {}
 
+  @ApiQuery(LanguageQuery)
+  @ApiQuery(RegionQuery)
   @Get('/hot')
-  public async findHotItems(@Query() query: FindHotItemsDTOQuery): Promise<ControllerResponse<BlackDesertItemHot[]>> {
+  public async findHotItems(
+    @Region() region: RegionContext,
+    @I18n() i18n: I18nContext,
+  ): Promise<ControllerResponse<BlackDesertItemHot[]>> {
     return {
       code: ControllerResponseCode.SUCCESS,
-      data: await this.listService.findHotItems(query.region, query.language),
+      data: await this.listService.findHotItems(region, i18n),
     };
   }
 
+  @ApiQuery(LanguageQuery)
+  @ApiQuery(RegionQuery)
   @Get('/queue')
   public async findQueueItems(
-    @Query() query: FindQueueItemsDTOQuery,
+    @Region() region: RegionContext,
+    @I18n() i18n: I18nContext,
   ): Promise<ControllerResponse<BlackDesertItemQueue[]>> {
     return {
       code: ControllerResponseCode.SUCCESS,
-      data: await this.listService.findQueueItems(query.region, query.language),
+      data: await this.listService.findQueueItems(region, i18n),
     };
   }
 
+  @ApiQuery(LanguageQuery)
+  @ApiQuery(RegionQuery)
+  @ApiParam(SubCategoryParam)
+  @ApiParam(MainCategoryParam)
   @Get('/:mainCategory/:subCategory')
   public async findByCategory(
-    @Param() params: FindByCategoryDTOParams,
-    @Query() query: FindByCategoryDTOQuery,
+    @Region() region: RegionContext,
+    @I18n() i18n: I18nContext,
+    @Param() params: FindByCategoryParamsDto,
   ): Promise<ControllerResponse<BlackDesertItem[]>> {
     return {
       code: ControllerResponseCode.SUCCESS,
-      data: await this.listService.findByCategory(
-        params.mainCategory,
-        params.subCategory,
-        query.region,
-        query.language,
-      ),
+      data: await this.listService.findByCategory(region, i18n, params.mainCategory, params.subCategory),
     };
   }
 }

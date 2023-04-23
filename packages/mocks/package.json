@@ -1,0 +1,9 @@
+{
+  "name": "@blackdesertmarket/mocks",
+  "description": "Functions to mock Black Desert items objects",
+  "main": "src/index.js",
+  "types": "types/index.d.ts",
+  "dependencies": {
+    "@blackdesertmarket/interfaces": "*"
+  }
+}

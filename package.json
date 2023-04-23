@@ -1,7 +1,6 @@
 {
   "name": "blackdesertmarket",
-  "description": "Single repository for all the Black Desert market related packages",
-  "author": "David <sobekcore@gmail.com>",
+  "description": "Single repository for all the Black Desert Market related packages",
   "workspaces": [
     "apps/*",
     "packages/*"

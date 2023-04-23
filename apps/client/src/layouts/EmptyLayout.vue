@@ -1,12 +1,9 @@
 <template>
-  <AppMarketplaceView>
-    <AppMarketplaceProvider>
-      <slot></slot>
-    </AppMarketplaceProvider>
-  </AppMarketplaceView>
+  <AppMarketplaceProvider>
+    <slot></slot>
+  </AppMarketplaceProvider>
 </template>
 
 <script lang="ts" setup>
-import AppMarketplaceView from '@/components/base/AppMarketplaceView.vue';
-import AppMarketplaceProvider from '@/components/base/AppMarketplaceProvider.vue';
+import AppMarketplaceProvider from '@/components/Base/AppMarketplaceProvider.vue';
 </script>

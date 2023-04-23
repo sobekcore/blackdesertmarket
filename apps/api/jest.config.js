@@ -1,14 +1,18 @@
 module.exports = {
-  moduleFileExtensions: ['js', 'json', 'ts'],
+  verbose: true,
   rootDir: '.',
-  testRegex: '.*\\.spec\\.ts$',
+  testEnvironment: 'node',
+  moduleFileExtensions: ['ts', 'js'],
+  testRegex: '.*\\.spec\\.(t|j)s$',
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
   moduleNameMapper: {
+    '^uuid$': require.resolve('uuid'),
     '@/(.*)': '<rootDir>/src/$1',
+    '@test/(.*)': '<rootDir>/test/$1',
   },
-  collectCoverageFrom: ['**/*.(t|j)s'],
-  coverageDirectory: '../coverage',
-  testEnvironment: 'node',
+  collectCoverageFrom: ['<rootDir>/src/**/*.(t|j)s'],
+  coveragePathIgnorePatterns: ['<rootDir>/src/main.ts', '.module.ts'],
+  coverageDirectory: 'coverage',
 };

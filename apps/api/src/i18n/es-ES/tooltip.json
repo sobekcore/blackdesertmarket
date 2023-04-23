@@ -1,0 +1,12 @@
+{
+  "personalTransaction": "Transacción privada",
+  "enhancementType": "Tipo de Refuerzo",
+  "description": "Descripción",
+  "classExclusive": "únicamente",
+  "itemEffect": "Efecto de objeto",
+  "enhancementEffect": "Efecto de mejora",
+  "specialEffect": "Efecto especial",
+  "setEffect": "Efecto de conjunto",
+  "price": "Precio",
+  "durability": "Durabilidad"
+}
