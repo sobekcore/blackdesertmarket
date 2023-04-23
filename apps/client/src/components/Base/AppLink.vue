@@ -1,5 +1,10 @@
 <template>
-  <a :href="props.url" target="_blank" class="break-all underline decoration-dotted underline-offset-4">
+  <a
+    data-test="link"
+    :href="props.url"
+    target="_blank"
+    class="break-all underline decoration-dotted underline-offset-4"
+  >
     {{ props.url }}
   </a>
 </template>

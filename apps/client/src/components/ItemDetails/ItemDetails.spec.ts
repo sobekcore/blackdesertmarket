@@ -2,6 +2,7 @@ import { BlackDesertItemDetails, BlackDesertItemType } from '@blackdesertmarket/
 import { mockBlackDesertItemDetails, mockBlackDesertItemType } from '@blackdesertmarket/mocks';
 import { VueWrapper, flushPromises, shallowMount } from '@vue/test-utils';
 import { mockPlugins } from '@test/mocks/plugins.mock';
+import { mockProvide } from '@test/mocks/provide.mock';
 import ItemDetails from '@/components/ItemDetails/ItemDetails.vue';
 import ItemDetailsAdditional from '@/components/ItemDetails/ItemDetailsAdditional.vue';
 import ItemDetailsAvailability from '@/components/ItemDetails/ItemDetailsAvailability.vue';
@@ -31,6 +32,7 @@ describe('ItemDetails', () => {
     wrapper = shallowMount(ItemDetails, {
       global: {
         plugins: mockPlugins(),
+        provide: mockProvide(),
       },
       props: {
         id: MOCK_ID,
@@ -61,6 +63,7 @@ describe('ItemDetails', () => {
     wrapper = shallowMount(ItemDetails, {
       global: {
         plugins: mockPlugins(),
+        provide: mockProvide(),
       },
       props: {
         id: MOCK_ID,
@@ -81,6 +84,7 @@ describe('ItemDetails', () => {
     wrapper = shallowMount(ItemDetails, {
       global: {
         plugins: mockPlugins(),
+        provide: mockProvide(),
       },
       props: {
         id: MOCK_ID,
