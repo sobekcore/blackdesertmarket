@@ -114,9 +114,9 @@ describe('ListController', () => {
         { mainCategory: 25, subCategory: 2 },
       );
 
-      const validItemQueue: boolean = isValidBlackDesertItem(getFirstElement<BlackDesertItem>(response.data));
+      const validItem: boolean = isValidBlackDesertItem(getFirstElement<BlackDesertItem>(response.data));
 
-      expect(validItemQueue).toBeTruthy();
+      expect(validItem).toBeTruthy();
     });
 
     it('should throw ExternalMarketException on invalid response', async () => {

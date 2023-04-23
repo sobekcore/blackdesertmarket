@@ -1,8 +1,9 @@
 <template>
   <button
+    data-test="tab"
     :class="{
       'w-full truncate border-b-2 border-dark-400 bg-dark-400 p-2': true,
-      'border-dark-800': props.modelValue === props.id,
+      'tab-active-state': props.modelValue === props.id,
     }"
     @click="handleTabClick"
   >
@@ -35,3 +36,9 @@ const handleTabClick = (): void => {
   emit('update:modelValue', props.id);
 };
 </script>
+
+<style lang="scss" scoped>
+.tab-active-state {
+  @apply border-dark-800;
+}
+</style>

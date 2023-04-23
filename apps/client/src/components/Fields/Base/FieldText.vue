@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input v-model="fieldValue" v-bind="attrs" type="text" />
+    <input v-model="fieldValue" v-bind="attrs" data-test="input" type="text" />
   </div>
 </template>
 
