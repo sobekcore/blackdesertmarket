@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # For this script to work the application must be located in /home/node/apps/client
-# There also need to be locally installed @vue/cli-service and globally installed http-server
+# There also need to be locally installed @vue/cli-service and globally installed serve
 
 ENVIRONMENT=$1
 
@@ -18,6 +18,6 @@ fi
 
 if [ "$ENVIRONMENT" = "prod" ]; then
   cd /home/node/apps/client
-  http-server dist --proxy http://localhost:8080?
+  serve dist -s -p 8080
   sleep infinity
 fi

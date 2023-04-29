@@ -2,6 +2,7 @@
   <Tooltip
     container="#tooltip"
     :distance="distance"
+    :triggers="triggers"
     :placement="props.placement"
     :disabled="props.disabled"
     :popper-class="props.class"
@@ -37,6 +38,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  showOnClick: {
+    type: Boolean,
+    default: false,
+  },
   class: {
     type: [String, Object] as PropType<VueAttributeClass>,
     default: 'tooltip:default',
@@ -48,9 +53,15 @@ const documentSize: UseDocumentSizeReturn = useDocumentSize();
 
 const distance: number = documentSize.remToRaw(tailwindConfig.getValue('padding', '2.5'));
 
+const triggers: string[] = ['hover', 'focus', 'touch'];
+
 const triggerTooltipShow = (): void => {
   emit('show');
 };
+
+if (props.showOnClick) {
+  triggers.push('click');
+}
 </script>
 
 <style lang="scss">

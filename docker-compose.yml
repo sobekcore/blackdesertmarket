@@ -15,6 +15,7 @@ services:
     volumes:
       - ./apps/client/:/home/node/apps/client
       - /home/node/apps/client/node_modules
+      - /home/node/apps/client/dist
 
   api:
     build:
@@ -30,6 +31,7 @@ services:
     volumes:
       - ./apps/api/:/home/node/apps/api
       - /home/node/apps/api/node_modules
+      - /home/node/apps/api/dist
 
 networks:
   blackdesertmarket-network:

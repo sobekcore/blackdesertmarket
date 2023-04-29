@@ -21,7 +21,7 @@ COPY --chown=node:node package.json .
 COPY --chown=node:node package-lock.json .
 
 # Install necessary npm dependencies
-RUN npm install -g http-server
+RUN npm install -g serve
 RUN npm install
 
 # Set work directory to the copied directory

@@ -22,7 +22,7 @@
             'translate-x-0': navigationOnCanvas,
           }"
         >
-          <CategorySidemenu />
+          <CategorySidemenu @navigate="categorySidemenuNavigate" />
         </nav>
         <main :key="locationStore.reload" class="h-full w-full overflow-y-hidden bg-dark-100 xl:w-3/4">
           <AppMaintenance v-if="maintenance" />
@@ -66,6 +66,10 @@ const showNavigation = (): void => {
 
 const hideNavigation = (): void => {
   navigationOnCanvas.value = false;
+};
+
+const categorySidemenuNavigate = (): void => {
+  hideNavigation();
 };
 
 const maintenance: ComputedRef<boolean> = computed((): boolean => {

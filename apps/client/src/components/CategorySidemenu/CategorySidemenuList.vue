@@ -53,6 +53,7 @@ import CategorySidemenuSubItem from '@/components/CategorySidemenu/CategorySidem
 
 const emit = defineEmits({
   effect: null,
+  navigate: null,
 });
 
 const translate = useInject(TranslateKey);
@@ -118,5 +119,6 @@ const categorySidemenuItemEffect = (mainCategory: number): void => {
 
 const categorySidemenuSubItemEffect = (mainCategory: number): void => {
   activeMainCategory.value = mainCategory;
+  emit('navigate');
 };
 </script>

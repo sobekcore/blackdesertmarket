@@ -1,5 +1,11 @@
 <template>
-  <AppTooltip placement="right-start" :disabled="!props.item" :class="itemGradeClass" @show="handleTooltipShow">
+  <AppTooltip
+    placement="right-start"
+    :disabled="!props.item"
+    :class="itemGradeClass"
+    show-on-click
+    @show="handleTooltipShow"
+  >
     <span class="relative flex h-[46px] w-[46px] items-center">
       <AppIcon :src="props.src" :class="props.class" class="h-full w-full rounded border border-dark-600 bg-dark-100" />
       <span role="presentation" aria-hidden="true" class="text-over-icon">
