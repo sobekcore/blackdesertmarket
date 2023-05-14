@@ -1,3 +1,7 @@
+<!--
+  TODO: Change this component to a reusable generic button component
+-->
+
 <template>
   <div
     :class="{

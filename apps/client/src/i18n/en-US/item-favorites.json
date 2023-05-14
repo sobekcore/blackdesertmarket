@@ -1,0 +1,9 @@
+{
+  "headerTextRegister": "If a search word can be found in a search result, it can be registered to Favorites.",
+  "headerTextCount": "You can register up to 10 search words in Favorites.",
+  "emptyFavorites": "No items registered in Favorites",
+  "searchButton": "Starts search with the search word",
+  "removeButton": "Remove search word from Favorites",
+  "listToFavorites": "List to Favorites",
+  "allReset": "All Reset"
+}

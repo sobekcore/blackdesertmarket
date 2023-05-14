@@ -17,11 +17,7 @@
           :placeholder="translate('listFilter.itemName')"
           @change="updateFilterState"
         />
-        <ListFilterButton
-          :variant="ListFilterButtonVariant.LIGHT"
-          :tooltip="`${translate('generic.comingSoon')}...`"
-          disabled
-        >
+        <ListFilterButton :variant="ListFilterButtonVariant.LIGHT" @click="showFavoritesModal">
           {{ translate('listFilter.favorites') }}
         </ListFilterButton>
         <ListFilterButton
@@ -51,16 +47,21 @@
       </ListFilterButton>
     </div>
   </form>
+  <Teleport v-if="favoritesModal" to="#modal">
+    <ItemFavoritesModal @close="hideFavoritesModal" />
+  </Teleport>
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, defineExpose, reactive } from 'vue';
+import { Ref, defineEmits, defineExpose, reactive, ref, watch } from 'vue';
 import { ListFilterData } from '@/interfaces/list-filter';
 import { ListFilterButtonSearchState, ListFilterButtonSortState, ListFilterButtonVariant } from '@/enums/list-filter';
+import { useLocationStore } from '@/stores/location';
 import { useDropdownIcon } from '@/composables/use-dropdown-icon';
 import { TranslateKey, useInject } from '@/composables/use-inject';
 import AppIcon from '@/components/Base/AppIcon.vue';
 import FieldSearchText from '@/components/Fields/FieldSearchText.vue';
+import ItemFavoritesModal from '@/components/ItemFavorites/ItemFavoritesModal.vue';
 import { ListFilterExposed } from '@/components/ListFilter/ListFilter.d';
 import ListFilterButton from '@/components/ListFilter/ListFilterButton.vue';
 import ListFilterButtonContent from '@/components/ListFilter/ListFilterButtonContent.vue';
@@ -70,6 +71,9 @@ const emit = defineEmits({
 });
 
 const translate = useInject(TranslateKey);
+const locationStore = useLocationStore();
+
+const favoritesModal: Ref<boolean> = ref(false);
 
 const state: ListFilterData = reactive({
   search: '',
@@ -112,19 +116,45 @@ const updateFilterState = (): void => {
   emit('filter', state);
 };
 
-const resetFilterState = (): void => {
+const resetFilterState = (update: boolean = true): void => {
   state.search = '';
   state.searchContext = ListFilterButtonSearchState.ALL;
   state.sortCount = ListFilterButtonSortState.DEFAULT;
   state.sortPrice = ListFilterButtonSortState.DEFAULT;
   state.sortGrade = ListFilterButtonSortState.DEFAULT;
 
-  updateFilterState();
+  if (update) {
+    updateFilterState();
+  }
 };
 
 const handleSubmit = (): void => {
   updateFilterState();
 };
+
+const showFavoritesModal = (): void => {
+  favoritesModal.value = true;
+};
+
+const hideFavoritesModal = (): void => {
+  favoritesModal.value = false;
+};
+
+watch(
+  (): string => {
+    return locationStore.getActiveSearchWord;
+  },
+  (): void => {
+    if (locationStore.getActiveSearchWord) {
+      resetFilterState(false);
+
+      state.search = locationStore.getActiveSearchWord;
+      locationStore.activeSearchWord = '';
+
+      updateFilterState();
+    }
+  },
+);
 
 defineExpose<ListFilterExposed>({
   resetFilterState,

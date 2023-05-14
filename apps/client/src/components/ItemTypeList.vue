@@ -52,6 +52,7 @@ const refetchItemTypeList = (id: number): Promise<void> => {
     if (itemType) {
       locationStore.mainCategory = itemType.mainCategory;
       locationStore.subCategory = itemType.subCategory;
+      locationStore.searchWord = itemType.name;
     }
 
     itemList.value = data;
@@ -117,6 +118,7 @@ onBeforeUnmount((): void => {
 
   locationStore.mainCategory = null;
   locationStore.subCategory = null;
+  locationStore.searchWord = '';
 });
 
 watch(
