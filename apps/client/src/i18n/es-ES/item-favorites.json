@@ -1,6 +1,6 @@
 {
-  "headerTextRegister": "Si se puede encontrar una palabra de búsqueda en un resultado de búsqueda, se puede registrar en Favoritos.",
-  "headerTextCount": "Puede registrar hasta 10 palabras de búsqueda en Favoritos.",
+  "headerTextRegister": "Si se puede encontrar una palabra de búsqueda en un resultado de búsqueda, se puede registrar en Favoritos",
+  "headerTextCount": "Puede registrar hasta 10 palabras de búsqueda en Favoritos",
   "emptyFavorites": "No hay artículos registrados en Favoritos",
   "searchButton": "Inicia la búsqueda con la palabra de búsqueda",
   "removeButton": "Quitar palabra de búsqueda de Favoritos",

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full flex-col">
+  <div class="flex h-full w-full flex-col">
     <div class="item-favorites-header">
       <ItemFavoritesHeader />
     </div>

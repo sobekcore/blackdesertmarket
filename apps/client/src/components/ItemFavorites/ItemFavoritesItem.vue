@@ -1,7 +1,9 @@
 <template>
-  <div class="bg-lighten-xs flex items-center justify-between rounded py-1.5 px-2 text-sm">
-    <span>{{ getItemLabel() }}</span>
-    <span class="flex gap-2">
+  <div class="bg-lighten-xs flex items-center justify-between gap-2 rounded py-1.5 px-2 text-sm">
+    <span class="inline-flex overflow-hidden">
+      <span class="truncate">{{ getItemLabel() }}</span>
+    </span>
+    <span class="flex flex-none gap-2">
       <AppTooltip placement="bottom">
         <button class="brightness-50 hocus:brightness-100" @click="handleSearchButtonClick">
           <AppIcon :src="require('@/assets/images/list-filter/search.png')" class="h-[24px] drop-shadow-md" />

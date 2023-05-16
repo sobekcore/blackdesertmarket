@@ -1,0 +1,6 @@
+{
+  "successTitle": "Éxito",
+  "errorTitle": "Fallido",
+  "errorCurrentPage": "La página actual es una página de lista, no una página de elementos",
+  "errorRegistered": "Esta palabra de búsqueda ya está registrada"
+}

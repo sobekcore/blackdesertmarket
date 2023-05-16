@@ -85,7 +85,7 @@ if (props.draggable) {
   const draggable: UseDraggableReturn = useDraggable(modal, {
     preventDefault: true,
     handle: handle,
-    onStart(position: Position, event: PointerEvent): false | void {
+    onStart(position: Position, event: PointerEvent): void | false {
       const target: HTMLElement = event.target as HTMLElement;
 
       if (target.classList.contains('modal-handle-ignore')) {

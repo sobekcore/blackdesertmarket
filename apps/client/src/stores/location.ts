@@ -10,7 +10,7 @@ interface LocationStoreState {
 }
 
 export const useLocationStore = defineStore('location', {
-  state: (): LocationStoreState => ({
+  state: () => ({
     reload: 0,
     maintenance: false,
     mainCategory: null,

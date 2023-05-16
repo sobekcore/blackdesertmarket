@@ -15,16 +15,29 @@
 
 <script lang="ts" setup>
 import { ListFilterButtonVariant } from '@/enums/list-filter';
+import { NotificationType } from '@/enums/notification';
 import { useFavoritesStore } from '@/stores/favorites';
 import { useLocationStore } from '@/stores/location';
 import { TranslateKey, useInject } from '@/composables/use-inject';
+import { UseNotificationReturn, useNotification } from '@/composables/use-notification';
 import ListFilterButton from '@/components/ListFilter/ListFilterButton.vue';
 
 const translate = useInject(TranslateKey);
 const locationStore = useLocationStore();
 const favoritesStore = useFavoritesStore();
+const notification: UseNotificationReturn = useNotification();
 
 const addToFavorites = (): void => {
+  if (!locationStore.getSearchWord) {
+    notification.show(NotificationType.ERROR, 'notification.errorCurrentPage');
+    return;
+  }
+
+  if (favoritesStore.getFavorite(locationStore.getSearchWord)) {
+    notification.show(NotificationType.ERROR, 'notification.errorRegistered');
+    return;
+  }
+
   favoritesStore.addFavorite(locationStore.getSearchWord);
 };
 

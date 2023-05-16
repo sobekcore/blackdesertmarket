@@ -6,14 +6,17 @@ interface FavoritesStoreState {
 }
 
 export const useFavoritesStore = defineStore('favorites', {
-  state: (): FavoritesStoreState => ({
-    /**
-     * Reactive properties are automatically unwrapped by Pinia when accessing state
-     * To use the same interface here we need to typecast them to non-reactive types
-     */
-    favorites: useLocalStorage<string[]>('favorites', []) as unknown as string[],
+  state: () => ({
+    favorites: useLocalStorage<string[]>('favorites.favorites', []),
   }),
   getters: {
+    getFavorite(state: FavoritesStoreState) {
+      return (searchWord: string): string | undefined => {
+        return state.favorites.find((favorite: string): boolean => {
+          return favorite === searchWord;
+        });
+      };
+    },
     getFavorites(state: FavoritesStoreState): string[] {
       return state.favorites;
     },
