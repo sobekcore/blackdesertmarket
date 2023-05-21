@@ -1,0 +1,50 @@
+$notificationTypes: (
+  success: $NOTIFICATION_SUCCESS,
+  error: $NOTIFICATION_ERROR,
+);
+
+@each $notificationType, $color in $notificationTypes {
+  .Vue-Toastification__toast.#{$notificationType} {
+    .Vue-Toastification__icon {
+      background: $color;
+    }
+
+    .Vue-Toastification__title {
+      color: $color;
+    }
+
+    .Vue-Toastification__progress-bar {
+      background: $color;
+    }
+  }
+}
+
+.Vue-Toastification__toast {
+  align-items: center;
+  padding: 0.75rem 1rem 1rem;
+  background: $DARK_400;
+
+  .Vue-Toastification__icon {
+    box-sizing: content-box;
+    margin-right: 1rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    color: $DARK_900;
+  }
+
+  .Vue-Toastification__toast-component-body {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: $DARK_900;
+
+    .Vue-Toastification__title {
+      font-size: 1rem;
+      line-height: 1.5rem;
+      font-weight: bold;
+    }
+  }
+
+  .Vue-Toastification__progress-bar {
+    height: 0.25rem;
+  }
+}

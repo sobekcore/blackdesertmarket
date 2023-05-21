@@ -1,5 +1,8 @@
 import { App as Application, createApp } from 'vue';
 import { I18n, createI18n } from 'vue-i18n';
+import toast, { PluginOptions } from 'vue-toastification';
+import 'vue-toastification/dist/index.css';
+import { ToastOptionsAndRequiredContent as Toast, ToastComponent } from 'vue-toastification/dist/types/types';
 import virtualScroll from 'vue-virtual-scroller';
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
 import floating from 'floating-vue';
@@ -24,8 +27,32 @@ const i18n: I18n = createI18n({
   legacy: false,
 });
 
+const options: PluginOptions = {
+  transition: 'Vue-Toastification__fade',
+  timeout: 3000,
+  closeButton: false,
+  filterBeforeCreate(toast: Toast, toasts: Toast[]): Toast | false {
+    const filtered: Toast[] = toasts.filter((entry: Toast): boolean => {
+      const entryContent: ToastComponent = entry.content as ToastComponent;
+      const toastContent: ToastComponent = toast.content as ToastComponent;
+
+      return (
+        entryContent?.props?.title === toastContent?.props?.title &&
+        entryContent?.props?.message === toastContent?.props?.message
+      );
+    });
+
+    if (filtered.length !== 0) {
+      return false;
+    }
+
+    return toast;
+  },
+};
+
 app.use(i18n);
 app.use(router);
+app.use(toast, options);
 app.use(floating);
 app.use(virtualScroll);
 

@@ -1,4 +1,5 @@
 import { Composer } from 'vue-i18n';
+import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { config } from '@/config';
 
@@ -8,9 +9,9 @@ interface PreferencesStoreState {
 }
 
 export const usePreferencesStore = defineStore('preferences', {
-  state: (): PreferencesStoreState => ({
-    region: config.defaultRegion,
-    language: config.defaultLanguage,
+  state: () => ({
+    region: useLocalStorage<string>('preferences.region', config.defaultRegion),
+    language: useLocalStorage<string>('preferences.language', config.defaultLanguage),
   }),
   getters: {
     getRegion(state: PreferencesStoreState): string {

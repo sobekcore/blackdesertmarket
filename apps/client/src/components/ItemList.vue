@@ -42,6 +42,7 @@ const itemList: Ref<BlackDesertItem[]> = ref([]);
 const refetchCategoryItemList = (mainCategory: number, subCategory: number): Promise<void> => {
   locationStore.mainCategory = mainCategory;
   locationStore.subCategory = subCategory;
+  locationStore.searchWord = '';
 
   const itemFetch: UseItemFetchReturn = useItemFetch(mainCategory, subCategory);
 
@@ -83,6 +84,7 @@ onBeforeUnmount((): void => {
 
   locationStore.mainCategory = null;
   locationStore.subCategory = null;
+  locationStore.searchWord = '';
 });
 
 watch(

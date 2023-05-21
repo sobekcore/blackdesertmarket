@@ -35,7 +35,9 @@
                 />
               </template>
             </template>
-            <li v-else class="py-3 px-6 text-sm text-dark-800">Could not find any sub-categories...</li>
+            <li v-else class="py-3 px-6 text-sm text-dark-800">
+              {{ translate('sidemenu.emptyCategory') }}
+            </li>
           </ul>
         </template>
       </CategorySidemenuItem>

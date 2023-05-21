@@ -1,0 +1,6 @@
+{
+  "successTitle": "Success",
+  "errorTitle": "Failed",
+  "errorCurrentPage": "Current page is a list page, not an item page",
+  "errorRegistered": "This search word is already registered"
+}

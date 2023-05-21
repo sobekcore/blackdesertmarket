@@ -66,7 +66,7 @@ export function useItemTypeFetch(id: number): UseItemTypeFetchReturn {
 
     if (response.data.value) {
       const itemType: BlackDesertItemType | undefined = response.data.value.data.find(
-        (item: BlackDesertItemType): boolean => item.enhancement === enhancement,
+        (itemType: BlackDesertItemType): boolean => itemType.enhancement === enhancement,
       );
 
       if (itemType) {

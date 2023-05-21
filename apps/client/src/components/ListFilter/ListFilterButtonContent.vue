@@ -1,5 +1,5 @@
 <template>
-  <span :class="props.class" class="flex">
+  <span data-test="outer" :class="props.class" class="flex">
     <AppIcon :src="props.icon" :class="props.iconClass" />
     <slot></slot>
   </span>

@@ -1,8 +1,8 @@
 <template>
-  <form class="flex flex-col gap-2 p-2.5" @submit.prevent="handleSubmit">
+  <form data-test="form" class="flex flex-col gap-2 p-2.5" @submit.prevent="handleSubmit">
     <div class="border-lighten w-full rounded border-t bg-dark-400 py-1.5 px-2 shadow-md">
       <div class="list-filter-main grid grid-flow-row gap-2 sm:grid-flow-col">
-        <ListFilterButton @click="updateButtonSearchState('searchContext')">
+        <ListFilterButton data-test="search-context" @click="updateButtonSearchState('searchContext')">
           <ListFilterButtonContent :icon="require('@/assets/images/list-filter/filter.png')" icon-class="h-[16px]">
             <template v-if="state.searchContext === ListFilterButtonSearchState.ALL">
               {{ translate('listFilter.all') }}
@@ -14,14 +14,11 @@
         </ListFilterButton>
         <FieldSearchText
           v-model="state.search"
+          data-test="search"
           :placeholder="translate('listFilter.itemName')"
           @change="updateFilterState"
         />
-        <ListFilterButton
-          :variant="ListFilterButtonVariant.LIGHT"
-          :tooltip="`${translate('generic.comingSoon')}...`"
-          disabled
-        >
+        <ListFilterButton data-test="favorites" :variant="ListFilterButtonVariant.LIGHT" @click="showFavoritesModal">
           {{ translate('listFilter.favorites') }}
         </ListFilterButton>
         <ListFilterButton
@@ -34,33 +31,52 @@
       </div>
     </div>
     <div class="flex flex-wrap gap-2">
-      <ListFilterButton :tooltip="translate('listFilter.sortCount')" @click="updateButtonSortState('sortCount')">
-        <ListFilterButtonContent :icon="require('@/assets/images/list-filter/sort-count.png')" class="gap-4">
-          <AppIcon :src="getListFilterButtonIcon(state.sortCount)" class="h-[20px] scale-125 drop-shadow-md" />
-        </ListFilterButtonContent>
-      </ListFilterButton>
-      <ListFilterButton :tooltip="translate('listFilter.sortPrice')" @click="updateButtonSortState('sortPrice')">
-        <ListFilterButtonContent :icon="require('@/assets/images/list-filter/sort-price.png')" class="gap-4">
-          <AppIcon :src="getListFilterButtonIcon(state.sortPrice)" class="h-[20px] scale-125 drop-shadow-md" />
-        </ListFilterButtonContent>
-      </ListFilterButton>
-      <ListFilterButton :tooltip="translate('listFilter.sortGrade')" @click="updateButtonSortState('sortGrade')">
-        <ListFilterButtonContent :icon="require('@/assets/images/list-filter/sort-grade.png')" class="gap-4">
-          <AppIcon :src="getListFilterButtonIcon(state.sortGrade)" class="h-[20px] scale-125 drop-shadow-md" />
-        </ListFilterButtonContent>
-      </ListFilterButton>
+      <slot name="bottom">
+        <ListFilterButton
+          data-test="sort-count"
+          :tooltip="translate('listFilter.sortCount')"
+          @click="updateButtonSortState('sortCount')"
+        >
+          <ListFilterButtonContent :icon="require('@/assets/images/list-filter/sort-count.png')" class="gap-4">
+            <AppIcon :src="getListFilterButtonIcon(state.sortCount)" class="h-[20px] scale-125 drop-shadow-md" />
+          </ListFilterButtonContent>
+        </ListFilterButton>
+        <ListFilterButton
+          data-test="sort-price"
+          :tooltip="translate('listFilter.sortPrice')"
+          @click="updateButtonSortState('sortPrice')"
+        >
+          <ListFilterButtonContent :icon="require('@/assets/images/list-filter/sort-price.png')" class="gap-4">
+            <AppIcon :src="getListFilterButtonIcon(state.sortPrice)" class="h-[20px] scale-125 drop-shadow-md" />
+          </ListFilterButtonContent>
+        </ListFilterButton>
+        <ListFilterButton
+          data-test="sort-grade"
+          :tooltip="translate('listFilter.sortGrade')"
+          @click="updateButtonSortState('sortGrade')"
+        >
+          <ListFilterButtonContent :icon="require('@/assets/images/list-filter/sort-grade.png')" class="gap-4">
+            <AppIcon :src="getListFilterButtonIcon(state.sortGrade)" class="h-[20px] scale-125 drop-shadow-md" />
+          </ListFilterButtonContent>
+        </ListFilterButton>
+      </slot>
     </div>
   </form>
+  <Teleport v-if="favoritesModal" to="#modal">
+    <ItemFavoritesModal @close="hideFavoritesModal" />
+  </Teleport>
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, defineExpose, reactive } from 'vue';
+import { Ref, defineEmits, defineExpose, reactive, ref, watch } from 'vue';
 import { ListFilterData } from '@/interfaces/list-filter';
 import { ListFilterButtonSearchState, ListFilterButtonSortState, ListFilterButtonVariant } from '@/enums/list-filter';
+import { useLocationStore } from '@/stores/location';
 import { useDropdownIcon } from '@/composables/use-dropdown-icon';
 import { TranslateKey, useInject } from '@/composables/use-inject';
 import AppIcon from '@/components/Base/AppIcon.vue';
 import FieldSearchText from '@/components/Fields/FieldSearchText.vue';
+import ItemFavoritesModal from '@/components/ItemFavorites/ItemFavoritesModal.vue';
 import { ListFilterExposed } from '@/components/ListFilter/ListFilter.d';
 import ListFilterButton from '@/components/ListFilter/ListFilterButton.vue';
 import ListFilterButtonContent from '@/components/ListFilter/ListFilterButtonContent.vue';
@@ -70,6 +86,9 @@ const emit = defineEmits({
 });
 
 const translate = useInject(TranslateKey);
+const locationStore = useLocationStore();
+
+const favoritesModal: Ref<boolean> = ref(false);
 
 const state: ListFilterData = reactive({
   search: '',
@@ -112,19 +131,45 @@ const updateFilterState = (): void => {
   emit('filter', state);
 };
 
-const resetFilterState = (): void => {
+const resetFilterState = (update: boolean = true): void => {
   state.search = '';
   state.searchContext = ListFilterButtonSearchState.ALL;
   state.sortCount = ListFilterButtonSortState.DEFAULT;
   state.sortPrice = ListFilterButtonSortState.DEFAULT;
   state.sortGrade = ListFilterButtonSortState.DEFAULT;
 
-  updateFilterState();
+  if (update) {
+    updateFilterState();
+  }
 };
 
 const handleSubmit = (): void => {
   updateFilterState();
 };
+
+const showFavoritesModal = (): void => {
+  favoritesModal.value = true;
+};
+
+const hideFavoritesModal = (): void => {
+  favoritesModal.value = false;
+};
+
+watch(
+  (): string => {
+    return locationStore.getActiveSearchWord;
+  },
+  (): void => {
+    if (locationStore.getActiveSearchWord) {
+      resetFilterState(false);
+
+      state.search = locationStore.getActiveSearchWord;
+      locationStore.activeSearchWord = '';
+
+      updateFilterState();
+    }
+  },
+);
 
 defineExpose<ListFilterExposed>({
   resetFilterState,

@@ -5,14 +5,18 @@ interface LocationStoreState {
   maintenance: boolean;
   mainCategory: number | null;
   subCategory: number | null;
+  searchWord: string;
+  activeSearchWord: string;
 }
 
 export const useLocationStore = defineStore('location', {
-  state: (): LocationStoreState => ({
+  state: () => ({
     reload: 0,
     maintenance: false,
     mainCategory: null,
     subCategory: null,
+    searchWord: '',
+    activeSearchWord: '',
   }),
   getters: {
     getMaintenance(state: LocationStoreState): boolean {
@@ -23,6 +27,12 @@ export const useLocationStore = defineStore('location', {
     },
     getSubCategory(state: LocationStoreState): number | null {
       return state.subCategory;
+    },
+    getSearchWord(state: LocationStoreState): string {
+      return state.searchWord;
+    },
+    getActiveSearchWord(state: LocationStoreState): string {
+      return state.activeSearchWord;
     },
   },
   actions: {

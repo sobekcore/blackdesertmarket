@@ -1,12 +1,18 @@
+<!--
+  TODO: Change this component to a reusable generic button component
+-->
+
 <template>
   <div
+    data-test="outer"
     :class="{
       [buttonVariantClassMap[props.variant]]: true,
-      'flex rounded border border-dark-100': true,
+      'flex min-h-[32px] rounded border border-dark-100': true,
       'opacity-75 brightness-75': props.disabled,
     }"
   >
     <button
+      data-test="button"
       type="button"
       :disabled="props.disabled"
       :class="{

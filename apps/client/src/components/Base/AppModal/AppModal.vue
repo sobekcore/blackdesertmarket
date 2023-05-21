@@ -85,7 +85,7 @@ if (props.draggable) {
   const draggable: UseDraggableReturn = useDraggable(modal, {
     preventDefault: true,
     handle: handle,
-    onStart(position: Position, event: PointerEvent): false | void {
+    onStart(position: Position, event: PointerEvent): void | false {
       const target: HTMLElement = event.target as HTMLElement;
 
       if (target.classList.contains('modal-handle-ignore')) {
@@ -155,10 +155,10 @@ useResizeObserver(modal, (): void => {
 }
 
 .modal-inactive-fullsize {
-  @apply max-h-[100dvh] w-[400px] max-w-[100vw];
+  @apply h-dynamic-screen w-screen;
 
   @screen xl {
-    @apply max-h-[90dvh] max-w-[90vw];
+    @apply h-auto max-h-[90dvh] w-[400px] max-w-[90vw];
   }
 }
 

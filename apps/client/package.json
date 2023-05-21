@@ -26,6 +26,7 @@
     "vue-chartjs": "^5.0.1",
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.0.3",
+    "vue-toastification": "^2.0.0-rc.5",
     "vue-virtual-scroller": "^2.0.0-beta.8"
   },
   "devDependencies": {
