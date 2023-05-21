@@ -3,7 +3,7 @@ import AppModalTitle from '@/components/Base/AppModal/AppModalTitle.vue';
 
 const MOCK_TITLE: string = 'Mock Title';
 
-describe('AppModalClose', () => {
+describe('AppModalTitle', () => {
   let wrapper: VueWrapper;
 
   beforeEach(() => {

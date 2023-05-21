@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2 class="Vue-Toastification__title">{{ props.title }}</h2>
-    <span>{{ props.message }}</span>
+    <h2 data-test="title" class="Vue-Toastification__title">{{ props.title }}</h2>
+    <span data-test="message">{{ props.message }}</span>
   </div>
 </template>
 

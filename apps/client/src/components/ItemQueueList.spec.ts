@@ -2,17 +2,29 @@ import { ComponentInternalInstance } from 'vue';
 import { BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItemQueue } from '@blackdesertmarket/mocks';
 import { VueWrapper, flushPromises, shallowMount } from '@vue/test-utils';
+import { mockListFilterData } from '@test/mocks/list-filter.mock';
 import { mockPlugins } from '@test/mocks/plugins.mock';
 import { mockProvide } from '@test/mocks/provide.mock';
+import { ListFilterData } from '@/interfaces/list-filter';
+import { UseListFilterReturn } from '@/composables/list-filter/use-list-filter';
 import ItemDetailsModal from '@/components/ItemDetails/ItemDetailsModal.vue';
 import ItemQueueList from '@/components/ItemQueueList.vue';
+import ListFilter from '@/components/ListFilter/ListFilter.vue';
 import ListItem from '@/components/ListItem/ListItem.vue';
 
 const MOCK_ITEM_QUEUE: BlackDesertItemQueue = mockBlackDesertItemQueue();
+const MOCK_FILTER_DATA: ListFilterData = mockListFilterData();
+const MOCK_PROCESS_ITEM_LIST: jest.Mock<UseListFilterReturn['processItemList']> = jest.fn();
 
 jest.mock('@/composables/item-queue/use-item-queue-fetch', () => ({
   useItemQueueFetch: () => ({
     fetch: () => Promise.resolve([MOCK_ITEM_QUEUE]),
+  }),
+}));
+
+jest.mock('@/composables/list-filter/use-list-filter', () => ({
+  useListFilter: () => ({
+    processItemList: MOCK_PROCESS_ITEM_LIST,
   }),
 }));
 
@@ -37,6 +49,12 @@ describe('ItemQueueList', () => {
     expect(listItemWrapper.exists()).toBeTruthy();
   });
 
+  it('should render ListFilter component', () => {
+    const listFilterWrapper: VueWrapper = wrapper.findComponent(ListFilter);
+
+    expect(listFilterWrapper.exists()).toBeTruthy();
+  });
+
   it('should handle effect event from ListItem', () => {
     const listItemWrapper: VueWrapper = wrapper.findComponent(ListItem);
 
@@ -47,6 +65,15 @@ describe('ItemQueueList', () => {
     const [events] = emitted.effect;
 
     expect(Array.isArray(events)).toBeTruthy();
+  });
+
+  it('should handle filter event from ListFilter', () => {
+    const listFilterWrapper: VueWrapper = wrapper.findComponent(ListFilter);
+
+    const component: ComponentInternalInstance = listFilterWrapper.getCurrentComponent();
+    component.emit('filter', MOCK_FILTER_DATA);
+
+    expect(MOCK_PROCESS_ITEM_LIST).toBeCalled();
   });
 
   it('should handle close event from ItemDetailsModal', async () => {

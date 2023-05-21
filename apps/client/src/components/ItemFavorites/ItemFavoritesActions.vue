@@ -1,12 +1,12 @@
 <template>
   <div class="flex gap-x-2.5">
     <div class="w-full">
-      <ListFilterButton :variant="ListFilterButtonVariant.LIGHT" @click="addToFavorites">
+      <ListFilterButton data-test="list-to-favorites" :variant="ListFilterButtonVariant.LIGHT" @click="addToFavorites">
         {{ translate('itemFavorites.listToFavorites') }}
       </ListFilterButton>
     </div>
     <div class="w-full">
-      <ListFilterButton :variant="ListFilterButtonVariant.LIGHT" @click="removeAllFavorites">
+      <ListFilterButton data-test="all-reset" :variant="ListFilterButtonVariant.LIGHT" @click="removeAllFavorites">
         {{ translate('itemFavorites.allReset') }}
       </ListFilterButton>
     </div>

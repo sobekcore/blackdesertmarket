@@ -2,18 +2,12 @@ import { DefineComponent, defineComponent } from 'vue';
 import { BlackDesertItem } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItem } from '@blackdesertmarket/mocks';
 import { VueWrapper, mount } from '@vue/test-utils';
+import { mockListFilterData } from '@test/mocks/list-filter.mock';
 import { ListFilterData } from '@/interfaces/list-filter';
 import { ListFilterButtonSearchState, ListFilterButtonSortState } from '@/enums/list-filter';
 import { useListFilter } from '@/composables/list-filter/use-list-filter';
 
-const MOCK_DATA: ListFilterData = {
-  search: 'Mock Search',
-  searchContext: ListFilterButtonSearchState.ALL,
-  sortCount: ListFilterButtonSortState.DEFAULT,
-  sortPrice: ListFilterButtonSortState.DEFAULT,
-  sortGrade: ListFilterButtonSortState.DEFAULT,
-};
-
+const MOCK_FILTER_DATA: ListFilterData = mockListFilterData();
 const MOCK_ITEM: BlackDesertItem = mockBlackDesertItem();
 
 describe('useListFilter', () => {
@@ -23,7 +17,7 @@ describe('useListFilter', () => {
   beforeEach(() => {
     component = defineComponent({
       setup() {
-        return useListFilter(MOCK_DATA);
+        return useListFilter(MOCK_FILTER_DATA);
       },
       template: '<slot></slot>',
     });
@@ -36,7 +30,7 @@ describe('useListFilter', () => {
       component = defineComponent({
         setup() {
           return useListFilter({
-            ...MOCK_DATA,
+            ...MOCK_FILTER_DATA,
             searchContext: ListFilterButtonSearchState.BY_CATEGORY,
           });
         },
@@ -55,7 +49,7 @@ describe('useListFilter', () => {
       component = defineComponent({
         setup() {
           return useListFilter({
-            ...MOCK_DATA,
+            ...MOCK_FILTER_DATA,
             search: 'Weeds',
             searchContext: ListFilterButtonSearchState.BY_CATEGORY,
           });
@@ -87,7 +81,7 @@ describe('useListFilter', () => {
       component = defineComponent({
         setup() {
           return useListFilter({
-            ...MOCK_DATA,
+            ...MOCK_FILTER_DATA,
             sortCount: ListFilterButtonSortState.DESC,
           });
         },
@@ -106,7 +100,7 @@ describe('useListFilter', () => {
       component = defineComponent({
         setup() {
           return useListFilter({
-            ...MOCK_DATA,
+            ...MOCK_FILTER_DATA,
             sortCount: ListFilterButtonSortState.ASC,
           });
         },
@@ -135,7 +129,7 @@ describe('useListFilter', () => {
       component = defineComponent({
         setup() {
           return useListFilter({
-            ...MOCK_DATA,
+            ...MOCK_FILTER_DATA,
             sortPrice: ListFilterButtonSortState.DESC,
           });
         },
@@ -154,7 +148,7 @@ describe('useListFilter', () => {
       component = defineComponent({
         setup() {
           return useListFilter({
-            ...MOCK_DATA,
+            ...MOCK_FILTER_DATA,
             sortPrice: ListFilterButtonSortState.ASC,
           });
         },
@@ -183,7 +177,7 @@ describe('useListFilter', () => {
       component = defineComponent({
         setup() {
           return useListFilter({
-            ...MOCK_DATA,
+            ...MOCK_FILTER_DATA,
             sortGrade: ListFilterButtonSortState.DESC,
           });
         },
@@ -202,7 +196,7 @@ describe('useListFilter', () => {
       component = defineComponent({
         setup() {
           return useListFilter({
-            ...MOCK_DATA,
+            ...MOCK_FILTER_DATA,
             sortGrade: ListFilterButtonSortState.ASC,
           });
         },

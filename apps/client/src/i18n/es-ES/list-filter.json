@@ -4,6 +4,7 @@
   "itemName": "Nombre del Árticulo",
   "favorites": "Favoritos",
   "status": "Estado",
+  "previous": "Previo",
   "sortCount": "Ordenar por el número de artículos registrados",
   "sortPrice": "Ordenar por el precio medio de cambio",
   "sortGrade": "Ordenar por grado de elemento"

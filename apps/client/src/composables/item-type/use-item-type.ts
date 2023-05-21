@@ -9,6 +9,7 @@ import {
 import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 
 export interface UseItemTypeReturn {
+  aggregateItemByList(itemList: BlackDesertItemType[]): void;
   getItemName(): string;
   getItemIconText(): string;
   getTradeCount(): string;
@@ -39,6 +40,16 @@ export function useItemType(itemType: BlackDesertItemType): UseItemTypeReturn {
     }
 
     return found.items.includes(itemType.id);
+  };
+
+  const aggregateItemByList = (itemList: BlackDesertItemType[]): void => {
+    itemType.tradeCount = itemList.reduce((tradeCount: number, itemType: BlackDesertItemType): number => {
+      return tradeCount + (itemType.tradeCount ?? 0);
+    }, 0);
+
+    itemType.count = itemList.reduce((count: number, itemType: BlackDesertItemType): number => {
+      return count + itemType.count;
+    }, 0);
   };
 
   const getItemName = (): string => {
@@ -116,6 +127,7 @@ export function useItemType(itemType: BlackDesertItemType): UseItemTypeReturn {
   };
 
   return {
+    aggregateItemByList,
     getItemName,
     getItemIconText,
     getTradeCount,

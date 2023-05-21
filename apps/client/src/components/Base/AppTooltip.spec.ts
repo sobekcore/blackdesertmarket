@@ -4,7 +4,7 @@ import { Placement, Tooltip } from 'floating-vue';
 import AppTooltip from '@/components/Base/AppTooltip.vue';
 
 const MOCK_PLACEMENT: Placement = 'bottom';
-const MOCK_DISABLED: boolean = false;
+const MOCK_DISABLED: boolean = true;
 
 describe('AppTooltip', () => {
   let wrapper: VueWrapper;
