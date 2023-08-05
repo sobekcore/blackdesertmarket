@@ -1,5 +1,5 @@
 import { StrictUseAxiosReturn, useAxios } from '@vueuse/integrations/useAxios';
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
 import { MarketApiResponse } from '@/interfaces/market-api-response';
 import { HttpMethod } from '@/enums/http';
 import { useAxiosInstance } from '@/composables/use-axios-instance';
@@ -9,6 +9,7 @@ export function useMarketApi<T>(
   method: HttpMethod,
   url: string,
   params?: Record<string, any>,
+  headers?: RawAxiosRequestHeaders,
 ): StrictUseAxiosReturn<MarketApiResponse<T>, AxiosResponse<MarketApiResponse<T>>, any> {
   const axiosInstance: AxiosInstance = useAxiosInstance();
 
@@ -16,6 +17,7 @@ export function useMarketApi<T>(
     method: method,
     baseURL: config.marketApiUrl,
     params: params,
+    headers: headers,
   };
 
   /**

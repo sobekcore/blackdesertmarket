@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 interface LocationStoreState {
   reload: number;
   maintenance: boolean;
+  offline: boolean;
   mainCategory: number | null;
   subCategory: number | null;
   searchWord: string;
@@ -13,6 +14,7 @@ export const useLocationStore = defineStore('location', {
   state: () => ({
     reload: 0,
     maintenance: false,
+    offline: false,
     mainCategory: null,
     subCategory: null,
     searchWord: '',
@@ -21,6 +23,9 @@ export const useLocationStore = defineStore('location', {
   getters: {
     getMaintenance(state: LocationStoreState): boolean {
       return state.maintenance;
+    },
+    getOffline(state: LocationStoreState): boolean {
+      return state.offline;
     },
     getMainCategory(state: LocationStoreState): number | null {
       return state.mainCategory;

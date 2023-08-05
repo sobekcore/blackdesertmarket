@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="apps/client/src/assets/images/icon.png" alt="Black Desert Market Logo" width="128" />
+  <img src="apps/client/public/assets/images/icon.png" alt="Black Desert Market Logo" width="128" />
 </p>
 
 # Black Desert Market

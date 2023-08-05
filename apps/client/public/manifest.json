@@ -1,0 +1,14 @@
+{
+  "name": "Black Desert Market",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#16161a",
+  "background_color": "#16161a",
+  "icons": [
+    {
+      "src": "/assets/images/icon.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    }
+  ]
+}

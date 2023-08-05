@@ -7,7 +7,7 @@
     @show="handleTooltipShow"
   >
     <span class="relative flex h-[46px] w-[46px] items-center">
-      <AppIcon :src="props.src" :class="props.class" class="h-full w-full rounded border border-dark-600 bg-dark-100" />
+      <AppIcon :src="props.src" :class="props.class" class="icon border-dark-600" />
       <span role="presentation" aria-hidden="true" class="text-over-icon">
         {{ text }}
       </span>
@@ -105,6 +105,15 @@ const handleTooltipShow = async (): Promise<void> => {
 
 <style lang="scss" scoped>
 @import '@/styles/variables.scss';
+
+.icon {
+  @apply relative h-full w-full rounded border bg-dark-100;
+
+  &::after {
+    @apply absolute inset-0 object-contain content-[''];
+    background: repeating-linear-gradient(-45deg, $DARK_100, $DARK_100 8px, $DARK_200 8px, $DARK_200 16px);
+  }
+}
 
 .text-over-icon {
   @apply absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 select-none font-dejavu-sans-condensed text-lg;

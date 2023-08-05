@@ -21,6 +21,8 @@ module.exports = {
       'brand-700': '#cca471',
       'brand-800': '#c4a68a',
       'brand-900': '#ffe3c0',
+      'notification-success': '#4caf50',
+      'notification-error': '#ff5252',
       'item-grade-1': '#83a545',
       'item-grade-2': '#458dcb',
       'item-grade-3': '#f3b93c',

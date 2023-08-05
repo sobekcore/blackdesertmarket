@@ -2,13 +2,13 @@
   <div class="flex justify-center">
     <div class="flex flex-col gap-1">
       <img
-        :src="require('@/assets/images/icon.png')"
+        src="/assets/images/icon.png"
         alt="Black Desert Market"
         class="m-auto h-16 cursor-pointer object-contain"
         @click="handleLogoClick"
       />
       <img
-        :src="require('@/assets/images/logo.png')"
+        src="/assets/images/logo.png"
         alt="Black Desert Market"
         class="h-16 cursor-pointer object-contain"
         @click="handleLogoClick"

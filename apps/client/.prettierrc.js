@@ -16,6 +16,7 @@ module.exports = {
     '^@/enums/(.*)$',
     '^@/configs/(.*)$',
     '^@/router/(.*)$',
+    '^@/pwa/(.*)$',
     '^@/layouts/(.*)$',
     '^@/views/(.*)$',
     '^@/stores/(.*)$',
