@@ -20,7 +20,9 @@ export function useItemFetch(mainCategory: number, subCategory: number): UseItem
         language: preferencesStore.getLanguage,
       },
       {
-        [HttpHeader.CACHE_CONTROL]: 'stale-if-error',
+        headers: {
+          [HttpHeader.CACHE_CONTROL]: 'stale-if-error',
+        },
       },
     );
 

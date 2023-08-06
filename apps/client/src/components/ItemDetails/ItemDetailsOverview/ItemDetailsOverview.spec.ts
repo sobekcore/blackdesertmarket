@@ -1,9 +1,10 @@
 import { ComponentPublicInstance, nextTick } from 'vue';
 import { BlackDesertItemDetailsExtended, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItemDetailsExtended, mockBlackDesertItemType } from '@blackdesertmarket/mocks';
-import { VueWrapper, shallowMount } from '@vue/test-utils';
+import { VueWrapper, flushPromises, shallowMount } from '@vue/test-utils';
 import { UseDateFormatReturn, useDateFormat } from '@vueuse/core';
 import { mockProvide } from '@test/mocks/provide.mock';
+import { mockCreateObjectURL } from '@test/mocks/url.mock';
 import { UnitTestException } from '@/exceptions/unit-test-exception';
 import { UseNumberFormatReturn, useNumberFormat } from '@/composables/use-number-format';
 import ItemDetailsOverview from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverview.vue';
@@ -14,11 +15,19 @@ import ListItemName from '@/components/ListItem/ListItemName.vue';
 const MOCK_ITEM_TYPE: BlackDesertItemType = mockBlackDesertItemType();
 const MOCK_ITEM_DETAILS: BlackDesertItemDetailsExtended = mockBlackDesertItemDetailsExtended();
 const MOCK_GRADE: number = 1;
+const MOCK_BLOB: string = 'mock-blob';
+mockCreateObjectURL(MOCK_BLOB);
 
 jest.mock('@/config', () => ({
   config: {
     marketApiUrl: 'https://api.blackdesertmarket.com',
   },
+}));
+
+jest.mock('@/composables/item/use-item-icon-fetch', () => ({
+  useItemIconFetch: () => ({
+    fetch: () => Promise.resolve(URL.createObjectURL(new Blob())),
+  }),
 }));
 
 describe('ItemDetailsOverview', () => {
@@ -67,7 +76,7 @@ describe('ItemDetailsOverview', () => {
       });
   });
 
-  it('should pass src prop to ListItemIcon depending on itemType prop', () => {
+  it('should pass src prop to ListItemIcon depending on itemType prop', async () => {
     wrapper = shallowMount(ItemDetailsOverview, {
       global: {
         provide: mockProvide(),
@@ -78,11 +87,13 @@ describe('ItemDetailsOverview', () => {
       },
     });
 
+    await flushPromises();
+
     const listItemIconWrapper: VueWrapper = wrapper.findComponent(ListItemIcon);
     const listItemIconAttributes: Record<string, string> = listItemIconWrapper.attributes();
 
     expect(listItemIconAttributes).toHaveProperty('src');
-    expect(listItemIconAttributes.src).toContain(String(MOCK_ITEM_TYPE.id));
+    expect(listItemIconAttributes.src).toContain(MOCK_BLOB);
   });
 
   it('should pass class prop to ListItemIcon depending on itemType prop', () => {

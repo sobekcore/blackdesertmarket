@@ -1,3 +1,4 @@
+import { handleBrokerEvents } from '@blackdesertmarket/event-broker';
 import { ServiceWorkerEvent } from '@/enums/event';
 import { getApplicationFiles } from '@/pwa/files';
 
@@ -15,10 +16,10 @@ export function registerOrActivateServiceWorker(): Promise<void> {
           return reject();
         }
 
-        navigator.serviceWorker.addEventListener('message', (event: MessageEvent): void => {
-          if (event.data.type === ServiceWorkerEvent.APPLICATION_CACHE_FINISHED) {
+        handleBrokerEvents<ServiceWorkerContainer>(navigator.serviceWorker, {
+          [ServiceWorkerEvent.APPLICATION_CACHE_FINISHED]: (): void => {
             return resolve();
-          }
+          },
         });
 
         registration.installing.postMessage({

@@ -21,7 +21,9 @@ export function useItemDetailsFetch(id: number, enhancement: number, extended?: 
         extended: String(extended),
       },
       {
-        [HttpHeader.CACHE_CONTROL]: 'stale-if-error',
+        headers: {
+          [HttpHeader.CACHE_CONTROL]: 'stale-if-error',
+        },
       },
     );
 

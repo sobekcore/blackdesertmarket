@@ -10,6 +10,7 @@
     "test:cov": "vue-cli-service test:unit --coverage"
   },
   "dependencies": {
+    "@blackdesertmarket/event-broker": "*",
     "@blackdesertmarket/helpers": "*",
     "@blackdesertmarket/interfaces": "*",
     "@blackdesertmarket/mocks": "*",

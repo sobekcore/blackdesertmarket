@@ -1,7 +1,8 @@
 import { BlackDesertItem, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItem } from '@blackdesertmarket/mocks';
-import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
+import { DOMWrapper, VueWrapper, flushPromises, shallowMount } from '@vue/test-utils';
 import { mockProvide } from '@test/mocks/provide.mock';
+import { mockCreateObjectURL } from '@test/mocks/url.mock';
 import {
   ItemEnhancementNameData,
   UseItemTypeEnhancementReturn,
@@ -17,11 +18,19 @@ import ListItemSeparator from '@/components/ListItem/ListItemSeparator.vue';
 const MOCK_ITEM: BlackDesertItem = mockBlackDesertItem();
 const MOCK_CLASS: string = 'mock-class';
 const MOCK_GRADE: number = 1;
+const MOCK_BLOB: string = 'mock-blob';
+mockCreateObjectURL(MOCK_BLOB);
 
 jest.mock('@/config', () => ({
   config: {
     marketApiUrl: 'https://api.blackdesertmarket.com',
   },
+}));
+
+jest.mock('@/composables/item/use-item-icon-fetch', () => ({
+  useItemIconFetch: () => ({
+    fetch: () => Promise.resolve(URL.createObjectURL(new Blob())),
+  }),
 }));
 
 describe('ListItem', () => {
@@ -90,7 +99,7 @@ describe('ListItem', () => {
     expect(innerAttributes.class).toContain(MOCK_CLASS);
   });
 
-  it('should pass src prop to ListItemIcon depending on item prop', () => {
+  it('should pass src prop to ListItemIcon depending on item prop', async () => {
     wrapper = shallowMount(ListItem, {
       global: {
         provide: mockProvide(),
@@ -101,11 +110,13 @@ describe('ListItem', () => {
       },
     });
 
+    await flushPromises();
+
     const listItemIconWrapper: VueWrapper = wrapper.findComponent(ListItemIcon);
     const listItemIconAttributes: Record<string, string> = listItemIconWrapper.attributes();
 
     expect(listItemIconAttributes).toHaveProperty('src');
-    expect(listItemIconAttributes.src).toContain(String(MOCK_ITEM.id));
+    expect(listItemIconAttributes.src).toContain(MOCK_BLOB);
   });
 
   it('should pass text prop to ListItemIcon depending on item prop', () => {

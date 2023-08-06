@@ -1,3 +1,4 @@
+import { handleBrokerEvents } from '@blackdesertmarket/event-broker';
 import { ServiceWorkerEvent } from '@/enums/event';
 import { populateApplicationCache } from '@/pwa/service-worker/application-cache';
 import { findRuntimeCache } from '@/pwa/service-worker/runtime-cache';
@@ -12,16 +13,14 @@ self.addEventListener('activate', (event: ExtendableEvent): void => {
   event.waitUntil(self.clients.claim());
 });
 
-self.addEventListener('message', (event: ExtendableMessageEvent): void => {
-  switch (event.data.type) {
-    case ServiceWorkerEvent.APPLICATION_CACHE_INIT:
-      event.waitUntil(populateApplicationCache(event.data.payload));
-      return;
-  }
-});
-
 self.addEventListener('fetch', (event: FetchEvent): void => {
   event.respondWith(findRuntimeCache(event.request) as Promise<Response>);
+});
+
+handleBrokerEvents<ServiceWorkerGlobalScope, ExtendableMessageEvent>(self, {
+  [ServiceWorkerEvent.APPLICATION_CACHE_INIT]: (event: ExtendableMessageEvent): void => {
+    event.waitUntil(populateApplicationCache(event.data.payload));
+  },
 });
 
 export {};

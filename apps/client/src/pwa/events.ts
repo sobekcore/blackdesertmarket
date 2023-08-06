@@ -1,16 +1,13 @@
+import { getEventBroker, handleBrokerEvents } from '@blackdesertmarket/event-broker';
 import { EventBroker, ServiceWorkerEvent } from '@/enums/event';
 import { useLocationStore } from '@/stores/location';
 
-const channel: BroadcastChannel = new BroadcastChannel(EventBroker.SERVICE_WORKER);
-
-export function listenForGlobalEvents(): void {
+export function listenForServiceWorkerEvents(): void {
   const locationStore = useLocationStore();
 
-  channel.addEventListener('message', (event: MessageEvent): void => {
-    switch (event.data.type) {
-      case ServiceWorkerEvent.RUNTIME_CACHE_REQUEST_FAILED:
-        locationStore.offline = true;
-        return;
-    }
+  handleBrokerEvents(getEventBroker(EventBroker.SERVICE_WORKER), {
+    [ServiceWorkerEvent.RUNTIME_CACHE_REQUEST_FAILED]: (): void => {
+      locationStore.offline = true;
+    },
   });
 }

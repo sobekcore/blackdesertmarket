@@ -1,0 +1,6 @@
+{
+  "name": "@blackdesertmarket/event-broker",
+  "description": "Wrapper for handling different types of events with the same API",
+  "main": "src/index.js",
+  "types": "types/index.d.ts"
+}

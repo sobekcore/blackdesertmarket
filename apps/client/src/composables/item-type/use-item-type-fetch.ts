@@ -23,7 +23,9 @@ export function useItemTypeFetch(id: number): UseItemTypeFetchReturn {
         language: preferencesStore.getLanguage,
       },
       {
-        [HttpHeader.CACHE_CONTROL]: 'stale-if-error',
+        headers: {
+          [HttpHeader.CACHE_CONTROL]: 'stale-if-error',
+        },
       },
     );
 

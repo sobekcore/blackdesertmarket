@@ -4,7 +4,7 @@
       <div class="flex h-full flex-grow flex-col xl:flex-row">
         <div class="navigation-sm">
           <button class="h-full" @click="showNavigation">
-            <AppIcon src="/assets/icon.png" class="h-full" />
+            <AppIcon src="/assets/images/icon.png" class="h-full" />
           </button>
         </div>
         <div

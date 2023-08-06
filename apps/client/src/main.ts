@@ -9,7 +9,7 @@ import floating from 'floating-vue';
 import 'floating-vue/dist/style.css';
 import { Pinia, createPinia } from 'pinia';
 import { router } from '@/router/router';
-import { listenForGlobalEvents } from '@/pwa/events';
+import { listenForServiceWorkerEvents } from '@/pwa/events';
 import { registerOrActivateServiceWorker } from '@/pwa/pwa';
 import { usePreferencesStore } from '@/stores/preferences';
 import '@/styles/styles.scss';
@@ -60,7 +60,7 @@ app.use(virtualScroll);
 
 registerOrActivateServiceWorker()
   .then((): void => {
-    listenForGlobalEvents();
+    listenForServiceWorkerEvents();
     app.mount('#app');
   })
   .catch((): void => {

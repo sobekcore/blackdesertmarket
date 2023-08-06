@@ -1,8 +1,7 @@
+import { getEventBroker } from '@blackdesertmarket/event-broker';
 import { ServiceWorkerCache } from '@/enums/cache';
 import { EventBroker, ServiceWorkerEvent } from '@/enums/event';
 import { HttpHeader } from '@/enums/http';
-
-const channel: BroadcastChannel = new BroadcastChannel(EventBroker.SERVICE_WORKER);
 
 export async function findRuntimeCache(request: Request): Promise<Response | undefined> {
   if (request.destination === 'document') {
@@ -16,7 +15,7 @@ export async function findRuntimeCache(request: Request): Promise<Response | und
     const cacheControl: string | null = request.headers.get(HttpHeader.CACHE_CONTROL);
 
     if (!cachedResponse && cacheControl === 'stale-if-error') {
-      channel.postMessage({
+      getEventBroker(EventBroker.SERVICE_WORKER).postMessage({
         type: ServiceWorkerEvent.RUNTIME_CACHE_REQUEST_FAILED,
       });
     }
@@ -26,7 +25,7 @@ export async function findRuntimeCache(request: Request): Promise<Response | und
 
   return fetch(request)
     .then((response: Response): Promise<Response | undefined> => {
-      if (response.status && !response.ok) {
+      if (!response.ok) {
         return handleCachedResponse();
       }
 
