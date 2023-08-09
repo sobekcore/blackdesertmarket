@@ -64,6 +64,5 @@ registerOrActivateServiceWorker()
     app.mount('#app');
   })
   .catch((): void => {
-    console.warn('Failed to register a ServiceWorker for current scope');
     app.mount('#app');
   });

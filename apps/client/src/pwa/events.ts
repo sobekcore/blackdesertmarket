@@ -6,7 +6,7 @@ export function listenForServiceWorkerEvents(): void {
   const locationStore = useLocationStore();
 
   handleBrokerEvents(getEventBroker(EventBroker.SERVICE_WORKER), {
-    [ServiceWorkerEvent.RUNTIME_CACHE_REQUEST_FAILED]: (): void => {
+    [ServiceWorkerEvent.APPLICATION_CACHE_REQUEST_FAILED]: (): void => {
       locationStore.offline = true;
     },
   });

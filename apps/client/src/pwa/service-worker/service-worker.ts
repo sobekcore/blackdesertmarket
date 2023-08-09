@@ -1,7 +1,6 @@
 import { handleBrokerEvents } from '@blackdesertmarket/event-broker';
 import { ServiceWorkerEvent } from '@/enums/event';
-import { populateApplicationCache } from '@/pwa/service-worker/application-cache';
-import { findRuntimeCache } from '@/pwa/service-worker/runtime-cache';
+import { findApplicationCache, populateApplicationCache } from '@/pwa/service-worker/application-cache';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -14,7 +13,7 @@ self.addEventListener('activate', (event: ExtendableEvent): void => {
 });
 
 self.addEventListener('fetch', (event: FetchEvent): void => {
-  event.respondWith(findRuntimeCache(event.request) as Promise<Response>);
+  event.respondWith(findApplicationCache(event.request) as Promise<Response>);
 });
 
 handleBrokerEvents<ServiceWorkerGlobalScope, ExtendableMessageEvent>(self, {

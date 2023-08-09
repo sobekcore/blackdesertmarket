@@ -1,7 +1,7 @@
 const { defineConfig } = require('@vue/cli-service');
 
 const CHUNK_SERVICE_WORKER_NAME = 'service-worker';
-const OUTPUT_DEFAULT_FILENAME = 'js/[name].[hash:8].js';
+const OUTPUT_DEFAULT_FILENAME = 'js/[name].js';
 const OUTPUT_SERVICE_WORKER_FILENAME = '[name].js';
 
 const ATTRIBUTE_TEST_NAME = 'data-test';
@@ -17,6 +17,7 @@ function removeAttributeTestFromNode(node) {
 }
 
 module.exports = defineConfig({
+  filenameHashing: false,
   transpileDependencies: true,
   parallel: false,
   configureWebpack: {
