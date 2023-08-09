@@ -5,7 +5,7 @@
     </div>
     <ListItemName :name="itemTypeComposable.getItemName()" :class="itemGradeText" />
     <div class="flex gap-x-3">
-      <ListItemIcon :src="itemIcon.href" :text="itemTypeComposable.getItemIconText()" :class="itemGradeBorder" />
+      <ListItemIcon :src="itemIcon" :text="itemTypeComposable.getItemIconText()" :class="itemGradeBorder" />
       <div class="flex flex-col justify-center gap-x-3">
         <ListItemTooltipProperty
           v-if="props.itemTooltip.damage"
@@ -81,12 +81,12 @@ import { ItemTooltipSectionId } from '@/enums/item-tooltip';
 import { UseItemTooltipReturn, useItemTooltip } from '@/composables/item-tooltip/use-item-tooltip';
 import { UseItemTypeReturn, useItemType } from '@/composables/item-type/use-item-type';
 import { UseItemReturn, useItem } from '@/composables/item/use-item';
+import { UseItemIconFetchReturn, useItemIconFetch } from '@/composables/item/use-item-icon-fetch';
 import { TranslateKey, useInject } from '@/composables/use-inject';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemName from '@/components/ListItem/ListItemName.vue';
 import ListItemTooltipProperty from '@/components/ListItem/ListItemTooltip/ListItemTooltipProperty.vue';
 import ListItemTooltipSection from '@/components/ListItem/ListItemTooltip/ListItemTooltipSection.vue';
-import { config } from '@/config';
 
 const props = defineProps({
   itemType: {
@@ -103,10 +103,11 @@ const translate = useInject(TranslateKey);
 const itemComposable: UseItemReturn = useItem(props.itemType);
 const itemTypeComposable: UseItemTypeReturn = useItemType(props.itemType);
 const itemTooltipComposable: UseItemTooltipReturn = useItemTooltip(props.itemTooltip);
+const itemIconFetch: UseItemIconFetchReturn = useItemIconFetch(props.itemType.id);
 
-const itemIcon: Ref<URL> = ref(new URL(`/item/${props.itemType.id}/icon`, config.marketApiUrl));
 const itemGradeText: Ref<string> = ref('mb-0.5 text-lg');
 const itemGradeBorder: Ref<string> = ref('');
+const itemIcon: Ref<string> = ref('');
 const centralMarketInformationId: Ref<string> = ref('');
 
 const centralMarketInformationOrder: ItemTooltipSectionId[] = [
@@ -129,6 +130,12 @@ const getCentralMarketInformationData = (): BlackDesertItemTooltipSection => {
 if (props.itemType.grade) {
   itemGradeText.value = `mb-0.5 text-lg text:item-grade-${props.itemType.grade}`;
   itemGradeBorder.value = `border:item-grade-${props.itemType.grade}`;
+}
+
+if (!itemIcon.value) {
+  itemIconFetch.fetch().then((icon: string): void => {
+    itemIcon.value = icon;
+  });
 }
 
 if (!centralMarketInformationId.value) {

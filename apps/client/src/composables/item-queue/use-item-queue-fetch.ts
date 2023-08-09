@@ -1,6 +1,6 @@
 import { BlackDesertItemQueue } from '@blackdesertmarket/interfaces';
 import { ComposableException } from '@/exceptions/composable-exception';
-import { HttpMethod } from '@/enums/http';
+import { HttpHeader, HttpMethod } from '@/enums/http';
 import { usePreferencesStore } from '@/stores/preferences';
 import { useMarketApi } from '@/composables/use-market-api';
 
@@ -12,10 +12,19 @@ export function useItemQueueFetch(): UseQueueItemListReturn {
   const preferencesStore = usePreferencesStore();
 
   const fetch = async (): Promise<BlackDesertItemQueue[]> => {
-    const marketApi = useMarketApi<BlackDesertItemQueue[]>(HttpMethod.GET, '/list/queue', {
-      region: preferencesStore.getRegion,
-      language: preferencesStore.getLanguage,
-    });
+    const marketApi = useMarketApi<BlackDesertItemQueue[]>(
+      HttpMethod.GET,
+      '/list/queue',
+      {
+        region: preferencesStore.getRegion,
+        language: preferencesStore.getLanguage,
+      },
+      {
+        headers: {
+          [HttpHeader.CACHE_CONTROL]: 'stale-if-error',
+        },
+      },
+    );
 
     const response = await marketApi.execute();
 

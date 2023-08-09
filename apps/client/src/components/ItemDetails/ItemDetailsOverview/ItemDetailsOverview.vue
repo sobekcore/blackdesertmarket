@@ -2,7 +2,7 @@
   <div class="flex h-full flex-col gap-y-5">
     <div class="flex flex-col-reverse gap-3.5 sm:flex-row">
       <div class="flex w-full gap-3.5 overflow-hidden">
-        <ListItemIcon :src="itemIcon.href" :item="props.itemType" :class="itemGradeBorder" />
+        <ListItemIcon :src="itemIcon" :item="props.itemType" :class="itemGradeBorder" />
         <ListItemName :name="itemType.name" :class="itemGradeText" />
       </div>
       <div class="flex gap-3.5">
@@ -64,13 +64,13 @@ import { BlackDesertItemDetails, BlackDesertItemType } from '@blackdesertmarket/
 import { ComponentException } from '@/exceptions/component-exception';
 import { UseItemDetailsReturn, useItemDetails } from '@/composables/item-details/use-item-details';
 import { UseItemTypeReturn, useItemType } from '@/composables/item-type/use-item-type';
+import { UseItemIconFetchReturn, useItemIconFetch } from '@/composables/item/use-item-icon-fetch';
 import { TranslateKey, useInject } from '@/composables/use-inject';
 import ItemDetailsOverviewButton from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverviewButton.vue';
 import ItemDetailsOverviewChart from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverviewChart.vue';
 import ItemDetailsOverviewProperty from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverviewProperty.vue';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemName from '@/components/ListItem/ListItemName.vue';
-import { config } from '@/config';
 
 const props = defineProps({
   itemType: {
@@ -86,10 +86,11 @@ const props = defineProps({
 const translate = useInject(TranslateKey);
 const itemTypeComposable: UseItemTypeReturn = useItemType(props.itemType);
 const itemDetailsComposable: UseItemDetailsReturn = useItemDetails(props.itemDetails);
+const itemIconFetch: UseItemIconFetchReturn = useItemIconFetch(props.itemType.id);
 
-const itemIcon: Ref<URL> = ref(new URL(`/item/${props.itemType.id}/icon`, config.marketApiUrl));
 const itemGradeText: Ref<string> = ref('');
 const itemGradeBorder: Ref<string> = ref('');
+const itemIcon: Ref<string> = ref('');
 
 const months: Ref<number> = ref(1);
 
@@ -111,5 +112,11 @@ const handleButtonClick = (month: number): void => {
 if (props.itemType.grade) {
   itemGradeText.value = `text:item-grade-${props.itemType.grade}`;
   itemGradeBorder.value = `border:item-grade-${props.itemType.grade}`;
+}
+
+if (!itemIcon.value) {
+  itemIconFetch.fetch().then((icon: string): void => {
+    itemIcon.value = icon;
+  });
 }
 </script>

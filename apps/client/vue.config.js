@@ -1,7 +1,10 @@
 const { defineConfig } = require('@vue/cli-service');
 
-const ATTRIBUTE_TEST_NAME = 'data-test';
+const CHUNK_SERVICE_WORKER_NAME = 'service-worker';
+const OUTPUT_DEFAULT_FILENAME = 'js/[name].js';
+const OUTPUT_SERVICE_WORKER_FILENAME = '[name].js';
 
+const ATTRIBUTE_TEST_NAME = 'data-test';
 const ELEMENT_NODE = 1;
 const ATTRIBUTE_NODE = 6;
 
@@ -14,6 +17,7 @@ function removeAttributeTestFromNode(node) {
 }
 
 module.exports = defineConfig({
+  filenameHashing: false,
   transpileDependencies: true,
   parallel: false,
   configureWebpack: {
@@ -22,8 +26,14 @@ module.exports = defineConfig({
         '~': __dirname,
       },
     },
+    output: {
+      filename: OUTPUT_DEFAULT_FILENAME,
+      chunkFilename(data) {
+        return data.chunk.name === CHUNK_SERVICE_WORKER_NAME ? OUTPUT_SERVICE_WORKER_FILENAME : OUTPUT_DEFAULT_FILENAME;
+      },
+    },
   },
-  chainWebpack: (config) => {
+  chainWebpack(config) {
     /**
      * Configuration to properly tree-shake i18n in the final bundle
      */

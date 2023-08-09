@@ -86,8 +86,8 @@ const props = defineProps({
 });
 
 const translate = useInject(TranslateKey);
-const itemListComposable: UseItemTypeFetchReturn = useItemTypeFetch(props.id);
-const itemDetailsComposable: UseItemDetailsFetchReturn = useItemDetailsFetch(props.id, props.enhancement, true);
+const itemListFetch: UseItemTypeFetchReturn = useItemTypeFetch(props.id);
+const itemDetailsFetch: UseItemDetailsFetchReturn = useItemDetailsFetch(props.id, props.enhancement, true);
 
 const itemType: Ref<BlackDesertItemType | null> = ref(null);
 const itemDetails: Ref<BlackDesertItemDetails | null> = ref(null);
@@ -134,13 +134,13 @@ const getItemAvailabilityTextClass = (
 };
 
 if (!itemType.value) {
-  itemListComposable.fetchByEnhancement(props.enhancement).then((data: BlackDesertItemType | null): void => {
+  itemListFetch.fetchByEnhancement(props.enhancement).then((data: BlackDesertItemType | null): void => {
     itemType.value = data;
   });
 }
 
 if (!itemDetails.value) {
-  itemDetailsComposable.fetch().then((data: BlackDesertItemDetails | null): void => {
+  itemDetailsFetch.fetch().then((data: BlackDesertItemDetails | null): void => {
     itemDetails.value = data;
   });
 }

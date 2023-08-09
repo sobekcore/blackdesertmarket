@@ -1,7 +1,7 @@
 import { getFirstElement } from '@blackdesertmarket/helpers';
 import { BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { ComposableException } from '@/exceptions/composable-exception';
-import { HttpMethod } from '@/enums/http';
+import { HttpHeader, HttpMethod } from '@/enums/http';
 import { usePreferencesStore } from '@/stores/preferences';
 import { useMarketApi } from '@/composables/use-market-api';
 
@@ -15,10 +15,19 @@ export function useItemTypeFetch(id: number): UseItemTypeFetchReturn {
   const preferencesStore = usePreferencesStore();
 
   const fetch = async (): Promise<BlackDesertItemType[]> => {
-    const marketApi = useMarketApi<BlackDesertItemType[]>(HttpMethod.GET, `/item/${id}`, {
-      region: preferencesStore.getRegion,
-      language: preferencesStore.getLanguage,
-    });
+    const marketApi = useMarketApi<BlackDesertItemType[]>(
+      HttpMethod.GET,
+      `/item/${id}`,
+      {
+        region: preferencesStore.getRegion,
+        language: preferencesStore.getLanguage,
+      },
+      {
+        headers: {
+          [HttpHeader.CACHE_CONTROL]: 'stale-if-error',
+        },
+      },
+    );
 
     const response = await marketApi.execute();
 

@@ -12,7 +12,7 @@
       <span class="relative flex items-stretch gap-2.5 overflow-hidden">
         <slot name="icon">
           <ListItemIcon
-            :src="itemIcon.href"
+            :src="itemIcon"
             :item="props.item"
             :text="itemTypeComposable.getItemIconText()"
             :class="itemGradeBorder"
@@ -42,12 +42,12 @@ import { BlackDesertItem, BlackDesertItemType } from '@blackdesertmarket/interfa
 import { VueAttributeClass } from '@/types/attributes-vue';
 import { UseItemTypeReturn, useItemType } from '@/composables/item-type/use-item-type';
 import { UseItemReturn, useItem } from '@/composables/item/use-item';
+import { UseItemIconFetchReturn, useItemIconFetch } from '@/composables/item/use-item-icon-fetch';
 import { TranslateKey, useInject } from '@/composables/use-inject';
 import ListItemIcon from '@/components/ListItem/ListItemIcon.vue';
 import ListItemName from '@/components/ListItem/ListItemName.vue';
 import ListItemProperty from '@/components/ListItem/ListItemProperty.vue';
 import ListItemSeparator from '@/components/ListItem/ListItemSeparator.vue';
-import { config } from '@/config';
 
 const emit = defineEmits({
   effect: null,
@@ -66,10 +66,11 @@ const props = defineProps({
 const translate = useInject(TranslateKey);
 const itemComposable: UseItemReturn = useItem(props.item);
 const itemTypeComposable: UseItemTypeReturn = useItemType(props.item as BlackDesertItemType);
+const itemIconFetch: UseItemIconFetchReturn = useItemIconFetch(props.item.id);
 
-const itemIcon: Ref<URL> = ref(new URL(`/item/${props.item.id}/icon`, config.marketApiUrl));
 const itemGradeText: Ref<string> = ref('text-sm');
 const itemGradeBorder: Ref<string> = ref('');
+const itemIcon: Ref<string> = ref('');
 
 const triggerListItemEffect = (): void => {
   emit('effect');
@@ -78,5 +79,11 @@ const triggerListItemEffect = (): void => {
 if (props.item.grade) {
   itemGradeText.value = `text-sm text:item-grade-${props.item.grade}`;
   itemGradeBorder.value = `border:item-grade-${props.item.grade}`;
+}
+
+if (!itemIcon.value) {
+  itemIconFetch.fetch().then((icon: string): void => {
+    itemIcon.value = icon;
+  });
 }
 </script>

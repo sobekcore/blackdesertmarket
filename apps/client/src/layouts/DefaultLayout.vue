@@ -4,7 +4,7 @@
       <div class="flex h-full flex-grow flex-col xl:flex-row">
         <div class="navigation-sm">
           <button class="h-full" @click="showNavigation">
-            <AppIcon :src="require('@/assets/images/icon.png')" class="h-full" />
+            <AppIcon src="/assets/images/icon.png" class="h-full" />
           </button>
         </div>
         <div
@@ -26,6 +26,7 @@
         </nav>
         <main :key="locationStore.reload" class="h-full w-full overflow-y-hidden bg-dark-100 xl:w-3/4">
           <AppMaintenance v-if="maintenance" />
+          <AppOffline v-else-if="offline" />
           <slot v-else></slot>
         </main>
       </div>
@@ -39,9 +40,10 @@ import { Router, useRouter } from 'vue-router';
 import { UseSwipeReturn, useSwipe } from '@vueuse/core';
 import { useLocationStore } from '@/stores/location';
 import AppIcon from '@/components/Base/AppIcon.vue';
-import AppMaintenance from '@/components/Base/AppMaintenance.vue';
 import AppMarketplaceProvider from '@/components/Base/AppMarketplaceProvider.vue';
 import AppMarketplaceView from '@/components/Base/AppMarketplaceView.vue';
+import AppMaintenance from '@/components/Base/AppStatus/AppMaintenance.vue';
+import AppOffline from '@/components/Base/AppStatus/AppOffline.vue';
 import CategorySidemenu from '@/components/CategorySidemenu/CategorySidemenu.vue';
 
 const locationStore = useLocationStore();
@@ -76,8 +78,13 @@ const maintenance: ComputedRef<boolean> = computed((): boolean => {
   return locationStore.maintenance;
 });
 
+const offline: ComputedRef<boolean> = computed((): boolean => {
+  return locationStore.offline;
+});
+
 router.afterEach((): void => {
   locationStore.maintenance = false;
+  locationStore.offline = false;
 });
 </script>
 
