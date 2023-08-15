@@ -1,8 +1,8 @@
 <template>
-  <form data-test="form" class="flex flex-col gap-2 p-2.5" @submit.prevent="handleSubmit">
+  <form data-test="list-filter-form" class="flex flex-col gap-2 p-2.5" @submit.prevent="handleSubmit">
     <div class="border-lighten w-full rounded border-t bg-dark-400 py-1.5 px-2 shadow-md">
       <div class="list-filter-main grid grid-flow-row gap-2 sm:grid-flow-col">
-        <ListFilterButton data-test="search-context" @click="updateButtonSearchState('searchContext')">
+        <ListFilterButton data-test="list-filter-search-context" @click="updateButtonSearchState('searchContext')">
           <ListFilterButtonContent :icon="require('@/assets/images/list-filter/filter.png')" icon-class="h-[16px]">
             <template v-if="state.searchContext === ListFilterButtonSearchState.ALL">
               {{ translate('listFilter.all') }}
@@ -14,7 +14,7 @@
         </ListFilterButton>
         <FieldSearchText
           v-model="state.search"
-          data-test="search"
+          data-test="list-filter-search"
           :placeholder="translate('listFilter.itemName')"
           @change="updateFilterState"
         />
@@ -33,7 +33,7 @@
     <div class="flex flex-wrap gap-2">
       <slot name="bottom">
         <ListFilterButton
-          data-test="sort-count"
+          data-test="list-filter-sort-count"
           :tooltip="translate('listFilter.sortCount')"
           @click="updateButtonSortState('sortCount')"
         >
@@ -42,7 +42,7 @@
           </ListFilterButtonContent>
         </ListFilterButton>
         <ListFilterButton
-          data-test="sort-price"
+          data-test="list-filter-sort-price"
           :tooltip="translate('listFilter.sortPrice')"
           @click="updateButtonSortState('sortPrice')"
         >

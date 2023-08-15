@@ -73,7 +73,7 @@ describe('ItemTypeList', () => {
     const component: ComponentInternalInstance = listFilterWrapper.getCurrentComponent();
     component.emit('filter', MOCK_FILTER_DATA);
 
-    expect(MOCK_PROCESS_ITEM_LIST).toBeCalled();
+    expect(MOCK_PROCESS_ITEM_LIST).toHaveBeenCalled();
   });
 
   it('should pass item prop to ListItem depending on id prop', async () => {

@@ -1,7 +1,7 @@
 <template>
   <li>
     <button
-      data-test="button"
+      data-test="category-sidemenu-sub-item"
       :class="{
         'flex w-full rounded-sm border py-3 px-6': true,
         'button-inactive-state': !isActive,

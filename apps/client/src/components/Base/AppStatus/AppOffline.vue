@@ -1,5 +1,5 @@
 <template>
-  <AppStatus title="Offline">
+  <AppStatus data-test="status-offline" title="Offline">
     <p>Currently your device is offline.</p>
     <p>Data from last visit could not be retrieved.</p>
   </AppStatus>

@@ -31,16 +31,16 @@ describe('AppLoader', () => {
   });
 
   describe('should contain class depending on overlay prop', () => {
-    it('when data-test = outer', () => {
+    it('when data-test = loader', () => {
       wrapper = shallowMount(AppLoader, {
         props: {
           overlay: MOCK_OVERLAY,
         },
       });
 
-      const outer: DOMWrapper<HTMLElement> = wrapper.find('[data-test="outer"]');
+      const loader: DOMWrapper<HTMLElement> = wrapper.find('[data-test="loader"]');
 
-      expect(outer.classes()).toContain('loader-overlay-wrapper');
+      expect(loader.classes()).toContain('loader-overlay-wrapper');
     });
 
     it('when data-test = icon', () => {

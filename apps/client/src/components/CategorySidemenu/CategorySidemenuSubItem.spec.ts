@@ -45,8 +45,8 @@ describe('CategorySidemenuSubItem', () => {
   });
 
   it('should emit effect event on click', () => {
-    const button: DOMWrapper<HTMLElement> = wrapper.find('[data-test="button"]');
-    button.trigger('click');
+    const categorySidemenuSubItem: DOMWrapper<HTMLElement> = wrapper.find('[data-test="category-sidemenu-sub-item"]');
+    categorySidemenuSubItem.trigger('click');
 
     const emitted: Record<string, unknown[]> = wrapper.emitted();
     const [events] = emitted.effect;
@@ -66,8 +66,8 @@ describe('CategorySidemenuSubItem', () => {
       },
     });
 
-    const button: DOMWrapper<HTMLElement> = wrapper.find('[data-test="button"]');
+    const categorySidemenuSubItem: DOMWrapper<HTMLElement> = wrapper.find('[data-test="category-sidemenu-sub-item"]');
 
-    expect(button.classes()).toContain('button-active-state');
+    expect(categorySidemenuSubItem.classes()).toContain('button-active-state');
   });
 });

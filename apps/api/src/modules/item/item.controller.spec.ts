@@ -68,7 +68,7 @@ describe('ItemController', () => {
         { id: 5600 },
       );
 
-      expect(promise).rejects.toThrow(ExternalMarketException);
+      await expect(promise).rejects.toThrow(ExternalMarketException);
     });
   });
 
@@ -94,7 +94,7 @@ describe('ItemController', () => {
 
       const promise: Promise<unknown> = itemController.findIconById({ id: 5600 });
 
-      expect(promise).rejects.toThrow(ExternalMarketException);
+      await expect(promise).rejects.toThrow(ExternalMarketException);
     });
   });
 
@@ -128,7 +128,7 @@ describe('ItemController', () => {
         { extended: true },
       );
 
-      expect(promise).rejects.toThrow(ExternalMarketException);
+      await expect(promise).rejects.toThrow(ExternalMarketException);
     });
   });
 });

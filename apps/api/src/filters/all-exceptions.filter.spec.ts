@@ -22,8 +22,8 @@ describe('AllExceptionsFilter', () => {
 
     allExceptionsFilter.catch(new HttpException(message, HttpStatus.INTERNAL_SERVER_ERROR), mockArgumentsHost);
 
-    expect(mockStatus).toBeCalledWith(HttpStatus.INTERNAL_SERVER_ERROR);
-    expect(mockJson).toBeCalledWith({ code: ControllerResponseCode.ERROR_INTERNAL, messages: [message] });
+    expect(mockStatus).toHaveBeenCalledWith(HttpStatus.INTERNAL_SERVER_ERROR);
+    expect(mockJson).toHaveBeenCalledWith({ code: ControllerResponseCode.ERROR_INTERNAL, messages: [message] });
   });
 
   it('should return response with proper structure on invalid exception', () => {
@@ -31,7 +31,7 @@ describe('AllExceptionsFilter', () => {
 
     allExceptionsFilter.catch(new HttpException({}, HttpStatus.INTERNAL_SERVER_ERROR), mockArgumentsHost);
 
-    expect(mockStatus).toBeCalledWith(HttpStatus.INTERNAL_SERVER_ERROR);
-    expect(mockJson).toBeCalledWith({ code: ControllerResponseCode.ERROR_INTERNAL, messages: [message] });
+    expect(mockStatus).toHaveBeenCalledWith(HttpStatus.INTERNAL_SERVER_ERROR);
+    expect(mockJson).toHaveBeenCalledWith({ code: ControllerResponseCode.ERROR_INTERNAL, messages: [message] });
   });
 });
