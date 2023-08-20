@@ -72,8 +72,8 @@ describe('ListItem', () => {
   });
 
   it('should emit effect event on click', () => {
-    const button: DOMWrapper<HTMLElement> = wrapper.find('[data-test="button"]');
-    button.trigger('click');
+    const listItemButton: DOMWrapper<HTMLElement> = wrapper.find('[data-test="list-item-button"]');
+    listItemButton.trigger('click');
 
     const emitted: Record<string, unknown[]> = wrapper.emitted();
     const [events] = emitted.effect;
@@ -92,11 +92,11 @@ describe('ListItem', () => {
       },
     });
 
-    const inner: DOMWrapper<HTMLElement> = wrapper.find('[data-test="inner"]');
-    const innerAttributes: Record<string, string> = inner.attributes();
+    const listItem: DOMWrapper<HTMLElement> = wrapper.find('[data-test="list-item"]');
+    const listItemAttributes: Record<string, string> = listItem.attributes();
 
-    expect(innerAttributes).toHaveProperty('class');
-    expect(innerAttributes.class).toContain(MOCK_CLASS);
+    expect(listItemAttributes).toHaveProperty('class');
+    expect(listItemAttributes.class).toContain(MOCK_CLASS);
   });
 
   it('should pass src prop to ListItemIcon depending on item prop', async () => {
@@ -117,24 +117,6 @@ describe('ListItem', () => {
 
     expect(listItemIconAttributes).toHaveProperty('src');
     expect(listItemIconAttributes.src).toContain(MOCK_BLOB);
-  });
-
-  it('should pass text prop to ListItemIcon depending on item prop', () => {
-    wrapper = shallowMount(ListItem, {
-      global: {
-        provide: mockProvide(),
-      },
-      props: {
-        item: MOCK_ITEM,
-        class: MOCK_CLASS,
-      },
-    });
-
-    const listItemIconWrapper: VueWrapper = wrapper.findComponent(ListItemIcon);
-    const listItemIconAttributes: Record<string, string> = listItemIconWrapper.attributes();
-
-    expect(listItemIconAttributes).toHaveProperty('text');
-    expect(listItemIconAttributes.text).toBeFalsy();
   });
 
   it('should pass text prop to ListItemIcon depending on item prop', () => {
@@ -207,10 +189,10 @@ describe('ListItem', () => {
 
     const numberFormat: UseNumberFormatReturn = useNumberFormat();
 
-    const listItemPropertyPrice: DOMWrapper<HTMLElement> = wrapper.find('[data-test="price"]');
+    const listItemPropertyPrice: DOMWrapper<HTMLElement> = wrapper.find('[data-test="list-item-price"]');
     const listItemPropertyPriceAttributes: Record<string, string> = listItemPropertyPrice.attributes();
 
-    const listItemPropertyCount: DOMWrapper<HTMLElement> = wrapper.find('[data-test="count"]');
+    const listItemPropertyCount: DOMWrapper<HTMLElement> = wrapper.find('[data-test="list-item-count"]');
     const listItemPropertyCountAttributes: Record<string, string> = listItemPropertyCount.attributes();
 
     expect(listItemPropertyPriceAttributes).toHaveProperty('value');

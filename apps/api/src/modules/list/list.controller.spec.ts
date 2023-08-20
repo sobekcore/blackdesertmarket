@@ -68,7 +68,7 @@ describe('ListController', () => {
         mockI18nContext(i18nService),
       );
 
-      expect(promise).rejects.toThrow(ExternalMarketException);
+      await expect(promise).rejects.toThrow(ExternalMarketException);
     });
   });
 
@@ -98,7 +98,7 @@ describe('ListController', () => {
         mockI18nContext(i18nService),
       );
 
-      expect(promise).rejects.toThrow(ExternalMarketException);
+      await expect(promise).rejects.toThrow(ExternalMarketException);
     });
   });
 
@@ -130,7 +130,7 @@ describe('ListController', () => {
         { mainCategory: 25, subCategory: 2 },
       );
 
-      expect(promise).rejects.toThrow(ExternalMarketException);
+      await expect(promise).rejects.toThrow(ExternalMarketException);
     });
   });
 });

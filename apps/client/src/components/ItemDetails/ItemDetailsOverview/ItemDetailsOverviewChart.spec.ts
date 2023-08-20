@@ -4,7 +4,7 @@ import { BlackDesertItemDetailsHistory } from '@blackdesertmarket/interfaces';
 import { mockBlackDesertItemDetailsHistory } from '@blackdesertmarket/mocks';
 import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
 import { DefaultDataPoint } from 'chart.js/dist/types';
-import { extractFromSetup } from '@test/helpers/extract-from-setup';
+import { extractFromSetup } from '@test/helpers/jest/extract-from-setup';
 import { mockProvide } from '@test/mocks/provide.mock';
 import ItemDetailsOverviewChart from '@/components/ItemDetails/ItemDetailsOverview/ItemDetailsOverviewChart.vue';
 
@@ -47,11 +47,11 @@ describe('ItemDetailsOverviewChart', () => {
       },
     });
 
-    const outer: DOMWrapper<HTMLElement> = wrapper.find('[data-test="outer"]');
-    const outerAttributes: Record<string, string> = outer.attributes();
+    const itemDetailsChart: DOMWrapper<HTMLElement> = wrapper.find('[data-test="item-details-chart"]');
+    const itemDetailsChartAttributes: Record<string, string> = itemDetailsChart.attributes();
 
-    expect(outerAttributes).toHaveProperty('class');
-    expect(outerAttributes.class).toContain(MOCK_CLASS);
+    expect(itemDetailsChartAttributes).toHaveProperty('class');
+    expect(itemDetailsChartAttributes.class).toContain(MOCK_CLASS);
   });
 
   it('should pass data prop to Line depending on data prop', () => {

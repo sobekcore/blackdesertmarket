@@ -22,6 +22,7 @@ const store: Pinia = createPinia();
 app.use(store);
 
 const preferencesStore = usePreferencesStore();
+document.documentElement.lang = preferencesStore.getLanguage;
 
 const i18n: I18n = createI18n({
   locale: preferencesStore.getLanguage,

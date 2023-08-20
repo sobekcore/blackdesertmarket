@@ -2,6 +2,7 @@ import { getEventBroker } from '@blackdesertmarket/event-broker';
 import { ServiceWorkerCache } from '@/enums/cache';
 import { EventBroker, ServiceWorkerEvent } from '@/enums/event';
 import { HttpHeader } from '@/enums/http';
+import { checkIsUrlExcludedFromSpa } from '@/router/excluded';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -19,14 +20,16 @@ export async function populateApplicationCache(files: string[]): Promise<void> {
 }
 
 export async function findApplicationCache(request: Request): Promise<Response | undefined> {
-  if (request.destination === 'document') {
+  const isUrlExcludedFromSpa: boolean = checkIsUrlExcludedFromSpa(request.url);
+
+  if (!isUrlExcludedFromSpa && request.destination === 'document') {
     return caches.match('/');
   }
 
   const cache: Cache = await caches.open(ServiceWorkerCache.APPLICATION);
   const cachedResponse: Response | undefined = await cache.match(request);
 
-  const handleCachedResponse = (): Promise<Response | undefined> => {
+  const handleCachedResponse = (fallback?: Response): Promise<Response | undefined> => {
     const cacheControl: string | null = request.headers.get(HttpHeader.CACHE_CONTROL);
 
     if (!cachedResponse && cacheControl === 'stale-if-error') {
@@ -35,13 +38,21 @@ export async function findApplicationCache(request: Request): Promise<Response |
       });
     }
 
+    if (!cachedResponse && fallback?.status === 503) {
+      return Promise.resolve(fallback);
+    }
+
     return Promise.resolve(cachedResponse);
   };
 
   return fetch(request)
     .then((response: Response): Promise<Response | undefined> => {
+      if (isUrlExcludedFromSpa) {
+        return Promise.resolve(response);
+      }
+
       if (!response.ok) {
-        return handleCachedResponse();
+        return handleCachedResponse(response);
       }
 
       return cache.put(request, response.clone()).then((): Response => {

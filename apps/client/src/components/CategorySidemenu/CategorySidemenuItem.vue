@@ -2,7 +2,7 @@
   <li>
     <slot name="before" :active="isActive"></slot>
     <button
-      data-test="button"
+      data-test="category-sidemenu-item"
       :class="{
         'flex w-full cursor-pointer items-center justify-between gap-x-3 border p-3': true,
         'button-inactive-state': !isActive,

@@ -1,6 +1,6 @@
 <template>
-  <AppStatus title="Maintenance">
-    <p>Currently the application is in the maintenance.</p>
+  <AppStatus data-test="status-maintenance" title="Maintenance">
+    <p>Currently application is in the maintenance.</p>
     <p>Please try again later.</p>
   </AppStatus>
 </template>

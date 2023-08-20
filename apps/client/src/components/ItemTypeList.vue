@@ -13,7 +13,8 @@
       <ListItem
         v-if="!search && itemType"
         :item="itemType"
-        class="pointer-events-none bg-gradient-to-b from-brand-600/60 to-brand-300/80"
+        disabled
+        class="bg-gradient-to-b from-brand-600/60 to-brand-300/80"
       >
         <template #append>
           <ListItemSeparator />

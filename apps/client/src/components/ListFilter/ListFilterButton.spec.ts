@@ -1,5 +1,5 @@
 import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
-import { extractFromSetup } from '@test/helpers/extract-from-setup';
+import { extractFromSetup } from '@test/helpers/jest/extract-from-setup';
 import { ListFilterButtonVariant } from '@/enums/list-filter';
 import AppModalContent from '@/components/Base/AppModal/AppModalContent.vue';
 import ListFilterButton from '@/components/ListFilter/ListFilterButton.vue';

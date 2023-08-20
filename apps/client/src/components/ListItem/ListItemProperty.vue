@@ -5,7 +5,7 @@
         {{ props.label }}
       </slot>
     </span>
-    <span class="flex items-center justify-end">
+    <span data-test="value" class="flex items-center justify-end">
       <slot name="value">
         {{ props.value }}
       </slot>

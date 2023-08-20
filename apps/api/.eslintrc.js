@@ -6,7 +6,6 @@ module.exports = {
   root: true,
   env: {
     node: true,
-    jest: true,
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -18,6 +17,16 @@ module.exports = {
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+  ],
+  overrides: [
+    {
+      files: ['src/**/*.spec.ts'],
+      env: {
+        'jest/globals': true,
+      },
+      plugins:  ['jest'],
+      extends: ['plugin:jest/recommended'],
+    },
   ],
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',

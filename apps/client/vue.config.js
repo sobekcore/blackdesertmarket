@@ -48,18 +48,20 @@ module.exports = defineConfig({
     });
 
     /**
-     * Configuration to remove data attributes used only for unit testing
+     * Configuration to remove data attributes used only for testing
      */
-    config.module
-      .rule('vue')
-      .use('vue-loader')
-      .tap((options) => {
-        options.compilerOptions = {
-          ...options.compilerOptions,
-          nodeTransforms: [removeAttributeTestFromNode],
-        };
+    if (process.env.NODE_ENV === 'production') {
+      config.module
+        .rule('vue')
+        .use('vue-loader')
+        .tap((options) => {
+          options.compilerOptions = {
+            ...options.compilerOptions,
+            nodeTransforms: [removeAttributeTestFromNode],
+          };
 
-        return options;
-      });
+          return options;
+        });
+    }
   },
 });

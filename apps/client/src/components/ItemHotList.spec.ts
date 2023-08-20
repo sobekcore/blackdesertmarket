@@ -57,6 +57,6 @@ describe('ItemHotList', () => {
     const component: ComponentInternalInstance = listFilterWrapper.getCurrentComponent();
     component.emit('filter', MOCK_FILTER_DATA);
 
-    expect(MOCK_PROCESS_ITEM_LIST).toBeCalled();
+    expect(MOCK_PROCESS_ITEM_LIST).toHaveBeenCalled();
   });
 });

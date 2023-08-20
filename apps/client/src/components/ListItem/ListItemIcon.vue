@@ -1,5 +1,6 @@
 <template>
   <AppTooltip
+    data-test="list-item-icon"
     placement="right-start"
     :disabled="!props.item"
     :class="itemGradeClass"

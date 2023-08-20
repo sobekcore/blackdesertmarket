@@ -4,12 +4,14 @@
 
 # Environment
 /.env.local
+/cypress.env.json
 
 # Logs
 npm-debug.log*
 
 # Tests
 /coverage
+/cypress
 
 # Configs
 /.idea

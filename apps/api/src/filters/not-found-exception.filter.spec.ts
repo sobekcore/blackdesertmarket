@@ -22,7 +22,7 @@ describe('NotFoundExceptionFilter', () => {
 
     notFoundExceptionFilter.catch(new NotFoundException(message), mockArgumentsHost);
 
-    expect(mockStatus).toBeCalledWith(HttpStatus.NOT_FOUND);
-    expect(mockJson).toBeCalledWith({ code: ControllerResponseCode.ERROR_INVALID_ROUTE, messages: [message] });
+    expect(mockStatus).toHaveBeenCalledWith(HttpStatus.NOT_FOUND);
+    expect(mockJson).toHaveBeenCalledWith({ code: ControllerResponseCode.ERROR_INVALID_ROUTE, messages: [message] });
   });
 });

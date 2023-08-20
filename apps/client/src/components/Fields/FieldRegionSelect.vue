@@ -1,5 +1,5 @@
 <template>
-  <FieldSelect v-model="fieldValue" :options="regions" />
+  <FieldSelect v-model="fieldValue" data-test="field-region-select" :options="regions" />
 </template>
 
 <script lang="ts" setup>

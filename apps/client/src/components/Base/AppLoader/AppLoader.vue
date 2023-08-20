@@ -1,6 +1,6 @@
 <template>
   <div
-    data-test="outer"
+    data-test="loader"
     role="status"
     aria-busy="true"
     :class="{

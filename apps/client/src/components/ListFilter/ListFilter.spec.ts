@@ -1,6 +1,6 @@
 import { ComponentInternalInstance, ComponentPublicInstance } from 'vue';
 import { DOMWrapper, VueWrapper, flushPromises, shallowMount } from '@vue/test-utils';
-import { extractFromSetup } from '@test/helpers/extract-from-setup';
+import { extractFromSetup } from '@test/helpers/jest/extract-from-setup';
 import { mockPlugins } from '@test/mocks/plugins.mock';
 import { mockProvide } from '@test/mocks/provide.mock';
 import { ListFilterData } from '@/interfaces/list-filter';
@@ -24,8 +24,8 @@ describe('ListFilter', () => {
   });
 
   it('should emit filter event on submit', () => {
-    const form: DOMWrapper<HTMLElement> = wrapper.find('[data-test="form"]');
-    form.trigger('submit');
+    const listFilterForm: DOMWrapper<HTMLElement> = wrapper.find('[data-test="list-filter-form"]');
+    listFilterForm.trigger('submit');
 
     const emitted: Record<string, unknown[]> = wrapper.emitted();
     const [events] = emitted.filter;
@@ -34,8 +34,8 @@ describe('ListFilter', () => {
   });
 
   it('should emit filter event on change', () => {
-    const search: DOMWrapper<HTMLElement> = wrapper.find('[data-test="search"]');
-    search.trigger('change');
+    const listFilterSearch: DOMWrapper<HTMLElement> = wrapper.find('[data-test="list-filter-search"]');
+    listFilterSearch.trigger('change');
 
     const emitted: Record<string, unknown[]> = wrapper.emitted();
     const [events] = emitted.filter;
@@ -44,9 +44,10 @@ describe('ListFilter', () => {
   });
 
   describe('should emit filter event on click', () => {
-    it('when data-test = search-context', () => {
-      const componentWrapper: VueWrapper =
-        wrapper.findComponent<ComponentPublicInstance>('[data-test="search-context"]');
+    it('when data-test = list-filter-search-context', () => {
+      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>(
+        '[data-test="list-filter-search-context"]',
+      );
 
       const component: ComponentInternalInstance = componentWrapper.getCurrentComponent();
       component.emit('click');
@@ -57,8 +58,10 @@ describe('ListFilter', () => {
       expect(Array.isArray(events)).toBeTruthy();
     });
 
-    it('when data-test = sort-count', () => {
-      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>('[data-test="sort-count"]');
+    it('when data-test = list-filter-sort-count', () => {
+      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>(
+        '[data-test="list-filter-sort-count"]',
+      );
 
       const component: ComponentInternalInstance = componentWrapper.getCurrentComponent();
       component.emit('click');
@@ -69,8 +72,10 @@ describe('ListFilter', () => {
       expect(Array.isArray(events)).toBeTruthy();
     });
 
-    it('when data-test = sort-price', () => {
-      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>('[data-test="sort-price"]');
+    it('when data-test = list-filter-sort-price', () => {
+      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>(
+        '[data-test="list-filter-sort-price"]',
+      );
 
       const component: ComponentInternalInstance = componentWrapper.getCurrentComponent();
       component.emit('click');
@@ -81,8 +86,10 @@ describe('ListFilter', () => {
       expect(Array.isArray(events)).toBeTruthy();
     });
 
-    it('when data-test = sort-grade', () => {
-      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>('[data-test="sort-grade"]');
+    it('when data-test = list-filter-sort-grade', () => {
+      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>(
+        '[data-test="list-filter-sort-grade"]',
+      );
 
       const component: ComponentInternalInstance = componentWrapper.getCurrentComponent();
       component.emit('click');
@@ -95,12 +102,13 @@ describe('ListFilter', () => {
   });
 
   describe('should update state on click', () => {
-    it('when data-test = search-context', () => {
+    it('when data-test = list-filter-search-context', () => {
       const stateInitial: ListFilterData = extractFromSetup<ListFilterData>(wrapper.getCurrentComponent(), 'state');
       const searchContextInitial: ListFilterButtonSearchState = stateInitial.searchContext;
 
-      const componentWrapper: VueWrapper =
-        wrapper.findComponent<ComponentPublicInstance>('[data-test="search-context"]');
+      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>(
+        '[data-test="list-filter-search-context"]',
+      );
 
       const component: ComponentInternalInstance = componentWrapper.getCurrentComponent();
       component.emit('click');
@@ -111,11 +119,13 @@ describe('ListFilter', () => {
       expect(searchContextInitial).not.toBe(searchContext);
     });
 
-    it('when data-test = sort-count', () => {
+    it('when data-test = list-filter-sort-count', () => {
       const stateInitial: ListFilterData = extractFromSetup<ListFilterData>(wrapper.getCurrentComponent(), 'state');
       const sortCountInitial: ListFilterButtonSortState = stateInitial.sortCount;
 
-      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>('[data-test="sort-count"]');
+      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>(
+        '[data-test="list-filter-sort-count"]',
+      );
 
       const component: ComponentInternalInstance = componentWrapper.getCurrentComponent();
       component.emit('click');
@@ -126,11 +136,13 @@ describe('ListFilter', () => {
       expect(sortCountInitial).not.toBe(sortCount);
     });
 
-    it('when data-test = sort-price', () => {
+    it('when data-test = list-filter-sort-price', () => {
       const stateInitial: ListFilterData = extractFromSetup<ListFilterData>(wrapper.getCurrentComponent(), 'state');
       const sortPriceInitial: ListFilterButtonSortState = stateInitial.sortPrice;
 
-      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>('[data-test="sort-price"]');
+      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>(
+        '[data-test="list-filter-sort-price"]',
+      );
 
       const component: ComponentInternalInstance = componentWrapper.getCurrentComponent();
       component.emit('click');
@@ -141,11 +153,13 @@ describe('ListFilter', () => {
       expect(sortPriceInitial).not.toBe(sortPrice);
     });
 
-    it('when data-test = sort-grade', () => {
+    it('when data-test = list-filter-sort-grade', () => {
       const stateInitial: ListFilterData = extractFromSetup<ListFilterData>(wrapper.getCurrentComponent(), 'state');
       const sortGradeInitial: ListFilterButtonSortState = stateInitial.sortGrade;
 
-      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>('[data-test="sort-grade"]');
+      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>(
+        '[data-test="list-filter-sort-grade"]',
+      );
 
       const component: ComponentInternalInstance = componentWrapper.getCurrentComponent();
       component.emit('click');
