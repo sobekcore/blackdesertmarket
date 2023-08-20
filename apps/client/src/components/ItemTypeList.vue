@@ -12,9 +12,9 @@
     <div class="flex h-full flex-col gap-2 overflow-y-scroll p-2.5 pt-0">
       <ListItem
         v-if="!search && itemType"
-        data-test="list-item-aggregate"
         :item="itemType"
-        class="pointer-events-none bg-gradient-to-b from-brand-600/60 to-brand-300/80"
+        disabled
+        class="bg-gradient-to-b from-brand-600/60 to-brand-300/80"
       >
         <template #append>
           <ListItemSeparator />

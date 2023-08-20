@@ -23,7 +23,9 @@ export const usePreferencesStore = defineStore('preferences', {
   },
   actions: {
     setLanguage(i18n: Composer, language: string): void {
+      document.documentElement.lang = language;
       i18n.locale.value = language;
+
       this.language = language;
     },
   },

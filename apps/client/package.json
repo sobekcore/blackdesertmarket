@@ -6,9 +6,10 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "test:unit:cov": "vue-cli-service test:unit --coverage",
     "test:unit:watch": "vue-cli-service test:unit --watch",
-    "test:e2e": "vue-cli-service test:e2e"
+    "test:unit:cov": "vue-cli-service test:unit --coverage",
+    "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e:headless": "vue-cli-service test:e2e --headless"
   },
   "dependencies": {
     "@blackdesertmarket/event-broker": "*",

@@ -1,5 +1,5 @@
 <template>
-  <FieldSelect v-model="fieldValue" :options="languages" />
+  <FieldSelect v-model="fieldValue" data-test="field-language-select" :options="languages" />
 </template>
 
 <script lang="ts" setup>

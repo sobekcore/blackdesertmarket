@@ -1,16 +1,13 @@
 declare namespace Cypress {
   interface Chainable {
-    clickOnRandom(options?: Partial<Cypress.ClickOptions>): Cypress.Chainable<JQuery<HTMLElement>>;
+    random(): Cypress.Chainable<JQuery<HTMLElement>>;
   }
 }
 
 Cypress.Commands.add(
-  'clickOnRandom',
+  'random',
   { prevSubject: 'element' },
-  (
-    subject: Cypress.JQueryWithSelector<HTMLElement>,
-    options?: Partial<Cypress.ClickOptions>,
-  ): Cypress.Chainable<JQuery<HTMLElement>> => {
-    return cy.wrap(subject.eq(Math.floor(Math.random() * subject.length))).click(options);
+  (subject: Cypress.JQueryWithSelector<HTMLElement>): Cypress.Chainable<JQuery<HTMLElement>> => {
+    return cy.wrap(subject.eq(Math.floor(Math.random() * subject.length)));
   },
 );

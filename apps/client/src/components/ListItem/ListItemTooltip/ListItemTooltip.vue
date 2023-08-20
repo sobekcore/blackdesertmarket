@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[320px]">
+  <div data-test="list-item-tooltip" class="w-[320px]">
     <div data-test="category" class="item-tooltip-category">
       {{ props.itemTooltip.category }}
     </div>

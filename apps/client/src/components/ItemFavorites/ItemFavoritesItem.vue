@@ -1,5 +1,9 @@
 <template>
-  <div class="bg-lighten-xs flex items-center justify-between gap-2 rounded py-1.5 px-2 text-sm">
+  <div
+    data-test="item-favorites-item"
+    :data-search-word="props.searchWord"
+    class="bg-lighten-xs flex items-center justify-between gap-2 rounded py-1.5 px-2 text-sm"
+  >
     <span class="inline-flex overflow-hidden">
       <span data-test="label" class="truncate">{{ getItemLabel() }}</span>
     </span>

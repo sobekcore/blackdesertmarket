@@ -7,13 +7,13 @@
       </div>
       <div class="flex gap-3.5">
         <ItemDetailsOverviewButton
-          data-test="1-month"
+          data-test="one-month"
           :label="`1 ${translate('date.month')}`"
           :active="months === 1"
           @click="handleButtonClick(1)"
         />
         <ItemDetailsOverviewButton
-          data-test="3-months"
+          data-test="three-months"
           :label="`3 ${translate('date.months')}`"
           :active="months === 3"
           @click="handleButtonClick(3)"
@@ -62,6 +62,7 @@
 import { ComputedRef, PropType, Ref, computed, defineProps, ref } from 'vue';
 import { BlackDesertItemDetails, BlackDesertItemType } from '@blackdesertmarket/interfaces';
 import { ComponentException } from '@/exceptions/component-exception';
+import { ItemDetailsDays } from '@/enums/item-details';
 import { UseItemDetailsReturn, useItemDetails } from '@/composables/item-details/use-item-details';
 import { UseItemTypeReturn, useItemType } from '@/composables/item-type/use-item-type';
 import { UseItemIconFetchReturn, useItemIconFetch } from '@/composables/item/use-item-icon-fetch';
@@ -94,12 +95,12 @@ const itemIcon: Ref<string> = ref('');
 
 const months: Ref<number> = ref(1);
 
-const days: ComputedRef<number> = computed((): number => {
+const days: ComputedRef<number> = computed((): ItemDetailsDays => {
   switch (months.value) {
     case 1:
-      return 31;
+      return ItemDetailsDays.ONE_MONTH;
     case 3:
-      return 89;
+      return ItemDetailsDays.THREE_MONTHS;
   }
 
   throw new ComponentException(`Could not compute days number for ${months.value} months`);

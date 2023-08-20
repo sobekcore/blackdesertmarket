@@ -3,9 +3,18 @@
 -->
 
 <template>
-  <div data-test="list-item" :class="props.class" class="flex rounded bg-dark-400 shadow-md">
+  <div
+    :data-test="props.disabled ? 'list-item-disabled' : 'list-item'"
+    :data-item-grade="props.item.grade"
+    :class="{
+      [props.class]: true,
+      'flex rounded bg-dark-400 shadow-md': true,
+      'pointer-events-none': props.disabled,
+    }"
+  >
     <button
       data-test="list-item-button"
+      :disabled="props.disabled"
       class="border-lighten hocus:bg-lighten-sm w-full cursor-pointer rounded border-t py-1.5 px-2 -outline-offset-1"
       @click="triggerListItemEffect"
     >
@@ -57,6 +66,10 @@ const props = defineProps({
   item: {
     type: Object as PropType<BlackDesertItem>,
     required: true,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
   class: {
     type: [String, Object] as PropType<VueAttributeClass>,

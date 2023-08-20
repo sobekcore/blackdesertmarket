@@ -51,7 +51,7 @@
           </ListFilterButtonContent>
         </ListFilterButton>
         <ListFilterButton
-          data-test="sort-grade"
+          data-test="list-filter-sort-grade"
           :tooltip="translate('listFilter.sortGrade')"
           @click="updateButtonSortState('sortGrade')"
         >

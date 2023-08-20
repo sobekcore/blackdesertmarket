@@ -1,6 +1,7 @@
+import { navigate } from '@test/helpers/cypress/navigate';
 import { MarketApiCode } from '@/enums/market-api-code';
 
-describe('Application Status', () => {
+describe('Status', () => {
   beforeEach(() => {
     cy.visit(Cypress.env('MARKET_CLIENT_URL'));
 
@@ -12,7 +13,7 @@ describe('Application Status', () => {
   it('should display Offline message when error occurred during a request', () => {
     cy.intercept('GET', `${Cypress.env('MARKET_API_URL')}/list/**/**`, { forceNetworkError: true }).as('listOffline');
 
-    cy.get('[data-test="category-sidemenu-sub-item"]').clickOnRandom({ force: true });
+    navigate();
     cy.wait('@listOffline');
 
     cy.get('[data-test="status-offline"]').should('contain.text', 'Offline');
@@ -26,7 +27,7 @@ describe('Application Status', () => {
       },
     }).as('listMaintenance');
 
-    cy.get('[data-test="category-sidemenu-sub-item"]').clickOnRandom({ force: true });
+    navigate();
     cy.wait('@listMaintenance');
 
     cy.get('[data-test="status-maintenance"]').should('contain.text', 'Maintenance');

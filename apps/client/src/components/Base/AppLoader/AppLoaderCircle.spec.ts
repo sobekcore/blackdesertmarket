@@ -1,5 +1,5 @@
 import { DOMWrapper, VueWrapper, shallowMount } from '@vue/test-utils';
-import { extractFromSetup } from '@test/helpers/extract-from-setup';
+import { extractFromSetup } from '@test/helpers/jest/extract-from-setup';
 import { UnitTestException } from '@/exceptions/unit-test-exception';
 import AppLoaderCircle from '@/components/Base/AppLoader/AppLoaderCircle.vue';
 

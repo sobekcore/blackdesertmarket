@@ -1,6 +1,6 @@
 import { ComponentInternalInstance, ComponentPublicInstance } from 'vue';
 import { DOMWrapper, VueWrapper, flushPromises, shallowMount } from '@vue/test-utils';
-import { extractFromSetup } from '@test/helpers/extract-from-setup';
+import { extractFromSetup } from '@test/helpers/jest/extract-from-setup';
 import { mockPlugins } from '@test/mocks/plugins.mock';
 import { mockProvide } from '@test/mocks/provide.mock';
 import { ListFilterData } from '@/interfaces/list-filter';
@@ -86,8 +86,10 @@ describe('ListFilter', () => {
       expect(Array.isArray(events)).toBeTruthy();
     });
 
-    it('when data-test = sort-grade', () => {
-      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>('[data-test="sort-grade"]');
+    it('when data-test = list-filter-sort-grade', () => {
+      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>(
+        '[data-test="list-filter-sort-grade"]',
+      );
 
       const component: ComponentInternalInstance = componentWrapper.getCurrentComponent();
       component.emit('click');
@@ -151,11 +153,13 @@ describe('ListFilter', () => {
       expect(sortPriceInitial).not.toBe(sortPrice);
     });
 
-    it('when data-test = sort-grade', () => {
+    it('when data-test = list-filter-sort-grade', () => {
       const stateInitial: ListFilterData = extractFromSetup<ListFilterData>(wrapper.getCurrentComponent(), 'state');
       const sortGradeInitial: ListFilterButtonSortState = stateInitial.sortGrade;
 
-      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>('[data-test="sort-grade"]');
+      const componentWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>(
+        '[data-test="list-filter-sort-grade"]',
+      );
 
       const component: ComponentInternalInstance = componentWrapper.getCurrentComponent();
       component.emit('click');

@@ -1,5 +1,11 @@
 <template>
-  <div :key="props.days" data-test="outer" class="relative h-full w-full" :class="props.class">
+  <div
+    :key="props.days"
+    data-test="item-details-chart"
+    :data-days="props.days"
+    class="relative h-full w-full"
+    :class="props.class"
+  >
     <Line :data="chartData" :options="chartOptions" :plugins="chartPlugins" />
   </div>
 </template>
@@ -26,6 +32,7 @@ import {
   TooltipItem,
 } from 'chart.js';
 import { VueAttributeClass } from '@/types/attributes-vue';
+import { ItemDetailsDays } from '@/enums/item-details';
 import { UseChartReturn, useChart } from '@/composables/use-chart';
 import { UseColorReturn, useColor } from '@/composables/use-color';
 import { UseDocumentSizeReturn, useDocumentSize } from '@/composables/use-document-size';
@@ -48,7 +55,7 @@ const props = defineProps({
     required: true,
   },
   days: {
-    type: Number,
+    type: Number as PropType<ItemDetailsDays>,
     required: true,
   },
   class: {
