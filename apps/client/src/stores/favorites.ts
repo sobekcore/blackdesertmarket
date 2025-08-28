@@ -1,47 +1,52 @@
-import { useLocalStorage } from '@vueuse/core';
+import { RemovableRef, useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 
-interface FavoritesStoreState {
-  favorites: string[];
+interface FavoritesStore {
+  favorites: RemovableRef<string[]>;
+  getFavorite(searchWord: string): string | undefined;
+  addFavorite(searchWord: string): void;
+  removeFavorite(searchWord: string): void;
+  removeFavorites(): void;
 }
 
-export const useFavoritesStore = defineStore('favorites', {
-  state: () => ({
-    favorites: useLocalStorage<string[]>('favorites.favorites', []),
-  }),
-  getters: {
-    getFavorite(state: FavoritesStoreState) {
-      return (searchWord: string): string | undefined => {
-        return state.favorites.find((favorite: string): boolean => {
-          return favorite === searchWord;
-        });
-      };
-    },
-    getFavorites(state: FavoritesStoreState): string[] {
-      return state.favorites;
-    },
-  },
-  actions: {
-    addFavorite(searchWord: string): void {
-      if (!searchWord) {
-        return;
-      }
+export const useFavoritesStore = defineStore('favorites', (): FavoritesStore => {
+  const favorites: RemovableRef<string[]> = useLocalStorage<string[]>('favorites.favorites', []);
 
-      if (this.favorites.length < 10 && !this.favorites.includes(searchWord)) {
-        this.favorites.push(searchWord);
-      }
-    },
-    removeFavorite(searchWord: string): void {
-      const index: number = this.favorites.findIndex((favorite: string): boolean => {
-        return favorite === searchWord;
-      });
+  const getFavorite = (searchWord: string): string | undefined => {
+    return favorites.value.find((favorite: string): boolean => {
+      return favorite === searchWord;
+    });
+  };
 
-      if (index !== -1) {
-        this.favorites.splice(index, 1);
-      }
-    },
-    removeFavorites(): void {
-      this.favorites = [];
-    },
-  },
+  const addFavorite = (searchWord: string): void => {
+    if (!searchWord) {
+      return;
+    }
+
+    if (favorites.value.length < 10 && !favorites.value.includes(searchWord)) {
+      favorites.value.push(searchWord);
+    }
+  };
+
+  const removeFavorite = (searchWord: string): void => {
+    const index: number = favorites.value.findIndex((favorite: string): boolean => {
+      return favorite === searchWord;
+    });
+
+    if (index !== -1) {
+      favorites.value.splice(index, 1);
+    }
+  };
+
+  const removeFavorites = (): void => {
+    favorites.value = [];
+  };
+
+  return {
+    favorites,
+    getFavorite,
+    addFavorite,
+    removeFavorite,
+    removeFavorites,
+  };
 });

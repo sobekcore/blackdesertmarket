@@ -76,11 +76,11 @@ watch(
 
 watch(
   (): Array<number | null> => {
-    return [locationStore.getMainCategory, locationStore.getSubCategory];
+    return [locationStore.mainCategory, locationStore.subCategory];
   },
   (): void => {
-    const matchMainCategory: boolean = props.mainCategory === locationStore.getMainCategory;
-    const matchSubCategory: boolean = props.subCategory === locationStore.getSubCategory;
+    const matchMainCategory: boolean = props.mainCategory === locationStore.mainCategory;
+    const matchSubCategory: boolean = props.subCategory === locationStore.subCategory;
 
     itemListActiveRoute.value = matchMainCategory && matchSubCategory;
   },

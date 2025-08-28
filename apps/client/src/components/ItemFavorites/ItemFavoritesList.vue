@@ -27,7 +27,7 @@ const translate = useInject(TranslateKey);
 const favoritesStore = useFavoritesStore();
 
 const favoritesList: ComputedRef<string[]> = computed((): string[] => {
-  return favoritesStore.getFavorites;
+  return favoritesStore.favorites;
 });
 
 const itemFavoritesItemEffect = (): void => {

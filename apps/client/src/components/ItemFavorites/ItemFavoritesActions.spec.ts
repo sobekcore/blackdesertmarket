@@ -35,7 +35,7 @@ describe('ItemFavoritesActions', () => {
     const component: ComponentInternalInstance = componentWrapper.getCurrentComponent();
     component.emit('click');
 
-    expect(favoritesStore.getFavorites).toEqual([MOCK_SEARCH]);
+    expect(favoritesStore.favorites).toEqual([MOCK_SEARCH]);
   });
 
   it('should remove all items from favorites on click', () => {
@@ -48,13 +48,13 @@ describe('ItemFavoritesActions', () => {
     const listToFavoritesComponent: ComponentInternalInstance = listToFavoritesWrapper.getCurrentComponent();
     listToFavoritesComponent.emit('click');
 
-    expect(favoritesStore.getFavorites).toEqual([MOCK_SEARCH]);
+    expect(favoritesStore.favorites).toEqual([MOCK_SEARCH]);
 
     const allResetWrapper: VueWrapper = wrapper.findComponent<ComponentPublicInstance>('[data-test="all-reset"]');
 
     const allResetComponent: ComponentInternalInstance = allResetWrapper.getCurrentComponent();
     allResetComponent.emit('click');
 
-    expect(favoritesStore.getFavorites).toEqual([]);
+    expect(favoritesStore.favorites).toEqual([]);
   });
 });

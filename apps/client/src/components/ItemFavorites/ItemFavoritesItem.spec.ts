@@ -50,7 +50,7 @@ describe('ItemFavoritesItem', () => {
     const searchButton: DOMWrapper<HTMLElement> = wrapper.find('[data-test="search-button"]');
     searchButton.trigger('click');
 
-    expect(locationStore.getActiveSearchWord).toBe(MOCK_SEARCH_WORD);
+    expect(locationStore.activeSearchWord).toBe(MOCK_SEARCH_WORD);
   });
 
   it('should remove item from favorites on click', () => {
@@ -59,6 +59,6 @@ describe('ItemFavoritesItem', () => {
     const searchButton: DOMWrapper<HTMLElement> = wrapper.find('[data-test="remove-button"]');
     searchButton.trigger('click');
 
-    expect(favoritesStore.getFavorites).toEqual([]);
+    expect(favoritesStore.favorites).toEqual([]);
   });
 });

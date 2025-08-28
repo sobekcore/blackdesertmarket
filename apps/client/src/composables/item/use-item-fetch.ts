@@ -16,8 +16,8 @@ export function useItemFetch(mainCategory: number, subCategory: number): UseItem
       HttpMethod.GET,
       `/list/${mainCategory}/${subCategory}`,
       {
-        region: preferencesStore.getRegion,
-        language: preferencesStore.getLanguage,
+        region: preferencesStore.region,
+        language: preferencesStore.language,
       },
       {
         headers: {

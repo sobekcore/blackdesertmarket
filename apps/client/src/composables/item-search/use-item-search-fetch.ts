@@ -13,8 +13,8 @@ export function useItemSearchFetch(search: string): UseItemSearchFetchReturn {
 
   const fetch = async (): Promise<BlackDesertItem[]> => {
     const marketApi = useMarketApi<BlackDesertItem[]>(HttpMethod.GET, `/search/${search}`, {
-      region: preferencesStore.getRegion,
-      language: preferencesStore.getLanguage,
+      region: preferencesStore.region,
+      language: preferencesStore.language,
     });
 
     const response = await marketApi.execute();

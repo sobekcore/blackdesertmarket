@@ -157,13 +157,13 @@ const hideFavoritesModal = (): void => {
 
 watch(
   (): string => {
-    return locationStore.getActiveSearchWord;
+    return locationStore.activeSearchWord;
   },
   (): void => {
-    if (locationStore.getActiveSearchWord) {
+    if (locationStore.activeSearchWord) {
       resetFilterState(false);
 
-      state.search = locationStore.getActiveSearchWord;
+      state.search = locationStore.activeSearchWord;
       locationStore.activeSearchWord = '';
 
       updateFilterState();

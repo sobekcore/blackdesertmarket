@@ -16,8 +16,8 @@ export function useItemHotFetch(): UseItemHotFetchReturn {
       HttpMethod.GET,
       '/list/hot',
       {
-        region: preferencesStore.getRegion,
-        language: preferencesStore.getLanguage,
+        region: preferencesStore.region,
+        language: preferencesStore.language,
       },
       {
         headers: {

@@ -28,17 +28,17 @@ const favoritesStore = useFavoritesStore();
 const notification: UseNotificationReturn = useNotification();
 
 const addToFavorites = (): void => {
-  if (!locationStore.getSearchWord) {
+  if (!locationStore.searchWord) {
     notification.show(NotificationType.ERROR, 'notification.errorCurrentPage');
     return;
   }
 
-  if (favoritesStore.getFavorite(locationStore.getSearchWord)) {
+  if (favoritesStore.getFavorite(locationStore.searchWord)) {
     notification.show(NotificationType.ERROR, 'notification.errorRegistered');
     return;
   }
 
-  favoritesStore.addFavorite(locationStore.getSearchWord);
+  favoritesStore.addFavorite(locationStore.searchWord);
 };
 
 const removeAllFavorites = (): void => {

@@ -8,8 +8,8 @@ const MOCK_SUB_CATEGORY: number = 1;
 
 jest.mock('@/stores/location', () => ({
   useLocationStore: () => ({
-    getMainCategory: MOCK_MAIN_CATEGORY,
-    getSubCategory: MOCK_SUB_CATEGORY,
+    mainCategory: MOCK_MAIN_CATEGORY,
+    subCategory: MOCK_SUB_CATEGORY,
   }),
 }));
 
