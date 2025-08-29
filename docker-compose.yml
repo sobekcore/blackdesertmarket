@@ -1,12 +1,9 @@
-version: "3.8"
-
 services:
   client:
     build:
       context: .
       dockerfile: ./apps/client/Dockerfile
-      args:
-        DOCKER_CLIENT_ENV: ${DOCKER_CLIENT_ENV:-prod}
+      target: ${DOCKER_CLIENT_ENV:-prod}
     ports:
       - "8080:8080"
     networks:
@@ -21,8 +18,7 @@ services:
     build:
       context: .
       dockerfile: ./apps/api/Dockerfile
-      args:
-        DOCKER_API_ENV: ${DOCKER_API_ENV:-prod}
+      target: ${DOCKER_API_ENV:-prod}
     ports:
       - "8081:3000"
     networks:

@@ -1,15 +1,17 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { HttpArgumentsHost } from '@nestjs/common/interfaces';
 import { Response } from 'express';
 import { ControllerResponseCode } from '@/enums/controller-response.enum';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  private defaultExceptionStatus: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-  private defaultExceptionCode: ControllerResponseCode = ControllerResponseCode.ERROR_INTERNAL;
-  private defaultExceptionMessage: string = 'Something went wrong on the server-side';
+  private readonly defaultExceptionStatus: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+  private readonly defaultExceptionCode: ControllerResponseCode = ControllerResponseCode.ERROR_INTERNAL;
+  private readonly defaultExceptionMessage: string = 'Something went wrong on the server-side';
 
   public catch(exception: unknown, host: ArgumentsHost): void {
+    Logger.error(exception, AllExceptionsFilter.name);
+
     const context: HttpArgumentsHost = host.switchToHttp();
     const response: Response = context.getResponse();
 
