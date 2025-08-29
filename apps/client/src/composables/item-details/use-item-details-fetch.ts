@@ -16,8 +16,8 @@ export function useItemDetailsFetch(id: number, enhancement: number, extended?: 
       HttpMethod.GET,
       `/item/${id}/${enhancement}`,
       {
-        region: preferencesStore.getRegion,
-        language: preferencesStore.getLanguage,
+        region: preferencesStore.region,
+        language: preferencesStore.language,
         extended: String(extended),
       },
       {

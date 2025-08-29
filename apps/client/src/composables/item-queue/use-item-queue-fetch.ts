@@ -16,8 +16,8 @@ export function useItemQueueFetch(): UseQueueItemListReturn {
       HttpMethod.GET,
       '/list/queue',
       {
-        region: preferencesStore.getRegion,
-        language: preferencesStore.getLanguage,
+        region: preferencesStore.region,
+        language: preferencesStore.language,
       },
       {
         headers: {

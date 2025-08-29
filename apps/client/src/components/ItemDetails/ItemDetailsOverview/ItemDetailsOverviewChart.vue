@@ -93,7 +93,7 @@ const labels: ComputedRef<string[]> = computed((): string[] => {
     props.days - 1,
   ];
 
-  return props.data.slice(0, props.days).map((item, index): string => {
+  return props.data.slice(-props.days).map((item, index): string => {
     if (!evenlyDistributedIndexes.includes(index)) {
       return '';
     }
@@ -104,7 +104,7 @@ const labels: ComputedRef<string[]> = computed((): string[] => {
 });
 
 const data: ComputedRef<number[]> = computed((): number[] => {
-  return props.data.slice(0, props.days).map((item): number => {
+  return props.data.slice(-props.days).map((item): number => {
     return item.onePrice / unit.value;
   });
 });

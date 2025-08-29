@@ -19,8 +19,8 @@ export function useItemTypeFetch(id: number): UseItemTypeFetchReturn {
       HttpMethod.GET,
       `/item/${id}`,
       {
-        region: preferencesStore.getRegion,
-        language: preferencesStore.getLanguage,
+        region: preferencesStore.region,
+        language: preferencesStore.language,
       },
       {
         headers: {
@@ -44,8 +44,8 @@ export function useItemTypeFetch(id: number): UseItemTypeFetchReturn {
 
   const fetchBaseType = async (): Promise<BlackDesertItemType | null> => {
     const marketApi = useMarketApi<BlackDesertItemType[]>(HttpMethod.GET, `/item/${id}`, {
-      region: preferencesStore.getRegion,
-      language: preferencesStore.getLanguage,
+      region: preferencesStore.region,
+      language: preferencesStore.language,
     });
 
     const response = await marketApi.execute();
@@ -63,8 +63,8 @@ export function useItemTypeFetch(id: number): UseItemTypeFetchReturn {
 
   const fetchByEnhancement = async (enhancement: number): Promise<BlackDesertItemType | null> => {
     const marketApi = useMarketApi<BlackDesertItemType[]>(HttpMethod.GET, `/item/${id}`, {
-      region: preferencesStore.getRegion,
-      language: preferencesStore.getLanguage,
+      region: preferencesStore.region,
+      language: preferencesStore.language,
     });
 
     const response = await marketApi.execute();

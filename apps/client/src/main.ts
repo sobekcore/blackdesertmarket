@@ -22,10 +22,10 @@ const store: Pinia = createPinia();
 app.use(store);
 
 const preferencesStore = usePreferencesStore();
-document.documentElement.lang = preferencesStore.getLanguage;
+document.documentElement.lang = preferencesStore.language;
 
 const i18n: I18n = createI18n({
-  locale: preferencesStore.getLanguage,
+  locale: preferencesStore.language,
   messages: messages,
   legacy: false,
 });

@@ -91,7 +91,7 @@ const handleTooltipShow = async (): Promise<void> => {
     HttpMethod.GET,
     `/item/${itemType.value.id}/${itemType.value.enhancement}/tooltip`,
     {
-      language: preferencesStore.getLanguage,
+      language: preferencesStore.language,
     },
   );
 

@@ -195,7 +195,7 @@ export class ItemService {
     return data;
   }
 
-  public findTooltipById(i18n: I18nContext, id: number, enhancement: number): Promise<BlackDesertItemTooltip> {
+  public async findTooltipById(i18n: I18nContext, id: number, enhancement: number): Promise<BlackDesertItemTooltip> {
     const params: BdoCodexParams = {
       id: String(`item--${id}`),
       enchant: String(enhancement),
@@ -206,18 +206,14 @@ export class ItemService {
       language: i18n.lang,
     };
 
-    const data: Observable<BlackDesertItemTooltip> = this.bdoCodexService
+    return this.bdoCodexService
       .buildRequest(BdoCodexEndpoint.ITEM_TOOLTIP, params, meta)
-      .pipe(
-        map((response: AxiosResponse): BlackDesertItemTooltip => {
-          try {
-            return this.itemTransformerService.transformBdoCodexItemTooltip(i18n, response.data, id, enhancement);
-          } catch {
-            throw new BdoCodexException('Response from BDO Codex did contain invalid data');
-          }
-        }),
-      );
-
-    return lastValueFrom(data);
+      .then((itemTooltip: string): BlackDesertItemTooltip => {
+        try {
+          return this.itemTransformerService.transformBdoCodexItemTooltip(i18n, itemTooltip, id, enhancement);
+        } catch {
+          throw new BdoCodexException('Response from BDO Codex did contain invalid data');
+        }
+      });
   }
 }

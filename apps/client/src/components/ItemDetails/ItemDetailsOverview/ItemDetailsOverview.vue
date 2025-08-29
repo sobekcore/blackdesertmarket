@@ -1,10 +1,40 @@
 <template>
-  <div class="flex h-full flex-col gap-y-5">
-    <div class="flex flex-col-reverse gap-3.5 sm:flex-row">
-      <div class="flex w-full gap-3.5 overflow-hidden">
+  <div class="flex h-full flex-col gap-5 xl:flex-row">
+    <div class="flex flex-col gap-5 xl:w-1/3">
+      <div class="flex min-h-[46px] gap-3.5 overflow-hidden">
         <ListItemIcon :src="itemIcon" :item="props.itemType" :class="itemGradeBorder" />
         <ListItemName :name="itemType.name" :class="itemGradeText" />
       </div>
+      <div class="grid h-full grid-cols-1 gap-6 sm:grid-cols-2">
+        <ItemDetailsOverviewProperty
+          data-test="in-stock"
+          :label="translate('item.count')"
+          :value="itemDetailsComposable.getSellCount()"
+        />
+        <ItemDetailsOverviewProperty :label="translate('generic.warehouseCapacity')" value="" />
+        <ItemDetailsOverviewProperty
+          data-test="base-price"
+          :label="translate('item.basePrice')"
+          :value="itemDetailsComposable.getBasePrice()"
+        />
+        <ItemDetailsOverviewProperty
+          data-test="recent-price"
+          :label="translate('itemDetails.recentPrice')"
+          :value="itemDetailsComposable.getRecentPrice()"
+        />
+        <ItemDetailsOverviewProperty
+          data-test="total-trades"
+          :label="translate('itemType.tradeCount')"
+          :value="itemTypeComposable.getTradeCount()"
+        />
+        <ItemDetailsOverviewProperty
+          data-test="recent-transaction"
+          :label="translate('itemDetails.recentTransaction')"
+          :value="itemDetailsComposable.getRecentTransaction()"
+        />
+      </div>
+    </div>
+    <div class="flex flex-col items-end gap-4 pb-5 xl:w-2/3">
       <div class="flex gap-3.5">
         <ItemDetailsOverviewButton
           data-test="one-month"
@@ -19,40 +49,8 @@
           @click="handleButtonClick(3)"
         />
       </div>
-    </div>
-    <div class="flex flex-grow flex-col gap-5 pb-5 xl:flex-row">
-      <div class="xl:w-1/3">
-        <div class="grid h-full grid-cols-1 gap-6 sm:grid-cols-2">
-          <ItemDetailsOverviewProperty
-            data-test="in-stock"
-            :label="translate('item.count')"
-            :value="itemDetailsComposable.getSellCount()"
-          />
-          <ItemDetailsOverviewProperty :label="translate('generic.warehouseCapacity')" value="" />
-          <ItemDetailsOverviewProperty
-            data-test="base-price"
-            :label="translate('item.basePrice')"
-            :value="itemDetailsComposable.getBasePrice()"
-          />
-          <ItemDetailsOverviewProperty
-            data-test="recent-price"
-            :label="translate('itemDetails.recentPrice')"
-            :value="itemDetailsComposable.getRecentPrice()"
-          />
-          <ItemDetailsOverviewProperty
-            data-test="total-trades"
-            :label="translate('itemType.tradeCount')"
-            :value="itemTypeComposable.getTradeCount()"
-          />
-          <ItemDetailsOverviewProperty
-            data-test="recent-transaction"
-            :label="translate('itemDetails.recentTransaction')"
-            :value="itemDetailsComposable.getRecentTransaction()"
-          />
-        </div>
-      </div>
-      <div class="h-full min-h-[300px] xl:w-2/3">
-        <ItemDetailsOverviewChart :data="props.itemDetails.history" :days="days" class="xl:-mt-4" />
+      <div class="min-h-[300px] w-full">
+        <ItemDetailsOverviewChart :data="props.itemDetails.history" :days="days" />
       </div>
     </div>
   </div>

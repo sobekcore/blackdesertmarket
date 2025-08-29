@@ -1,16 +1,14 @@
 <template>
-  <div
-    data-test="outer"
+  <button
+    data-test="button"
     :class="{
-      'my-1.5 min-h-[34px] rounded': true,
+      'border-lighten whitespace-nowrap rounded border py-1.5 px-5 text-sm': true,
       'button-inactive-state': !props.active,
       'button-active-state': props.active,
     }"
   >
-    <button class="border-lighten flex h-full items-center whitespace-nowrap rounded border px-5 text-sm">
-      {{ props.label }}
-    </button>
-  </div>
+    {{ props.label }}
+  </button>
 </template>
 
 <script lang="ts" setup>
