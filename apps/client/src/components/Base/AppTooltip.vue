@@ -7,6 +7,7 @@
     :disabled="props.disabled"
     :popper-class="props.class"
     class="flex"
+    shift-cross-axis
     auto-boundary-max-size
     handle-resize
     @show="triggerTooltipShow"
@@ -89,7 +90,7 @@ if (props.showOnClick) {
 }
 
 .v-popper--theme-tooltip .v-popper__inner {
-  @apply border text-sm text-dark-900;
+  @apply max-w-[100vw] border text-sm text-dark-900;
 }
 
 .v-popper--theme-tooltip .v-popper__arrow-outer {

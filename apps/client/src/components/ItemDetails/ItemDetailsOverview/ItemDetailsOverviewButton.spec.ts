@@ -33,8 +33,8 @@ describe('ItemDetailsOverviewButton', () => {
       },
     });
 
-    const outer: DOMWrapper<HTMLElement> = wrapper.find('[data-test="outer"]');
+    const button: DOMWrapper<HTMLElement> = wrapper.find('[data-test="button"]');
 
-    expect(outer.classes()).toContain('button-active-state');
+    expect(button.classes()).toContain('button-active-state');
   });
 });
