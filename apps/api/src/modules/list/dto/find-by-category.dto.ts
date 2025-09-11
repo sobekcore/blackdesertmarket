@@ -11,6 +11,6 @@ export class FindByCategoryParamsDto {
   @Type(() => Number)
   @IsNumber()
   @Min(1)
-  @Max(24)
+  @Max(30)
   public readonly subCategory: number;
 }

@@ -77,6 +77,30 @@ export default {
           title: 'sidemenu.mainWeapon.slayer',
           subCategory: 18,
         },
+        {
+          title: 'sidemenu.mainWeapon.swallowtailFan',
+          subCategory: 19,
+        },
+        {
+          title: 'sidemenu.mainWeapon.foxspiritCharm',
+          subCategory: 20,
+        },
+        {
+          title: 'sidemenu.mainWeapon.hammers',
+          subCategory: 21,
+        },
+        {
+          title: 'sidemenu.mainWeapon.hwando',
+          subCategory: 22,
+        },
+        {
+          title: 'sidemenu.mainWeapon.revolvers',
+          subCategory: 23,
+        },
+        {
+          title: 'sidemenu.mainWeapon.powerPole',
+          subCategory: 24,
+        },
       ],
     },
     {
@@ -147,6 +171,30 @@ export default {
         {
           title: 'sidemenu.subWeapon.shard',
           subCategory: 16,
+        },
+        {
+          title: 'sidemenu.subWeapon.doStave',
+          subCategory: 17,
+        },
+        {
+          title: 'sidemenu.subWeapon.binyeoKnife',
+          subCategory: 18,
+        },
+        {
+          title: 'sidemenu.subWeapon.gravityCores',
+          subCategory: 19,
+        },
+        {
+          title: 'sidemenu.subWeapon.gombangdae',
+          subCategory: 20,
+        },
+        {
+          title: 'sidemenu.subWeapon.shotgun',
+          subCategory: 21,
+        },
+        {
+          title: 'sidemenu.subWeapon.gourdBottle',
+          subCategory: 22,
         },
       ],
     },
@@ -247,6 +295,30 @@ export default {
           title: 'sidemenu.awakening.trion',
           subCategory: 24,
         },
+        {
+          title: 'sidemenu.awakening.soulTome',
+          subCategory: 25,
+        },
+        {
+          title: 'sidemenu.awakening.foxtailFans',
+          subCategory: 26,
+        },
+        {
+          title: 'sidemenu.awakening.sledgehammer',
+          subCategory: 27,
+        },
+        {
+          title: 'sidemenu.awakening.enlightenedBlade',
+          subCategory: 28,
+        },
+        {
+          title: 'sidemenu.awakening.lilDevil',
+          subCategory: 29,
+        },
+        {
+          title: 'sidemenu.awakening.jadePillar',
+          subCategory: 30,
+        },
       ],
     },
     {
@@ -304,29 +376,33 @@ export default {
       ],
     },
     {
-      title: 'sidemenu.lightstone.title',
+      title: 'sidemenu.artifactLightstone.title',
       icon: 'categories/85.png',
       mainCategory: 85,
       subCategories: [
         {
-          title: 'sidemenu.lightstone.lightstoneOfFire',
+          title: 'sidemenu.artifactLightstone.lightstoneOfFire',
           subCategory: 1,
         },
         {
-          title: 'sidemenu.lightstone.lightstoneOfEarth',
+          title: 'sidemenu.artifactLightstone.lightstoneOfEarth',
           subCategory: 2,
         },
         {
-          title: 'sidemenu.lightstone.lightstoneOfWind',
+          title: 'sidemenu.artifactLightstone.lightstoneOfWind',
           subCategory: 3,
         },
         {
-          title: 'sidemenu.lightstone.lightstoneOfFlora',
+          title: 'sidemenu.artifactLightstone.lightstoneOfFlora',
           subCategory: 4,
         },
         {
-          title: 'sidemenu.lightstone.specialLightstone',
+          title: 'sidemenu.artifactLightstone.specialLightstone',
           subCategory: 5,
+        },
+        {
+          title: 'sidemenu.artifactLightstone.artifact',
+          subCategory: 6,
         },
       ],
     },
@@ -370,17 +446,21 @@ export default {
       ],
     },
     {
-      title: 'sidemenu.enhancementUpgrade.title',
+      title: 'sidemenu.enhancement.title',
       icon: 'categories/30.png',
       mainCategory: 30,
       subCategories: [
         {
-          title: 'sidemenu.enhancementUpgrade.blackStone',
+          title: 'sidemenu.enhancement.blackStone',
           subCategory: 1,
         },
         {
-          title: 'sidemenu.enhancementUpgrade.upgrade',
+          title: 'sidemenu.enhancement.upgrade',
           subCategory: 2,
+        },
+        {
+          title: 'sidemenu.enhancement.reforge',
+          subCategory: 3,
         },
       ],
     },
@@ -499,36 +579,20 @@ export default {
       mainCategory: 50,
       subCategories: [
         {
-          title: 'sidemenu.magicCrystal.mainWeapon',
+          title: 'sidemenu.magicCrystal.attackCrystal',
           subCategory: 1,
         },
         {
-          title: 'sidemenu.magicCrystal.subWeapon',
+          title: 'sidemenu.magicCrystal.defenseCrystal',
           subCategory: 2,
         },
         {
-          title: 'sidemenu.magicCrystal.awakeningWeapon',
-          subCategory: 8,
-        },
-        {
-          title: 'sidemenu.magicCrystal.helmet',
+          title: 'sidemenu.magicCrystal.functionalCrystal',
           subCategory: 3,
         },
         {
-          title: 'sidemenu.magicCrystal.armor',
+          title: 'sidemenu.magicCrystal.combinedCrystal',
           subCategory: 4,
-        },
-        {
-          title: 'sidemenu.magicCrystal.gloves',
-          subCategory: 5,
-        },
-        {
-          title: 'sidemenu.magicCrystal.shoes',
-          subCategory: 6,
-        },
-        {
-          title: 'sidemenu.magicCrystal.versatile',
-          subCategory: 7,
         },
       ],
     },

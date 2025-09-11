@@ -5,6 +5,6 @@ export const SubCategoryParam: ApiParamOptions = {
   schema: {
     type: 'integer',
     minimum: 1,
-    maximum: 24,
+    maximum: 30,
   },
 };

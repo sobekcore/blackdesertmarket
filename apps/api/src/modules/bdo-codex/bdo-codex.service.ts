@@ -21,18 +21,24 @@ export class BdoCodexService {
       url.searchParams.append(key, value);
     }
 
-    const browser: Browser = await chromium.launch();
-    const context: BrowserContext = await browser.newContext();
-    const page: Page = await context.newPage();
+    let browser: Browser;
+    let context: BrowserContext;
+    let page: Page;
 
-    await page.goto(url.href);
-    await page.waitForSelector('.card', { timeout: 3000 });
+    try {
+      browser = await chromium.launch();
+      context = await browser.newContext();
+      page = await context.newPage();
 
-    const content: string = await page.content();
-    await context.close();
-    await browser.close();
+      await page.goto(url.href);
+      await page.waitForSelector('.card', { timeout: 3000 });
 
-    return content;
+      return page.content();
+    } finally {
+      await page.close();
+      await context.close();
+      await browser.close();
+    }
   }
 
   private getRequestUrl(endpoint: string): URL {

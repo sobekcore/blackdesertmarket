@@ -21,7 +21,13 @@
     "morningStar": "Morning Star",
     "kyve": "Kyve",
     "serenaca": "Serenaca",
-    "slayer": "Slayer"
+    "slayer": "Slayer",
+    "swallowtailFan": "Swallowtail Fan",
+    "foxspiritCharm": "Foxspirit Charm",
+    "hammers": "Hammers",
+    "hwando": "Hwando",
+    "revolvers": "Revolvers",
+    "powerPole": "Power Pole"
   },
   "subWeapon": {
     "title": "Sub-weapon",
@@ -40,7 +46,13 @@
     "haladie": "Haladie",
     "quoratum": "Quoratum",
     "mareca": "Mareca",
-    "shard": "Shard"
+    "shard": "Shard",
+    "doStave": "Do Stave",
+    "binyeoKnife": "Binyeo Knife",
+    "gravityCores": "Gravity Cores",
+    "gombangdae": "Gombangdae",
+    "shotgun": "Shotgun",
+    "gourdBottle": "Gourd Bottle"
   },
   "awakening": {
     "title": "Awakening",
@@ -66,7 +78,13 @@
     "sting": "Sting",
     "kibelius": "Kibelius",
     "patraca": "Patraca",
-    "trion": "Trion"
+    "trion": "Trion",
+    "soulTome": "Soul Tome",
+    "foxtailFans": "Foxtail Fans",
+    "sledgehammer": "Sledgehammer",
+    "enlightenedBlade": "Enlightened Blade",
+    "lilDevil": "Lil' Devil",
+    "jadePillar": "Jade Pillar"
   },
   "armor": {
     "title": "Armor",
@@ -84,13 +102,14 @@
     "earring": "Earring",
     "belt": "Belt"
   },
-  "lightstone": {
-    "title": "Lightstone",
+  "artifactLightstone": {
+    "title": "Artifact/Lightstone",
     "lightstoneOfFire": "Lightstone of Fire",
     "lightstoneOfEarth": "Lightstone of Earth",
     "lightstoneOfWind": "Lightstone of Wind",
     "lightstoneOfFlora": "Lightstone of Flora",
-    "specialLightstone": "Special Lightstone"
+    "specialLightstone": "Special Lightstone",
+    "artifact": "Artifact"
   },
   "material": {
     "title": "Material",
@@ -103,10 +122,11 @@
     "seafood": "Seafood",
     "misc": "Misc."
   },
-  "enhancementUpgrade": {
-    "title": "Enhancement/Upgrade",
+  "enhancement": {
+    "title": "Enhancement",
     "blackStone": "Black Stone",
-    "upgrade": "Upgrade"
+    "upgrade": "Upgrade",
+    "reforge": "Reforge"
   },
   "consumables": {
     "title": "Consumables",
@@ -141,14 +161,10 @@
   },
   "magicCrystal": {
     "title": "Magic Crystal",
-    "mainWeapon": "Main Weapon",
-    "subWeapon": "Sub-weapon",
-    "awakeningWeapon": "Awakening Weapon",
-    "helmet": "Helmet",
-    "armor": "Armor",
-    "gloves": "Gloves",
-    "shoes": "Shoes",
-    "versatile": "Versatile"
+    "attackCrystal": "Attack Crystal",
+    "defenseCrystal": "Defense Crystal",
+    "functionalCrystal": "Functional Crystal",
+    "combinedCrystal": "Combined Crystal"
   },
   "pearlItem": {
     "title": "Pearl Item",
