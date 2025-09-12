@@ -4,11 +4,11 @@
     <div v-if="search" class="flex h-full flex-col gap-2 overflow-y-scroll p-2.5 pt-0">
       <ListItem v-for="item in itemList" :key="item.id" :item="item" @effect="handleListItemClick(item)" />
     </div>
-    <RecycleScroller v-else class="p-2.5 pt-0" :items="itemList" skip-hover>
+    <RecycleScroller v-else class="p-2.5 pt-0" key-field="key" :items="itemList" skip-hover>
       <template #default="{ item }">
         <ListItem
-          :key="item.id"
-          v-memo="[item.id]"
+          :key="item.key"
+          v-memo="[item.key]"
           :item="item"
           :class="getFluctuationTypeClass(item)"
           @effect="handleListItemClick(item)"
@@ -83,6 +83,10 @@ const search: Ref<boolean> = ref(false);
 const itemList: Ref<BlackDesertItem[] | BlackDesertItemHot[]> = ref([]);
 const activeItem: Ref<BlackDesertItemHot | null> = ref(null);
 
+const getListItemKey = (item: BlackDesertItem | BlackDesertItemHot): string => {
+  return isValidBlackDesertItemHot(item) ? `${item.id}.${item.enhancement}` : `${item.id}`;
+};
+
 const getBasePrice = (item: BlackDesertItem | BlackDesertItemHot): string => {
   const itemComposable: UseItemReturn = useItem(item);
   return itemComposable.getBasePrice();
@@ -116,10 +120,10 @@ const getFluctuationTypeIcon = (item: BlackDesertItem | BlackDesertItemHot): str
 };
 
 const prepareHotItemList = (data: BlackDesertItemHot[]) => {
-  const virtualScroll: UseVirtualScrollReturn = useVirtualScroll();
+  const virtualScroll: UseVirtualScrollReturn<BlackDesertItem> = useVirtualScroll();
   const gap: number = documentSize.remToRaw(tailwindConfig.getValue('gap', '2'));
 
-  itemList.value = virtualScroll.prepareData<BlackDesertItem>(data, ItemSize.HEIGHT, gap);
+  itemList.value = virtualScroll.prepareData(data, getListItemKey, ItemSize.HEIGHT, gap);
 };
 
 const refetchHotItemList = (): Promise<void> => {

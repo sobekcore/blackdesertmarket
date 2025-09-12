@@ -6,6 +6,7 @@ type MockDataItem = Record<string, unknown>;
 
 const MOCK_DATA_ITEM_1: MockDataItem = {};
 const MOCK_DATA_ITEM_2: MockDataItem = {};
+const MOCK_KEY: string = 'key';
 const MOCK_HEIGHT: number = 1;
 const MOCK_GAP: number = 1;
 
@@ -16,7 +17,7 @@ describe('useVirtualScroll', () => {
   beforeEach(() => {
     component = defineComponent({
       setup() {
-        return useVirtualScroll();
+        return useVirtualScroll<MockDataItem>();
       },
       template: '<slot></slot>',
     });
@@ -26,15 +27,22 @@ describe('useVirtualScroll', () => {
 
   it('should return proper data from prepareData', () => {
     const componentVM: Record<string, any> = wrapper.vm as Record<string, any>;
-    const data: MockDataItem[] = componentVM.prepareData([MOCK_DATA_ITEM_1, MOCK_DATA_ITEM_2], MOCK_HEIGHT, MOCK_GAP);
+    const data: MockDataItem[] = componentVM.prepareData(
+      [MOCK_DATA_ITEM_1, MOCK_DATA_ITEM_2],
+      () => MOCK_KEY,
+      MOCK_HEIGHT,
+      MOCK_GAP,
+    );
 
     const MOCK_DATA_ITEM_PREPARED_1: MockDataItem = {
       ...MOCK_DATA_ITEM_1,
+      key: MOCK_KEY,
       size: MOCK_HEIGHT + MOCK_GAP,
     };
 
     const MOCK_DATA_ITEM_PREPARED_2: MockDataItem = {
       ...MOCK_DATA_ITEM_2,
+      key: MOCK_KEY,
       size: MOCK_HEIGHT,
     };
 
