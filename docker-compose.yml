@@ -15,6 +15,7 @@ services:
       - /home/node/apps/client/dist
 
   api:
+    init: true
     build:
       context: .
       dockerfile: ./apps/api/Dockerfile

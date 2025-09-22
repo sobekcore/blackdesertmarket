@@ -35,9 +35,9 @@ export class BdoCodexService {
 
       return page.content();
     } finally {
-      await page.close();
-      await context.close();
-      await browser.close();
+      await page?.close();
+      await context?.close();
+      await browser?.close();
     }
   }
 
